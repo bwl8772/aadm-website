@@ -17,7 +17,6 @@ const {
 	urlMcpQuickstart,
 	urlClerkSignIn,
 	urlClerkSignUp,
-	urlClerkSignOut,
 	clerkPublishableKey,
 } = Astro.props;
 
@@ -94,19 +93,18 @@ const mcpChip =
 				<span class="sm:hidden">Join</span>
 				<span class="hidden sm:inline">Sign up</span>
 			</a>
-			<a
+			<button
 				id="nav-clerk-sign-out"
-				href={urlClerkSignOut}
-				rel="noopener noreferrer"
-				aria-label="Sign out of Clerk (Account Portal)"
+				type="button"
+				aria-label="Sign out"
 				class:list={[
-					'shrink-0 whitespace-nowrap rounded-lg border border-border-subtle px-2.5 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-slate-500/50 hover:bg-surface-card/50 hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4',
+					'shrink-0 cursor-pointer whitespace-nowrap rounded-lg border border-border-subtle px-2.5 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-slate-500/50 hover:bg-surface-card/50 hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4',
 					clerkPublishableKey ? 'hidden' : '',
 				]}
 			>
 				<span class="sm:hidden">Out</span>
 				<span class="hidden sm:inline">Sign out</span>
-			</a>
+			</button>
 		</nav>
 	</div>
 </header>
