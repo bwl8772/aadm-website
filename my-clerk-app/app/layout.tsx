@@ -37,39 +37,76 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ClerkProvider taskUrls={{ "reset-password": "/forgot-password/complete" }}>
-          <header className="flex flex-wrap items-center gap-3 p-4 border-b border-zinc-200 dark:border-zinc-800">
-            <Link href="/" className="font-semibold text-lg mr-auto">
+          <header className="flex items-center gap-2 border-b border-zinc-200 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3 dark:border-zinc-800">
+            <Link
+              href="/"
+              className="shrink-0 font-semibold text-base text-zinc-900 sm:text-lg dark:text-zinc-50"
+            >
               Home
             </Link>
-            <Show when="signed-in">
-              <Link href="/dashboard/tokens" className="text-sm font-medium hover:underline">
-                Dashboard
-              </Link>
-              <Link href="/profile" className="text-sm hover:underline">
-                Profile
-              </Link>
-              <Link href="/subscription" className="text-sm hover:underline">
-                Subscription
-              </Link>
-              {hostedUserProfileUrl ? (
-                <UserButton
-                  userProfileMode="navigation"
-                  userProfileUrl={hostedUserProfileUrl}
-                />
-              ) : (
-                <UserButton />
-              )}
-            </Show>
-            <Show when="signed-out">
-              <SignInButton mode="redirect" />
-              <Link
-                href={clerkForgotPasswordHref()}
-                className="text-sm text-zinc-600 hover:underline dark:text-zinc-400"
-              >
-                Forgot password?
-              </Link>
-              <SignUpButton mode="redirect" />
-            </Show>
+            <div className="min-w-0 flex-1" aria-hidden="true" />
+            <nav
+              className="scrollbar-none flex shrink-0 flex-nowrap items-center justify-end gap-2 overflow-x-auto sm:gap-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              aria-label="Account"
+            >
+              <Show when="signed-in">
+                <Link
+                  href="/dashboard/tokens"
+                  className="shrink-0 whitespace-nowrap text-sm font-medium text-zinc-800 hover:underline dark:text-zinc-200"
+                >
+                  <span className="sm:hidden">Tokens</span>
+                  <span className="hidden sm:inline">Dashboard</span>
+                </Link>
+                <Link
+                  href="/profile"
+                  className="shrink-0 whitespace-nowrap text-sm text-zinc-700 hover:underline dark:text-zinc-300"
+                >
+                  Profile
+                </Link>
+                <Link
+                  href="/subscription"
+                  className="shrink-0 whitespace-nowrap text-sm text-zinc-700 hover:underline dark:text-zinc-300"
+                >
+                  <span className="sm:hidden">Plan</span>
+                  <span className="hidden sm:inline">Subscription</span>
+                </Link>
+                {hostedUserProfileUrl ? (
+                  <UserButton
+                    userProfileMode="navigation"
+                    userProfileUrl={hostedUserProfileUrl}
+                  />
+                ) : (
+                  <UserButton />
+                )}
+              </Show>
+              <Show when="signed-out">
+                <SignInButton mode="redirect">
+                  <button
+                    type="button"
+                    className="shrink-0 cursor-pointer rounded-md border border-zinc-300 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-900 shadow-sm transition hover:bg-zinc-50 sm:px-3 sm:text-sm dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
+                  >
+                    <span className="sm:hidden">Login</span>
+                    <span className="hidden sm:inline">Sign in</span>
+                  </button>
+                </SignInButton>
+                <Link
+                  href={clerkForgotPasswordHref()}
+                  className="shrink-0 whitespace-nowrap text-xs text-zinc-600 hover:underline sm:text-sm dark:text-zinc-400"
+                >
+                  <span className="sm:hidden">Forgot?</span>
+                  <span className="hidden sm:inline">Forgot password?</span>
+                </Link>
+                <SignUpButton mode="redirect">
+                  <button
+                    type="button"
+                    className="shrink-0 cursor-pointer rounded-md bg-violet-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-violet-700 sm:px-3 sm:text-sm"
+                  >
+                    <span className="sm:hidden">Join</span>
+                    <span className="hidden sm:inline">Sign up</span>
+                  </button>
+                </SignUpButton>
+              </Show>
+            </nav>
           </header>
           <main className="flex-1">{children}</main>
         </ClerkProvider>
