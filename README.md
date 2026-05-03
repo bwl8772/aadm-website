@@ -7,7 +7,7 @@ Standalone **static** marketing homepage for **AADM** (Agentic Authority Deliver
 | Track | What | Where |
 |--------|------|--------|
 | **Standard** | Published openly—definitions, templates, governance narrative | Public repo (e.g. **`aadm-standard`** on GitHub) — **View the Standard** |
-| **MCP** | Private **paid** access; implementation stays proprietary | **Service:** Streamable HTTP on your MCP host (e.g. `https://mcp.example.com/mcp`). **Docs:** often on your main site (e.g. `https://example.com/mcp`) — **Get MCP Access** points at docs; quick reference on this page uses the MCP URL for health, discovery JSON, and `curl`. |
+| **MCP** | Private **MCP access**; implementation stays proprietary | **Service:** Streamable HTTP on your MCP host (e.g. `https://mcp.example.com/mcp`). **Docs:** often on your main site (e.g. `https://example.com/mcp`) — **Get MCP Access** points at docs; quick reference on this page uses the MCP URL for health, discovery JSON, and `curl`. |
 
 This repo is only the marketing shell. It does not ship MCP server source or the normative standard files.
 
