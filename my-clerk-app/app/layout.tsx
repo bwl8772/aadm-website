@@ -30,8 +30,8 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ClerkProvider>
-          <header className="flex items-center gap-4 p-4 border-b border-zinc-200 dark:border-zinc-800">
+        <ClerkProvider taskUrls={{ "reset-password": "/forgot-password/complete" }}>
+          <header className="flex flex-wrap items-center gap-3 p-4 border-b border-zinc-200 dark:border-zinc-800">
             <Link href="/" className="font-semibold text-lg mr-auto">
               Home
             </Link>
@@ -45,8 +45,11 @@ export default function RootLayout({
               <UserButton />
             </Show>
             <Show when="signed-out">
-              <SignInButton />
-              <SignUpButton />
+              <SignInButton mode="redirect" />
+              <Link href="/forgot-password" className="text-sm text-zinc-600 hover:underline dark:text-zinc-400">
+                Forgot password?
+              </Link>
+              <SignUpButton mode="redirect" />
             </Show>
           </header>
           <main className="flex-1">{children}</main>
