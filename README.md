@@ -7,7 +7,7 @@ Standalone **static** marketing homepage for **AADM** (Agentic Authority Deliver
 | Track | What | Where |
 |--------|------|--------|
 | **Standard** | Published openly—definitions, templates, governance narrative | Public repo (e.g. **`aadm-standard`** on GitHub) — **View the Standard** |
-| **MCP** | Private **paid** access; implementation stays proprietary | Hosted HTTP MCP for subscribers — **Get MCP Access** / portal URL |
+| **MCP** | Private **paid** access; implementation stays proprietary | **Service:** Streamable HTTP on your MCP host (e.g. `https://mcp.example.com/mcp`). **Docs:** often on your main site (e.g. `https://example.com/mcp`) — **Get MCP Access** points at docs; quick reference on this page uses the MCP URL for health, discovery JSON, and `curl`. |
 
 This repo is only the marketing shell. It does not ship MCP server source or the normative standard files.
 
@@ -32,15 +32,15 @@ Copy `.env.example` to `.env` and set. **Do not put a space after `=`** — a le
 | Variable | Purpose |
 |----------|---------|
 | `PUBLIC_STANDARD_REPO_URL` | **View the Standard** — public repo or site for the standard (e.g. `aadm-standard` on GitHub). |
-| `PUBLIC_MCP_REPO_URL` | **MCP HTTP URL** for Streamable HTTP (usually ends in `/mcp`) — your production subscriber MCP base. Drives `/health` and `/` links and the `initialize` curl on the homepage. |
-| `PUBLIC_MCP_QUICKSTART_URL` | **Get MCP Access** — customer-facing portal or landing (often the same host as the MCP service or a route in front of it). |
-| `PUBLIC_MCP_CUSTOMER_DOCS_URL` (optional) | **Subscriber documentation** — private Notion, docs portal, or gated URL. If unset, the site states that implementation and full integration guides are proprietary and ship with the access package (no public GitHub links). |
+| `PUBLIC_MCP_REPO_URL` | **MCP HTTP URL** — must include the **`/mcp`** path for JSON-RPC (e.g. `https://mcp.aadm.io/mcp`). Same origin is used for **`GET /health`** and **`GET /`** discovery JSON ([example discovery payload](https://mcp.aadm.io/)). |
+| `PUBLIC_MCP_QUICKSTART_URL` | **Get MCP Access** + in-page “MCP documentation” link — subscriber docs on your **marketing** domain (e.g. `https://aadm.io/mcp`), separate from the MCP API host. |
+| `PUBLIC_MCP_CUSTOMER_DOCS_URL` (optional) | Second documentation base (e.g. gated Notion). If unset and `PUBLIC_MCP_QUICKSTART_URL` is set, the page still links to that docs URL. |
 
 Astro only exposes variables prefixed with `PUBLIC_` to the client.
 
 ### MCP quick reference on the homepage
 
-The **MCP access — quick reference** block describes public protocol facts (Streamable HTTP, `Accept` headers, `/health`, minimal `initialize` curl). It does **not** link to a public MCP source repository. Deeper host integration material belongs in **`PUBLIC_MCP_CUSTOMER_DOCS_URL`** or in materials you deliver outside this static site.
+The **MCP access — quick reference** block uses **`PUBLIC_MCP_REPO_URL`** for protocol facts (Streamable HTTP, `Accept` headers, `/health`, service-root discovery JSON, minimal `initialize` curl). It uses **`PUBLIC_MCP_QUICKSTART_URL`** for the **MCP documentation** button and the **Get MCP Access** header/hero CTA—typically your marketing site path (e.g. `/mcp` on `aadm.io`), not the MCP API hostname.
 
 ## Build
 

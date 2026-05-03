@@ -7,6 +7,7 @@ const urlStandard = trim(import.meta.env.PUBLIC_STANDARD_REPO_URL) || '#configur
 const urlMcpEndpoint = trim(import.meta.env.PUBLIC_MCP_REPO_URL);
 const urlMcpQuickstart = trim(import.meta.env.PUBLIC_MCP_QUICKSTART_URL) || '#configure-quickstart-url';
 const urlMcpCustomerDocs = trim(import.meta.env.PUBLIC_MCP_CUSTOMER_DOCS_URL);
+const hasMcpDocsLink = urlMcpQuickstart.length > 0 && !urlMcpQuickstart.startsWith('#');
 
 let healthUrl = '';
 let discoveryUrl = '';
@@ -163,7 +164,7 @@ const curlInit = urlMcpEndpoint
 								href={urlMcpQuickstart}
 								class="inline-flex items-center rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110"
 							>
-								Open MCP portal
+								MCP documentation
 							</a>
 							{healthUrl ? (
 								<a
@@ -195,19 +196,28 @@ const curlInit = urlMcpEndpoint
 							<pre
 								class="overflow-x-auto rounded-2xl border border-border-subtle bg-surface-card/90 p-4 font-mono-cta text-xs leading-relaxed text-slate-300 sm:text-sm"><code>{curlInit}</code></pre>
 						</div>
+						{hasMcpDocsLink ? (
+							<p class="text-sm text-slate-500">
+								Server implementation is proprietary; subscriber guides and setup live on the{' '}
+								<a href={urlMcpQuickstart} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+									MCP documentation site
+								</a>
+								.
+							</p>
+						) : (
+							<p class="text-sm text-slate-500">
+								Set <code class="font-mono-cta text-slate-400">PUBLIC_MCP_QUICKSTART_URL</code> to your public
+								subscriber docs (for example <code class="font-mono-cta text-slate-400">https://aadm.io/mcp</code>).
+							</p>
+						)}
 						{urlMcpCustomerDocs ? (
 							<p class="text-sm text-slate-500">
-								Subscriber integration and orchestration guides:{' '}
+								Additional material:{' '}
 								<a href={urlMcpCustomerDocs} class="font-semibold text-accent-violet underline hover:text-accent-blue">
 									Customer documentation
 								</a>
 							</p>
-						) : (
-							<p class="text-sm text-slate-500">
-								MCP server implementation and full integration playbooks are <strong class="text-slate-400">proprietary</strong>
-								— connection details, session behavior, and host contracts are provided with your access package, not on public GitHub.
-							</p>
-						)}
+						) : null}
 					</div>
 				) : (
 					<p class="mt-6 rounded-xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-4 text-sm text-slate-500">
@@ -238,7 +248,7 @@ const curlInit = urlMcpEndpoint
 						<p class="mt-2 text-slate-300">
 							Use <span class="text-accent-violet">PUBLIC_STANDARD_REPO_URL</span>,{' '}
 							<span class="text-accent-blue">PUBLIC_MCP_REPO_URL</span> (MCP HTTP URL),{' '}
-							<span class="text-accent-violet">PUBLIC_MCP_QUICKSTART_URL</span> (portal / landing). Optional:{' '}
+							<span class="text-accent-violet">PUBLIC_MCP_QUICKSTART_URL</span> (subscriber docs, e.g. /mcp on your main site). Optional:{' '}
 							<span class="text-accent-blue">PUBLIC_MCP_CUSTOMER_DOCS_URL</span> (private subscriber docs). No spaces after{' '}
 							<code class="text-slate-400">=</code>.
 						</p>
