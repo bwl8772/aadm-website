@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { ClerkProvider, SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import {
+  clerkForgotPasswordHref,
+  clerkUserProfileUrl,
+} from "@/lib/clerk-host";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,6 +28,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const hostedUserProfileUrl = clerkUserProfileUrl();
+
   return (
     <html
       lang="en"
@@ -36,17 +42,30 @@ export default function RootLayout({
               Home
             </Link>
             <Show when="signed-in">
+              <Link href="/dashboard/tokens" className="text-sm font-medium hover:underline">
+                Dashboard
+              </Link>
               <Link href="/profile" className="text-sm hover:underline">
                 Profile
               </Link>
               <Link href="/subscription" className="text-sm hover:underline">
                 Subscription
               </Link>
-              <UserButton />
+              {hostedUserProfileUrl ? (
+                <UserButton
+                  userProfileMode="navigation"
+                  userProfileUrl={hostedUserProfileUrl}
+                />
+              ) : (
+                <UserButton />
+              )}
             </Show>
             <Show when="signed-out">
               <SignInButton mode="redirect" />
-              <Link href="/forgot-password" className="text-sm text-zinc-600 hover:underline dark:text-zinc-400">
+              <Link
+                href={clerkForgotPasswordHref()}
+                className="text-sm text-zinc-600 hover:underline dark:text-zinc-400"
+              >
                 Forgot password?
               </Link>
               <SignUpButton mode="redirect" />

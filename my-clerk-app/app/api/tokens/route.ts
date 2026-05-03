@@ -1,12 +1,16 @@
+import crypto from "node:crypto";
+
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import crypto from "crypto";
+
+import { expiresAtFromNow, isTokenExpired, resolveExpiresAt } from "@/lib/mcp-token";
 
 interface StoredToken {
   id: string;
   name: string;
   tokenHash: string;
   createdAt: string;
+  expiresAt?: string;
 }
 
 export async function GET() {
@@ -21,12 +25,17 @@ export async function GET() {
     (user.privateMetadata?.mcpTokens as StoredToken[]) || [];
 
   return NextResponse.json({
-    tokens: tokens.map((t) => ({
-      id: t.id,
-      name: t.name,
-      token: `***${t.tokenHash.slice(-6)}`,
-      createdAt: t.createdAt,
-    })),
+    tokens: tokens.map((t) => {
+      const expiresAt = resolveExpiresAt(t);
+      return {
+        id: t.id,
+        name: t.name,
+        token: `***${t.tokenHash.slice(-6)}`,
+        createdAt: t.createdAt,
+        expiresAt,
+        expired: isTokenExpired(expiresAt),
+      };
+    }),
   });
 }
 
@@ -42,7 +51,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Name is required" }, { status: 400 });
   }
 
-  const rawToken = `mcp_${crypto.randomBytes(32).toString("hex")}`;
+  const rawToken = `aadm_${crypto.randomBytes(32).toString("hex")}`;
   const tokenHash = crypto.createHash("sha256").update(rawToken).digest("hex");
 
   const client = await clerkClient();
@@ -50,11 +59,15 @@ export async function POST(request: Request) {
   const existingTokens: StoredToken[] =
     (user.privateMetadata?.mcpTokens as StoredToken[]) || [];
 
+  const createdAt = new Date().toISOString();
+  const expiresAt = expiresAtFromNow();
+
   const newToken: StoredToken = {
     id: crypto.randomUUID(),
     name,
     tokenHash,
-    createdAt: new Date().toISOString(),
+    createdAt,
+    expiresAt,
   };
 
   await client.users.updateUserMetadata(userId, {
@@ -63,7 +76,11 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json({ token: rawToken, id: newToken.id });
+  return NextResponse.json({
+    token: rawToken,
+    id: newToken.id,
+    expiresAt: newToken.expiresAt,
+  });
 }
 
 export async function DELETE(request: Request) {
