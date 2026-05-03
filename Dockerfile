@@ -1,6 +1,15 @@
 # Production image for Railway (or any Docker host). Serves static Astro `dist/` + GET /health.
+# Bake homepage URLs at build: pass the same PUBLIC_* names as `.env` (Railway Variables / `docker build --build-arg`).
 FROM node:22-alpine AS build
 WORKDIR /app
+ARG PUBLIC_STANDARD_REPO_URL=""
+ARG PUBLIC_MCP_REPO_URL=""
+ARG PUBLIC_MCP_QUICKSTART_URL=""
+ARG PUBLIC_MCP_CUSTOMER_DOCS_URL=""
+ENV PUBLIC_STANDARD_REPO_URL=$PUBLIC_STANDARD_REPO_URL \
+	PUBLIC_MCP_REPO_URL=$PUBLIC_MCP_REPO_URL \
+	PUBLIC_MCP_QUICKSTART_URL=$PUBLIC_MCP_QUICKSTART_URL \
+	PUBLIC_MCP_CUSTOMER_DOCS_URL=$PUBLIC_MCP_CUSTOMER_DOCS_URL
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .

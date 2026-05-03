@@ -50,6 +50,34 @@ npm run build
 
 Output: `dist/`. Preview locally with `npm run preview`.
 
+## Docker (Railway or any host)
+
+Multi-stage **`Dockerfile`**: builds Astro, then runs a tiny Node server that serves `dist/` and answers **`GET /health`** with JSON `{"status":"ok","service":"aadm-website"}`.
+
+```bash
+docker build -t aadm-website \
+  --build-arg PUBLIC_STANDARD_REPO_URL="https://github.com/your-org/aadm-standard" \
+  --build-arg PUBLIC_MCP_REPO_URL="https://mcp.example.com/mcp" \
+  --build-arg PUBLIC_MCP_QUICKSTART_URL="https://example.com/mcp" \
+  .
+docker run --rm -p 8080:8080 -e PORT=8080 aadm-website
+# Visit http://localhost:8080/health
+```
+
+**Railway:** New service → deploy from this repo → set **Root Directory** if needed → **Dockerfile** builder. Add the same **`PUBLIC_*`** names as in `.env` under **Variables** so the Astro build can embed correct links (Railway forwards them as build args when names match `ARG` lines in the Dockerfile).
+
+Listen address: **`0.0.0.0`**; port from **`PORT`** (Railway sets this automatically).
+
+### Health checks: `aadm.io` vs `aadm.io/health` vs MCP
+
+| What you probe | Typical URL | Notes |
+|----------------|---------------|--------|
+| **This marketing site** (this repo, Docker) | **`https://aadm.io/health`** | Dedicated JSON endpoint from `scripts/docker-serve.mjs`. Use this for Railway / load balancer health checks on the **site** service. |
+| **Site root** | `https://aadm.io/` | Returns **HTML** (homepage). You *can* probe `/` for “something is up,” but checks are clearer with **`/health`** (small JSON, no layout/CDN ambiguity). |
+| **MCP service** (separate deploy, e.g. `mcp.aadm.io`) | **`https://mcp.aadm.io/health`** | Different process: liveness for the **MCP server**, not the marketing site. Discovery JSON is usually **`GET /`** on that same MCP host ([example](https://mcp.aadm.io/)). |
+
+So: **`aadm.io/health`** for the static site on Railway; **`mcp…/health`** for the MCP product. They are not interchangeable.
+
 ## Publish this repo
 
 ```bash
