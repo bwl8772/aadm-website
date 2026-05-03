@@ -32,7 +32,7 @@ Copy `.env.example` to `.env` and set. **Do not put a space after `=`** — a le
 | Variable | Purpose |
 |----------|---------|
 | `PUBLIC_STANDARD_REPO_URL` | **View the Standard** — public repo or site for the standard (e.g. `aadm-standard` on GitHub). |
-| `PUBLIC_MCP_REPO_URL` | **MCP host or JSON-RPC URL** — e.g. `https://mcp.aadm.io` (homepage appends **`/mcp`** for `initialize` / client config) or full `https://mcp.aadm.io/mcp`. Same origin is used for **`GET /health`** and **`GET /`** discovery JSON ([example](https://mcp.aadm.io/)). |
+| `PUBLIC_MCP_REPO_URL` | **MCP host** — e.g. `https://mcp.aadm.io`. Same origin is used for **`GET /health`** and **`GET /`** discovery JSON ([example](https://mcp.aadm.io/)). The endpoint is the origin itself—do **not** append `/mcp`. |
 | `PUBLIC_MCP_QUICKSTART_URL` | **Get MCP Access** in the header (and related links) — should point at this repo’s **`/mcp`** sales page (e.g. `https://aadm.io/mcp`), separate from the MCP API host (`PUBLIC_MCP_REPO_URL`). |
 | `PUBLIC_MCP_CUSTOMER_DOCS_URL` (optional) | Second documentation base (e.g. gated Notion). If unset and `PUBLIC_MCP_QUICKSTART_URL` is set, the page still links to that docs URL. |
 | `PUBLIC_CLERK_SIGN_IN_URL` / `PUBLIC_CLERK_SIGN_UP_URL` | Marketing header **Sign in** / **Sign up** → Clerk Account Portal (e.g. `https://accounts…/sign-in`). |

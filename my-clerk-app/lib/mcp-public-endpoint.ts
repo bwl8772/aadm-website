@@ -1,19 +1,15 @@
-/** Default MCP host (Streamable HTTP JSON-RPC lives at `/mcp`). */
+/** Default MCP host — the endpoint is the origin itself, not `/mcp`. */
 const DEFAULT_MCP_ORIGIN = "https://mcp.aadm.io";
 
-/** Ensure JSON-RPC URL ends with `/mcp` when env is origin-only (e.g. `https://mcp.aadm.io`). */
+/** Normalize MCP URL to origin (+ optional non-root path). Do NOT append `/mcp`. */
 export function normalizeMcpRpcUrl(raw: string | undefined): string {
-  const fallback = `${DEFAULT_MCP_ORIGIN}/mcp`;
   const v = raw?.trim();
-  if (!v) return fallback;
+  if (!v) return DEFAULT_MCP_ORIGIN;
   try {
     const u = new URL(v);
-    if (u.pathname === "/" || u.pathname === "") {
-      return `${u.origin}/mcp`;
-    }
-    return `${u.origin}${u.pathname.replace(/\/+$/, "")}`;
+    return `${u.origin}${u.pathname === "/" ? "" : u.pathname.replace(/\/+$/, "")}`;
   } catch {
-    return fallback;
+    return DEFAULT_MCP_ORIGIN;
   }
 }
 

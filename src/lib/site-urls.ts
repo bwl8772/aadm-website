@@ -4,17 +4,14 @@ export function trim(v: string | undefined): string {
 	return typeof v === 'string' ? v.trim() : '';
 }
 
-/** `PUBLIC_MCP_REPO_URL` may be origin-only; JSON-RPC expects `/mcp`. */
+/** Normalize MCP URL. The endpoint is the origin itself (e.g. `https://mcp.aadm.io`), not `/mcp`. */
 export function normalizeMcpRpcUrl(raw: string): string {
-	const DEFAULT = 'https://mcp.aadm.io/mcp';
+	const DEFAULT = 'https://mcp.aadm.io';
 	const v = raw.trim();
 	if (!v) return DEFAULT;
 	try {
 		const u = new URL(v);
-		if (u.pathname === '/' || u.pathname === '') {
-			return `${u.origin}/mcp`;
-		}
-		return `${u.origin}${u.pathname.replace(/\/+$/, '')}`;
+		return `${u.origin}${u.pathname === '/' ? '' : u.pathname.replace(/\/+$/, '')}`;
 	} catch {
 		return DEFAULT;
 	}
