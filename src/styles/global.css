@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+	--font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+	--color-surface-deep: #05040a;
+	--color-surface-mid: #0a0e1a;
+	--color-surface-card: #0f1424;
+	--color-accent-violet: #9d7bf5;
+	--color-accent-violet-dim: #6d4bd6;
+	--color-accent-blue: #4f8cff;
+	--color-accent-blue-dim: #2563eb;
+	--color-border-subtle: rgba(148, 163, 184, 0.12);
+}
+
+html {
+	font-family: var(--font-sans);
+	scroll-behavior: smooth;
+}
+
+body {
+	@apply bg-surface-deep text-slate-200 antialiased;
+	background-image:
+		radial-gradient(ellipse 100% 80% at 50% -30%, rgba(124, 58, 237, 0.22), transparent),
+		radial-gradient(ellipse 70% 50% at 100% 0%, rgba(37, 99, 235, 0.18), transparent),
+		radial-gradient(ellipse 60% 40% at 0% 60%, rgba(139, 92, 246, 0.12), transparent);
+	background-attachment: fixed;
+}
+
+.font-display {
+	font-family: var(--font-display);
+}
+
+.font-mono-cta {
+	font-family: var(--font-mono);
+}

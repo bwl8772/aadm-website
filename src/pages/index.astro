@@ -1,17 +1,159 @@
 ---
+import Layout from '../layouts/Layout.astro';
 
+const urlStandard = import.meta.env.PUBLIC_STANDARD_REPO_URL ?? '#configure-standard-url';
+const urlMcp = import.meta.env.PUBLIC_MCP_REPO_URL ?? '#configure-mcp-url';
+const urlMcpQuickstart = import.meta.env.PUBLIC_MCP_QUICKSTART_URL ?? '#configure-quickstart-url';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="AADM — Agentic Authority Delivery Model">
+	<a
+		href="#main"
+		class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-white"
+		>Skip to content</a
+	>
+
+	<header
+		class="sticky top-0 z-40 border-b border-border-subtle bg-surface-deep/80 backdrop-blur-md"
+	>
+		<div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+			<span class="font-display text-lg font-bold tracking-tight text-white"> AADM </span>
+			<nav class="flex items-center gap-2 sm:gap-3" aria-label="Primary">
+				<a
+					href={urlStandard}
+					class="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/5 hover:text-white"
+				>
+					Standard
+				</a>
+				<a
+					href={urlMcp}
+					class="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/5 hover:text-white"
+				>
+					MCP
+				</a>
+				<a
+					href={urlMcpQuickstart}
+					class="rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-lg shadow-violet-900/30 transition hover:brightness-110"
+				>
+					Get MCP access
+				</a>
+			</nav>
+		</div>
+	</header>
+
+	<main id="main">
+		<section class="mx-auto max-w-6xl px-4 pb-20 pt-16 sm:px-6 sm:pt-24">
+			<p
+				class="mb-4 inline-flex items-center rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-xs font-medium uppercase tracking-wider text-accent-violet"
+			>
+				Enterprise delivery standard
+			</p>
+			<h1
+				class="font-display max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl"
+			>
+				Governed software delivery for
+				<span class="bg-gradient-to-r from-accent-violet to-accent-blue bg-clip-text text-transparent">
+					humans and agents
+				</span>
+			</h1>
+			<p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
+				AADM combines placement (UDALI), controls (AUTH), proof in your repo, and a portable MCP context
+				plane so agents stop improvising from stale snippets.
+			</p>
+			<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+				<a
+					href={urlStandard}
+					class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid"
+				>
+					Review the standard
+				</a>
+				<a
+					href={urlMcpQuickstart}
+					class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
+				>
+					Get MCP access
+				</a>
+			</div>
+			<p class="mt-4 text-sm text-slate-500">
+				The MCP does not enforce production AUTH — your services, gateways, tests, and CI remain
+				authoritative.
+			</p>
+		</section>
+
+		<section class="border-y border-border-subtle bg-surface-mid/40 py-16 sm:py-20">
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<h2 class="font-display text-center text-2xl font-bold text-white sm:text-3xl">
+					Three equal agent workflows
+				</h2>
+				<p class="mx-auto mt-3 max-w-2xl text-center text-slate-400">
+					Reference MCP bundles surface the same contract idea: pick the lane that matches the primary
+					question — not everything is “bug chat.”
+				</p>
+				<ul class="mt-12 grid gap-6 sm:grid-cols-3">
+					<li
+						class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20"
+					>
+						<h3 class="font-display text-lg font-bold text-accent-violet">Navigator</h3>
+						<p class="mt-2 text-sm leading-relaxed text-slate-400">
+							Planned delivery — scope, verify, readiness for net new or material improvement.
+						</p>
+					</li>
+					<li
+						class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20"
+					>
+						<h3 class="font-display text-lg font-bold text-accent-blue">Investigator</h3>
+						<p class="mt-2 text-sm leading-relaxed text-slate-400">
+							Defects — evidence-gated recon before deep diagnosis; remediation when classified.
+						</p>
+					</li>
+					<li
+						class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20"
+					>
+						<h3 class="font-display text-lg font-bold text-violet-300">Sentinel</h3>
+						<p class="mt-2 text-sm leading-relaxed text-slate-400">
+							Assurance — prove existing alignment with AUTH, UDALI, and evidence across seams.
+						</p>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+			<div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+				<div>
+					<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Standard vs MCP</h2>
+					<p class="mt-4 text-slate-400">
+						Keep the narrative and templates where humans fork and cite them. Run an AADM MCP server
+						where agents need versioned tools, resources, and orchestrator hints — typically a
+						separate deployment you trust.
+					</p>
+				</div>
+				<div class="space-y-4">
+					<div
+						class="rounded-2xl border border-border-subtle bg-surface-card/90 p-5 font-mono-cta text-sm"
+					>
+						<p class="text-xs font-medium uppercase tracking-wide text-slate-500">Environment</p>
+						<p class="mt-2 text-slate-300">
+							Set <span class="text-accent-violet">PUBLIC_STANDARD_REPO_URL</span>,{' '}
+							<span class="text-accent-blue">PUBLIC_MCP_REPO_URL</span>, and{' '}
+							<span class="text-accent-violet">PUBLIC_MCP_QUICKSTART_URL</span> for production links.
+						</p>
+					</div>
+					<div
+						class="rounded-2xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-5 text-sm text-slate-500"
+					>
+						This repository is only the marketing shell. Point buttons at your public standard repo,
+						MCP distribution, and quickstart doc.
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<footer class="border-t border-border-subtle py-10">
+			<div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-center text-sm text-slate-500 sm:flex-row sm:text-left sm:px-6">
+				<span class="font-display font-semibold text-slate-400">AADM</span>
+				<p>Static site — Astro. Not a substitute for organizational sign-off or audits.</p>
+			</div>
+		</footer>
+	</main>
+</Layout>

@@ -1,43 +1,51 @@
-# Astro Starter Kit: Minimal
+# AADM website
 
-```sh
-npm create astro@latest -- --template minimal
+Standalone **static** marketing homepage for **AADM** (Agentic Authority Delivery Model). This repo is intentionally separate from **`aadm-standard`** (human-readable standard) and **`aadm-mcp`** (MCP server implementation).
+
+## Stack
+
+- [Astro](https://astro.build/) 6 — `output: 'static'`
+- [Tailwind CSS](https://tailwindcss.com/) v4 via `@tailwindcss/vite`
+
+## Develop
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Open [http://localhost:4321](http://localhost:4321).
 
-## 🚀 Project Structure
+## Configure outbound links
 
-Inside of your Astro project, you'll see the following folders and files:
+Copy `.env.example` to `.env` and set:
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+| Variable | Purpose |
+|----------|---------|
+| `PUBLIC_STANDARD_REPO_URL` | Public standard repository (GitHub or docs root) |
+| `PUBLIC_MCP_REPO_URL` | MCP server / distribution repository |
+| `PUBLIC_MCP_QUICKSTART_URL` | MCP quickstart or integration doc |
+
+Astro only exposes variables prefixed with `PUBLIC_` to the client.
+
+## Build
+
+```bash
+npm run build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Output: `dist/`. Preview locally with `npm run preview`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Publish this repo
 
-Any static assets, like images, can be placed in the `public/` directory.
+```bash
+cd /Users/brianlambert/github/aadm-website
+git remote add origin https://github.com/YOUR_ORG/aadm-website.git
+git push -u origin main
+```
 
-## 🧞 Commands
+Replace `YOUR_ORG` and repo name as needed.
 
-All commands are run from the root of the project, from a terminal:
+## License
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Add a license file if this site should carry one; it does not ship AADM normative content beyond short marketing copy.
