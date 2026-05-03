@@ -60,9 +60,15 @@ const curlInit = urlMcpEndpoint
 	<main id="main">
 		<section class="mx-auto max-w-6xl px-4 pb-20 pt-16 sm:px-6 sm:pt-24">
 			<p
-				class="mb-4 inline-flex items-center rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-xs font-medium uppercase tracking-wider text-accent-violet"
+				class="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-400"
 			>
-				Enterprise delivery standard
+				<span
+					class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-blue"
+					>Published standard</span
+				>
+				<span class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-violet"
+					>Paid MCP access · Railway-hosted</span
+				>
 			</p>
 			<h1
 				class="font-display max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl"
@@ -73,8 +79,11 @@ const curlInit = urlMcpEndpoint
 				</span>
 			</h1>
 			<p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
-				AADM combines placement (UDALI), controls (AUTH), proof in your repo, and a portable MCP context
-				plane so agents stop improvising from stale snippets.
+				We <strong class="font-semibold text-slate-300">publish the standard</strong> in the open—definitions,
+				templates, and governance narrative anyone can read and adopt.{' '}
+				<strong class="font-semibold text-slate-300">Paid MCP access</strong> is separate: a private, hosted service
+				on <strong class="font-semibold text-slate-300">Railway</strong> so subscribers’ agents get versioned tools
+				and resources without us open-sourcing the MCP implementation.
 			</p>
 			<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
 				<a
@@ -136,6 +145,10 @@ const curlInit = urlMcpEndpoint
 
 		<section id="mcp-quickstart" class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
 			<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">MCP access — quick reference</h2>
+			<p class="mt-3 text-sm text-slate-500">
+				Subscriber endpoints are deployed on <strong class="text-slate-400">Railway</strong>; URLs below are
+				whatever you configure for your customers (example values in development only).
+			</p>
 			<p class="mt-4 max-w-3xl text-slate-400">
 				The hosted MCP service speaks <strong class="text-slate-300">MCP over Streamable HTTP</strong>:
 				clients <code class="rounded bg-surface-card px-1.5 py-0.5 font-mono-cta text-sm text-accent-violet"
@@ -211,11 +224,12 @@ const curlInit = urlMcpEndpoint
 		<section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
 			<div class="grid gap-10 lg:grid-cols-2 lg:items-center">
 				<div>
-					<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Standard vs MCP</h2>
+					<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Published standard vs paid MCP</h2>
 					<p class="mt-4 text-slate-400">
-						Keep the narrative and templates where humans fork and cite them. Use licensed AADM MCP access
-						where agents need versioned tools, resources, and orchestrator hints — separate from the public
-						standard text and not a substitute for your own production AUTH.
+						The <strong class="text-slate-300">standard</strong> lives in the public repository for humans,
+						tickets, and audits. <strong class="text-slate-300">MCP</strong> is subscriber infrastructure we
+						operate on Railway—connection details and SLAs come with access, not from a public server repo.
+						Nothing here replaces your production AUTH, gateways, or CI.
 					</p>
 				</div>
 				<div class="space-y-4">
