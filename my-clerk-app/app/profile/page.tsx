@@ -47,11 +47,15 @@ export default function ProfilePage() {
       <section className="rounded-xl border border-violet-200 bg-violet-50/50 p-5 dark:border-violet-900 dark:bg-violet-950/20">
         <h2 className="text-sm font-semibold text-violet-900 dark:text-violet-200">MCP API access</h2>
         <p className="mt-2 text-sm text-violet-900/80 dark:text-violet-200/80">
-          Create <code className="rounded bg-violet-100/80 px-1 text-xs dark:bg-violet-900/60">aadm_</code> access
-          tokens, copy the full secret once, and use it as the entire{" "}
-          <code className="rounded bg-violet-100/80 px-1 text-xs dark:bg-violet-900/60">Authorization</code> header
-          value (no <code className="rounded bg-violet-100/80 px-1 text-xs dark:bg-violet-900/60">Bearer</code> prefix)
-          when connecting to the MCP server.
+          For MCP access you can use <strong className="text-violet-950 dark:text-violet-100">AADM tokens</strong> (
+          <code className="rounded bg-violet-100/80 px-1 text-xs dark:bg-violet-900/60">aadm_</code>, created below)
+          or a <strong className="text-violet-950 dark:text-violet-100">Clerk API key</strong> (
+          <code className="rounded bg-violet-100/80 px-1 text-xs dark:bg-violet-900/60">ak_</code>) from your hosted
+          Clerk account (<strong className="text-violet-950 dark:text-violet-100">API keys</strong> under Account /
+          user profile). AADM tokens go in <code className="rounded bg-violet-100/80 px-1 text-xs dark:bg-violet-900/60">Authorization</code>{" "}
+          in full with no <code className="rounded bg-violet-100/80 px-1 text-xs dark:bg-violet-900/60">Bearer</code>;{" "}
+          <code className="rounded bg-violet-100/80 px-1 text-xs dark:bg-violet-900/60">ak_</code> keys also allow{" "}
+          <code className="rounded bg-violet-100/80 px-1 text-xs dark:bg-violet-900/60">Bearer</code> per Clerk.
         </p>
         <Link
           href="/dashboard/tokens"

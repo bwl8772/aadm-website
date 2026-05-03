@@ -1,37 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import ClerkNavScript from '../components/ClerkNavScript.astro';
+import { getSiteUrlConfig } from '../lib/site-urls';
 
-const trim = (v: string | undefined) => (typeof v === 'string' ? v.trim() : '');
-
-const urlStandard = trim(import.meta.env.PUBLIC_STANDARD_REPO_URL) || '#configure-standard-url';
-const urlMcpEndpoint = trim(import.meta.env.PUBLIC_MCP_REPO_URL);
-const urlMcpQuickstart = trim(import.meta.env.PUBLIC_MCP_QUICKSTART_URL) || '#configure-quickstart-url';
-const urlMcpCustomerDocs = trim(import.meta.env.PUBLIC_MCP_CUSTOMER_DOCS_URL);
-const hasMcpDocsLink = urlMcpQuickstart.length > 0 && !urlMcpQuickstart.startsWith('#');
-
-const urlClerkSignIn =
-	trim(import.meta.env.PUBLIC_CLERK_SIGN_IN_URL) || 'https://accounts.aadm.io/sign-in';
-const urlClerkSignUp =
-	trim(import.meta.env.PUBLIC_CLERK_SIGN_UP_URL) || 'https://accounts.aadm.io/sign-up';
-
-let healthUrl = '';
-let discoveryUrl = '';
-try {
-	if (urlMcpEndpoint) {
-		const u = new URL(urlMcpEndpoint);
-		healthUrl = `${u.origin}/health`;
-		discoveryUrl = `${u.origin}/`;
-	}
-} catch {
-	/* ignore invalid PUBLIC_MCP_REPO_URL */
-}
-
-const curlInit = urlMcpEndpoint
-	? `curl -s -X POST ${urlMcpEndpoint} \\
-  -H "Content-Type: application/json" \\
-  -H "Accept: application/json, text/event-stream" \\
-  -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"smoke","version":"1.0.0"}}}'`
-	: '';
+const cfg = getSiteUrlConfig(import.meta.env);
+const {
+	urlStandard,
+	urlMcpEndpoint,
+	urlMcpQuickstart,
+	urlMcpCustomerDocs,
+	hasMcpDocsLink,
+	urlClerkSignUp,
+	clerkPublishableKey,
+	clerkSatelliteDomain,
+	urlClerkUserProfile,
+	urlClerkSignIn,
+	urlClerkSignOut,
+	healthUrl,
+	discoveryUrl,
+	curlInit,
+} = cfg;
 ---
 
 <Layout title="AADM — Agentic Authority Delivery Model">
@@ -41,55 +31,7 @@ const curlInit = urlMcpEndpoint
 		>Skip to content</a
 	>
 
-	<header
-		class="sticky top-0 z-40 border-b border-border-subtle bg-surface-deep/80 backdrop-blur-md"
-	>
-		<div
-			class="mx-auto flex min-h-14 max-w-6xl items-center gap-2 px-3 py-2 sm:h-16 sm:gap-4 sm:px-6 sm:py-0"
-		>
-			<span class="shrink-0 font-display text-base font-bold tracking-tight text-white sm:text-lg">
-				AADM
-			</span>
-			<nav
-				class="scrollbar-none flex min-w-0 flex-1 flex-nowrap items-center justify-end gap-1.5 overflow-x-auto pb-0.5 sm:gap-2 sm:overflow-visible sm:pb-0 md:gap-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-				aria-label="Primary"
-			>
-				<a
-					href={urlStandard}
-					aria-label="View the AADM standard"
-					class="shrink-0 whitespace-nowrap rounded-lg border border-border-subtle bg-surface-card/80 px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid sm:px-3 sm:py-2 sm:text-sm md:px-4"
-				>
-					<span class="md:hidden">Standard</span>
-					<span class="hidden md:inline">View the Standard</span>
-				</a>
-				<a
-					href={urlMcpQuickstart}
-					aria-label="Get MCP access"
-					class="shrink-0 whitespace-nowrap rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-2.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-violet-900/30 transition hover:brightness-110 sm:px-3 sm:py-2 sm:text-sm md:px-4"
-				>
-					<span class="md:hidden">MCP</span>
-					<span class="hidden md:inline">Get MCP Access</span>
-				</a>
-				<a
-					href={urlClerkSignIn}
-					rel="noopener noreferrer"
-					aria-label="Log in to your account"
-					class="shrink-0 whitespace-nowrap rounded-lg border border-border-subtle px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-slate-500/50 hover:bg-surface-card/60 hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4"
-				>
-					<span class="sm:hidden">Login</span>
-					<span class="hidden sm:inline">Log in</span>
-				</a>
-				<a
-					href={urlClerkSignUp}
-					rel="noopener noreferrer"
-					class="shrink-0 whitespace-nowrap rounded-lg border border-violet-500/40 bg-violet-950/40 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-violet-400/60 hover:bg-violet-900/50 sm:px-3 sm:py-2 sm:text-sm md:px-4"
-				>
-					<span class="sm:hidden">Join</span>
-					<span class="hidden sm:inline">Sign up</span>
-				</a>
-			</nav>
-		</div>
-	</header>
+	<SiteHeader {...cfg} />
 
 	<main id="main">
 		<section class="mx-auto max-w-6xl px-4 pb-20 pt-16 sm:px-6 sm:pt-24">
@@ -296,11 +238,13 @@ const curlInit = urlMcpEndpoint
 			</div>
 		</section>
 
-		<footer class="border-t border-border-subtle py-10">
-			<div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-center text-sm text-slate-500 sm:flex-row sm:text-left sm:px-6">
-				<span class="font-display font-semibold text-slate-400">AADM</span>
-				<p>Static site — Astro. Not a substitute for organizational sign-off or audits.</p>
-			</div>
-		</footer>
+		<SiteFooter />
 	</main>
+
+	<ClerkNavScript
+		clerkPublishableKey={clerkPublishableKey}
+		urlClerkUserProfile={urlClerkUserProfile}
+		urlClerkSignIn={urlClerkSignIn}
+		clerkSatelliteDomain={clerkSatelliteDomain}
+	/>
 </Layout>

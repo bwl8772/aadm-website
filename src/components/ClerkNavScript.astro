@@ -1,0 +1,102 @@
+---
+interface Props {
+	clerkPublishableKey: string;
+	urlClerkUserProfile: string;
+	urlClerkSignIn: string;
+	clerkSatelliteDomain: string;
+}
+
+const { clerkPublishableKey, urlClerkUserProfile, urlClerkSignIn, clerkSatelliteDomain } = Astro.props;
+---
+
+{
+	clerkPublishableKey ? (
+		<script
+			is:inline
+			define:vars={{
+				clerkPk: clerkPublishableKey,
+				clerkProfileUrl: urlClerkUserProfile,
+				clerkSignInUrl: urlClerkSignIn,
+				clerkSatellite: clerkSatelliteDomain,
+			}}
+		>{`
+(function () {
+	function applySignedOut() {
+		var a = document.getElementById('nav-clerk-auth-primary');
+		if (a) {
+			a.href = clerkSignInUrl;
+			var long = a.querySelector('[data-clerk-auth="long"]');
+			var short = a.querySelector('[data-clerk-auth="short"]');
+			if (long) long.textContent = 'Sign in';
+			if (short) short.textContent = 'Sign in';
+			a.setAttribute('aria-label', 'Sign in to your account');
+		}
+		var out = document.getElementById('nav-clerk-sign-out');
+		if (out) out.classList.add('hidden');
+		var join = document.getElementById('nav-clerk-sign-up');
+		if (join) join.classList.remove('hidden');
+	}
+	function applySignedIn() {
+		var a = document.getElementById('nav-clerk-auth-primary');
+		if (a) {
+			a.href = clerkProfileUrl;
+			var long = a.querySelector('[data-clerk-auth="long"]');
+			var short = a.querySelector('[data-clerk-auth="short"]');
+			if (long) long.textContent = 'Account';
+			if (short) short.textContent = 'Account';
+			a.setAttribute('aria-label', 'Your account');
+		}
+		var out = document.getElementById('nav-clerk-sign-out');
+		if (out) out.classList.remove('hidden');
+		var join = document.getElementById('nav-clerk-sign-up');
+		if (join) join.classList.add('hidden');
+	}
+	function loadClerkScript() {
+		if (window.Clerk) return Promise.resolve();
+		return new Promise(function (resolve, reject) {
+			var s = document.createElement('script');
+			s.async = true;
+			s.crossOrigin = 'anonymous';
+			s.src = 'https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js';
+			s.onload = function () {
+				resolve();
+			};
+			s.onerror = function () {
+				reject(new Error('clerk-js load failed'));
+			};
+			document.head.appendChild(s);
+		});
+	}
+	async function init() {
+		try {
+			await loadClerkScript();
+			var opts = { publishableKey: clerkPk };
+			if (clerkSatellite) {
+				opts.isSatellite = true;
+				opts.domain = clerkSatellite;
+				opts.signInUrl = clerkSignInUrl;
+			}
+			await window.Clerk.load(opts);
+			if (window.Clerk.user) applySignedIn();
+			else applySignedOut();
+			if (typeof window.Clerk.addListener === 'function') {
+				window.Clerk.addListener(function (payload) {
+					if (payload && payload.user) applySignedIn();
+					else applySignedOut();
+				});
+			}
+		} catch (e) {
+			applySignedOut();
+		}
+	}
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', function () {
+			void init();
+		});
+	} else {
+		void init();
+	}
+})();
+		`}</script>
+	) : null
+}

@@ -1,0 +1,112 @@
+---
+import type { SiteUrlConfig } from '../lib/site-urls';
+
+type ActiveNav = 'home' | 'mcp' | null;
+
+interface Props extends SiteUrlConfig {
+	/** When set, highlights the matching nav control. */
+	activeNav?: ActiveNav;
+	/** Override href for the “Get MCP Access” nav chip (e.g. `/mcp#get-access` on the MCP sales page). */
+	mcpNavHref?: string;
+}
+
+const {
+	activeNav = null,
+	mcpNavHref: mcpNavHrefProp,
+	urlStandard,
+	urlMcpQuickstart,
+	urlClerkSignIn,
+	urlClerkSignUp,
+	urlClerkSignOut,
+	clerkPublishableKey,
+} = Astro.props;
+
+const mcpNavHref = mcpNavHrefProp ?? urlMcpQuickstart;
+
+const standardChip =
+	activeNav === 'home'
+		? 'ring-2 ring-accent-violet/60 ring-offset-2 ring-offset-surface-deep'
+		: '';
+const mcpChip =
+	activeNav === 'mcp'
+		? 'ring-2 ring-white/40 ring-offset-2 ring-offset-surface-deep'
+		: '';
+---
+
+<header
+	class="sticky top-0 z-40 border-b border-border-subtle bg-surface-deep/80 backdrop-blur-md"
+>
+	<div
+		class="mx-auto flex min-h-14 max-w-6xl items-center gap-2 px-3 py-2 sm:h-16 sm:gap-4 sm:px-6 sm:py-0"
+	>
+		<a
+			href="https://aadm.io/"
+			rel="noopener noreferrer"
+			aria-label="AADM — home"
+			class="shrink-0 rounded font-display text-base font-bold tracking-tight text-white transition hover:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 sm:text-lg"
+		>
+			AADM
+		</a>
+		<nav
+			class="scrollbar-none flex min-w-0 flex-1 flex-nowrap items-center justify-end gap-1.5 overflow-x-auto pb-0.5 sm:gap-2 sm:overflow-visible sm:pb-0 md:gap-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+			aria-label="Primary"
+		>
+			<a
+				href={urlStandard}
+				aria-label="View the AADM standard"
+				aria-current={activeNav === 'home' ? 'page' : undefined}
+				class:list={[
+					'shrink-0 whitespace-nowrap rounded-lg border border-border-subtle bg-surface-card/80 px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid sm:px-3 sm:py-2 sm:text-sm md:px-4',
+					standardChip,
+				]}
+			>
+				<span class="md:hidden">Standard</span>
+				<span class="hidden md:inline">View the Standard</span>
+			</a>
+			<a
+				href={mcpNavHref}
+				aria-label="Get MCP access"
+				aria-current={activeNav === 'mcp' ? 'page' : undefined}
+				class:list={[
+					'shrink-0 whitespace-nowrap rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-2.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-violet-900/30 transition hover:brightness-110 sm:px-3 sm:py-2 sm:text-sm md:px-4',
+					mcpChip,
+				]}
+			>
+				<span class="md:hidden">MCP</span>
+				<span class="hidden md:inline">Get MCP Access</span>
+			</a>
+			<a
+				id="nav-clerk-auth-primary"
+				href={urlClerkSignIn}
+				rel="noopener noreferrer"
+				aria-label="Sign in to your account"
+				class="shrink-0 whitespace-nowrap rounded-lg border border-border-subtle px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-slate-500/50 hover:bg-surface-card/60 hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4"
+			>
+				<span class="sm:hidden" data-clerk-auth="short">Sign in</span>
+				<span class="hidden sm:inline" data-clerk-auth="long">Sign in</span>
+			</a>
+			<a
+				id="nav-clerk-sign-up"
+				href={urlClerkSignUp}
+				rel="noopener noreferrer"
+				class="shrink-0 whitespace-nowrap rounded-lg border border-violet-500/40 bg-violet-950/40 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-violet-400/60 hover:bg-violet-900/50 sm:px-3 sm:py-2 sm:text-sm md:px-4"
+			>
+				<span class="sm:hidden">Join</span>
+				<span class="hidden sm:inline">Sign up</span>
+			</a>
+			<a
+				id="nav-clerk-sign-out"
+				href={urlClerkSignOut}
+				rel="noopener noreferrer"
+				aria-label="Sign out of Clerk (Account Portal)"
+				class:list={[
+					'shrink-0 whitespace-nowrap rounded-lg border border-border-subtle px-2.5 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-slate-500/50 hover:bg-surface-card/50 hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4',
+					clerkPublishableKey ? 'hidden' : '',
+				]}
+			>
+				<span class="sm:hidden">Out</span>
+				<span class="hidden sm:inline">Sign out</span>
+			</a>
+		</nav>
+	</div>
+</header>

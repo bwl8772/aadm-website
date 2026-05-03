@@ -2,13 +2,7 @@
 
 import { useAuth } from "@clerk/nextjs";
 import { useCallback, useEffect, useMemo, useState } from "react";
-
-const DEFAULT_MCP_ENDPOINT = "https://mcp.aadm.io/mcp";
-
-function mcpEndpointFromEnv(): string {
-  const raw = process.env.NEXT_PUBLIC_MCP_HTTP_URL?.trim();
-  return raw && raw.length > 0 ? raw : DEFAULT_MCP_ENDPOINT;
-}
+import { mcpRpcUrlForNextApp } from "@/lib/mcp-public-endpoint";
 
 function safeMcpHost(endpoint: string): string {
   try {
@@ -29,7 +23,7 @@ interface McpToken {
 
 export default function DashboardTokensPage() {
   const { isLoaded, isSignedIn } = useAuth();
-  const mcpEndpoint = useMemo(() => mcpEndpointFromEnv(), []);
+  const mcpEndpoint = useMemo(() => mcpRpcUrlForNextApp(), []);
   const mcpHost = useMemo(() => safeMcpHost(mcpEndpoint), [mcpEndpoint]);
   const [tokens, setTokens] = useState<McpToken[]>([]);
   const [tokenName, setTokenName] = useState("");
@@ -209,7 +203,15 @@ export default function DashboardTokensPage() {
       </div>
 
       <div className="rounded-2xl border border-violet-200 bg-violet-50/40 p-6 dark:border-violet-900 dark:bg-violet-950/25">
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Use this token in your MCP client</h2>
+        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Connect your MCP client</h2>
+        <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
+          The MCP server accepts either an <strong className="text-zinc-900 dark:text-zinc-100">AADM token</strong> from
+          below (<code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">aadm_</code>) or a{" "}
+          <strong className="text-zinc-900 dark:text-zinc-100">Clerk user API key</strong> (
+          <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">ak_</code>) you create in your hosted
+          Clerk account under <strong className="text-zinc-900 dark:text-zinc-100">API keys</strong> (same Clerk project
+          as this app).
+        </p>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-300">
           <li>
             <strong className="text-zinc-900 dark:text-zinc-100">Server URL</strong> — set the MCP URL to{" "}
@@ -217,34 +219,50 @@ export default function DashboardTokensPage() {
             <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">/mcp</code> path).
           </li>
           <li>
-            <strong className="text-zinc-900 dark:text-zinc-100">Authorization header</strong> — set{" "}
-            <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">Authorization</code> to your{" "}
-            <strong className="text-zinc-900 dark:text-zinc-100">entire</strong> secret string (the full line you copy
-            from this page: <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">aadm_</code> plus hex).
-            Do <strong className="text-zinc-900 dark:text-zinc-100">not</strong> add a{" "}
-            <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">Bearer</code> prefix or any other
-            scheme — the header value is exactly the token.
+            <strong className="text-zinc-900 dark:text-zinc-100">Authorization</strong> — for{" "}
+            <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">aadm_</code> tokens, set the header
+            value to the <strong className="text-zinc-900 dark:text-zinc-100">entire</strong> secret (no{" "}
+            <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">Bearer</code>). For{" "}
+            <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">ak_</code> Clerk keys, use the full key
+            or <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">Bearer ak_…</code> — see{" "}
+            <a
+              href="https://clerk.com/docs/guides/development/machine-auth/api-keys"
+              className="font-medium text-violet-700 underline-offset-2 hover:underline dark:text-violet-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Clerk API keys
+            </a>
+            .
           </li>
           <li>
-            <strong className="text-zinc-900 dark:text-zinc-100">Account</strong> — the MCP server checks the token
-            against this Clerk organization; use the same account you used to sign in here.
+            <strong className="text-zinc-900 dark:text-zinc-100">Account</strong> — use the same Clerk user as this
+            site; the MCP host validates against this instance.
           </li>
         </ol>
         <p className="mt-4 text-xs text-zinc-600 dark:text-zinc-400">
-          Example (replace with your real secret):{" "}
+          Example — AADM token (header value is the whole secret):{" "}
           <code className="mt-1 block break-all rounded-lg border border-violet-200/80 bg-white/90 p-2 font-mono text-[11px] text-zinc-800 dark:border-violet-900 dark:bg-zinc-950 dark:text-zinc-200">
             Authorization: aadm_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           </code>
         </p>
-        <p className="mt-3 text-xs text-zinc-600 dark:text-zinc-400">
-          Cursor and other hosts: in MCP config, map <code className="rounded bg-white/90 px-1 dark:bg-zinc-900">headers.Authorization</code>{" "}
-          (or the equivalent field) to the full <code className="rounded bg-white/90 px-1 dark:bg-zinc-900">aadm_…</code> value — not only a suffix after{" "}
-          <code className="rounded bg-white/90 px-1 dark:bg-zinc-900">Bearer</code>.
+        <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-400">
+          Example — Clerk API key:{" "}
+          <code className="mt-1 block break-all rounded-lg border border-violet-200/80 bg-white/90 p-2 font-mono text-[11px] text-zinc-800 dark:border-violet-900 dark:bg-zinc-950 dark:text-zinc-200">
+            Authorization: ak_22493YKV29XYSR37N44GMH3SNAK12CFM
+          </code>
         </p>
-        {process.env.NEXT_PUBLIC_MCP_HTTP_URL?.trim() ? null : (
+        <p className="mt-3 text-xs text-zinc-600 dark:text-zinc-400">
+          Cursor: set <code className="rounded bg-white/90 px-1 dark:bg-zinc-900">headers.Authorization</code> to the
+          full <code className="rounded bg-white/90 px-1 dark:bg-zinc-900">aadm_…</code> or <code className="rounded bg-white/90 px-1 dark:bg-zinc-900">ak_…</code> value
+          (or <code className="rounded bg-white/90 px-1 dark:bg-zinc-900">Bearer ak_…</code> for Clerk keys).
+        </p>
+        {process.env.NEXT_PUBLIC_MCP_HTTP_URL?.trim() ||
+        process.env.NEXT_PUBLIC_MCP_REPO_URL?.trim() ? null : (
           <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-500">
             Default URL targets <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">{mcpHost}</code>. Override with{" "}
-            <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">NEXT_PUBLIC_MCP_HTTP_URL</code> for staging or self-hosted MCP.
+            <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">NEXT_PUBLIC_MCP_HTTP_URL</code> or{" "}
+            <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">NEXT_PUBLIC_MCP_REPO_URL</code> for staging or self-hosted MCP.
           </p>
         )}
       </div>

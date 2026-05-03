@@ -1,0 +1,575 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import ClerkNavScript from '../components/ClerkNavScript.astro';
+import { getSiteUrlConfig } from '../lib/site-urls';
+
+const cfg = getSiteUrlConfig(import.meta.env);
+const {
+	urlStandard,
+	urlMcpCustomerDocs,
+	urlClerkSignUp,
+	urlClerkSignIn,
+	clerkPublishableKey,
+	clerkSatelliteDomain,
+	urlClerkUserProfile,
+	urlMcpEndpoint,
+	healthUrl,
+	discoveryUrl,
+	curlInit,
+} = cfg;
+---
+
+<Layout
+	title="AADM MCP — What you can do with subscriber access"
+	description="Versioned AADM tools and resources for coding agents: Navigator delivery, Investigator defects, Sentinel assurance. Paid MCP access on Streamable HTTP."
+>
+	<a
+		href="#main"
+		class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-white"
+		>Skip to content</a
+	>
+
+	<SiteHeader {...cfg} activeNav="mcp" mcpNavHref="#get-access" />
+
+	<main id="main">
+		<!-- 1 Hero -->
+		<section
+			class="relative mx-auto max-w-6xl px-4 pb-16 pt-12 sm:px-6 sm:pb-24 sm:pt-16 lg:pt-20"
+			aria-labelledby="mcp-hero-heading"
+		>
+			<div class="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,420px)]">
+				<div>
+					<p
+						class="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-400"
+					>
+						<span
+							class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-violet"
+							>Subscriber MCP</span
+						>
+						<span class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-blue"
+							>Agents & teams</span
+						>
+					</p>
+					<h1
+						id="mcp-hero-heading"
+						class="font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl"
+					>
+						What you can do with the
+						<span class="bg-gradient-to-r from-accent-violet to-accent-blue bg-clip-text text-transparent">
+							AADM MCP
+						</span>
+					</h1>
+					<p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-400">
+						Give Cursor, Claude Code, and other MCP hosts the same governed context your organization expects:
+						AUTH slices, UDALI doctrine, workflow discipline, and troubleshooting rails—without open-sourcing the
+						server implementation.
+					</p>
+					<div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+						<a
+							id="get-access"
+							href={urlClerkSignUp}
+							rel="noopener noreferrer"
+							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
+						>
+							Get access
+						</a>
+						<a
+							href={urlClerkSignIn}
+							rel="noopener noreferrer"
+							class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white transition hover:border-slate-500/40 hover:bg-surface-mid"
+						>
+							Sign in
+						</a>
+						<a
+							href={urlStandard}
+							class="inline-flex items-center justify-center text-sm font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
+						>
+							View the Standard (free, public)
+						</a>
+					</div>
+					<p class="mt-4 text-sm text-slate-500">
+						The MCP does not enforce production AUTH in your apps—your gateways, tests, and CI remain authoritative.
+					</p>
+				</div>
+				<div
+					class="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-border-subtle bg-surface-card/60 shadow-2xl shadow-violet-950/30"
+					aria-hidden="true"
+				>
+					<div
+						class="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(157,123,245,0.35),transparent_55%),radial-gradient(ellipse_at_80%_60%,rgba(79,140,255,0.25),transparent_50%)]"
+					>
+					</div>
+					<svg
+						class="absolute inset-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] opacity-90"
+						viewBox="0 0 400 300"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<rect x="24" y="32" width="352" height="56" rx="12" stroke="rgba(148,163,184,0.25)" stroke-width="1.5" />
+						<circle cx="48" cy="60" r="6" fill="#22c55e" opacity="0.9" />
+						<text x="68" y="64" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="11">Streamable HTTP · MCP session</text>
+						<rect x="24" y="104" width="200" height="72" rx="10" fill="rgba(15,20,36,0.9)" stroke="rgba(157,123,245,0.35)" />
+						<text x="40" y="132" fill="#9d7bf5" font-family="JetBrains Mono, monospace" font-size="10">tools/list</text>
+						<text x="40" y="154" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="9">resources/read · AUTH-…</text>
+						<rect x="240" y="104" width="136" height="140" rx="10" fill="rgba(15,20,36,0.85)" stroke="rgba(79,140,255,0.35)" />
+						<text x="256" y="132" fill="#4f8cff" font-family="JetBrains Mono, monospace" font-size="10">standard_brief</text>
+						<text x="256" y="156" fill="#94a3b8" font-family="Plus Jakarta Sans, sans-serif" font-size="9">workflows · routing</text>
+						<text x="256" y="180" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="8">navigator · investigator</text>
+						<text x="256" y="200" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="8">sentinel</text>
+						<path d="M224 140 L240 140" stroke="rgba(148,163,184,0.3)" stroke-width="2" stroke-dasharray="4 4" />
+					</svg>
+				</div>
+			</div>
+		</section>
+
+		<!-- 2 What the MCP gives you -->
+		<section class="border-y border-border-subtle bg-surface-mid/40 py-16 sm:py-20" aria-labelledby="mcp-cap-heading">
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<div class="mx-auto max-w-2xl text-center">
+					<h2 id="mcp-cap-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+						One connection, governed surfaces
+					</h2>
+					<p class="mt-3 text-slate-400">
+						Subscribers point hosts at the MCP endpoint and get deterministic access to the standard library—not a
+						chatty wrapper around the public web.
+					</p>
+				</div>
+				<ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+					<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-lg shadow-black/20">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/15 text-2xl"
+							aria-hidden="true">📚</div
+						>
+						<h3 class="font-display text-lg font-bold text-white">Canonical resources</h3>
+						<p class="mt-2 text-sm leading-relaxed text-slate-400">
+							Read AUTH packs, UDALI doctrine, layer guides, and workflow mode docs as versioned MCP resources.
+						</p>
+					</li>
+					<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-lg shadow-black/20">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/15 text-2xl"
+							aria-hidden="true">⚙️</div
+						>
+						<h3 class="font-display text-lg font-bold text-white">Typed tools</h3>
+						<p class="mt-2 text-sm leading-relaxed text-slate-400">
+							Call tools for briefs, routing, doctrine slices, delivery planning, defect debugging, and assurance
+							programs—each with stable contracts for orchestrators.
+						</p>
+					</li>
+					<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-lg shadow-black/20">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/15 text-2xl"
+							aria-hidden="true">✓</div
+						>
+						<h3 class="font-display text-lg font-bold text-white">Response gates</h3>
+						<p class="mt-2 text-sm leading-relaxed text-slate-400">
+							Troubleshooter-shaped outputs enforce execution control: atomic next actions, scope guardrails, and
+							classification before “fix” stories run away.
+						</p>
+					</li>
+					<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-lg shadow-black/20">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/15 text-2xl"
+							aria-hidden="true">🔐</div
+						>
+						<h3 class="font-display text-lg font-bold text-white">Operator-owned AUTH</h3>
+						<p class="mt-2 text-sm leading-relaxed text-slate-400">
+							The MCP describes how controls should apply; your services and CI still prove enforcement. No silent
+							claims of pass/fail in consumer repos.
+						</p>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- 3 Outcomes -->
+		<section class="mx-auto max-w-6xl px-4 py-20 sm:px-6" aria-labelledby="mcp-outcomes-heading">
+			<h2 id="mcp-outcomes-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+				Outcomes your teams can drive
+			</h2>
+			<p class="mt-3 max-w-3xl text-slate-400">
+				Agents stop improvising from memory. Humans get repeatable briefs, routing, and evidence language aligned to
+				AADM—whether you are shipping, debugging, or attesting.
+			</p>
+			<ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					[
+						{
+							t: 'Faster delivery framing',
+							d: 'Navigator-style scope → verify → readiness with `plan_delivery` and doctrine-backed checks—not a generic checklist.',
+						},
+						{
+							t: 'Safer defect work',
+							d: 'Investigator path keeps recon evidence-first; Path B diagnosis stays gated until routing accepts proof.',
+						},
+						{
+							t: 'Assurance without theater',
+							d: 'Sentinel surfaces audit programs and seam closure language so “alignment” means traceable evidence, not vibes.',
+						},
+						{
+							t: 'Orchestrator-ready metadata',
+							d: '`standard_brief`, `route_lane`, and follow-on catalogs give hosts deterministic branching instead of keyword roulette.',
+						},
+						{
+							t: 'AUTH literacy in-context',
+							d: 'Fetch AUTH slices where enforcement belongs in the stack—without dumping entire PDFs into every prompt.',
+						},
+						{
+							t: 'One subscription, versioned server',
+							d: 'Hosted MCP tracks server capabilities; you integrate once and inherit capability schema bumps on your schedule.',
+						},
+					].map((item) => (
+						<li class="rounded-2xl border border-border-subtle bg-surface-card/60 p-5">
+							<p class="font-display text-sm font-bold uppercase tracking-wide text-accent-violet">Outcome</p>
+							<h3 class="mt-1 font-semibold text-white">{item.t}</h3>
+							<p class="mt-2 text-sm leading-relaxed text-slate-400">{item.d}</p>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+
+		<!-- 4 Three workflows -->
+		<section class="border-y border-border-subtle bg-surface-mid/30 py-16 sm:py-20" aria-labelledby="mcp-workflows-heading">
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<h2 id="mcp-workflows-heading" class="font-display text-center text-2xl font-bold text-white sm:text-3xl">
+					Three equal agent workflows
+				</h2>
+				<p class="mx-auto mt-3 max-w-2xl text-center text-slate-400">
+					The MCP treats Navigator, Investigator, and Sentinel as peers. Pick the lane that matches the primary
+					question—standard orchestration uses first-match routing so you do not “Navigator away” a defect.
+				</p>
+				<div class="mt-12 grid gap-6 lg:grid-cols-3">
+					<article
+						class="rounded-2xl border border-border-subtle bg-surface-card/90 p-6 shadow-xl shadow-black/25"
+					>
+						<h3 class="font-display text-xl font-bold text-accent-violet">Navigator</h3>
+						<p class="mt-1 text-xs font-medium uppercase tracking-wide text-slate-500">workflow · delivery</p>
+						<p class="mt-4 text-sm leading-relaxed text-slate-400">
+							Net new or material improvement: map scope, bind AUTH references, pull doctrine slices, and exit with
+							readiness language your integrators can execute against.
+						</p>
+					</article>
+					<article
+						class="rounded-2xl border border-border-subtle bg-surface-card/90 p-6 shadow-xl shadow-black/25"
+					>
+						<h3 class="font-display text-xl font-bold text-accent-blue">Investigator</h3>
+						<p class="mt-1 text-xs font-medium uppercase tracking-wide text-slate-500">workflow · defect</p>
+						<p class="mt-4 text-sm leading-relaxed text-slate-400">
+							Broken vs expected: append evidence, respect halt-before-fix, and only deepen diagnosis when
+							classification crosses the router threshold.
+						</p>
+					</article>
+					<article
+						class="rounded-2xl border border-border-subtle bg-surface-card/90 p-6 shadow-xl shadow-black/25"
+					>
+						<h3 class="font-display text-xl font-bold text-violet-200">Sentinel</h3>
+						<p class="mt-1 text-xs font-medium uppercase tracking-wide text-slate-500">workflow · assurance</p>
+						<p class="mt-4 text-sm leading-relaxed text-slate-400">
+							Prove existing alignment: scope seams, bind evidence, run audit-program language, and attest readiness
+							without pretending a single bug ticket is “compliance.”
+						</p>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- 5–7 Mock conversations -->
+		<section class="mx-auto max-w-6xl px-4 py-20 sm:px-6" aria-labelledby="mcp-mocks-heading">
+			<h2 id="mcp-mocks-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+				What it feels like to talk to the MCP
+			</h2>
+			<p class="mt-3 max-w-3xl text-slate-400">
+				Illustrative panels—wording is shortened; real payloads follow the server’s JSON contracts and gates.
+			</p>
+
+			<div class="mt-12 space-y-12">
+				<!-- Navigator mock -->
+				<div>
+					<h3 class="font-display text-lg font-bold text-accent-violet">Navigator — delivery brief & routing</h3>
+					<p class="mt-1 text-sm text-slate-500">
+						Host calls <code class="font-mono-cta text-accent-violet">standard_brief</code> then branches on{' '}
+						<code class="font-mono-cta text-slate-400">workflows</code> /{' '}
+						<code class="font-mono-cta text-slate-400">orchestrator_contract</code>.
+					</p>
+					<div
+						class="mt-4 overflow-hidden rounded-2xl border border-border-subtle bg-[#060914] shadow-2xl shadow-black/40"
+					>
+						<div
+							class="flex items-center gap-2 border-b border-white/10 bg-surface-card/95 px-4 py-2.5 font-mono-cta text-xs text-slate-400"
+						>
+							<span class="h-2 w-2 shrink-0 rounded-full bg-emerald-500" aria-hidden="true"></span>
+							<span>tools/call · standard_brief</span>
+						</div>
+						<div class="grid gap-0 font-mono-cta text-[11px] leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-white/10">
+							<div class="space-y-3 p-4 text-slate-400">
+								<p>
+									<span class="text-accent-violet">You</span>{' '}
+									<span class="text-slate-600">—</span> Feature: OAuth-backed export for enterprise tenants. Need
+									UDALI-shaped scope and AUTH touchpoints.
+								</p>
+								<p>
+									<span class="text-slate-500">Host</span>{' '}
+									<span class="text-slate-600">—</span>{' '}
+									<code class="rounded bg-black/40 px-1 text-slate-300">standard_brief</code> with issue text +
+									repo hints.
+								</p>
+							</div>
+							<div class="space-y-3 bg-black/20 p-4 text-slate-300">
+								<p>
+									<span class="text-accent-blue">MCP</span>{' '}
+									<span class="text-slate-600">—</span>{' '}
+									<code class="text-emerald-400/90">capabilities_schema_version</code>,{' '}
+									<code class="text-emerald-400/90">navigator_feature_delivery</code> stages,{' '}
+									<code class="text-emerald-400/90">orchestrator_contract</code> (R3 Navigator when delivery intent
+									holds).
+								</p>
+								<p class="text-slate-500">
+									Follow-on catalog entries point to <code class="text-slate-400">fetch_auth</code>, doctrine slices,
+									<code class="text-slate-400">plan_delivery</code>—single next action per recon posture.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Investigator mock -->
+				<div>
+					<h3 class="font-display text-lg font-bold text-accent-blue">Investigator — evidence before diagnosis</h3>
+					<p class="mt-1 text-sm text-slate-500">
+						<code class="font-mono-cta text-accent-blue">debug_defect</code> returns routing, gates, and{' '}
+						<code class="font-mono-cta text-slate-400">WHAT THIS MEANS</code> appendix language.
+					</p>
+					<div
+						class="mt-4 overflow-hidden rounded-2xl border border-border-subtle bg-[#060914] shadow-2xl shadow-black/40"
+					>
+						<div
+							class="flex items-center gap-2 border-b border-white/10 bg-surface-card/95 px-4 py-2.5 font-mono-cta text-xs text-slate-400"
+						>
+							<span class="h-2 w-2 shrink-0 rounded-full bg-amber-500" aria-hidden="true"></span>
+							<span>tools/call · debug_defect</span>
+						</div>
+						<div class="grid gap-0 font-mono-cta text-[11px] leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-white/10">
+							<div class="space-y-3 p-4 text-slate-400">
+								<p>
+									<span class="text-accent-violet">You</span>{' '}
+									<span class="text-slate-600">—</span> Playwright times out on checkout; bumped timeout—still flaky.
+								</p>
+								<p>
+									<span class="text-slate-500">Host</span>{' '}
+									<span class="text-slate-600">—</span> Second call with{' '}
+									<code class="rounded bg-black/40 px-1 text-slate-300">append_evidence</code>: last HAR row + test
+									name.
+								</p>
+							</div>
+							<div class="space-y-3 bg-black/20 p-4 text-slate-300">
+								<p>
+									<span class="text-accent-blue">MCP</span>{' '}
+									<span class="text-slate-600">—</span>{' '}
+									<code class="text-amber-300/90">rootCauseClassificationStatus: UNCLASSIFIED</code>, Path A recon;
+									<code class="text-slate-500">testTimeoutInflationRuleActive</code> nudges proof before timeout edits.
+								</p>
+								<p class="text-slate-500">
+									Single next action: capture missing network stub vs. UI assertion—no multi-file refactor until
+									<code class="text-slate-400">CLASSIFIED</code>.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Sentinel mock -->
+				<div>
+					<h3 class="font-display text-lg font-bold text-violet-200">Sentinel — assurance & seams</h3>
+					<p class="mt-1 text-sm text-slate-500">
+						Assurance tools surface audit dimensions and observability expectations—not a one-line “you’re fine.”
+					</p>
+					<div
+						class="mt-4 overflow-hidden rounded-2xl border border-border-subtle bg-[#060914] shadow-2xl shadow-black/40"
+					>
+						<div
+							class="flex items-center gap-2 border-b border-white/10 bg-surface-card/95 px-4 py-2.5 font-mono-cta text-xs text-slate-400"
+						>
+							<span class="h-2 w-2 shrink-0 rounded-full bg-violet-400" aria-hidden="true"></span>
+							<span>tools/call · sentinel_assurance</span>
+						</div>
+						<div class="grid gap-0 font-mono-cta text-[11px] leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-white/10">
+							<div class="space-y-3 p-4 text-slate-400">
+								<p>
+									<span class="text-accent-violet">You</span>{' '}
+									<span class="text-slate-600">—</span> Quarterly attest: MCP integration + L7 gateway + CI evidence
+									for AUTH-12.
+								</p>
+								<p>
+									<span class="text-slate-500">Host</span>{' '}
+									<span class="text-slate-600">—</span> Scope = MCP host + repo CI; bind{' '}
+									<code class="rounded bg-black/40 px-1 text-slate-300">agent_observability_expectations</code> per
+									seam.
+								</p>
+							</div>
+							<div class="space-y-3 bg-black/20 p-4 text-slate-300">
+								<p>
+									<span class="text-accent-blue">MCP</span>{' '}
+									<span class="text-slate-600">—</span> Audit program slice +{' '}
+									<code class="text-violet-300/90">sentinel_audit_exit_kind</code> framing; gaps hand off to Investigator
+									or Navigator per edge-case rules—not mixed in one thread.
+								</p>
+								<p class="text-slate-500">
+									Attestation dimensions reference AUTH resources and UDALI layers; hosts keep local evidence IDs.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 8 Included + CTA -->
+		<section
+			class="border-y border-border-subtle bg-gradient-to-b from-surface-mid/80 to-surface-deep py-20 sm:py-24"
+			aria-labelledby="mcp-included-heading"
+		>
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+					<div>
+						<h2 id="mcp-included-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+							What paid access includes
+						</h2>
+						<p class="mt-4 text-slate-400">
+							Subscribers run the hosted MCP service (Streamable HTTP) against your org’s credentials. Tokens, rotation,
+							and billing live in the operator app—this page is the story; the portal is the mechanics.
+						</p>
+						<ul class="mt-8 space-y-3 text-sm text-slate-300">
+							<li class="flex gap-3">
+								<span class="text-accent-violet" aria-hidden="true">✓</span>
+								Versioned tools, prompts, and resources aligned to the published AADM standard narrative.
+							</li>
+							<li class="flex gap-3">
+								<span class="text-accent-violet" aria-hidden="true">✓</span>
+								Deterministic routing metadata for orchestrators (<code class="font-mono-cta text-slate-400">route_lane</code>, follow-on catalogs).
+							</li>
+							<li class="flex gap-3">
+								<span class="text-accent-violet" aria-hidden="true">✓</span>
+								Troubleshooter gates and execution-control templates suitable for CI-adjacent agent runs.
+							</li>
+							<li class="flex gap-3">
+								<span class="text-accent-violet" aria-hidden="true">✓</span>
+								Operational endpoints: <code class="font-mono-cta text-slate-400">GET /health</code>, service discovery at
+								<code class="font-mono-cta text-slate-400">GET /</code> on the MCP host (separate from this marketing site).
+							</li>
+						</ul>
+						<p class="mt-8">
+							<a
+								href={urlStandard}
+								class="text-sm font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
+							>
+								Read the public standard first
+							</a>
+							<span class="text-slate-500"> — then subscribe when you want agents on the same rails.</span>
+						</p>
+					</div>
+					<div
+						class="rounded-3xl border border-violet-500/30 bg-surface-card/90 p-8 shadow-2xl shadow-violet-950/30"
+					>
+						<p class="text-xs font-medium uppercase tracking-wide text-slate-500">Subscriber checkout</p>
+						<p class="mt-2 font-display text-2xl font-bold text-white">Get access</p>
+						<p class="mt-3 text-sm text-slate-400">
+							Create an account (or sign in), complete subscription, then mint MCP tokens from your dashboard.
+						</p>
+						<div class="mt-8 flex flex-col gap-3">
+							<a
+								href={urlClerkSignUp}
+								rel="noopener noreferrer"
+								class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
+							>
+								Get access — sign up
+							</a>
+							<a
+								href={urlClerkSignIn}
+								rel="noopener noreferrer"
+								class="inline-flex items-center justify-center rounded-xl border border-border-subtle px-6 py-3.5 text-center text-base font-semibold text-white transition hover:bg-surface-mid"
+							>
+								Already subscribed? Sign in
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 9 Technical strip -->
+		<section id="technical" class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="mcp-tech-heading">
+			<h2 id="mcp-tech-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+				Technical confidence (operators)
+			</h2>
+			<p class="mt-3 max-w-3xl text-sm text-slate-400">
+				The product MCP speaks <strong class="text-slate-300">MCP over Streamable HTTP</strong>:{' '}
+				<code class="font-mono-cta text-accent-violet">POST</code> with{' '}
+				<code class="font-mono-cta text-slate-300">Accept: application/json, text/event-stream</code>. Browser GET to the
+				MCP path without that header often returns <strong class="text-slate-300">406</strong>—expected.
+			</p>
+			{
+				urlMcpEndpoint ? (
+					<div class="mt-8 space-y-6">
+						<div class="flex flex-wrap gap-3">
+							{healthUrl ? (
+								<a
+									href={healthUrl}
+									class="inline-flex items-center rounded-lg border border-border-subtle bg-surface-card px-4 py-2 text-sm font-semibold text-white transition hover:bg-surface-mid"
+								>
+									GET /health (MCP host)
+								</a>
+							) : null}
+							{discoveryUrl ? (
+								<a
+									href={discoveryUrl}
+									class="inline-flex items-center rounded-lg border border-border-subtle bg-surface-card px-4 py-2 text-sm font-semibold text-white transition hover:bg-surface-mid"
+								>
+									GET / (discovery)
+								</a>
+							) : null}
+							<a
+								href="https://aadm.io/"
+								class="inline-flex items-center rounded-lg border border-dashed border-slate-600/60 px-4 py-2 text-sm font-semibold text-slate-400 transition hover:border-slate-500 hover:text-slate-200"
+							>
+								Marketing home
+							</a>
+						</div>
+						<div>
+							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">MCP JSON-RPC URL (env-driven)</p>
+							<p class="break-all font-mono-cta text-sm text-accent-blue">{urlMcpEndpoint}</p>
+						</div>
+						<div>
+							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">Smoke: initialize</p>
+							<pre class="overflow-x-auto rounded-2xl border border-border-subtle bg-surface-card/90 p-4 font-mono-cta text-xs leading-relaxed text-slate-300 sm:text-sm"><code>{curlInit}</code></pre>
+						</div>
+						{urlMcpCustomerDocs ? (
+							<p class="text-sm text-slate-500">
+								Internal / customer docs:{' '}
+								<a href={urlMcpCustomerDocs} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+									Subscriber documentation
+								</a>
+							</p>
+						) : null}
+					</div>
+				) : (
+					<p class="mt-6 text-sm text-slate-500">
+						Set <code class="font-mono-cta text-slate-400">PUBLIC_MCP_REPO_URL</code> at build time to render your MCP
+						endpoint and curl on this page.
+					</p>
+				)
+			}
+		</section>
+
+		<SiteFooter variant="mcp" />
+	</main>
+
+	<ClerkNavScript
+		clerkPublishableKey={clerkPublishableKey}
+		urlClerkUserProfile={urlClerkUserProfile}
+		urlClerkSignIn={urlClerkSignIn}
+		clerkSatelliteDomain={clerkSatelliteDomain}
+	/>
+</Layout>

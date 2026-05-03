@@ -32,9 +32,14 @@ Copy `.env.example` to `.env` and set. **Do not put a space after `=`** — a le
 | Variable | Purpose |
 |----------|---------|
 | `PUBLIC_STANDARD_REPO_URL` | **View the Standard** — public repo or site for the standard (e.g. `aadm-standard` on GitHub). |
-| `PUBLIC_MCP_REPO_URL` | **MCP HTTP URL** — must include the **`/mcp`** path for JSON-RPC (e.g. `https://mcp.aadm.io/mcp`). Same origin is used for **`GET /health`** and **`GET /`** discovery JSON ([example discovery payload](https://mcp.aadm.io/)). |
-| `PUBLIC_MCP_QUICKSTART_URL` | **Get MCP Access** + in-page “MCP documentation” link — subscriber docs on your **marketing** domain (e.g. `https://aadm.io/mcp`), separate from the MCP API host. |
+| `PUBLIC_MCP_REPO_URL` | **MCP host or JSON-RPC URL** — e.g. `https://mcp.aadm.io` (homepage appends **`/mcp`** for `initialize` / client config) or full `https://mcp.aadm.io/mcp`. Same origin is used for **`GET /health`** and **`GET /`** discovery JSON ([example](https://mcp.aadm.io/)). |
+| `PUBLIC_MCP_QUICKSTART_URL` | **Get MCP Access** in the header (and related links) — should point at this repo’s **`/mcp`** sales page (e.g. `https://aadm.io/mcp`), separate from the MCP API host (`PUBLIC_MCP_REPO_URL`). |
 | `PUBLIC_MCP_CUSTOMER_DOCS_URL` (optional) | Second documentation base (e.g. gated Notion). If unset and `PUBLIC_MCP_QUICKSTART_URL` is set, the page still links to that docs URL. |
+| `PUBLIC_CLERK_SIGN_IN_URL` / `PUBLIC_CLERK_SIGN_UP_URL` | Marketing header **Sign in** / **Sign up** → Clerk Account Portal (e.g. `https://accounts…/sign-in`). |
+| `PUBLIC_CLERK_USER_PROFILE_URL` (optional) | When a session is detected, the primary auth control becomes **Account** and links here (default `https://accounts.aadm.io/user`). |
+| `PUBLIC_CLERK_SIGN_OUT_URL` (optional) | **Sign out** — default `{sign-in origin}/sign-out?redirect_url=https://aadm.io/`. If that path 404s for your instance, copy the exact sign-out URL from **Clerk Dashboard → Account Portal**. |
+| `PUBLIC_CLERK_PUBLISHABLE_KEY` (optional) | If set, the site loads Clerk browser JS: signed-out users see **Sign in**; signed-in users see **Account** (profile URL above) and **Sign out** is shown. Use the same publishable key as your Clerk app; add `aadm.io` to allowed origins in Clerk. |
+| `PUBLIC_CLERK_SATELLITE_DOMAIN` (optional) | Hostname for Clerk **satellite** setup (e.g. `aadm.io`) so the marketing domain can receive session sync. Omit unless you use satellite domains. |
 
 Astro only exposes variables prefixed with `PUBLIC_` to the client.
 
@@ -57,8 +62,9 @@ Multi-stage **`Dockerfile`**: builds Astro, then runs a tiny Node server that se
 ```bash
 docker build -t aadm-website \
   --build-arg PUBLIC_STANDARD_REPO_URL="https://github.com/your-org/aadm-standard" \
-  --build-arg PUBLIC_MCP_REPO_URL="https://mcp.example.com/mcp" \
-  --build-arg PUBLIC_MCP_QUICKSTART_URL="https://example.com/mcp" \
+  --build-arg PUBLIC_MCP_REPO_URL="https://mcp.aadm.io" \
+  --build-arg PUBLIC_MCP_QUICKSTART_URL="https://aadm.io/mcp" \
+  --build-arg PUBLIC_CLERK_PUBLISHABLE_KEY="pk_live_..." \
   .
 docker run --rm -p 8080:8080 -e PORT=8080 aadm-website
 # Visit http://localhost:8080/health
