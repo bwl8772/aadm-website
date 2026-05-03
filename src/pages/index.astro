@@ -67,7 +67,7 @@ const curlInit = urlMcpEndpoint
 					>Published standard</span
 				>
 				<span class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-violet"
-					>Paid MCP access · Railway-hosted</span
+					>Paid MCP access</span
 				>
 			</p>
 			<h1
@@ -82,8 +82,7 @@ const curlInit = urlMcpEndpoint
 				We <strong class="font-semibold text-slate-300">publish the standard</strong> in the open—definitions,
 				templates, and governance narrative anyone can read and adopt.{' '}
 				<strong class="font-semibold text-slate-300">Paid MCP access</strong> is separate: a private, hosted service
-				on <strong class="font-semibold text-slate-300">Railway</strong> so subscribers’ agents get versioned tools
-				and resources without us open-sourcing the MCP implementation.
+				so subscribers’ agents get versioned tools and resources without us open-sourcing the MCP implementation.
 			</p>
 			<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
 				<a
@@ -146,8 +145,7 @@ const curlInit = urlMcpEndpoint
 		<section id="mcp-quickstart" class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
 			<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">MCP access — quick reference</h2>
 			<p class="mt-3 text-sm text-slate-500">
-				Subscriber endpoints are deployed on <strong class="text-slate-400">Railway</strong>; URLs below are
-				whatever you configure for your customers (example values in development only).
+				URLs below come from your environment—use production subscriber endpoints when you ship this site.
 			</p>
 			<p class="mt-4 max-w-3xl text-slate-400">
 				The hosted MCP service speaks <strong class="text-slate-300">MCP over Streamable HTTP</strong>:
@@ -228,7 +226,7 @@ const curlInit = urlMcpEndpoint
 					<p class="mt-4 text-slate-400">
 						The <strong class="text-slate-300">standard</strong> lives in the public repository for humans,
 						tickets, and audits. <strong class="text-slate-300">MCP</strong> is subscriber infrastructure we
-						operate on Railway—connection details and SLAs come with access, not from a public server repo.
+						operate as hosted infrastructure—connection details and SLAs come with access, not from a public server repo.
 						Nothing here replaces your production AUTH, gateways, or CI.
 					</p>
 				</div>
