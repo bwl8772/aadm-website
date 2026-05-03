@@ -1,4 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
+import { CLERK_POST_AUTH_DEFAULT_PATH } from '@/lib/clerk-redirects'
 
 const isProtectedRoute = createRouteMatcher([
   '/profile(.*)',
@@ -7,6 +9,10 @@ const isProtectedRoute = createRouteMatcher([
 ])
 
 export default clerkMiddleware(async (auth, request) => {
+  const { userId } = await auth()
+  if (userId && request.nextUrl.pathname === '/') {
+    return NextResponse.redirect(new URL(CLERK_POST_AUTH_DEFAULT_PATH, request.url))
+  }
   if (isProtectedRoute(request)) {
     await auth.protect()
   }

@@ -43,9 +43,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6 space-y-8">
-      <h1 className="text-2xl font-bold">Profile</h1>
-
+    <div className="mx-auto max-w-2xl space-y-8 p-6">
       <section className="rounded-xl border border-violet-200 bg-violet-50/50 p-5 dark:border-violet-900 dark:bg-violet-950/20">
         <h2 className="text-sm font-semibold text-violet-900 dark:text-violet-200">MCP API access</h2>
         <p className="mt-2 text-sm text-violet-900/80 dark:text-violet-200/80">
@@ -59,12 +57,19 @@ export default function ProfilePage() {
           href="/dashboard/tokens"
           className="mt-3 inline-flex rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-violet-700"
         >
-          Open token dashboard
+          Create and copy tokens
         </Link>
       </section>
 
-      <section className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-6">
-        <h2 className="text-lg font-semibold mb-4">Update Profile</h2>
+      <div>
+        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Profile</h1>
+        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+          Name and email for your account. Use the section above for MCP access.
+        </p>
+      </div>
+
+      <section className="rounded-lg border border-zinc-200 p-6 dark:border-zinc-800">
+        <h2 className="mb-4 text-lg font-semibold text-zinc-900 dark:text-zinc-50">Update profile</h2>
         <form onSubmit={handleUpdateProfile} className="space-y-4">
           <div>
             <label htmlFor="profile-email" className="block text-sm font-medium mb-1">

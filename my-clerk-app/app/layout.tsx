@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { ClerkProvider, SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import {
   clerkForgotPasswordHref,
   clerkUserProfileUrl,
 } from "@/lib/clerk-host";
+import {
+  clerkSignInFallbackRedirectUrl,
+  clerkSignUpFallbackRedirectUrl,
+} from "@/lib/clerk-redirects";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -23,12 +28,15 @@ export const metadata: Metadata = {
   description: "Next.js app with Clerk auth and Stripe",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { userId } = await auth();
   const hostedUserProfileUrl = clerkUserProfileUrl();
+  const postAuth = clerkSignInFallbackRedirectUrl();
+  const postSignUp = clerkSignUpFallbackRedirectUrl();
 
   return (
     <html
@@ -36,10 +44,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ClerkProvider taskUrls={{ "reset-password": "/forgot-password/complete" }}>
+        <ClerkProvider
+          taskUrls={{ "reset-password": "/forgot-password/complete" }}
+          signInFallbackRedirectUrl={postAuth}
+          signUpFallbackRedirectUrl={postSignUp}
+        >
           <header className="flex items-center gap-2 border-b border-zinc-200 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3 dark:border-zinc-800">
             <Link
-              href="/"
+              href={userId ? postAuth : "/"}
               className="shrink-0 font-semibold text-base text-zinc-900 sm:text-lg dark:text-zinc-50"
             >
               Home
@@ -80,7 +92,7 @@ export default function RootLayout({
                 )}
               </Show>
               <Show when="signed-out">
-                <SignInButton mode="redirect">
+                <SignInButton mode="redirect" fallbackRedirectUrl={postAuth}>
                   <button
                     type="button"
                     className="shrink-0 cursor-pointer rounded-md border border-zinc-300 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-900 shadow-sm transition hover:bg-zinc-50 sm:px-3 sm:text-sm dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
@@ -96,7 +108,7 @@ export default function RootLayout({
                   <span className="sm:hidden">Forgot?</span>
                   <span className="hidden sm:inline">Forgot password?</span>
                 </Link>
-                <SignUpButton mode="redirect">
+                <SignUpButton mode="redirect" fallbackRedirectUrl={postSignUp}>
                   <button
                     type="button"
                     className="shrink-0 cursor-pointer rounded-md bg-violet-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-violet-700 sm:px-3 sm:text-sm"

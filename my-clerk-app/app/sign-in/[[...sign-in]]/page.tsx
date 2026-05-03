@@ -7,6 +7,7 @@ import {
   clerkSignUpUrl,
   isClerkAuthHostedExternally,
 } from "@/lib/clerk-host";
+import { clerkSignInFallbackRedirectUrl } from "@/lib/clerk-redirects";
 
 export default function SignInPage() {
   if (isClerkAuthHostedExternally()) {
@@ -15,7 +16,12 @@ export default function SignInPage() {
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8">
-      <SignIn path="/sign-in" routing="path" signUpUrl={clerkSignUpUrl()} />
+      <SignIn
+        path="/sign-in"
+        routing="path"
+        signUpUrl={clerkSignUpUrl()}
+        fallbackRedirectUrl={clerkSignInFallbackRedirectUrl()}
+      />
       <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
         <Link
           href={clerkForgotPasswordHref()}
