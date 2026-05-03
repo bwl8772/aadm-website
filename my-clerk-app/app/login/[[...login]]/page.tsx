@@ -7,20 +7,22 @@ import {
   clerkSignUpUrl,
   isClerkAuthHostedExternally,
 } from "@/lib/clerk-host";
-import { clerkSignInFallbackRedirectUrl } from "@/lib/clerk-redirects";
+import { clerkSignInForceRedirectUrl } from "@/lib/clerk-redirects";
 
-export default function SignInPage() {
+export default function LoginPage() {
   if (isClerkAuthHostedExternally()) {
-    redirect(clerkSignInUrl());
+    const portalUrl = new URL(clerkSignInUrl());
+    portalUrl.searchParams.set("redirect_url", clerkSignInForceRedirectUrl());
+    redirect(portalUrl.toString());
   }
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8">
       <SignIn
-        path="/sign-in"
+        path="/login"
         routing="path"
         signUpUrl={clerkSignUpUrl()}
-        fallbackRedirectUrl={clerkSignInFallbackRedirectUrl()}
+        forceRedirectUrl={clerkSignInForceRedirectUrl()}
       />
       <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
         <Link
