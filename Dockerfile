@@ -10,8 +10,8 @@ FROM node:22-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=8080
-COPY --from=build /app/dist ./dist
-COPY scripts/docker-serve.mjs ./serve.mjs
+COPY --from=build --chown=node:node /app/dist ./dist
+COPY --chown=node:node scripts/docker-serve.mjs ./serve.mjs
 EXPOSE 8080
 USER node
 CMD ["node", "serve.mjs"]
