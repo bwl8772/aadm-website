@@ -1,7 +1,7 @@
 import { SignUp } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { clerkSignInUrl, clerkSignUpUrl, isClerkAuthHostedExternally } from "@/lib/clerk-host";
-import { clerkSignUpFallbackRedirectUrl } from "@/lib/clerk-redirects";
+import { clerkSignUpForceRedirectUrl } from "@/lib/clerk-redirects";
 
 export default function SignUpPage() {
   if (isClerkAuthHostedExternally()) {
@@ -14,7 +14,7 @@ export default function SignUpPage() {
         path="/sign-up"
         routing="path"
         signInUrl={clerkSignInUrl()}
-        fallbackRedirectUrl={clerkSignUpFallbackRedirectUrl()}
+        forceRedirectUrl={clerkSignUpForceRedirectUrl()}
       />
     </div>
   );

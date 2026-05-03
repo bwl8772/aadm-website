@@ -10,6 +10,8 @@ import {
 import {
   clerkSignInFallbackRedirectUrl,
   clerkSignUpFallbackRedirectUrl,
+  clerkSignInForceRedirectUrl,
+  clerkSignUpForceRedirectUrl,
 } from "@/lib/clerk-redirects";
 import "./globals.css";
 
@@ -37,6 +39,8 @@ export default async function RootLayout({
   const hostedUserProfileUrl = clerkUserProfileUrl();
   const postAuth = clerkSignInFallbackRedirectUrl();
   const postSignUp = clerkSignUpFallbackRedirectUrl();
+  const forceSignIn = clerkSignInForceRedirectUrl();
+  const forceSignUp = clerkSignUpForceRedirectUrl();
 
   return (
     <html
@@ -46,6 +50,8 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col">
         <ClerkProvider
           taskUrls={{ "reset-password": "/forgot-password/complete" }}
+          signInForceRedirectUrl={forceSignIn}
+          signUpForceRedirectUrl={forceSignUp}
           signInFallbackRedirectUrl={postAuth}
           signUpFallbackRedirectUrl={postSignUp}
         >
@@ -92,7 +98,7 @@ export default async function RootLayout({
                 )}
               </Show>
               <Show when="signed-out">
-                <SignInButton mode="redirect" fallbackRedirectUrl={postAuth}>
+                <SignInButton mode="redirect" forceRedirectUrl={forceSignIn}>
                   <button
                     type="button"
                     className="shrink-0 cursor-pointer rounded-md border border-zinc-300 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-900 shadow-sm transition hover:bg-zinc-50 sm:px-3 sm:text-sm dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
@@ -108,7 +114,7 @@ export default async function RootLayout({
                   <span className="sm:hidden">Forgot?</span>
                   <span className="hidden sm:inline">Forgot password?</span>
                 </Link>
-                <SignUpButton mode="redirect" fallbackRedirectUrl={postSignUp}>
+                <SignUpButton mode="redirect" forceRedirectUrl={forceSignUp}>
                   <button
                     type="button"
                     className="shrink-0 cursor-pointer rounded-md bg-violet-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-violet-700 sm:px-3 sm:text-sm"

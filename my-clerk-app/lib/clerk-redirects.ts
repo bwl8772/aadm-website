@@ -19,3 +19,22 @@ export function clerkSignInFallbackRedirectUrl(): string {
 export function clerkSignUpFallbackRedirectUrl(): string {
   return normalizeFallback(process.env.NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL);
 }
+
+/**
+ * Build an absolute redirect URL for the Account Portal to return to.
+ * When auth is hosted externally (e.g. accounts.aadm.io), Clerk needs the full
+ * origin so it doesn't fall back to the production domain from the Dashboard.
+ */
+export function clerkSignInForceRedirectUrl(): string {
+  const base = process.env.NEXT_PUBLIC_APP_URL?.trim() || "";
+  const path = clerkSignInFallbackRedirectUrl();
+  if (base) return `${base}${path}`;
+  return path;
+}
+
+export function clerkSignUpForceRedirectUrl(): string {
+  const base = process.env.NEXT_PUBLIC_APP_URL?.trim() || "";
+  const path = clerkSignUpFallbackRedirectUrl();
+  if (base) return `${base}${path}`;
+  return path;
+}
