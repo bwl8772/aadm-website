@@ -5,7 +5,9 @@ import { clerkSignUpForceRedirectUrl } from "@/lib/clerk-redirects";
 
 export default function SignUpPage() {
   if (isClerkAuthHostedExternally()) {
-    redirect(clerkSignUpUrl());
+    const portalUrl = new URL(clerkSignUpUrl());
+    portalUrl.searchParams.set("redirect_url", clerkSignUpForceRedirectUrl());
+    redirect(portalUrl.toString());
   }
 
   return (

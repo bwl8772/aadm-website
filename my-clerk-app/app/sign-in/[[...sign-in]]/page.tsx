@@ -11,7 +11,9 @@ import { clerkSignInForceRedirectUrl } from "@/lib/clerk-redirects";
 
 export default function SignInPage() {
   if (isClerkAuthHostedExternally()) {
-    redirect(clerkSignInUrl());
+    const portalUrl = new URL(clerkSignInUrl());
+    portalUrl.searchParams.set("redirect_url", clerkSignInForceRedirectUrl());
+    redirect(portalUrl.toString());
   }
 
   return (
