@@ -1,8 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const urlStandard = import.meta.env.PUBLIC_STANDARD_REPO_URL ?? '#configure-standard-url';
-const urlMcpQuickstart = import.meta.env.PUBLIC_MCP_QUICKSTART_URL ?? '#configure-quickstart-url';
+const trim = (v: string | undefined) => (typeof v === 'string' ? v.trim() : '');
+
+const urlStandard = trim(import.meta.env.PUBLIC_STANDARD_REPO_URL) || '#configure-standard-url';
+const urlMcpEndpoint = trim(import.meta.env.PUBLIC_MCP_REPO_URL);
+const urlMcpQuickstart = trim(import.meta.env.PUBLIC_MCP_QUICKSTART_URL) || '#configure-quickstart-url';
+const urlMcpGithub = trim(import.meta.env.PUBLIC_MCP_GITHUB_URL);
+
+let healthUrl = '';
+let discoveryUrl = '';
+try {
+	if (urlMcpEndpoint) {
+		const u = new URL(urlMcpEndpoint);
+		healthUrl = `${u.origin}/health`;
+		discoveryUrl = `${u.origin}/`;
+	}
+} catch {
+	/* ignore invalid PUBLIC_MCP_REPO_URL */
+}
+
+const curlInit = urlMcpEndpoint
+	? `curl -s -X POST ${urlMcpEndpoint} \\
+  -H "Content-Type: application/json" \\
+  -H "Accept: application/json, text/event-stream" \\
+  -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"smoke","version":"1.0.0"}}}'`
+	: '';
 ---
 
 <Layout title="AADM — Agentic Authority Delivery Model">
@@ -111,7 +134,87 @@ const urlMcpQuickstart = import.meta.env.PUBLIC_MCP_QUICKSTART_URL ?? '#configur
 			</div>
 		</section>
 
-		<section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+		<section id="mcp-quickstart" class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+			<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">MCP access — quick reference</h2>
+			<p class="mt-4 max-w-3xl text-slate-400">
+				The reference server speaks <strong class="text-slate-300">MCP over Streamable HTTP</strong>:
+				clients <code class="rounded bg-surface-card px-1.5 py-0.5 font-mono-cta text-sm text-accent-violet"
+					>POST</code
+				> to the MCP path with <code class="font-mono-cta text-sm text-slate-300">Accept: application/json, text/event-stream</code>.
+				Use <code class="font-mono-cta text-sm text-slate-300">GET /health</code> for load balancers (not MCP protocol traffic). Opening the MCP path in a browser often returns <strong class="text-slate-300">406</strong> without that Accept header — that is expected.
+			</p>
+
+			{
+				urlMcpEndpoint ? (
+					<div class="mt-8 space-y-6">
+						<div class="flex flex-wrap gap-3">
+							<a
+								href={urlMcpQuickstart}
+								class="inline-flex items-center rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110"
+							>
+								Open MCP portal
+							</a>
+							{healthUrl ? (
+								<a
+									href={healthUrl}
+									class="inline-flex items-center rounded-lg border border-border-subtle bg-surface-card px-4 py-2 text-sm font-semibold text-white transition hover:bg-surface-mid"
+								>
+									GET /health
+								</a>
+							) : null}
+							{discoveryUrl ? (
+								<a
+									href={discoveryUrl}
+									class="inline-flex items-center rounded-lg border border-border-subtle bg-surface-card px-4 py-2 text-sm font-semibold text-white transition hover:bg-surface-mid"
+								>
+									GET / (discovery)
+								</a>
+							) : null}
+						</div>
+						<div>
+							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+								MCP HTTP URL
+							</p>
+							<p class="break-all font-mono-cta text-sm text-accent-blue">{urlMcpEndpoint}</p>
+						</div>
+						<div>
+							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+								Smoke: initialize (JSON-RPC over HTTP)
+							</p>
+							<pre
+								class="overflow-x-auto rounded-2xl border border-border-subtle bg-surface-card/90 p-4 font-mono-cta text-xs leading-relaxed text-slate-300 sm:text-sm"><code>{curlInit}</code></pre>
+						</div>
+						{urlMcpGithub ? (
+							<p class="text-sm text-slate-500">
+								Host integration (sessions, <code class="font-mono-cta text-slate-400">standard_brief</code>, troubleshooter gates):{' '}
+								<a href={`${urlMcpGithub}/blob/main/docs/INTEGRATION.md`} class="text-accent-violet underline hover:text-accent-blue">
+									docs/INTEGRATION.md
+								</a>
+								{' · '}
+								<a
+									href={`${urlMcpGithub}/blob/main/resources/agents/mcp-setup.md`}
+									class="text-accent-violet underline hover:text-accent-blue"
+								>
+									resources/agents/mcp-setup.md
+								</a>
+								{' · '}
+								<a href={urlMcpGithub} class="text-accent-violet underline hover:text-accent-blue">
+									Repository
+								</a>
+							</p>
+						) : null}
+					</div>
+				) : (
+					<p class="mt-6 rounded-xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-4 text-sm text-slate-500">
+						Set <span class="font-mono-cta text-slate-400">PUBLIC_MCP_REPO_URL</span> in{' '}
+						<code class="font-mono-cta text-slate-400">.env</code> to show your MCP endpoint, health link, and curl
+						example.
+					</p>
+				)
+			}
+		</section>
+
+		<section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
 			<div class="grid gap-10 lg:grid-cols-2 lg:items-center">
 				<div>
 					<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Standard vs MCP</h2>
@@ -127,16 +230,18 @@ const urlMcpQuickstart = import.meta.env.PUBLIC_MCP_QUICKSTART_URL ?? '#configur
 					>
 						<p class="text-xs font-medium uppercase tracking-wide text-slate-500">Environment</p>
 						<p class="mt-2 text-slate-300">
-							Set <span class="text-accent-violet">PUBLIC_STANDARD_REPO_URL</span>,{' '}
-							<span class="text-accent-blue">PUBLIC_MCP_REPO_URL</span>, and{' '}
-							<span class="text-accent-violet">PUBLIC_MCP_QUICKSTART_URL</span> for production links.
+							Use <span class="text-accent-violet">PUBLIC_STANDARD_REPO_URL</span>,{' '}
+							<span class="text-accent-blue">PUBLIC_MCP_REPO_URL</span> (MCP HTTP URL),{' '}
+							<span class="text-accent-violet">PUBLIC_MCP_QUICKSTART_URL</span> (portal / landing). Optional:{' '}
+							<span class="text-accent-blue">PUBLIC_MCP_GITHUB_URL</span> for doc links. No spaces after{' '}
+							<code class="text-slate-400">=</code>.
 						</p>
 					</div>
 					<div
 						class="rounded-2xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-5 text-sm text-slate-500"
 					>
-						This repository is only the marketing shell. Point buttons at your public standard repo,
-						MCP distribution, and quickstart doc.
+						This repository is only the marketing shell. Point env vars at your public standard repo, MCP
+						endpoint, and operator portal.
 					</div>
 				</div>
 			</div>

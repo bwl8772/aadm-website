@@ -18,15 +18,20 @@ Open [http://localhost:4321](http://localhost:4321).
 
 ## Configure outbound links
 
-Copy `.env.example` to `.env` and set:
+Copy `.env.example` to `.env` and set. **Do not put a space after `=`** — a leading space becomes part of the URL.
 
 | Variable | Purpose |
 |----------|---------|
-| `PUBLIC_STANDARD_REPO_URL` | Public standard repository (GitHub or docs root) |
-| `PUBLIC_MCP_REPO_URL` | MCP server / distribution repository |
-| `PUBLIC_MCP_QUICKSTART_URL` | MCP quickstart or integration doc |
+| `PUBLIC_STANDARD_REPO_URL` | **View the Standard** — e.g. GitHub root for `aadm-standard` |
+| `PUBLIC_MCP_REPO_URL` | **MCP HTTP URL** for Streamable HTTP (usually ends in `/mcp`). Drives `/health` and `/` links and the initialize `curl` on the homepage. |
+| `PUBLIC_MCP_QUICKSTART_URL` | **Get MCP Access** — deploy landing or operator portal (e.g. your public MCP site root). |
+| `PUBLIC_MCP_GITHUB_URL` (optional) | `aadm-mcp` source on GitHub; homepage adds links to `docs/INTEGRATION.md` and `resources/agents/mcp-setup.md`. |
 
 Astro only exposes variables prefixed with `PUBLIC_` to the client.
+
+### MCP quickstart copy (from `aadm-mcp`)
+
+The on-page **MCP access — quick reference** section summarizes the same ideas as the open **`aadm-mcp`** README / `AGENTS.md`: Streamable HTTP `POST` to `/mcp` with the right `Accept` header, **`GET /health`** for probes, **`GET /`** for discovery JSON, and a minimal **`initialize`** curl. For orchestrators and long sessions, follow **`docs/INTEGRATION.md`** in the MCP repository.
 
 ## Build
 
