@@ -9,7 +9,7 @@ import {
 } from "@/lib/clerk-host";
 import { clerkSignInForceRedirectUrl } from "@/lib/clerk-redirects";
 
-export default function SignInPage() {
+export default function LoginPage() {
   if (isClerkAuthHostedExternally()) {
     const portalUrl = new URL(clerkSignInUrl());
     portalUrl.searchParams.set("redirect_url", clerkSignInForceRedirectUrl());
@@ -19,7 +19,7 @@ export default function SignInPage() {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8">
       <SignIn
-        path="/sign-in"
+        path="/login"
         routing="path"
         signUpUrl={clerkSignUpUrl()}
         forceRedirectUrl={clerkSignInForceRedirectUrl()}

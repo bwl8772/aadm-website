@@ -8,11 +8,11 @@ export function isClerkAuthHostedExternally(): boolean {
 }
 
 export function clerkSignInUrl(): string {
-  return process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL?.trim() || "/sign-in";
+  return process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL?.trim() || "/login";
 }
 
 export function clerkSignUpUrl(): string {
-  return process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL?.trim() || "/sign-up";
+  return process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL?.trim() || "/signup";
 }
 
 /** Forgot-password / reset entry: hosted sign-in includes Clerk’s reset flow. */

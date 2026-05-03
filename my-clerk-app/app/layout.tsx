@@ -5,6 +5,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import {
   clerkForgotPasswordHref,
+  clerkSignInUrl,
+  clerkSignUpUrl,
   clerkUserProfileUrl,
 } from "@/lib/clerk-host";
 import {
@@ -37,6 +39,8 @@ export default async function RootLayout({
 }>) {
   const { userId } = await auth();
   const hostedUserProfileUrl = clerkUserProfileUrl();
+  const signInPath = clerkSignInUrl();
+  const signUpPath = clerkSignUpUrl();
   const postAuth = clerkSignInFallbackRedirectUrl();
   const postSignUp = clerkSignUpFallbackRedirectUrl();
   const forceSignIn = clerkSignInForceRedirectUrl();
@@ -49,7 +53,8 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ClerkProvider
-          taskUrls={{ "reset-password": "/forgot-password/complete" }}
+          signInUrl={signInPath}
+          signUpUrl={signUpPath}
           signInForceRedirectUrl={forceSignIn}
           signUpForceRedirectUrl={forceSignUp}
           signInFallbackRedirectUrl={postAuth}
