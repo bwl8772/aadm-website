@@ -28,6 +28,27 @@ function accountPortalOrigin(signInUrl: string): string {
 	}
 }
 
+/** After Clerk Account Portal sign-out, users always land on the public marketing home. */
+export const CLERK_SIGN_OUT_REDIRECT_URL = 'https://aadm.io/';
+
+/**
+ * Clerk sign-out URL with `redirect_url` always set to {@link CLERK_SIGN_OUT_REDIRECT_URL}.
+ * If `PUBLIC_CLERK_SIGN_OUT_URL` is set (e.g. non-default portal path), it is used as the base; the redirect query is still forced.
+ */
+export function buildClerkSignOutUrl(signOutOverride: string | undefined, signInUrl: string): string {
+	const redirect = CLERK_SIGN_OUT_REDIRECT_URL;
+	const raw = trim(signOutOverride);
+	const fallback = `${accountPortalOrigin(signInUrl)}/sign-out?redirect_url=${encodeURIComponent(redirect)}`;
+	if (!raw) return fallback;
+	try {
+		const u = new URL(raw, accountPortalOrigin(signInUrl));
+		u.searchParams.set('redirect_url', redirect);
+		return u.toString();
+	} catch {
+		return fallback;
+	}
+}
+
 export type SiteUrlConfig = {
 	urlStandard: string;
 	urlMcpEndpoint: string;
@@ -59,9 +80,7 @@ export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
 		trim(env.PUBLIC_CLERK_SIGN_UP_URL) || 'https://accounts.aadm.io/sign-up';
 	const urlClerkUserProfile =
 		trim(env.PUBLIC_CLERK_USER_PROFILE_URL) || 'https://accounts.aadm.io/user';
-	const urlClerkSignOut =
-		trim(env.PUBLIC_CLERK_SIGN_OUT_URL) ||
-		`${accountPortalOrigin(urlClerkSignIn)}/sign-out?redirect_url=${encodeURIComponent('https://aadm.io/')}`;
+	const urlClerkSignOut = buildClerkSignOutUrl(env.PUBLIC_CLERK_SIGN_OUT_URL, urlClerkSignIn);
 
 	const clerkPublishableKey = trim(env.PUBLIC_CLERK_PUBLISHABLE_KEY) || '';
 	const clerkSatelliteDomain = trim(env.PUBLIC_CLERK_SATELLITE_DOMAIN) || '';

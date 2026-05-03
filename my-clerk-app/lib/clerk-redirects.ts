@@ -38,3 +38,6 @@ export function clerkSignUpForceRedirectUrl(): string {
   if (base) return `${base}${path}`;
   return path;
 }
+
+/** Where Clerk sends users after sign-out (marketing home, not the Next app). */
+export const CLERK_AFTER_SIGN_OUT_URL = "https://aadm.io/";

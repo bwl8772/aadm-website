@@ -16,6 +16,7 @@ import {
 	clerkUserProfileUrl,
 } from "@/lib/clerk-host";
 import {
+	CLERK_AFTER_SIGN_OUT_URL,
 	clerkSignInFallbackRedirectUrl,
 	clerkSignInForceRedirectUrl,
 	clerkSignUpFallbackRedirectUrl,
@@ -65,6 +66,7 @@ export default async function RootLayout({
 					signUpForceRedirectUrl={forceSignUp}
 					signInFallbackRedirectUrl={postAuth}
 					signUpFallbackRedirectUrl={postSignUp}
+					afterSignOutUrl={CLERK_AFTER_SIGN_OUT_URL}
 				>
 					<header className="flex items-center gap-2 border-b border-zinc-200 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3 dark:border-zinc-800">
 						<Link

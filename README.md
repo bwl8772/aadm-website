@@ -37,7 +37,7 @@ Copy `.env.example` to `.env` and set. **Do not put a space after `=`** — a le
 | `PUBLIC_MCP_CUSTOMER_DOCS_URL` (optional) | Second documentation base (e.g. gated Notion). If unset and `PUBLIC_MCP_QUICKSTART_URL` is set, the page still links to that docs URL. |
 | `PUBLIC_CLERK_SIGN_IN_URL` / `PUBLIC_CLERK_SIGN_UP_URL` | Marketing header **Sign in** / **Sign up** → Clerk Account Portal (e.g. `https://accounts…/sign-in`). |
 | `PUBLIC_CLERK_USER_PROFILE_URL` (optional) | When a session is detected, the primary auth control becomes **Account** and links here (default `https://accounts.aadm.io/user`). |
-| `PUBLIC_CLERK_SIGN_OUT_URL` (optional) | **Sign out** — default `{sign-in origin}/sign-out?redirect_url=https://aadm.io/`. If that path 404s for your instance, copy the exact sign-out URL from **Clerk Dashboard → Account Portal**. |
+| `PUBLIC_CLERK_SIGN_OUT_URL` (optional) | Override the Account Portal **sign-out** path/origin if yours differs; **`redirect_url` is always set to `https://aadm.io/`** after logout. |
 | `PUBLIC_CLERK_PUBLISHABLE_KEY` (optional) | If set, the site loads Clerk browser JS: signed-out users see **Sign in**; signed-in users see **Account** (profile URL above) and **Sign out** is shown. Use the same publishable key as your Clerk app; add `aadm.io` to allowed origins in Clerk. |
 | `PUBLIC_CLERK_SATELLITE_DOMAIN` (optional) | Hostname for Clerk **satellite** setup (e.g. `aadm.io`) so the marketing domain can receive session sync. Omit unless you use satellite domains. |
 
