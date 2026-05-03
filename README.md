@@ -1,6 +1,6 @@
 # AADM website
 
-Standalone **static** marketing homepage for **AADM** (Agentic Authority Delivery Model). This repo is intentionally separate from **`aadm-standard`** (human-readable standard) and **`aadm-mcp`** (MCP server implementation).
+Standalone **static** marketing homepage for **AADM** (Agentic Authority Delivery Model). This repo is intentionally separate from the public **`aadm-standard`** narrative and from your **commercial MCP product** (implementation is private; you sell access).
 
 ## Stack
 
@@ -22,16 +22,16 @@ Copy `.env.example` to `.env` and set. **Do not put a space after `=`** — a le
 
 | Variable | Purpose |
 |----------|---------|
-| `PUBLIC_STANDARD_REPO_URL` | **View the Standard** — e.g. GitHub root for `aadm-standard` |
-| `PUBLIC_MCP_REPO_URL` | **MCP HTTP URL** for Streamable HTTP (usually ends in `/mcp`). Drives `/health` and `/` links and the initialize `curl` on the homepage. |
-| `PUBLIC_MCP_QUICKSTART_URL` | **Get MCP Access** — deploy landing or operator portal (e.g. your public MCP site root). |
-| `PUBLIC_MCP_GITHUB_URL` (optional) | `aadm-mcp` source on GitHub; homepage adds links to `docs/INTEGRATION.md` and `resources/agents/mcp-setup.md`. |
+| `PUBLIC_STANDARD_REPO_URL` | **View the Standard** — public repo or site for the standard (e.g. `aadm-standard` on GitHub). |
+| `PUBLIC_MCP_REPO_URL` | **MCP HTTP URL** for Streamable HTTP (usually ends in `/mcp`). Drives `/health` and `/` links and the `initialize` curl on the homepage. |
+| `PUBLIC_MCP_QUICKSTART_URL` | **Get MCP Access** — your customer-facing MCP portal or landing (e.g. `mcp.aadm.io`). |
+| `PUBLIC_MCP_CUSTOMER_DOCS_URL` (optional) | **Subscriber documentation** — private Notion, docs portal, or gated URL. If unset, the site states that implementation and full integration guides are proprietary and ship with the access package (no public GitHub links). |
 
 Astro only exposes variables prefixed with `PUBLIC_` to the client.
 
-### MCP quickstart copy (from `aadm-mcp`)
+### MCP quick reference on the homepage
 
-The on-page **MCP access — quick reference** section summarizes the same ideas as the open **`aadm-mcp`** README / `AGENTS.md`: Streamable HTTP `POST` to `/mcp` with the right `Accept` header, **`GET /health`** for probes, **`GET /`** for discovery JSON, and a minimal **`initialize`** curl. For orchestrators and long sessions, follow **`docs/INTEGRATION.md`** in the MCP repository.
+The **MCP access — quick reference** block describes public protocol facts (Streamable HTTP, `Accept` headers, `/health`, minimal `initialize` curl). It does **not** link to a public MCP source repository. Deeper host integration material belongs in **`PUBLIC_MCP_CUSTOMER_DOCS_URL`** or in materials you deliver outside this static site.
 
 ## Build
 

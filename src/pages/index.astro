@@ -6,7 +6,7 @@ const trim = (v: string | undefined) => (typeof v === 'string' ? v.trim() : '');
 const urlStandard = trim(import.meta.env.PUBLIC_STANDARD_REPO_URL) || '#configure-standard-url';
 const urlMcpEndpoint = trim(import.meta.env.PUBLIC_MCP_REPO_URL);
 const urlMcpQuickstart = trim(import.meta.env.PUBLIC_MCP_QUICKSTART_URL) || '#configure-quickstart-url';
-const urlMcpGithub = trim(import.meta.env.PUBLIC_MCP_GITHUB_URL);
+const urlMcpCustomerDocs = trim(import.meta.env.PUBLIC_MCP_CUSTOMER_DOCS_URL);
 
 let healthUrl = '';
 let discoveryUrl = '';
@@ -102,8 +102,8 @@ const curlInit = urlMcpEndpoint
 					Three equal agent workflows
 				</h2>
 				<p class="mx-auto mt-3 max-w-2xl text-center text-slate-400">
-					Reference MCP bundles surface the same contract idea: pick the lane that matches the primary
-					question — not everything is “bug chat.”
+					AADM MCP surfaces three equal workflows: pick the lane that matches the primary question — not
+					everything is “bug chat.”
 				</p>
 				<ul class="mt-12 grid gap-6 sm:grid-cols-3">
 					<li
@@ -137,7 +137,7 @@ const curlInit = urlMcpEndpoint
 		<section id="mcp-quickstart" class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
 			<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">MCP access — quick reference</h2>
 			<p class="mt-4 max-w-3xl text-slate-400">
-				The reference server speaks <strong class="text-slate-300">MCP over Streamable HTTP</strong>:
+				The hosted MCP service speaks <strong class="text-slate-300">MCP over Streamable HTTP</strong>:
 				clients <code class="rounded bg-surface-card px-1.5 py-0.5 font-mono-cta text-sm text-accent-violet"
 					>POST</code
 				> to the MCP path with <code class="font-mono-cta text-sm text-slate-300">Accept: application/json, text/event-stream</code>.
@@ -184,25 +184,19 @@ const curlInit = urlMcpEndpoint
 							<pre
 								class="overflow-x-auto rounded-2xl border border-border-subtle bg-surface-card/90 p-4 font-mono-cta text-xs leading-relaxed text-slate-300 sm:text-sm"><code>{curlInit}</code></pre>
 						</div>
-						{urlMcpGithub ? (
+						{urlMcpCustomerDocs ? (
 							<p class="text-sm text-slate-500">
-								Host integration (sessions, <code class="font-mono-cta text-slate-400">standard_brief</code>, troubleshooter gates):{' '}
-								<a href={`${urlMcpGithub}/blob/main/docs/INTEGRATION.md`} class="text-accent-violet underline hover:text-accent-blue">
-									docs/INTEGRATION.md
-								</a>
-								{' · '}
-								<a
-									href={`${urlMcpGithub}/blob/main/resources/agents/mcp-setup.md`}
-									class="text-accent-violet underline hover:text-accent-blue"
-								>
-									resources/agents/mcp-setup.md
-								</a>
-								{' · '}
-								<a href={urlMcpGithub} class="text-accent-violet underline hover:text-accent-blue">
-									Repository
+								Subscriber integration and orchestration guides:{' '}
+								<a href={urlMcpCustomerDocs} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+									Customer documentation
 								</a>
 							</p>
-						) : null}
+						) : (
+							<p class="text-sm text-slate-500">
+								MCP server implementation and full integration playbooks are <strong class="text-slate-400">proprietary</strong>
+								— connection details, session behavior, and host contracts are provided with your access package, not on public GitHub.
+							</p>
+						)}
 					</div>
 				) : (
 					<p class="mt-6 rounded-xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-4 text-sm text-slate-500">
@@ -219,9 +213,9 @@ const curlInit = urlMcpEndpoint
 				<div>
 					<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Standard vs MCP</h2>
 					<p class="mt-4 text-slate-400">
-						Keep the narrative and templates where humans fork and cite them. Run an AADM MCP server
-						where agents need versioned tools, resources, and orchestrator hints — typically a
-						separate deployment you trust.
+						Keep the narrative and templates where humans fork and cite them. Use licensed AADM MCP access
+						where agents need versioned tools, resources, and orchestrator hints — separate from the public
+						standard text and not a substitute for your own production AUTH.
 					</p>
 				</div>
 				<div class="space-y-4">
@@ -233,7 +227,7 @@ const curlInit = urlMcpEndpoint
 							Use <span class="text-accent-violet">PUBLIC_STANDARD_REPO_URL</span>,{' '}
 							<span class="text-accent-blue">PUBLIC_MCP_REPO_URL</span> (MCP HTTP URL),{' '}
 							<span class="text-accent-violet">PUBLIC_MCP_QUICKSTART_URL</span> (portal / landing). Optional:{' '}
-							<span class="text-accent-blue">PUBLIC_MCP_GITHUB_URL</span> for doc links. No spaces after{' '}
+							<span class="text-accent-blue">PUBLIC_MCP_CUSTOMER_DOCS_URL</span> (private subscriber docs). No spaces after{' '}
 							<code class="text-slate-400">=</code>.
 						</p>
 					</div>
@@ -241,7 +235,7 @@ const curlInit = urlMcpEndpoint
 						class="rounded-2xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-5 text-sm text-slate-500"
 					>
 						This repository is only the marketing shell. Point env vars at your public standard repo, MCP
-						endpoint, and operator portal.
+						endpoint, operator portal, and (if you have one) a subscriber-only docs base URL.
 					</div>
 				</div>
 			</div>
