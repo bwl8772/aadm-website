@@ -1,25 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import ClerkNavScript from '../components/ClerkNavScript.astro';
-import { clerkReturnUrlForPathname, getSiteUrlConfig } from '../lib/site-urls';
+import { Show, SignInButton, SignUpButton } from '@clerk/astro/components';
+import { URL_ACCOUNT_USER, getSiteUrlConfig } from '../lib/site-urls';
 
-const cfg = getSiteUrlConfig(import.meta.env, {
-	clerkReturnAfterAuth: clerkReturnUrlForPathname(
-		import.meta.env,
-		Astro.url.pathname,
-		Astro.url.search,
-	),
-});
+const cfg = getSiteUrlConfig(import.meta.env);
 const {
 	urlStandard,
+	urlMcpMarketing,
 	urlMcpCustomerDocs,
-	urlClerkSignUp,
-	urlClerkSignIn,
-	clerkPublishableKey,
-	clerkSatelliteDomain,
-	urlClerkUserProfile,
 	urlMcpEndpoint,
 	healthUrl,
 	discoveryUrl,
@@ -30,15 +19,9 @@ const {
 <Layout
 	title="AADM MCP — What you can do with subscriber access"
 	description="Versioned AADM tools and resources for coding agents: Navigator delivery, Investigator defects, Sentinel assurance. Paid MCP access on Streamable HTTP."
+	headerActiveNav="mcp"
+	headerMcpNavHref="#get-access"
 >
-	<a
-		href="#main"
-		class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-white"
-		>Skip to content</a
-	>
-
-	<SiteHeader {...cfg} activeNav="mcp" mcpNavHref="#get-access" />
-
 	<main id="main">
 		<!-- 1 Hero -->
 		<section
@@ -73,21 +56,30 @@ const {
 						server implementation.
 					</p>
 					<div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-						<a
-							id="get-access"
-							href={urlClerkSignUp}
-							rel="noopener noreferrer"
-							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
-						>
-							Get access
-						</a>
-						<a
-							href={urlClerkSignIn}
-							rel="noopener noreferrer"
-							class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white transition hover:border-slate-500/40 hover:bg-surface-mid"
-						>
-							Sign in
-						</a>
+						<Show when="signed-out">
+							<SignUpButton
+								mode="modal"
+								id="get-access"
+								class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
+							>
+								Get access
+							</SignUpButton>
+							<SignInButton
+								mode="modal"
+								class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white transition hover:border-slate-500/40 hover:bg-surface-mid"
+							>
+								Sign in
+							</SignInButton>
+						</Show>
+						<Show when="signed-in">
+							<a
+								id="get-access"
+								href={URL_ACCOUNT_USER}
+								class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
+							>
+								Manage account
+							</a>
+						</Show>
 						<a
 							href={urlStandard}
 							class="inline-flex items-center justify-center text-sm font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
@@ -203,32 +195,32 @@ const {
 				{
 					[
 						{
-							l: 'Delivery',
+							l: 'Velocity',
 							t: 'Faster delivery framing',
 							d: 'Navigator-style scope, verify, readiness with plan_delivery and doctrine-backed checks—not a generic checklist.',
 						},
 						{
-							l: 'Defects',
+							l: 'Rigor',
 							t: 'Safer defect work',
 							d: 'Investigator path keeps recon evidence-first; Path B diagnosis stays gated until routing accepts proof.',
 						},
 						{
-							l: 'Assurance',
+							l: 'Evidence',
 							t: 'Assurance without theater',
 							d: 'Sentinel surfaces audit programs and seam closure language so “alignment” means traceable evidence, not vibes.',
 						},
 						{
-							l: 'Orchestration',
+							l: 'Determinism',
 							t: 'Orchestrator-ready metadata',
 							d: '`standard_brief`, `route_lane`, and follow-on catalogs give hosts deterministic branching instead of keyword roulette.',
 						},
 						{
-							l: 'Controls',
+							l: 'Literacy',
 							t: 'AUTH literacy in-context',
 							d: 'Fetch AUTH slices where enforcement belongs in the stack—without dumping entire PDFs into every prompt.',
 						},
 						{
-							l: 'Platform',
+							l: 'Continuity',
 							t: 'One subscription, versioned server',
 							d: 'Hosted MCP tracks server capabilities; you integrate once and inherit capability schema bumps on your schedule.',
 						},
@@ -491,20 +483,28 @@ const {
 							Create an account (or sign in), complete subscription, then mint MCP tokens from your dashboard.
 						</p>
 						<div class="mt-8 flex flex-col gap-3">
-							<a
-								href={urlClerkSignUp}
-								rel="noopener noreferrer"
-								class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
-							>
-								Get access — sign up
-							</a>
-							<a
-								href={urlClerkSignIn}
-								rel="noopener noreferrer"
-								class="inline-flex items-center justify-center rounded-xl border border-border-subtle px-6 py-3.5 text-center text-base font-semibold text-white transition hover:bg-surface-mid"
-							>
-								Already subscribed? Sign in
-							</a>
+							<Show when="signed-out">
+								<SignUpButton
+									mode="modal"
+									class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
+								>
+									Get access — sign up
+								</SignUpButton>
+								<SignInButton
+									mode="modal"
+									class="inline-flex items-center justify-center rounded-xl border border-border-subtle px-6 py-3.5 text-center text-base font-semibold text-white transition hover:bg-surface-mid"
+								>
+									Already subscribed? Sign in
+								</SignInButton>
+							</Show>
+							<Show when="signed-in">
+								<a
+									href={URL_ACCOUNT_USER}
+									class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
+								>
+									Manage account
+								</a>
+							</Show>
 						</div>
 					</div>
 				</div>
@@ -543,14 +543,16 @@ const {
 								</a>
 							) : null}
 							<a
-								href="https://aadm.io/"
+								href="/"
 								class="inline-flex items-center rounded-lg border border-dashed border-slate-600/60 px-4 py-2 text-sm font-semibold text-slate-400 transition hover:border-slate-500 hover:text-slate-200"
 							>
 								About
 							</a>
 						</div>
 						<div>
-							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">MCP JSON-RPC URL (env-driven)</p>
+							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+								MCP service — Streamable HTTP origin (default <code class="text-slate-400">https://mcp.aadm.io</code>)
+							</p>
 							<p class="break-all font-mono-cta text-sm text-accent-blue">{urlMcpEndpoint}</p>
 						</div>
 						<div>
@@ -577,11 +579,4 @@ const {
 
 		<SiteFooter variant="mcp" />
 	</main>
-
-	<ClerkNavScript
-		clerkPublishableKey={clerkPublishableKey}
-		urlClerkUserProfile={urlClerkUserProfile}
-		urlClerkSignIn={urlClerkSignIn}
-		clerkSatelliteDomain={clerkSatelliteDomain}
-	/>
 </Layout>

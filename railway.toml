@@ -1,0 +1,11 @@
+# Railway config-as-code — https://docs.railway.app/deploy/config-as-code
+#
+# Dashboard values are overridden when the same keys exist here.
+# Zero-downtime deploys: wait until the container serves /health before cutover.
+
+[build]
+builder = "DOCKERFILE"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 300

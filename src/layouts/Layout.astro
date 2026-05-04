@@ -1,15 +1,27 @@
 ---
 import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import { getSiteUrlConfig } from '../lib/site-urls';
+
+type HeaderNav = 'home' | 'mcp' | null;
 
 interface Props {
 	title: string;
 	description?: string;
+	/** Highlights nav when MCP marketing route is active (`SiteHeader`). */
+	headerActiveNav?: HeaderNav;
+	/** Optional MCP chip href override (e.g. `#get-access` on `/mcp`). */
+	headerMcpNavHref?: string;
 }
 
 const {
 	title,
 	description = 'Agentic Authority Delivery Model — governed architecture for humans and coding agents.',
+	headerActiveNav = null,
+	headerMcpNavHref,
 } = Astro.props;
+
+const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 ---
 
 <!doctype html>
@@ -30,6 +42,21 @@ const {
 		/>
 	</head>
 	<body>
+		<a
+			href="#main"
+			class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-white"
+			>Skip to content</a
+		>
+		<!--
+			Clerk quickstart pattern: Show / SignInButton / SignUpButton / UserButton in the site header.
+			https://clerk.com/docs/astro/getting-started/quickstart
+		-->
+		<SiteHeader
+			urlStandard={urlStandard}
+			urlMcpMarketing={urlMcpMarketing}
+			activeNav={headerActiveNav}
+			mcpNavHref={headerMcpNavHref}
+		/>
 		<slot />
 	</body>
 </html>

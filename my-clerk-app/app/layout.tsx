@@ -17,10 +17,7 @@ import {
 } from "@/lib/clerk-host";
 import {
 	CLERK_AFTER_SIGN_OUT_URL,
-	clerkSignInFallbackRedirectUrl,
-	clerkSignInForceRedirectUrl,
-	clerkSignUpFallbackRedirectUrl,
-	clerkSignUpForceRedirectUrl,
+	CLERK_POST_AUTH_DEFAULT_PATH,
 } from "@/lib/clerk-redirects";
 import "./globals.css";
 
@@ -48,10 +45,6 @@ export default async function RootLayout({
 	const hostedUserProfileUrl = clerkUserProfileUrl();
 	const signInPath = clerkSignInUrl();
 	const signUpPath = clerkSignUpUrl();
-	const postAuth = clerkSignInFallbackRedirectUrl();
-	const postSignUp = clerkSignUpFallbackRedirectUrl();
-	const forceSignIn = clerkSignInForceRedirectUrl();
-	const forceSignUp = clerkSignUpForceRedirectUrl();
 
 	return (
 		<html
@@ -59,18 +52,10 @@ export default async function RootLayout({
 			className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
 		>
 			<body className="min-h-full flex flex-col">
-				<ClerkProvider
-					signInUrl={signInPath}
-					signUpUrl={signUpPath}
-					signInForceRedirectUrl={forceSignIn}
-					signUpForceRedirectUrl={forceSignUp}
-					signInFallbackRedirectUrl={postAuth}
-					signUpFallbackRedirectUrl={postSignUp}
-					afterSignOutUrl={CLERK_AFTER_SIGN_OUT_URL}
-				>
+				<ClerkProvider signInUrl={signInPath} signUpUrl={signUpPath} afterSignOutUrl={CLERK_AFTER_SIGN_OUT_URL}>
 					<header className="flex items-center gap-2 border-b border-zinc-200 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3 dark:border-zinc-800">
 						<Link
-							href={userId ? postAuth : "/"}
+							href={userId ? CLERK_POST_AUTH_DEFAULT_PATH : "/"}
 							className="shrink-0 font-semibold text-base text-zinc-900 sm:text-lg dark:text-zinc-50"
 						>
 							Home
@@ -111,7 +96,7 @@ export default async function RootLayout({
 								)}
 							</Show>
 							<Show when="signed-out">
-								<SignInButton mode="redirect" forceRedirectUrl={forceSignIn}>
+								<SignInButton mode="redirect">
 									<button
 										type="button"
 										className="shrink-0 cursor-pointer rounded-md border border-zinc-300 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-900 shadow-sm transition hover:bg-zinc-50 sm:px-3 sm:text-sm dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
@@ -127,7 +112,7 @@ export default async function RootLayout({
 									<span className="sm:hidden">Forgot?</span>
 									<span className="hidden sm:inline">Forgot password?</span>
 								</Link>
-								<SignUpButton mode="redirect" forceRedirectUrl={forceSignUp}>
+								<SignUpButton mode="redirect">
 									<button
 										type="button"
 										className="shrink-0 cursor-pointer rounded-md bg-violet-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-violet-700 sm:px-3 sm:text-sm"

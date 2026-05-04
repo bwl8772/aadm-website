@@ -9,11 +9,17 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test:clerk-smoke": "node scripts/clerk-nav-smoke.mjs"
   },
   "dependencies": {
+    "@astrojs/node": "^10.0.6",
+    "@clerk/astro": "^3.1.0",
     "@tailwindcss/vite": "^4.2.4",
     "astro": "^6.2.1",
     "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "playwright": "^1.52.0"
   }
 }

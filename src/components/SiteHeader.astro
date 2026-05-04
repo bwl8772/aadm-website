@@ -1,26 +1,21 @@
 ---
-import type { SiteUrlConfig } from '../lib/site-urls';
+import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/astro/components';
 
 type ActiveNav = 'home' | 'mcp' | null;
 
-interface Props extends SiteUrlConfig {
+interface Props {
+	urlStandard: string;
+	/** Public MCP marketing page (production: `https://aadm.io/mcp`). */
+	urlMcpMarketing: string;
 	/** When set, highlights the matching nav control. */
 	activeNav?: ActiveNav;
-	/** Override href for the “Get MCP Access” nav chip (e.g. `/mcp#get-access` on the MCP sales page). */
+	/** Override href for the MCP nav chip (e.g. `/mcp#get-access` on the MCP sales page). */
 	mcpNavHref?: string;
 }
 
-const {
-	activeNav = null,
-	mcpNavHref: mcpNavHrefProp,
-	urlStandard,
-	urlMcpQuickstart,
-	urlClerkSignIn,
-	urlClerkSignUp,
-	clerkPublishableKey,
-} = Astro.props;
+const { activeNav = null, mcpNavHref: mcpNavHrefProp, urlStandard, urlMcpMarketing } = Astro.props;
 
-const mcpNavHref = mcpNavHrefProp ?? urlMcpQuickstart;
+const mcpNavHref = mcpNavHrefProp ?? urlMcpMarketing;
 
 const standardChip =
 	activeNav === 'home'
@@ -30,17 +25,18 @@ const mcpChip =
 	activeNav === 'mcp'
 		? 'ring-2 ring-white/40 ring-offset-2 ring-offset-surface-deep'
 		: '';
+
+const baseChipClasses =
+	'shrink-0 whitespace-nowrap rounded-lg border border-border-subtle px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-slate-500/50 hover:bg-surface-card/60 hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4';
+const joinChipClasses =
+	'shrink-0 whitespace-nowrap rounded-lg border border-violet-500/40 bg-violet-950/40 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-violet-400/60 hover:bg-violet-900/50 sm:px-3 sm:py-2 sm:text-sm md:px-4';
+
 ---
 
-<header
-	class="sticky top-0 z-40 border-b border-border-subtle bg-surface-deep/80 backdrop-blur-md"
->
-	<div
-		class="mx-auto flex min-h-14 max-w-6xl items-center gap-2 px-3 py-2 sm:h-16 sm:gap-4 sm:px-6 sm:py-0"
-	>
+<header class="sticky top-0 z-40 border-b border-border-subtle bg-surface-deep/80 backdrop-blur-md">
+	<div class="mx-auto flex min-h-14 max-w-6xl items-center gap-2 px-3 py-2 sm:h-16 sm:gap-4 sm:px-6 sm:py-0">
 		<a
-			href="https://aadm.io/"
-			rel="noopener noreferrer"
+			href="/"
 			aria-label="AADM — home"
 			class="shrink-0 rounded font-display text-base font-bold tracking-tight text-white transition hover:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 sm:text-lg"
 		>
@@ -52,7 +48,7 @@ const mcpChip =
 		>
 			<a
 				href={urlStandard}
-				aria-label="View the AADM standard"
+				aria-label="Open AADM standard — read and adopt"
 				aria-current={activeNav === 'home' ? 'page' : undefined}
 				class:list={[
 					'shrink-0 whitespace-nowrap rounded-lg border border-border-subtle bg-surface-card/80 px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid sm:px-3 sm:py-2 sm:text-sm md:px-4',
@@ -60,11 +56,11 @@ const mcpChip =
 				]}
 			>
 				<span class="md:hidden">Standard</span>
-				<span class="hidden md:inline">View the Standard</span>
+				<span class="hidden md:inline">Open standard</span>
 			</a>
 			<a
 				href={mcpNavHref}
-				aria-label="Get MCP access"
+				aria-label="MCP marketing — overview and access (aadm.io/mcp)"
 				aria-current={activeNav === 'mcp' ? 'page' : undefined}
 				class:list={[
 					'shrink-0 whitespace-nowrap rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-2.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-violet-900/30 transition hover:brightness-110 sm:px-3 sm:py-2 sm:text-sm md:px-4',
@@ -72,39 +68,18 @@ const mcpChip =
 				]}
 			>
 				<span class="md:hidden">MCP</span>
-				<span class="hidden md:inline">Get MCP Access</span>
+				<span class="hidden md:inline">Hosted MCP</span>
 			</a>
-			<a
-				id="nav-clerk-auth-primary"
-				href={urlClerkSignIn}
-				rel="noopener noreferrer"
-				aria-label="Sign in to your account"
-				class="shrink-0 whitespace-nowrap rounded-lg border border-border-subtle px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-slate-500/50 hover:bg-surface-card/60 hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4"
-			>
-				<span class="sm:hidden" data-clerk-auth="short">Sign in</span>
-				<span class="hidden sm:inline" data-clerk-auth="long">Sign in</span>
-			</a>
-			<a
-				id="nav-clerk-sign-up"
-				href={urlClerkSignUp}
-				rel="noopener noreferrer"
-				class="shrink-0 whitespace-nowrap rounded-lg border border-violet-500/40 bg-violet-950/40 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-violet-400/60 hover:bg-violet-900/50 sm:px-3 sm:py-2 sm:text-sm md:px-4"
-			>
-				<span class="sm:hidden">Join</span>
-				<span class="hidden sm:inline">Sign up</span>
-			</a>
-			<button
-				id="nav-clerk-sign-out"
-				type="button"
-				aria-label="Sign out"
-				class:list={[
-					'shrink-0 cursor-pointer whitespace-nowrap rounded-lg border border-border-subtle px-2.5 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-slate-500/50 hover:bg-surface-card/50 hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4',
-					clerkPublishableKey ? 'hidden' : '',
-				]}
-			>
-				<span class="sm:hidden">Out</span>
-				<span class="hidden sm:inline">Sign out</span>
-			</button>
+			<Show when="signed-out">
+				<SignInButton mode="modal" class={baseChipClasses}>Sign in</SignInButton>
+				<SignUpButton mode="modal" class={joinChipClasses}>
+					<span class="sm:hidden">Join</span>
+					<span class="hidden sm:inline">Sign up</span>
+				</SignUpButton>
+			</Show>
+			<Show when="signed-in">
+				<UserButton afterSignOutUrl="/" />
+			</Show>
 		</nav>
 	</div>
 </header>

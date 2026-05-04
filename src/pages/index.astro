@@ -1,44 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import ClerkNavScript from '../components/ClerkNavScript.astro';
-import { clerkReturnUrlForPathname, getSiteUrlConfig } from '../lib/site-urls';
+import { getSiteUrlConfig } from '../lib/site-urls';
 
-const cfg = getSiteUrlConfig(import.meta.env, {
-	clerkReturnAfterAuth: clerkReturnUrlForPathname(
-		import.meta.env,
-		Astro.url.pathname,
-		Astro.url.search,
-	),
-});
+const cfg = getSiteUrlConfig(import.meta.env);
 const {
 	urlStandard,
 	urlMcpEndpoint,
-	urlMcpQuickstart,
+	urlMcpMarketing,
 	urlMcpCustomerDocs,
-	hasMcpDocsLink,
-	urlClerkSignUp,
-	clerkPublishableKey,
-	clerkSatelliteDomain,
-	urlClerkUserProfile,
-	urlClerkSignIn,
-	urlClerkSignOut,
+	hasMcpMarketingLink,
 	healthUrl,
 	discoveryUrl,
 	curlInit,
 } = cfg;
 ---
 
-<Layout title="AADM — Agentic Authority Delivery Model">
-	<a
-		href="#main"
-		class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-white"
-		>Skip to content</a
-	>
-
-	<SiteHeader {...cfg} />
-
+<Layout
+	title="AADM — Agentic Authority Delivery Model"
+	description="Open standard for governed software delivery with agents—read and adopt in public. Optional hosted MCP keeps your tooling versioned, online, and maintained."
+	headerActiveNav="home"
+>
 	<main id="main">
 		<section class="mx-auto max-w-6xl px-4 pb-20 pt-16 sm:px-6 sm:pt-24">
 			<p
@@ -46,54 +28,55 @@ const {
 			>
 				<span
 					class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-blue"
-					>Published standard</span
+					>Open standard</span
 				>
 				<span class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-violet"
-					>MCP access</span
+					>Hosted MCP</span
 				>
 			</p>
 			<h1
 				class="font-display max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl"
 			>
-				Governed software delivery for
+				Keep agent-assisted delivery
 				<span class="bg-gradient-to-r from-accent-violet to-accent-blue bg-clip-text text-transparent">
-					humans and agents
+					aligned, current, and online
 				</span>
 			</h1>
 			<p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
-				We <strong class="font-semibold text-slate-300">publish the standard</strong> in the open—definitions,
-				templates, and governance narrative anyone can read and adopt.{' '}
-				<strong class="font-semibold text-slate-300">MCP access</strong> is separate: a private, hosted service
-				so subscribers’ agents get versioned tools and resources without us open-sourcing the MCP implementation.
+				<strong class="font-semibold text-slate-300">The standard</strong> lives in the open—definitions,
+				templates, and governance narrative you can read, adopt, and improve with everyone else shipping software
+				the same way. <strong class="font-semibold text-slate-300">Hosted MCP access</strong> is separate: a
+				private service so your agents get versioned tools and resources on infrastructure that stays updated and
+				maintained—without requiring an open-source MCP implementation.
 			</p>
 			<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
 				<a
 					href={urlStandard}
 					class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid"
 				>
-					View the Standard
+					Read &amp; adopt the standard
 				</a>
 				<a
-					href={urlMcpQuickstart}
+					href={urlMcpMarketing}
 					class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
 				>
-					Get MCP Access
+					Connect production agents
 				</a>
 			</div>
 			<p class="mt-4 text-sm text-slate-500">
-				The MCP does not enforce production AUTH — your services, gateways, tests, and CI remain
-				authoritative.
+				MCP carries context and workflows—it does not replace your production AUTH, gateways, tests, or CI as the
+				source of truth.
 			</p>
 		</section>
 
 		<section class="border-y border-border-subtle bg-surface-mid/40 py-16 sm:py-20">
 			<div class="mx-auto max-w-6xl px-4 sm:px-6">
 				<h2 class="font-display text-center text-2xl font-bold text-white sm:text-3xl">
-					Three equal agent workflows
+					Three ways your agents stay useful—not generic “bug chat”
 				</h2>
 				<p class="mx-auto mt-3 max-w-2xl text-center text-slate-400">
-					AADM MCP surfaces three equal workflows: pick the lane that matches the primary question — not
-					everything is “bug chat.”
+					Same vocabulary in the open standard; when you subscribe to hosted MCP, your tools expose three equal
+					lanes so the right workflow matches the question you are actually asking.
 				</p>
 				<ul class="mt-12 grid gap-6 sm:grid-cols-3">
 					<li
@@ -101,7 +84,8 @@ const {
 					>
 						<h3 class="font-display text-lg font-bold text-accent-violet">Navigator</h3>
 						<p class="mt-2 text-sm leading-relaxed text-slate-400">
-							Planned delivery — scope, verify, readiness for net new or material improvement.
+							<strong class="text-slate-300">You ship planned work:</strong> scope, verify, and readiness for
+							net-new or meaningful upgrades—without improvising a process each sprint.
 						</p>
 					</li>
 					<li
@@ -109,7 +93,8 @@ const {
 					>
 						<h3 class="font-display text-lg font-bold text-accent-blue">Investigator</h3>
 						<p class="mt-2 text-sm leading-relaxed text-slate-400">
-							Defects — evidence-gated recon before deep diagnosis; remediation when classified.
+							<strong class="text-slate-300">You fix what is broken:</strong> evidence-first recon, then
+							remediation once the failure is classified—fewer speculative rewrites.
 						</p>
 					</li>
 					<li
@@ -117,7 +102,8 @@ const {
 					>
 						<h3 class="font-display text-lg font-bold text-violet-300">Sentinel</h3>
 						<p class="mt-2 text-sm leading-relaxed text-slate-400">
-							Assurance — prove existing alignment with AUTH, UDALI, and evidence across seams.
+							<strong class="text-slate-300">You prove alignment:</strong> trace AUTH, UDALI, and evidence
+							across seams so releases are defensible—not vibes.
 						</p>
 					</li>
 				</ul>
@@ -125,12 +111,12 @@ const {
 		</section>
 
 		<section id="mcp-quickstart" class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-			<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">MCP access — quick reference</h2>
-			<p class="mt-3 text-sm text-slate-500">
-				URLs below come from your environment—use production subscriber endpoints when you ship this site.
-			</p>
+			<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Wire your stack—quick MCP reference</h2>
 			<p class="mt-4 max-w-3xl text-slate-400">
-				The MCP speaks over <strong class="text-slate-300">Streamable HTTP</strong>:
+				When agents need stable, versioned access to the same resources your team already trusts, 				the MCP
+				<strong class="text-slate-300">service</strong> at{' '}
+				<code class="font-mono-cta text-sm text-accent-blue">{urlMcpEndpoint}</code> speaks
+				<strong class="text-slate-300">Streamable HTTP</strong>:
 				<code class="rounded bg-surface-card px-1.5 py-0.5 font-mono-cta text-sm text-accent-violet">POST</code>
 				with <code class="font-mono-cta text-sm text-slate-300">Accept: application/json, text/event-stream</code>.
 				Browser GET to the MCP path without that header often returns <strong class="text-slate-300">406</strong>—expected.
@@ -141,10 +127,10 @@ const {
 					<div class="mt-8 space-y-6">
 						<div class="flex flex-wrap gap-3">
 							<a
-								href={urlMcpQuickstart}
+								href={urlMcpMarketing}
 								class="inline-flex items-center rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110"
 							>
-								MCP documentation
+								MCP marketing (aadm.io/mcp)
 							</a>
 							{healthUrl ? (
 								<a
@@ -165,7 +151,7 @@ const {
 						</div>
 						<div>
 							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
-								MCP HTTP URL
+								MCP service (JSON-RPC — not the marketing page)
 							</p>
 							<p class="break-all font-mono-cta text-sm text-accent-blue">{urlMcpEndpoint}</p>
 						</div>
@@ -176,18 +162,19 @@ const {
 							<pre
 								class="overflow-x-auto rounded-2xl border border-border-subtle bg-surface-card/90 p-4 font-mono-cta text-xs leading-relaxed text-slate-300 sm:text-sm"><code>{curlInit}</code></pre>
 						</div>
-						{hasMcpDocsLink ? (
+						{hasMcpMarketingLink ? (
 							<p class="text-sm text-slate-500">
-								Server implementation is proprietary; subscriber guides and setup live on the{' '}
-								<a href={urlMcpQuickstart} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-									MCP documentation site
+								Subscription covers the running service, updates, and subscriber guides—read the public MCP
+								marketing page at{' '}
+								<a href={urlMcpMarketing} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+									{urlMcpMarketing}
 								</a>
-								.
+								(default production: <code class="font-mono-cta text-slate-400">https://aadm.io/mcp</code>).
 							</p>
 						) : (
 							<p class="text-sm text-slate-500">
-								Set <code class="font-mono-cta text-slate-400">PUBLIC_MCP_QUICKSTART_URL</code> to your public
-								subscriber docs (for example <code class="font-mono-cta text-slate-400">https://aadm.io/mcp</code>).
+								Set <code class="font-mono-cta text-slate-400">PUBLIC_MCP_QUICKSTART_URL</code> to your MCP marketing
+								URL (override default <code class="font-mono-cta text-slate-400">https://aadm.io/mcp</code> when needed).
 							</p>
 						)}
 						{urlMcpCustomerDocs ? (
@@ -210,46 +197,49 @@ const {
 		</section>
 
 		<section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
-			<div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+			<div class="grid gap-10 lg:grid-cols-2 lg:items-start">
 				<div>
-					<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Published standard vs MCP</h2>
+					<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Open standard, hosted bridge</h2>
 					<p class="mt-4 text-slate-400">
-						The <strong class="text-slate-300">standard</strong> lives in the public repository for humans,
-						tickets, and audits. <strong class="text-slate-300">MCP</strong> is subscriber infrastructure we
-						operate as hosted infrastructure—connection details and SLAs come with access, not from a public server repo.
-						Nothing here replaces your production AUTH, gateways, or CI.
+						<strong class="text-slate-300">One living standard, visible to everyone who ships with you.</strong>
+						The text stays public so your org, partners, and community can discuss changes, propose updates, and
+						stay on the same page—like any mature open project.
+					</p>
+					<p class="mt-4 text-slate-400">
+						<strong class="text-slate-300">Pay for uptime and evolution, not a zip file.</strong> Hosted MCP is
+						a separate subscription so the endpoint your agents call stays online, versioned, and maintained;
+						you get operational continuity instead of self-hosting a moving target.
+					</p>
+					<p class="mt-4 text-sm text-slate-500">
+						Your production AUTH, gateways, tests, and CI stay authoritative; MCP is how agents load the
+						standard’s context and workflows predictably.
 					</p>
 				</div>
 				<div class="space-y-4">
-					<div
-						class="rounded-2xl border border-border-subtle bg-surface-card/90 p-5 font-mono-cta text-sm"
-					>
-						<p class="text-xs font-medium uppercase tracking-wide text-slate-500">Environment</p>
-						<p class="mt-2 text-slate-300">
-							Use <span class="text-accent-violet">PUBLIC_STANDARD_REPO_URL</span>,{' '}
-							<span class="text-accent-blue">PUBLIC_MCP_REPO_URL</span> (MCP HTTP URL),{' '}
-							<span class="text-accent-violet">PUBLIC_MCP_QUICKSTART_URL</span> (subscriber docs, e.g. /mcp on your main site). Optional:{' '}
-							<span class="text-accent-blue">PUBLIC_MCP_CUSTOMER_DOCS_URL</span> (private subscriber docs). No spaces after{' '}
-							<code class="text-slate-400">=</code>.
-						</p>
+					<div class="rounded-2xl border border-border-subtle bg-surface-card/90 p-6">
+						<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">What you get</h3>
+						<ul class="mt-4 space-y-3 text-sm text-slate-400">
+							<li>
+								<span class="font-semibold text-accent-blue">Open standard</span> — always readable,
+								adoptable, and improvable in public; no paywall on the definitions.
+							</li>
+							<li>
+								<span class="font-semibold text-accent-violet">Hosted MCP</span> — versioned tools and
+								resources for subscribers’ agents; someone ships fixes and keeps the service current.
+							</li>
+						</ul>
 					</div>
-					<div
-						class="rounded-2xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-5 text-sm text-slate-500"
-					>
-						This repository is only the marketing shell. Point env vars at your public standard repo, MCP
-						endpoint, operator portal, and (if you have one) a subscriber-only docs base URL.
-					</div>
+					<p class="rounded-2xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-4 font-mono-cta text-xs leading-relaxed text-slate-500">
+						Deploying this site? Set <span class="text-accent-violet">PUBLIC_STANDARD_REPO_URL</span>,{' '}
+						<span class="text-accent-blue">PUBLIC_MCP_REPO_URL</span> to the MCP service (default{' '}
+						<code class="text-slate-400">https://mcp.aadm.io</code>), and optionally{' '}
+						<span class="text-accent-violet">PUBLIC_MCP_QUICKSTART_URL</span> for the marketing page (default{' '}
+						<code class="text-slate-400">https://aadm.io/mcp</code>).
+					</p>
 				</div>
 			</div>
 		</section>
 
 		<SiteFooter />
 	</main>
-
-	<ClerkNavScript
-		clerkPublishableKey={clerkPublishableKey}
-		urlClerkUserProfile={urlClerkUserProfile}
-		urlClerkSignIn={urlClerkSignIn}
-		clerkSatelliteDomain={clerkSatelliteDomain}
-	/>
 </Layout>

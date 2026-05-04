@@ -1,0 +1,90 @@
+/**
+ * Playwright smoke for the @clerk/astro nav.
+ *
+ * - Loads `/`, captures hrefs/buttons signed-out users see.
+ * - Clicks Sign in to confirm Clerk redirects to its Account Portal (no bounce-back loop).
+ * - Loads `/mcp`, confirms Get access / Sign in are Clerk components and resolve to the portal.
+ *
+ * Run: BASE_URL=http://127.0.0.1:4322 npm run test:clerk-smoke
+ *      BASE_URL=https://aadm.io npm run test:clerk-smoke
+ */
+import { chromium } from 'playwright';
+
+const base = (process.env.BASE_URL || 'http://127.0.0.1:4322').replace(/\/$/, '');
+const timeoutMs = Number(process.env.SMOKE_TIMEOUT_MS || 45000);
+
+function log(section, data) {
+	console.log(`\n=== ${section} ===`);
+	console.log(typeof data === 'string' ? data : JSON.stringify(data, null, 2));
+}
+
+const browser = await chromium.launch({ headless: process.env.HEADFUL !== '1' });
+const context = await browser.newContext({
+	viewport: { width: 1280, height: 800 },
+	userAgent:
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+});
+
+let exitCode = 0;
+try {
+	const page = await context.newPage();
+	const navigations = [];
+	page.on('framenavigated', (frame) => {
+		if (frame === page.mainFrame()) navigations.push({ t: Date.now(), url: frame.url() });
+	});
+
+	await page.goto(`${base}/`, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
+	await page.waitForTimeout(1500);
+
+	const homeData = await page.evaluate(() => {
+		const headerButtons = Array.from(document.querySelectorAll('header button')).map((b) => ({
+			text: b.textContent?.trim() || null,
+			dataset: { ...b.dataset },
+		}));
+		const headerLinks = Array.from(document.querySelectorAll('header a')).map((a) => ({
+			text: a.textContent?.trim() || null,
+			href: a.getAttribute('href'),
+		}));
+		return { headerButtons, headerLinks };
+	});
+	log('Home page (signed-out)', { url: page.url(), ...homeData });
+
+	navigations.length = 0;
+	const signInBtn = page.locator('header button', { hasText: 'Sign in' }).first();
+	await signInBtn.click({ timeout: 10000 });
+	await page.waitForLoadState('domcontentloaded', { timeout: timeoutMs }).catch(() => {});
+	await page.waitForTimeout(2000);
+
+	log('After clicking Sign in (Clerk component)', {
+		finalUrl: page.url(),
+		title: await page.title(),
+		isClerkPortal:
+			/accounts\..+/.test(new URL(page.url()).hostname) ||
+			/clerk\.accounts\.dev/.test(new URL(page.url()).hostname),
+		mainText: ((await page.locator('body').innerText()).slice(0, 280) || '').replace(/\s+/g, ' ').trim(),
+	});
+	log('Main-frame navigations (chronological)', navigations);
+
+	await page.goto(`${base}/mcp`, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
+	await page.waitForTimeout(1500);
+
+	const mcpData = await page.evaluate(() => {
+		const get = (sel) => {
+			const el = document.querySelector(sel);
+			return el ? { tag: el.tagName.toLowerCase(), text: el.textContent?.trim() || null } : null;
+		};
+		return {
+			getAccess: get('#get-access'),
+			heroSignIn: Array.from(document.querySelectorAll('main button')).find(
+				(b) => /Sign in/i.test(b.textContent || ''),
+			)?.textContent?.trim() || null,
+		};
+	});
+	log('/mcp page (signed-out CTAs)', { url: page.url(), ...mcpData });
+} catch (err) {
+	console.error('Smoke failed:', err);
+	exitCode = 1;
+} finally {
+	await browser.close();
+	process.exit(exitCode);
+}

@@ -1,19 +1,20 @@
 # AADM website
 
-Standalone **static** marketing homepage for **AADM** (Agentic Authority Delivery Model).
+Marketing site for **AADM** (Agentic Authority Delivery Model). Astro **SSR** with the official **`@clerk/astro`** SDK for sign-in / sign-up / sign-out.
 
 **Product split**
 
 | Track | What | Where |
 |--------|------|--------|
 | **Standard** | Published openly—definitions, templates, governance narrative | Public repo (e.g. **`aadm-standard`** on GitHub) — **View the Standard** |
-| **MCP** | Private **MCP access**; implementation stays proprietary | **Service:** Streamable HTTP on your MCP host (e.g. `https://mcp.example.com/mcp`). **Docs:** often on your main site (e.g. `https://example.com/mcp`) — **Get MCP Access** points at docs; quick reference on this page uses the MCP URL for health, discovery JSON, and `curl`. |
+| **MCP** | Private **MCP access**; implementation stays proprietary | **Service (agents):** Streamable HTTP at **`https://mcp.aadm.io`**. **Marketing (humans):** **`https://aadm.io/mcp`** — this repo also serves `/mcp` when you deploy this Astro app. |
 
 This repo is only the marketing shell. It does not ship MCP server source or the normative standard files.
 
 ## Stack
 
-- [Astro](https://astro.build/) 6 — `output: 'static'`
+- [Astro](https://astro.build/) 6 — `output: 'server'`, `@astrojs/node` standalone adapter
+- [`@clerk/astro`](https://clerk.com/docs/astro/getting-started/quickstart) — Clerk middleware + components (no hand-rolled JS)
 - [Tailwind CSS](https://tailwindcss.com/) v4 via `@tailwindcss/vite`
 
 ## Develop
@@ -23,29 +24,36 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:4321](http://localhost:4321).
+Open [http://localhost:4321](http://localhost:4321). Health check: [http://localhost:4321/health](http://localhost:4321/health).
 
-## Configure outbound links
+## Configure
 
-Copy `.env.example` to `.env` and set. **Do not put a space after `=`** — a leading space becomes part of the URL.
+Copy `.env.example` to `.env`. **Do not put a space after `=`**.
 
 | Variable | Purpose |
 |----------|---------|
-| `PUBLIC_STANDARD_REPO_URL` | **View the Standard** — public repo or site for the standard (e.g. `aadm-standard` on GitHub). |
-| `PUBLIC_MCP_REPO_URL` | **MCP host** — e.g. `https://mcp.aadm.io`. Same origin is used for **`GET /health`** and **`GET /`** discovery JSON ([example](https://mcp.aadm.io/)). The endpoint is the origin itself—do **not** append `/mcp`. |
-| `PUBLIC_MCP_QUICKSTART_URL` | **Get MCP Access** in the header (and related links) — should point at this repo’s **`/mcp`** sales page (e.g. `https://aadm.io/mcp`), separate from the MCP API host (`PUBLIC_MCP_REPO_URL`). |
-| `PUBLIC_MCP_CUSTOMER_DOCS_URL` (optional) | Second documentation base (e.g. gated Notion). If unset and `PUBLIC_MCP_QUICKSTART_URL` is set, the page still links to that docs URL. |
-| `PUBLIC_CLERK_SIGN_IN_URL` / `PUBLIC_CLERK_SIGN_UP_URL` | Marketing header **Sign in** / **Sign up** → Clerk Account Portal (e.g. `https://accounts…/sign-in`). |
-| `PUBLIC_CLERK_USER_PROFILE_URL` (optional) | When a session is detected, the primary auth control becomes **Account** and links here (default `https://accounts.aadm.io/user`). |
-| `PUBLIC_CLERK_SIGN_OUT_URL` (optional) | Override the Account Portal **sign-out** path/origin if yours differs; **`redirect_url` is always set to `https://aadm.io/`** after logout. |
-| `PUBLIC_CLERK_PUBLISHABLE_KEY` (optional) | If set, the site loads Clerk browser JS: signed-out users see **Sign in**; signed-in users see **Account** (profile URL above) and **Sign out** is shown. Use the same publishable key as your Clerk app; add `aadm.io` to allowed origins in Clerk. |
-| `PUBLIC_CLERK_SATELLITE_DOMAIN` (optional) | Hostname for Clerk **satellite** setup (e.g. `aadm.io`) so the marketing domain can receive session sync. Omit unless you use satellite domains. |
+| `PUBLIC_STANDARD_REPO_URL` | **View the Standard** — public repo or site for the standard. |
+| `PUBLIC_MCP_REPO_URL` | **MCP service** — Streamable HTTP origin only. Default **`https://mcp.aadm.io`**. Do **not** append `/mcp`; this is not the marketing site. |
+| `PUBLIC_MCP_QUICKSTART_URL` (optional) | **MCP marketing** page URL. Default **`https://aadm.io/mcp`**. Override for local preview (e.g. `http://localhost:4321/mcp`). |
+| `PUBLIC_MCP_CUSTOMER_DOCS_URL` (optional) | Second documentation base (e.g. gated Notion). |
+| `PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key (build + runtime). |
+| `CLERK_SECRET_KEY` | Clerk secret (runtime, server-only). Required for `clerkMiddleware()`. |
+| `PUBLIC_CLERK_AUTHORIZED_PARTIES` (optional) | Comma-separated origins for Clerk’s `authorizedParties` (e.g. `http://localhost:4321,https://aadm.io`). Use when Clerk otherwise redirects browsers to the Dashboard application URL. Wired in `astro.config.mjs`. |
 
-Astro only exposes variables prefixed with `PUBLIC_` to the client.
+Astro only exposes `PUBLIC_*` variables to the client. `CLERK_SECRET_KEY` stays on the server.
 
-### MCP quick reference on the homepage
+### Routes (Astro)
 
-The **MCP access — quick reference** block uses **`PUBLIC_MCP_REPO_URL`** for protocol facts (Streamable HTTP, `Accept` headers, `/health`, service-root discovery JSON, minimal `initialize` curl). It uses **`PUBLIC_MCP_QUICKSTART_URL`** for the **MCP documentation** button and the **Get MCP Access** header/hero CTA—typically your marketing site path (e.g. `/mcp` on `aadm.io`), not the MCP API hostname.
+There is no manual “route order” file: URLs come from `src/pages/` only — `index.astro` → `/`, `mcp.astro` → `/mcp` (**marketing** for this deploy), `health.ts` → `/health`. The live MCP **service** for clients is always **`https://mcp.aadm.io`** (`PUBLIC_MCP_REPO_URL`). Private URL prefixes for Clerk live in `src/lib/routes.ts` and are consumed by `src/middleware.ts`.
+
+### Auth: how it works now
+
+- `src/middleware.ts` runs `clerkMiddleware` with **opt-in** private routes (`/account(.*)` by default); `/`, `/mcp`, and `/health` stay public.
+- `SiteHeader` uses `<Show when="signed-out">` / `<Show when="signed-in">` plus `<SignInButton>`, `<SignUpButton>`, `<UserButton afterSignOutUrl="/">` from `@clerk/astro/components` (same pattern as the [Clerk Astro quickstart](https://clerk.com/docs/astro/getting-started/quickstart)).
+- The MCP page CTAs (`Get access`, `Sign in`) are also `<SignUpButton>` / `<SignInButton>`.
+- No more inline `<script>` for Clerk JS, no manual `redirect_url` query plumbing.
+
+Set the Clerk Account Portal hosts in the Clerk Dashboard (`accounts.<your-domain>.com`); the SDK redirects there automatically.
 
 ## Build
 
@@ -53,11 +61,11 @@ The **MCP access — quick reference** block uses **`PUBLIC_MCP_REPO_URL`** for 
 npm run build
 ```
 
-Output: `dist/`. Preview locally with `npm run preview`.
+Output: `dist/` (Astro Node SSR). Preview with `npm run preview`.
 
 ## Docker (Railway or any host)
 
-Multi-stage **`Dockerfile`**: builds Astro, then runs a tiny Node server that serves `dist/` and answers **`GET /health`** with JSON `{"status":"ok","service":"aadm-website"}`.
+Multi-stage `Dockerfile`: builds Astro SSR, then runs `node ./dist/server/entry.mjs`. **`@astrojs/node`** listens on **`HOST`** (default `0.0.0.0` in the image) and **`PORT`** (Railway sets `PORT` at runtime; local default `8080`).
 
 ```bash
 docker build -t aadm-website \
@@ -66,33 +74,36 @@ docker build -t aadm-website \
   --build-arg PUBLIC_MCP_QUICKSTART_URL="https://aadm.io/mcp" \
   --build-arg PUBLIC_CLERK_PUBLISHABLE_KEY="pk_live_..." \
   .
-docker run --rm -p 8080:8080 -e PORT=8080 aadm-website
+docker run --rm -p 8080:8080 \
+  -e CLERK_SECRET_KEY="sk_live_..." \
+  -e PUBLIC_CLERK_PUBLISHABLE_KEY="pk_live_..." \
+  -e PORT=8080 \
+  aadm-website
 # Visit http://localhost:8080/health
 ```
 
-**Railway:** New service → deploy from this repo → set **Root Directory** if needed → **Dockerfile** builder. Add the same **`PUBLIC_*`** names as in `.env` under **Variables** so the Astro build can embed correct links (Railway forwards them as build args when names match `ARG` lines in the Dockerfile).
+### Railway
 
-Listen address: **`0.0.0.0`**; port from **`PORT`** (Railway sets this automatically).
+1. **New service** → deploy from this GitHub repo (root directory = repo root).
+2. Railway picks up **`Dockerfile`** and **`railway.toml`** (`builder = "DOCKERFILE"`, deploy health check on **`/health`**).
+3. **Variables** (runtime): `CLERK_SECRET_KEY`, `PUBLIC_CLERK_PUBLISHABLE_KEY`, and the same `PUBLIC_*` marketing URLs you use locally. Railway injects **`PORT`**; do not set it manually unless you know you need a fixed port.
+4. **Build arguments** (optional): In the service **Settings → Build → Docker Build Args**, add the same names as the `ARG` lines in the Dockerfile (`PUBLIC_STANDARD_REPO_URL`, `PUBLIC_MCP_REPO_URL`, etc.) so Astro embeds public URLs at build time. If you omit them, defaults in `site-urls.ts` apply where coded.
 
-### Health checks: `aadm.io` vs `aadm.io/health` vs MCP
+Health check for the load balancer: **`/health`** (JSON `{"status":"ok","service":"aadm-website"}`).
 
-| What you probe | Typical URL | Notes |
-|----------------|---------------|--------|
-| **This marketing site** (this repo, Docker) | **`https://aadm.io/health`** | Dedicated JSON endpoint from `scripts/docker-serve.mjs`. Use this for Railway / load balancer health checks on the **site** service. |
-| **Site root** | `https://aadm.io/` | Returns **HTML** (homepage). You *can* probe `/` for “something is up,” but checks are clearer with **`/health`** (small JSON, no layout/CDN ambiguity). |
-| **MCP service** (separate deploy, e.g. `mcp.aadm.io`) | **`https://mcp.aadm.io/health`** | Different process: liveness for the **MCP server**, not the marketing site. Discovery JSON is usually **`GET /`** on that same MCP host ([example](https://mcp.aadm.io/)). |
+### Health checks
 
-So: **`aadm.io/health`** for the static site on Railway; **`mcp…/health`** for the MCP product. They are not interchangeable.
+| What you probe | URL | Notes |
+|----------------|-----|-------|
+| This site | `https://aadm.io/health` | Astro endpoint returning `{"status":"ok","service":"aadm-website"}`. Use for Railway/LB health checks. |
+| MCP service | `https://mcp.aadm.io/health` | Separate deploy. |
 
-## Publish this repo
+## Publish
 
 ```bash
-cd /Users/brianlambert/github/aadm-website
 git remote add origin https://github.com/YOUR_ORG/aadm-website.git
 git push -u origin main
 ```
-
-Replace `YOUR_ORG` and repo name as needed.
 
 ## License
 
