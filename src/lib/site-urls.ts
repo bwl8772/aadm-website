@@ -25,8 +25,40 @@ function accountPortalOrigin(signInUrl: string): string {
 	}
 }
 
+/** Canonical public origin for static marketing deploys (Railway / aadm.io). */
+export const SITE_CANONICAL_ORIGIN = 'https://aadm.io';
+
 /** After Clerk Account Portal sign-out, users always land on the public About page. */
 export const CLERK_SIGN_OUT_REDIRECT_URL = 'https://aadm.io/';
+
+/**
+ * Clerk Account Portal entry URLs should include `redirect_url` (Clerk docs — direct links).
+ * Appends or overwrites the query param so post-auth return is deterministic.
+ */
+export function appendAccountPortalRedirect(portalPageUrl: string, redirectAfterAuth: string): string {
+	const raw = trim(portalPageUrl);
+	const dest = trim(redirectAfterAuth);
+	if (!raw || !dest) return raw;
+	try {
+		const u = new URL(raw);
+		u.searchParams.set('redirect_url', dest);
+		return u.toString();
+	} catch {
+		return raw;
+	}
+}
+
+/**
+ * Build the URL users should return to after Account Portal sign-in/up, for static pages.
+ */
+export function clerkReturnUrlForPathname(env: ImportMetaEnv, pathname: string, search: string): string {
+	const origin = trim(env.PUBLIC_SITE_URL) || SITE_CANONICAL_ORIGIN;
+	try {
+		return new URL(`${pathname || '/'}${search || ''}`, origin).href;
+	} catch {
+		return CLERK_SIGN_OUT_REDIRECT_URL;
+	}
+}
 
 /**
  * Clerk sign-out URL with `redirect_url` always set to {@link CLERK_SIGN_OUT_REDIRECT_URL}.
@@ -63,7 +95,10 @@ export type SiteUrlConfig = {
 	curlInit: string;
 };
 
-export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
+export function getSiteUrlConfig(
+	env: ImportMetaEnv,
+	opts?: { clerkReturnAfterAuth?: string },
+): SiteUrlConfig {
 	const urlStandard = trim(env.PUBLIC_STANDARD_REPO_URL) || '#configure-standard-url';
 	const urlMcpRaw = trim(env.PUBLIC_MCP_REPO_URL);
 	const urlMcpEndpoint = normalizeMcpRpcUrl(urlMcpRaw || 'https://mcp.aadm.io');
@@ -71,13 +106,19 @@ export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
 	const urlMcpCustomerDocs = trim(env.PUBLIC_MCP_CUSTOMER_DOCS_URL);
 	const hasMcpDocsLink = urlMcpQuickstart.length > 0 && !urlMcpQuickstart.startsWith('#');
 
-	const urlClerkSignIn =
+	const urlClerkSignInBase =
 		trim(env.PUBLIC_CLERK_SIGN_IN_URL) || 'https://accounts.aadm.io/sign-in';
-	const urlClerkSignUp =
+	const urlClerkSignUpBase =
 		trim(env.PUBLIC_CLERK_SIGN_UP_URL) || 'https://accounts.aadm.io/sign-up';
+	const clerkReturnAfterAuth =
+		trim(opts?.clerkReturnAfterAuth) ||
+		trim(env.PUBLIC_CLERK_POST_AUTH_REDIRECT) ||
+		CLERK_SIGN_OUT_REDIRECT_URL;
+	const urlClerkSignIn = appendAccountPortalRedirect(urlClerkSignInBase, clerkReturnAfterAuth);
+	const urlClerkSignUp = appendAccountPortalRedirect(urlClerkSignUpBase, clerkReturnAfterAuth);
 	const urlClerkUserProfile =
 		trim(env.PUBLIC_CLERK_USER_PROFILE_URL) || 'https://accounts.aadm.io/user';
-	const urlClerkSignOut = buildClerkSignOutUrl(env.PUBLIC_CLERK_SIGN_OUT_URL, urlClerkSignIn);
+	const urlClerkSignOut = buildClerkSignOutUrl(env.PUBLIC_CLERK_SIGN_OUT_URL, urlClerkSignInBase);
 
 	const clerkPublishableKey = trim(env.PUBLIC_CLERK_PUBLISHABLE_KEY) || '';
 	const clerkSatelliteDomain = trim(env.PUBLIC_CLERK_SATELLITE_DOMAIN) || '';

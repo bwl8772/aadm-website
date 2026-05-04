@@ -3,9 +3,15 @@ import Layout from '../layouts/Layout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import ClerkNavScript from '../components/ClerkNavScript.astro';
-import { getSiteUrlConfig } from '../lib/site-urls';
+import { clerkReturnUrlForPathname, getSiteUrlConfig } from '../lib/site-urls';
 
-const cfg = getSiteUrlConfig(import.meta.env);
+const cfg = getSiteUrlConfig(import.meta.env, {
+	clerkReturnAfterAuth: clerkReturnUrlForPathname(
+		import.meta.env,
+		Astro.url.pathname,
+		Astro.url.search,
+	),
+});
 const {
 	urlStandard,
 	urlMcpCustomerDocs,
