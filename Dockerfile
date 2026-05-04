@@ -23,8 +23,9 @@ ENV PUBLIC_STANDARD_REPO_URL=$PUBLIC_STANDARD_REPO_URL \
 	PUBLIC_CLERK_PUBLISHABLE_KEY=$PUBLIC_CLERK_PUBLISHABLE_KEY
 
 COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm,id=aadm-website-npm \
-	npm ci
+# Railway rejects arbitrary BuildKit cache `id=` values (requires cacheKey/service prefix).
+# Rely on Docker layer cache for `npm ci` instead.
+RUN npm ci
 COPY . .
 RUN npm run build && npm prune --omit=dev
 
