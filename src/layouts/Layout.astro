@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import { getSiteUrlConfig } from '../lib/site-urls';
 
 type HeaderNav = 'home' | 'mcp' | null;
@@ -12,6 +13,10 @@ interface Props {
 	headerActiveNav?: HeaderNav;
 	/** Optional MCP chip href override (e.g. `#get-access` on `/mcp`). */
 	headerMcpNavHref?: string;
+	/** Footer variant — shorter tagline on MCP page. */
+	footerVariant?: 'default' | 'mcp';
+	/** Set to false to suppress the footer on this page. */
+	showFooter?: boolean;
 }
 
 const {
@@ -19,6 +24,8 @@ const {
 	description = 'Agentic Authority Delivery Model — governed architecture for humans and coding agents.',
 	headerActiveNav = null,
 	headerMcpNavHref,
+	footerVariant = 'default',
+	showFooter = true,
 } = Astro.props;
 
 const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
@@ -58,5 +65,6 @@ const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 			mcpNavHref={headerMcpNavHref}
 		/>
 		<slot />
+		{showFooter && <SiteFooter variant={footerVariant} />}
 	</body>
 </html>

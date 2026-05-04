@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SiteFooter from '../components/SiteFooter.astro';
 import { Show, SignInButton, SignUpButton } from '@clerk/astro/components';
 import { URL_ACCOUNT_USER, getSiteUrlConfig } from '../lib/site-urls';
 
@@ -32,6 +31,7 @@ const cursorMcpJsonSnippet = `    "aadm": {
 	description="Versioned AADM tools and resources for coding agents: Navigator delivery, Investigator defects, Sentinel assurance. Paid MCP access on Streamable HTTP."
 	headerActiveNav="mcp"
 	headerMcpNavHref="#get-access"
+	footerVariant="mcp"
 >
 	<main id="main">
 		<!-- 1 Hero -->
@@ -634,6 +634,5 @@ const cursorMcpJsonSnippet = `    "aadm": {
 			}
 		</section>
 
-		<SiteFooter variant="mcp" />
 	</main>
 </Layout>

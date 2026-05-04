@@ -1,0 +1,216 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteUrlConfig } from '../lib/site-urls';
+
+const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
+---
+
+<Layout
+	title="AADM + Cursor — How they work together"
+	description="AADM shapes how agents reason and what to demand. Cursor applies those standards in your workspace. Understanding the division makes both more useful."
+	headerActiveNav={null}
+>
+	<main id="main">
+
+		<!-- Hero -->
+		<section class="mx-auto max-w-6xl px-4 pb-16 pt-16 sm:px-6 sm:pt-24">
+			<p class="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-400">
+				<span class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-violet">
+					AADM + Cursor
+				</span>
+			</p>
+			<h1 class="font-display max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
+				Standard as coaching.
+				<span class="bg-gradient-to-r from-accent-violet to-accent-blue bg-clip-text text-transparent">
+					Cursor as editor.
+				</span>
+			</h1>
+			<p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
+				AADM defines the workflows, layer language, and evidence discipline. Cursor—and the model inside it—opens
+				your project and applies that standard to real code. Understanding the division makes both more useful.
+			</p>
+			<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+				<a
+					href={urlMcpMarketing}
+					class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
+				>
+					Connect via MCP
+				</a>
+				<a
+					href={urlStandard}
+					class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid"
+				>
+					Read the standard
+				</a>
+			</div>
+		</section>
+
+		<!-- What AADM actually does -->
+		<section class="border-y border-border-subtle bg-surface-mid/40 py-16 sm:py-20">
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<div class="grid gap-10 lg:grid-cols-2 lg:items-start">
+					<div>
+						<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">
+							What AADM actually does
+						</h2>
+						<p class="mt-4 text-slate-400">
+							AADM—the standard plus MCP—is <strong class="text-slate-300">guidance and guardrails</strong>:
+							workflows (Navigator / Investigator / Sentinel), layer language, evidence-before-fix discipline,
+							templates, and tools that return structured prompts and checklists.
+						</p>
+						<p class="mt-4 text-slate-400">
+							It is <strong class="text-slate-300">not your app</strong> and does not run inside your product
+							codebase.
+						</p>
+					</div>
+					<div class="space-y-4">
+						<div class="rounded-2xl border border-border-subtle bg-surface-card/90 p-6">
+							<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">What the MCP does not do</h3>
+							<ul class="mt-4 space-y-3 text-sm text-slate-400">
+								<li>
+									<span class="font-semibold text-accent-violet">No repo scan</span> — the MCP server does not
+									read your codebase or issue a "certified compliant" verdict.
+								</li>
+								<li>
+									<span class="font-semibold text-accent-blue">No pass/fail score</span> — real behavioral
+									proof stays with your repo: tests, CI, traces, and review.
+								</li>
+								<li>
+									<span class="font-semibold text-slate-300">No app patching</span> — AADM shapes what agents
+									demand (e.g. "pair mutations with invalidation"); it doesn't patch your branch.
+								</li>
+							</ul>
+						</div>
+						<p class="rounded-2xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-4 text-xs leading-relaxed text-slate-500">
+							From the AGENTS.md positioning:{' '}
+							<em class="text-slate-400">"Application repos prove AADM through code, tests, and evidence."</em>
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- What Cursor does -->
+		<section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+			<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">
+				What Cursor / the AI does
+			</h2>
+			<p class="mt-4 max-w-3xl text-slate-400">
+				Cursor and the model can open your project, grep, read files, and change code. That is normal
+				engineering work in your workspace—not "AADM certifying" anything.
+			</p>
+			<p class="mt-4 max-w-3xl text-slate-400">
+				If the model ever said it violated AADM by reading code, that was an over-correction. AADM never
+				says "don't read the repo." It says the MCP isn't the authority that scanned everything—and you
+				shouldn't treat tool output as a compliance score without your own evidence.
+			</p>
+
+			<ul class="mt-12 grid gap-6 sm:grid-cols-3">
+				<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20">
+					<h3 class="font-display text-lg font-bold text-accent-violet">Navigator</h3>
+					<p class="mt-2 text-sm leading-relaxed text-slate-400">
+						<strong class="text-slate-300">Planned delivery:</strong> Cursor scopes and implements
+						net-new work. AADM provides the workflow language for what "ready" looks like before
+						you ship.
+					</p>
+				</li>
+				<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20">
+					<h3 class="font-display text-lg font-bold text-accent-blue">Investigator</h3>
+					<p class="mt-2 text-sm leading-relaxed text-slate-400">
+						<strong class="text-slate-300">Defect work:</strong> Cursor reads traces, greps code, and
+						applies fixes. AADM enforces evidence-before-fix—recon first, remediation only after the
+						failure is classified.
+					</p>
+				</li>
+				<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20">
+					<h3 class="font-display text-lg font-bold text-violet-300">Sentinel</h3>
+					<p class="mt-2 text-sm leading-relaxed text-slate-400">
+						<strong class="text-slate-300">Assurance:</strong> Cursor traces AUTH and UDALI seams across
+						your codebase. AADM defines what evidence is required to attest alignment—not a vibes check.
+					</p>
+				</li>
+			</ul>
+		</section>
+
+		<!-- Q&A table -->
+		<section class="border-y border-border-subtle bg-surface-mid/40 py-16 sm:py-20">
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Direct answers</h2>
+				<p class="mt-3 text-slate-400">Common questions about how responsibility divides between AADM and Cursor.</p>
+
+				<div class="mt-10 overflow-hidden rounded-2xl border border-border-subtle bg-surface-card/80">
+					<table class="w-full text-sm">
+						<thead>
+							<tr class="border-b border-border-subtle">
+								<th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Question</th>
+								<th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Short answer</th>
+							</tr>
+						</thead>
+						<tbody class="divide-y divide-border-subtle">
+							<tr>
+								<td class="px-6 py-4 text-slate-300 font-medium">Does AADM "do adherence"?</td>
+								<td class="px-6 py-4 text-slate-400">
+									It defines adherence expectations and process. Your repo and tests demonstrate adherence.
+								</td>
+							</tr>
+							<tr>
+								<td class="px-6 py-4 text-slate-300 font-medium">Does Cursor fix the code?</td>
+								<td class="px-6 py-4 text-slate-400">
+									Yes — fixes happen in your codebase via the agent (or you). AADM doesn't patch your repo by itself.
+								</td>
+							</tr>
+							<tr>
+								<td class="px-6 py-4 text-slate-300 font-medium">Should Cursor read the repo?</td>
+								<td class="px-6 py-4 text-slate-400">
+									Yes. Verifying alleged gaps with Read/grep in your repo is appropriate—claiming "no remediation needed"
+									must be justified by behavior (repro, GET before/after), not line reads alone.
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<!-- Mental model callout -->
+		<section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+			<div class="rounded-2xl border border-border-subtle bg-surface-card/80 p-8 sm:p-10">
+				<h2 class="font-display text-xl font-bold text-white sm:text-2xl">Sound mental model</h2>
+				<div class="mt-6 flex flex-col gap-4 sm:flex-row sm:gap-8">
+					<div class="flex-1 rounded-xl border border-border-subtle bg-surface-mid/60 p-5">
+						<p class="text-xs font-semibold uppercase tracking-wide text-accent-violet">AADM</p>
+						<p class="mt-2 text-sm text-slate-400">Standard + coaching. Defines what "done right" looks like and what to demand from every agent turn.</p>
+					</div>
+					<div class="flex-1 rounded-xl border border-border-subtle bg-surface-mid/60 p-5">
+						<p class="text-xs font-semibold uppercase tracking-wide text-accent-blue">Your app + CI</p>
+						<p class="mt-2 text-sm text-slate-400">Proof. Tests, traces, and review that confirm the branch actually does what AADM coaching demanded.</p>
+					</div>
+					<div class="flex-1 rounded-xl border border-border-subtle bg-surface-mid/60 p-5">
+						<p class="text-xs font-semibold uppercase tracking-wide text-slate-300">Cursor</p>
+						<p class="mt-2 text-sm text-slate-400">Editor / agent. Applies the coaching to real code in your workspace—reads, greps, and ships the fixes.</p>
+					</div>
+				</div>
+				<p class="mt-6 text-sm text-slate-500">
+					Model inconsistency (e.g. "gaps don't exist" from a line read, then "I shouldn't verify in code") is not a
+					faithful reading of AADM. The standard asks for behavioral proof—not permission to avoid reading your repo.
+				</p>
+			</div>
+
+			<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+				<a
+					href={urlMcpMarketing}
+					class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
+				>
+					Get MCP access
+				</a>
+				<a
+					href="/claude-code"
+					class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid"
+				>
+					AADM + Claude Code →
+				</a>
+			</div>
+		</section>
+
+	</main>
+</Layout>

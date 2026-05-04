@@ -7,15 +7,25 @@ interface Props {
 const { variant = 'default' } = Astro.props;
 const tagline =
 	variant === 'mcp'
-		? 'AADM MCP is paid subscriber infrastructure—your production AUTH, gateways, and CI stay authoritative.'
-		: 'Static site — Astro. Not a substitute for organizational sign-off or audits.';
+		? 'AADM MCP works with your existing code. Your production AUTH, gateways, and CI stay authoritative.'
+		: 'Not a substitute for organizational sign-off or audits.';
 ---
 
 <footer class="border-t border-border-subtle py-10">
-	<div
-		class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-center text-sm text-slate-500 sm:flex-row sm:text-left sm:px-6"
-	>
-		<span class="font-display font-semibold text-slate-400">AADM</span>
-		<p>{tagline}</p>
+	<div class="mx-auto max-w-6xl px-4 sm:px-6">
+		<div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+			<span class="font-display font-semibold text-slate-400">AADM</span>
+			<nav class="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer navigation">
+				<a
+					href="/cursor"
+					class="text-sm text-slate-500 transition-colors hover:text-slate-700"
+				>AADM + Cursor</a>
+				<a
+					href="/claude-code"
+					class="text-sm text-slate-500 transition-colors hover:text-slate-700"
+				>AADM + Claude Code</a>
+			</nav>
+		</div>
+		<p class="mt-6 text-xs text-slate-400 sm:mt-4">{tagline}</p>
 	</div>
 </footer>

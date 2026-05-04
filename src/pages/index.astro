@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SiteFooter from '../components/SiteFooter.astro';
 import { getSiteUrlConfig } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
@@ -240,6 +239,62 @@ const {
 			</div>
 		</section>
 
-		<SiteFooter />
+		<section
+			id="aadm-planning"
+			class="border-t border-border-subtle bg-surface-mid/30 py-16 sm:py-24"
+			aria-labelledby="aadm-planning-heading"
+		>
+			<div class="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14">
+				<div>
+					<p
+						class="mb-3 inline-flex rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-xs font-medium uppercase tracking-wider text-accent-violet"
+					>
+						Navigator lane
+					</p>
+					<h2 id="aadm-planning-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+						AADM for planning
+					</h2>
+					<p class="mt-4 text-lg leading-relaxed text-slate-400">
+						The AADM MCP helps you <strong class="font-semibold text-slate-300">plan before implementation</strong>:
+						turn vague goals into layer-aware work—who owns what across UDALI, which AUTH hooks matter, and in
+						what order changes should land. Your agents get the same routing and handoff language your team
+						uses, so “plan the sprint” and “classify the bug” do not collapse into one generic chat.
+					</p>
+					<p class="mt-4 text-slate-400">
+						Tools like <code class="font-mono-cta text-sm text-accent-blue">plan_delivery</code> and{' '}
+						<code class="font-mono-cta text-sm text-accent-blue">map_feature</code> sit in the{' '}
+						<strong class="text-slate-300">Navigator</strong> path: scope, verify, and readiness—without
+						guessing layer ownership after the fact.
+					</p>
+					<p class="mt-6">
+						<a
+							href={urlMcpMarketing}
+							class="inline-flex items-center text-sm font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 transition hover:text-accent-blue hover:decoration-accent-blue/50"
+						>
+							Connect agents to hosted MCP
+						</a>
+					</p>
+				</div>
+				<div>
+					<figure
+						class="overflow-hidden rounded-2xl border border-border-subtle bg-surface-card/50 shadow-2xl shadow-black/30"
+					>
+						<img
+							src="/images/aadm-planning-example.png"
+							width="1200"
+							height="800"
+							loading="lazy"
+							decoding="async"
+							class="h-auto w-full object-cover object-top"
+							alt="Example AADM analysis: friction points mapped to UDALI layers and roles, with phased implementation order."
+						/>
+						<figcaption class="border-t border-border-subtle px-4 py-3 text-xs leading-relaxed text-slate-500">
+							Example output: layer ownership matrix and phased implementation order from an agent-assisted planning pass.
+						</figcaption>
+					</figure>
+				</div>
+			</div>
+		</section>
+
 	</main>
 </Layout>
