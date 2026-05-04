@@ -14,6 +14,25 @@ const {
 	discoveryUrl,
 	curlInit,
 } = cfg;
+
+/** Cursor Streamable HTTP endpoint: `{service origin}/mcp` (not the marketing site). */
+let cursorMcpHttpUrl = 'https://mcp.aadm.io/mcp';
+try {
+	if (urlMcpEndpoint) {
+		const u = new URL(urlMcpEndpoint);
+		cursorMcpHttpUrl = `${u.origin}/mcp`;
+	}
+} catch {
+	/* keep default */
+}
+
+const cursorMcpJsonSnippet = `    "aadm": {
+      "type": "http",
+      "url": "${cursorMcpHttpUrl}",
+      "headers": {
+        "Authorization": "<insert your token here>"
+      }
+    }`;
 ---
 
 <Layout
@@ -509,6 +528,52 @@ const {
 					</div>
 				</div>
 			</div>
+		</section>
+
+		<!-- Setup MCP (Cursor) -->
+		<section id="setup-mcp" class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="mcp-setup-heading">
+			<h2 id="mcp-setup-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+				Setup MCP (Cursor)
+			</h2>
+			<p class="mt-4 max-w-3xl text-slate-400">
+				After you <strong class="text-slate-300">sign in</strong> and subscribe, mint or copy an API key for MCP from your
+				subscriber dashboard (Clerk user API keys look like <code class="font-mono-cta text-accent-violet">ak_…</code>). Then
+				add the server block below under <code class="font-mono-cta text-slate-400">mcpServers</code> in{' '}
+				<code class="font-mono-cta text-slate-400">~/.cursor/mcp.json</code>. Replace the placeholder with your real key—do
+				not commit it.
+			</p>
+			<ol class="mt-6 max-w-3xl list-decimal space-y-3 pl-5 text-sm text-slate-300">
+				<li>
+					Sign in or sign up (header or “Get access”), complete subscription if you have not already.
+				</li>
+				<li>
+					Open your account portal and create or copy an MCP-capable API key (
+					<a href={URL_ACCOUNT_USER} class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue">manage account</a>
+					).
+				</li>
+				<li>
+					Paste the key into <code class="font-mono-cta text-slate-400">Authorization</code> as shown—use the raw{' '}
+					<code class="font-mono-cta text-slate-400">ak_…</code> value or{' '}
+					<code class="font-mono-cta text-slate-400">Bearer ak_…</code> if your client expects it.
+				</li>
+				<li>
+					Restart MCP in Cursor (or reload the window) so it picks up the change.
+				</li>
+			</ol>
+			<p class="mt-6 text-xs font-medium uppercase tracking-wide text-slate-500">
+				Example <span class="font-mono-cta normal-case text-slate-400">~/.cursor/mcp.json</span> fragment
+			</p>
+			<pre
+				class="mt-3 overflow-x-auto rounded-2xl border border-border-subtle bg-surface-card/90 p-4 font-mono-cta text-xs leading-relaxed text-slate-300 sm:text-sm"
+				role="region"
+				aria-label="Cursor MCP JSON snippet"
+			><code>{cursorMcpJsonSnippet}</code></pre>
+			<p class="mt-4 max-w-3xl text-sm text-slate-500">
+				Service discovery JSON lives at <code class="font-mono-cta text-slate-400">{cursorMcpHttpUrl.replace(/\/mcp$/, '/')}</code>;
+				MCP JSON-RPC uses <code class="font-mono-cta text-accent-violet">{cursorMcpHttpUrl}</code> with Streamable HTTP (
+				<code class="font-mono-cta text-slate-400">Accept: application/json, text/event-stream</code>
+				)—your IDE sends that; you only configure the URL and auth header here.
+			</p>
 		</section>
 
 		<!-- 9 Technical strip -->
