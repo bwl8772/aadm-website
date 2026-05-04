@@ -15,16 +15,8 @@ const {
 	curlInit,
 } = cfg;
 
-/** Cursor Streamable HTTP endpoint: `{service origin}/mcp` (not the marketing site). */
-let cursorMcpHttpUrl = 'https://mcp.aadm.io/mcp';
-try {
-	if (urlMcpEndpoint) {
-		const u = new URL(urlMcpEndpoint);
-		cursorMcpHttpUrl = `${u.origin}/mcp`;
-	}
-} catch {
-	/* keep default */
-}
+/** Cursor Streamable HTTP URL — MCP service origin (`urlMcpEndpoint`), not the marketing site. */
+const cursorMcpHttpUrl = urlMcpEndpoint || 'https://mcp.aadm.io';
 
 const cursorMcpJsonSnippet = `    "aadm": {
       "type": "http",
@@ -569,7 +561,7 @@ const cursorMcpJsonSnippet = `    "aadm": {
 				aria-label="Cursor MCP JSON snippet"
 			><code>{cursorMcpJsonSnippet}</code></pre>
 			<p class="mt-4 max-w-3xl text-sm text-slate-500">
-				Service discovery JSON lives at <code class="font-mono-cta text-slate-400">{cursorMcpHttpUrl.replace(/\/mcp$/, '/')}</code>;
+				Service discovery JSON lives at <code class="font-mono-cta text-slate-400">{discoveryUrl || `${cursorMcpHttpUrl}/`}</code>;
 				MCP JSON-RPC uses <code class="font-mono-cta text-accent-violet">{cursorMcpHttpUrl}</code> with Streamable HTTP (
 				<code class="font-mono-cta text-slate-400">Accept: application/json, text/event-stream</code>
 				)—your IDE sends that; you only configure the URL and auth header here.

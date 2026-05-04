@@ -215,8 +215,8 @@ export default function DashboardTokensPage() {
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-300">
           <li>
             <strong className="text-zinc-900 dark:text-zinc-100">Server URL</strong> — set the MCP URL to{" "}
-            <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">{mcpEndpoint}</code> (Streamable HTTP,{" "}
-            <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">/mcp</code> path).
+            <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">{mcpEndpoint}</code> (Streamable HTTP at
+            the service origin — no extra path).
           </li>
           <li>
             <strong className="text-zinc-900 dark:text-zinc-100">Authorization</strong> — for{" "}
