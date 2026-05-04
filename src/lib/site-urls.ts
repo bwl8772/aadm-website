@@ -25,7 +25,7 @@ function accountPortalOrigin(signInUrl: string): string {
 	}
 }
 
-/** After Clerk Account Portal sign-out, users always land on the public marketing home. */
+/** After Clerk Account Portal sign-out, users always land on the public About page. */
 export const CLERK_SIGN_OUT_REDIRECT_URL = 'https://aadm.io/';
 
 /**

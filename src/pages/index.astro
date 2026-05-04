@@ -124,11 +124,10 @@ const {
 				URLs below come from your environment—use production subscriber endpoints when you ship this site.
 			</p>
 			<p class="mt-4 max-w-3xl text-slate-400">
-				The hosted MCP service speaks <strong class="text-slate-300">MCP over Streamable HTTP</strong>:
-				clients <code class="rounded bg-surface-card px-1.5 py-0.5 font-mono-cta text-sm text-accent-violet"
-					>POST</code
-				> to the MCP path with <code class="font-mono-cta text-sm text-slate-300">Accept: application/json, text/event-stream</code>.
-				Use <code class="font-mono-cta text-sm text-slate-300">GET /health</code> for load balancers (not MCP protocol traffic). Opening the MCP path in a browser often returns <strong class="text-slate-300">406</strong> without that Accept header — that is expected.
+				The MCP speaks over <strong class="text-slate-300">Streamable HTTP</strong>:
+				<code class="rounded bg-surface-card px-1.5 py-0.5 font-mono-cta text-sm text-accent-violet">POST</code>
+				with <code class="font-mono-cta text-sm text-slate-300">Accept: application/json, text/event-stream</code>.
+				Browser GET to the MCP path without that header often returns <strong class="text-slate-300">406</strong>—expected.
 			</p>
 
 			{

@@ -197,32 +197,38 @@ const {
 				{
 					[
 						{
+							l: 'Delivery',
 							t: 'Faster delivery framing',
-							d: 'Navigator-style scope → verify → readiness with `plan_delivery` and doctrine-backed checks—not a generic checklist.',
+							d: 'Navigator-style scope, verify, readiness with plan_delivery and doctrine-backed checks—not a generic checklist.',
 						},
 						{
+							l: 'Defects',
 							t: 'Safer defect work',
 							d: 'Investigator path keeps recon evidence-first; Path B diagnosis stays gated until routing accepts proof.',
 						},
 						{
+							l: 'Assurance',
 							t: 'Assurance without theater',
 							d: 'Sentinel surfaces audit programs and seam closure language so “alignment” means traceable evidence, not vibes.',
 						},
 						{
+							l: 'Orchestration',
 							t: 'Orchestrator-ready metadata',
 							d: '`standard_brief`, `route_lane`, and follow-on catalogs give hosts deterministic branching instead of keyword roulette.',
 						},
 						{
+							l: 'Controls',
 							t: 'AUTH literacy in-context',
 							d: 'Fetch AUTH slices where enforcement belongs in the stack—without dumping entire PDFs into every prompt.',
 						},
 						{
+							l: 'Platform',
 							t: 'One subscription, versioned server',
 							d: 'Hosted MCP tracks server capabilities; you integrate once and inherit capability schema bumps on your schedule.',
 						},
 					].map((item) => (
 						<li class="rounded-2xl border border-border-subtle bg-surface-card/60 p-5">
-							<p class="font-display text-sm font-bold uppercase tracking-wide text-accent-violet">Outcome</p>
+							<p class="font-display text-sm font-bold uppercase tracking-wide text-accent-violet">{item.l}</p>
 							<h3 class="mt-1 font-semibold text-white">{item.t}</h3>
 							<p class="mt-2 text-sm leading-relaxed text-slate-400">{item.d}</p>
 						</li>
@@ -505,10 +511,10 @@ const {
 				Technical confidence (operators)
 			</h2>
 			<p class="mt-3 max-w-3xl text-sm text-slate-400">
-				The product MCP speaks <strong class="text-slate-300">MCP over Streamable HTTP</strong>:{' '}
-				<code class="font-mono-cta text-accent-violet">POST</code> with{' '}
-				<code class="font-mono-cta text-slate-300">Accept: application/json, text/event-stream</code>. Browser GET to the
-				MCP path without that header often returns <strong class="text-slate-300">406</strong>—expected.
+				The MCP speaks over <strong class="text-slate-300">Streamable HTTP</strong>:
+				<code class="font-mono-cta text-accent-violet">POST</code> with
+				<code class="font-mono-cta text-slate-300">Accept: application/json, text/event-stream</code>.
+				Browser GET to the MCP path without that header often returns <strong class="text-slate-300">406</strong>—expected.
 			</p>
 			{
 				urlMcpEndpoint ? (
@@ -534,7 +540,7 @@ const {
 								href="https://aadm.io/"
 								class="inline-flex items-center rounded-lg border border-dashed border-slate-600/60 px-4 py-2 text-sm font-semibold text-slate-400 transition hover:border-slate-500 hover:text-slate-200"
 							>
-								Marketing home
+								About
 							</a>
 						</div>
 						<div>
