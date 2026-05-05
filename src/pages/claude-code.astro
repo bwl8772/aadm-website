@@ -1,24 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Show, SignInButton, SignUpButton } from '@clerk/astro/components';
-import {
-	URL_ACCOUNT_USER,
-	getSiteUrlConfig,
-	hostedMcpOrigin,
-	resolveHostedMcpRpcUrl,
-} from '../lib/site-urls';
+import { URL_ACCOUNT_USER, getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const { urlStandard, urlMcpMarketing, urlMcpEndpoint } = cfg;
 
-const claudeMcpRpcUrl = resolveHostedMcpRpcUrl(urlMcpEndpoint || 'https://mcp.aadm.io');
-const claudeMcpOriginOnly = hostedMcpOrigin(claudeMcpRpcUrl);
+/** Claude hosts expect the MCP service origin with trailing slash — no `/mcp` path segment. */
+const claudeMcpOriginOnly = hostedMcpOrigin(urlMcpEndpoint || 'https://mcp.aadm.io');
+const claudeMcpConfigUrl = `${claudeMcpOriginOnly}/`;
 
 const claudeMcpFullConfigSnippet = `{
   "mcpServers": {
     "aadm": {
       "type": "http",
-      "url": "${claudeMcpRpcUrl}",
+      "url": "${claudeMcpConfigUrl}",
       "headers": {
         "Authorization": "<your token here>"
       }
@@ -202,9 +198,9 @@ const claudeMcpFullConfigSnippet = `{
 							aria-label="Example Claude MCP configuration JSON"
 						><code id="claude-connect-config-code">{claudeMcpFullConfigSnippet}</code></pre>
 						<p class="mt-3 text-xs text-slate-500">
-							RPC URL: <code class="font-mono-cta text-slate-400">{claudeMcpRpcUrl}</code>
-							<span class="text-slate-600"> · </span>
-							Discovery origin: <code class="font-mono-cta text-slate-400">{claudeMcpOriginOnly}/</code>
+							<code class="font-mono-cta text-slate-400">url</code> uses service origin + trailing slash (example production:{' '}
+							<code class="font-mono-cta text-slate-400">https://mcp.aadm.io/</code>
+							). Discovery JSON: <code class="font-mono-cta text-slate-400">{claudeMcpOriginOnly}/</code>
 						</p>
 					</div>
 				</div>
