@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "buuld": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "test:clerk-smoke": "node scripts/clerk-nav-smoke.mjs"

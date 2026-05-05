@@ -132,6 +132,216 @@ const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 			</ul>
 		</section>
 
+		<!-- Cursor in action (illustrative UI) -->
+		<section class="border-y border-border-subtle bg-surface-deep py-16 sm:py-20" aria-labelledby="cursor-in-action-heading">
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<h2 id="cursor-in-action-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+					Cursor in action
+				</h2>
+				<p class="mt-3 max-w-3xl text-slate-400">
+					Illustrative UI only—the transcript is fictional. Real MCP payloads follow{' '}
+					<code class="font-mono-cta text-slate-500">tools/list</code> contracts on your server build.
+				</p>
+
+				<figure
+					class="mt-10 overflow-hidden rounded-xl border border-[#3e3e42] bg-[#181818] shadow-2xl shadow-black/50 ring-1 ring-white/5"
+					aria-label="Fictional Cursor editor window showing chat and MCP tool calls"
+				>
+					<!-- Title bar -->
+					<div class="flex items-center gap-3 border-b border-[#2d2d2d] bg-[#1f1f1f] px-3 py-2">
+						<div class="flex gap-1.5 pl-1" aria-hidden="true">
+							<span class="h-3 w-3 rounded-full bg-[#ff5f57]/90"></span>
+							<span class="h-3 w-3 rounded-full bg-[#febc2e]/90"></span>
+							<span class="h-3 w-3 rounded-full bg-[#28c840]/90"></span>
+						</div>
+						<div class="flex min-w-0 flex-1 items-center justify-center gap-2">
+							<svg class="h-4 w-4 shrink-0 text-slate-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+								<path
+									d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+									opacity=".35"
+								></path>
+							</svg>
+							<span class="truncate font-mono-cta text-xs text-slate-400">workspace-api — Cursor</span>
+						</div>
+						<span class="w-14 shrink-0"></span>
+					</div>
+
+					<div class="flex min-h-[520px] flex-col lg:min-h-[560px] lg:flex-row">
+						<!-- Activity bar -->
+						<div
+							class="flex flex-row gap-1 border-b border-[#2d2d2d] bg-[#181818] px-2 py-2 lg:w-12 lg:flex-col lg:border-b-0 lg:border-r lg:py-3"
+							aria-hidden="true"
+						>
+							<div class="flex h-9 w-9 items-center justify-center rounded-md bg-[#2d2d2d] text-slate-300">💬</div>
+							<div class="flex h-9 w-9 items-center justify-center rounded-md text-slate-600 opacity-60">📄</div>
+							<div class="flex h-9 w-9 items-center justify-center rounded-md text-slate-600 opacity-60">🔍</div>
+						</div>
+
+						<!-- Chat column -->
+						<div class="flex min-w-0 flex-1 flex-col bg-[#1e1e1e]">
+							<div class="border-b border-[#2d2d2d] px-4 py-2">
+								<p class="font-mono-cta text-[10px] font-medium uppercase tracking-wider text-slate-500">
+									Agent · MCP enabled
+								</p>
+								<p class="truncate text-xs text-slate-400">Slice audit · L7 DTO / serialization · Sentinel framing</p>
+							</div>
+
+							<div class="flex-1 space-y-4 overflow-y-auto px-4 py-4 font-mono-cta text-[13px] leading-relaxed">
+								<!-- User -->
+								<div class="flex justify-end">
+									<div class="max-w-[92%] rounded-2xl rounded-br-md bg-[#264f78] px-4 py-3 text-[#e8f1ff]">
+										<p class="text-[11px] font-semibold uppercase tracking-wide text-blue-200/80">You</p>
+										<p class="mt-1">
+											Run a Sentinel-style slice on our workspace API: trace critical fields from request → schema →
+											domain → DB → DTO → JSON response. Flag leakage, rename mismatches, and silent truncation—not
+											just “is auth enforced.” Use AADM MCP for workflow + audit scaffolding.
+										</p>
+									</div>
+								</div>
+
+								<!-- Agent text -->
+								<div class="flex justify-start">
+									<div class="max-w-[92%] rounded-2xl rounded-bl-md border border-[#333] bg-[#252526] px-4 py-3 text-slate-300">
+										<p class="text-[11px] font-semibold uppercase tracking-wide text-violet-300/90">Agent</p>
+										<p class="mt-1 text-slate-400">
+											On it. I’ll pull the orchestrator snapshot, then kick an assurance-shaped audit run so we inherit
+											the section spine and suggested AUTH pulls—then I’ll summarize data-flow risks for your team.
+										</p>
+									</div>
+								</div>
+
+								<!-- Tool: standard_brief -->
+								<div class="overflow-hidden rounded-lg border border-violet-500/35 bg-[#1a1625]">
+									<div class="flex items-center gap-2 border-b border-violet-500/20 bg-violet-950/40 px-3 py-2">
+										<span class="rounded bg-violet-600/80 px-1.5 py-0.5 text-[10px] font-bold text-white">MCP</span>
+										<span class="text-[11px] text-violet-200/90">tools/call</span>
+										<code class="text-[12px] text-emerald-300">standard_brief</code>
+									</div>
+									<pre class="max-h-32 overflow-y-auto p-3 text-[11px] text-slate-400">{`{
+  "capabilities_schema_version": "…",
+  "sentinel_assurance": { "workflow_id": "assurance", "stages": [ … ] },
+  "follow_on_catalog": [ { "id": "audit_run_nl", "suggested_tool": "audit_run" }, … ]
+}`}</pre>
+								</div>
+
+								<!-- Tool: audit_run -->
+								<div class="overflow-hidden rounded-lg border border-emerald-500/30 bg-[#0f1a17]">
+									<div class="flex items-center gap-2 border-b border-emerald-500/20 bg-emerald-950/35 px-3 py-2">
+										<span class="rounded bg-emerald-700/90 px-1.5 py-0.5 text-[10px] font-bold text-white">MCP</span>
+										<span class="text-[11px] text-emerald-200/80">tools/call</span>
+										<code class="text-[12px] text-emerald-300">audit_run</code>
+									</div>
+									<pre class="max-h-36 overflow-y-auto p-3 text-[11px] text-slate-400">{`{
+  "request": "Assess workspace API for response leakage, camelCase vs snake_case mismatches, date/string drift in DTOs, and silent batch truncation across adapter → service → mapper.",
+  "app_name": "Workspace API (illustrative)"
+}`}</pre>
+								</div>
+
+								<!-- Tool: fetch_auth -->
+								<div class="overflow-hidden rounded-lg border border-sky-500/25 bg-[#0f1724]">
+									<div class="flex items-center gap-2 border-b border-sky-500/15 bg-sky-950/30 px-3 py-2">
+										<span class="rounded bg-sky-700/90 px-1.5 py-0.5 text-[10px] font-bold text-white">MCP</span>
+										<span class="text-[11px] text-sky-200/70">tools/call</span>
+										<code class="text-[12px] text-sky-300">fetch_auth</code>
+									</div>
+									<pre class="p-3 text-[11px] text-slate-400">{`{ "auth_id": "AUTH-21" }  // DTO / boundary discipline (illustrative cite)`}</pre>
+								</div>
+
+								<!-- Agent long reply -->
+								<div class="flex justify-start">
+									<div
+										class="max-w-[98%] rounded-2xl rounded-bl-md border border-[#333] bg-[#252526] px-4 py-3 text-slate-300"
+									>
+										<p class="text-[11px] font-semibold uppercase tracking-wide text-violet-300/90">Agent</p>
+										<p class="mt-2 text-slate-400">
+											Here’s the slice readout—framed as <strong class="text-slate-200">data-flow</strong> bugs (harder
+											than “is the filter present?” enforcement checks):
+										</p>
+										<div class="mt-3 max-h-52 overflow-y-auto rounded-lg border border-[#3e3e42] bg-[#1e1e1e] p-3 text-[12px]">
+											<p class="font-semibold text-amber-200/90">Representative risks (illustrative)</p>
+											<ul class="mt-2 list-disc space-y-2 pl-4 text-slate-400">
+												<li>
+													<strong class="text-slate-300">Field leakage</strong> — response includes internal-only columns
+													(e.g. soft-delete metadata) because the list DTO mirrors the persistence model.
+												</li>
+												<li>
+													<strong class="text-slate-300">Format mismatch</strong> —
+													<code class="text-sky-300/90">deleted_at</code> stored correctly but serialized as a plain string
+													where clients expect ISO-8601—breaks downstream parsers.
+												</li>
+												<li>
+													<strong class="text-slate-300">Silent truncation</strong> — batch accepts 100 rows; mapper drops
+													half with no error surface—clients trust counts from the request, not the payload.
+												</li>
+											</ul>
+											<p class="mt-4 text-slate-500">
+												These are contract / observability problems across hops—not a substitute for gateway AUTH, which
+												still has to be proven in your repo.
+											</p>
+											<p class="mt-4 font-semibold text-slate-300">Trace discipline (what we’d prove in code)</p>
+											<ol class="mt-2 list-decimal space-y-2 pl-4 text-slate-400">
+												<li>
+													Follow each critical field: UI input → API schema → domain → persistence → serialization → client
+													types.
+												</li>
+												<li>
+													At every hop ask: name alignment, type alignment, intentional transforms, inclusion/exclusion in the
+													outbound contract.
+												</li>
+												<li>
+													Compare three artifacts: frontend types, OpenAPI or response schema, and actual JSON from a live
+													call—not just “mapper exists.”
+												</li>
+											</ol>
+											<p class="mt-4 font-semibold text-slate-300">Illustrative mismatch patterns</p>
+											<dl class="mt-2 space-y-3 text-slate-400">
+												<div>
+													<dt class="text-slate-300">Rename drift</dt>
+													<dd class="mt-1 pl-0">
+														Request uses <code class="text-sky-300/90">workspaceId</code>; DB uses{' '}
+														<code class="text-sky-300/90">workspace_id</code>; response accidentally emits snake_case—mobile
+														clients break.
+													</dd>
+												</div>
+												<div>
+													<dt class="text-slate-300">Shape drift</dt>
+													<dd class="mt-1 pl-0">
+														Domain computes nested scores correctly; DTO flattens or swaps structure—validators pass while UX
+														regresses.
+													</dd>
+												</div>
+												<div>
+													<dt class="text-slate-300">Null vs missing</dt>
+													<dd class="mt-1 pl-0">
+														<code class="text-sky-300/90">embedding: null</code> is valid JSON but callers assumed omission—
+														<code class="text-sky-300/90">.length</code> crashes without a defensive read.
+													</dd>
+												</div>
+											</dl>
+											<p class="mt-4 border-t border-[#3e3e42] pt-3 text-[11px] text-slate-500">
+												Next: paste the <code class="text-slate-400">coding_agent_markdown</code> brief from a real{' '}
+												<code class="text-slate-400">audit_run</code> response into this thread, pair it with two HAR or test
+												fixtures, and we’ll turn this into repo-specific file paths and fixes—still evidence-first.
+											</p>
+										</div>
+									</div>
+								</div>
+
+								<!-- Composer -->
+								<div class="rounded-lg border border-dashed border-[#444] bg-[#252526]/80 px-3 py-2.5 text-[12px] text-slate-600">
+									<span class="text-slate-500">Plan, search, build anything…</span>
+									<span class="float-right text-[10px] text-slate-600">Agent ⌘I · MCP</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<figcaption class="border-t border-[#2d2d2d] bg-[#1f1f1f] px-4 py-2 text-center text-[11px] text-slate-500">
+						Fictional transcript for storytelling — not captured from a live workspace.
+					</figcaption>
+				</figure>
+			</div>
+		</section>
+
 		<!-- Q&A table -->
 		<section class="border-y border-border-subtle bg-surface-mid/40 py-16 sm:py-20">
 			<div class="mx-auto max-w-6xl px-4 sm:px-6">

@@ -1,7 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Show, SignInButton, SignUpButton } from '@clerk/astro/components';
-import { URL_ACCOUNT_USER, getSiteUrlConfig } from '../lib/site-urls';
+import {
+	URL_ACCOUNT_USER,
+	getSiteUrlConfig,
+	hostedMcpOrigin,
+	resolveHostedMcpRpcUrl,
+} from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const {
@@ -14,23 +19,175 @@ const {
 	curlInit,
 } = cfg;
 
-/** Cursor Streamable HTTP URL — MCP service origin (`urlMcpEndpoint`), not the marketing site. */
-const cursorMcpHttpUrl = urlMcpEndpoint || 'https://mcp.aadm.io';
+const cursorMcpRpcUrl = resolveHostedMcpRpcUrl(urlMcpEndpoint || 'https://mcp.aadm.io');
+const cursorMcpHttpUrl = hostedMcpOrigin(cursorMcpRpcUrl);
+
+const cursorMcpFullConfigSnippet = `{
+  "mcpServers": {
+    "aadm": {
+      "type": "http",
+      "url": "${cursorMcpRpcUrl}",
+      "headers": {
+        "Authorization": "<your token here>"
+      }
+    }
+  }
+}`;
 
 const cursorMcpJsonSnippet = `    "aadm": {
       "type": "http",
-      "url": "${cursorMcpHttpUrl}",
+      "url": "${cursorMcpRpcUrl}",
       "headers": {
-        "Authorization": "<insert your token here>"
+        "Authorization": "<your token here>"
       }
     }`;
+
+/** Marketing snapshot — names align with hosted MCP `tools/list`; schema evolves with server version. */
+const mcpToolsCatalog: Array<{
+	tool: string;
+	badges: Array<'Orchestration' | 'Navigator' | 'Investigator' | 'Sentinel' | 'Doctrine'>;
+	outcome: string;
+}> = [
+	{
+		tool: 'standard_brief',
+		badges: ['Orchestration'],
+		outcome:
+			'One call loads workflow parity, orchestrator contract, follow-on catalog, and Sentinel assurance JSON hosts branch on.',
+	},
+	{
+		tool: 'route_lane',
+		badges: ['Orchestration'],
+		outcome:
+			'When intent is already delivery, defect, or assurance, return deterministic routing metadata—no keyword roulette.',
+	},
+	{
+		tool: 'orchestrator_anchor',
+		badges: ['Orchestration'],
+		outcome:
+			'Long-running jobs get a stable checklist: what to persist outside MCP, session notes, and when to refresh the brief.',
+	},
+	{
+		tool: 'plan_delivery',
+		badges: ['Navigator'],
+		outcome: 'Turn a task into UDALI-shaped delivery handoffs with doctrine-backed scope and integrator-ready language.',
+	},
+	{
+		tool: 'map_feature',
+		badges: ['Navigator'],
+		outcome: 'Seed layer and AUTH-XX hints from a short feature description—explicitly suggestive until your architecture confirms.',
+	},
+	{
+		tool: 'fetch_auth',
+		badges: ['Doctrine'],
+		outcome: 'Pull the official markdown for a numbered AUTH control so prompts cite governance text, not paraphrase.',
+	},
+	{
+		tool: 'role_guide',
+		badges: ['Doctrine'],
+		outcome: 'Slice UDALI agent doctrine (Unifier, Designer, Adapter, Logician, Integrator) for the role and task you are in.',
+	},
+	{
+		tool: 'debug_defect',
+		badges: ['Investigator'],
+		outcome:
+			'Gated defect machine: Path A recon, Path B only after proof, execution-control appendix, and troubleshooter response gates.',
+	},
+	{
+		tool: 'debug_bundle',
+		badges: ['Investigator'],
+		outcome: 'Advanced hosts send a full integrated troubleshooter payload when they need the bundled diagnosis shape.',
+	},
+	{
+		tool: 'debug_hint',
+		badges: ['Investigator'],
+		outcome: 'Lightweight recon-vs-diagnose hint before you commit to a full debug_defect turn.',
+	},
+	{
+		tool: 'classify_bug',
+		badges: ['Investigator'],
+		outcome: 'Classify ownership and routing early so the right lane—not the loudest symptom—owns the next step.',
+	},
+	{
+		tool: 'triage_bug',
+		badges: ['Investigator'],
+		outcome: 'Map a rough symptom to suggested AUTH topics and stack band for intake before deeper debugging.',
+	},
+	{
+		tool: 'fix_pack',
+		badges: ['Investigator'],
+		outcome:
+			'After evidence and gates pass, emit an authorized fix prompt pack sized for coding agents—no premature refactor stories.',
+	},
+	{
+		tool: 'audit_interview',
+		badges: ['Sentinel'],
+		outcome: 'Step through vertical depth and horizontal seams until scope is confirmable; then merge into outline-shaped intake.',
+	},
+	{
+		tool: 'audit_outline',
+		badges: ['Sentinel'],
+		outcome: 'Produce the assurance scaffold: sections, checklist pointers, coder requests, and human-editable confirmation.',
+	},
+	{
+		tool: 'audit_run',
+		badges: ['Sentinel'],
+		outcome:
+			'Plain-language “run an audit” asks become a program-aware intake plus top-findings brief for a repo-connected agent.',
+	},
+	{
+		tool: 'sentinel_programs',
+		badges: ['Sentinel'],
+		outcome: 'Snapshot every bundled Sentinel audit program template without pulling the full standard_brief payload.',
+	},
+	{
+		tool: 'sentinel_program',
+		badges: ['Sentinel'],
+		outcome: 'Fetch one audit program row by id when hosts only need that template’s rigor spine and evidence expectations.',
+	},
+	{
+		tool: 'sentinel_attestation_examples',
+		badges: ['Sentinel'],
+		outcome: 'Shipped seam-tier examples so teams see how depth and boundaries translate to must-prove vs latent seams.',
+	},
+	{
+		tool: 'sentinel_closure',
+		badges: ['Sentinel'],
+		outcome: 'Resolve closure tiers from attestation depth, vertical claim, and horizontal seams—deterministic seam language.',
+	},
+	{
+		tool: 'sentinel_stage_guide',
+		badges: ['Sentinel'],
+		outcome: 'Gate helper for one assurance stage of a chosen program—keeps humans oriented inside the three-stage spine.',
+	},
+	{
+		tool: 'sentinel_handoff_hint',
+		badges: ['Sentinel'],
+		outcome: 'After a sentinel_audit_exit_kind, get deterministic wording for staying in assurance or opening Navigator or Investigator.',
+	},
+	{
+		tool: 'sentinel_canonical_refs',
+		badges: ['Sentinel'],
+		outcome: 'Curated resources/read URIs for delivery and assurance lanes so hosts wire doctrine without hunting the catalog.',
+	},
+];
+
+const toolBadgeClass: Record<
+	(typeof mcpToolsCatalog)[number]['badges'][number],
+	string
+> = {
+	Orchestration: 'border-amber-500/35 bg-amber-500/10 text-amber-100',
+	Navigator: 'border-violet-500/35 bg-violet-500/10 text-accent-violet',
+	Investigator: 'border-blue-500/35 bg-blue-500/10 text-accent-blue',
+	Sentinel: 'border-violet-400/30 bg-violet-950/50 text-violet-200',
+	Doctrine: 'border-emerald-500/35 bg-emerald-500/10 text-emerald-200',
+};
 ---
 
 <Layout
 	title="AADM MCP — What you can do with subscriber access"
 	description="Versioned AADM tools and resources for coding agents: Navigator delivery, Investigator defects, Sentinel assurance. Paid MCP access on Streamable HTTP."
 	headerActiveNav="mcp"
-	headerMcpNavHref="#get-access"
+	headerMcpNavHref="#connect-cursor"
 	footerVariant="mcp"
 >
 	<main id="main">
@@ -132,6 +289,142 @@ const cursorMcpJsonSnippet = `    "aadm": {
 				</div>
 			</div>
 		</section>
+
+		<!-- Connect with Cursor — first scroll below hero -->
+		<section
+			id="connect-cursor"
+			class="scroll-mt-24 border-y border-border-subtle bg-surface-mid/50 py-14 sm:scroll-mt-28 sm:py-16"
+			aria-labelledby="connect-cursor-heading"
+		>
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+					<div class="max-w-xl shrink-0">
+						<p class="text-xs font-bold uppercase tracking-wider text-accent-violet">Cursor · MCP</p>
+						<h2 id="connect-cursor-heading" class="font-display mt-2 text-2xl font-bold text-white sm:text-3xl">
+							Connect with Cursor
+						</h2>
+						<p class="mt-3 text-slate-400">
+							Subscribe, mint an MCP-capable token in your dashboard, paste it into{' '}
+							<code class="font-mono-cta text-slate-300">~/.cursor/mcp.json</code>, then reload Cursor so{' '}
+							<code class="font-mono-cta text-slate-300">tools/list</code> picks up AADM.
+						</p>
+						<ol class="mt-6 list-decimal space-y-3 pl-5 text-sm text-slate-300">
+							<li>
+								<Show when="signed-out">
+									<span>
+										<SignUpButton
+											mode="modal"
+											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
+										>
+											Sign up
+										</SignUpButton>
+										{' '}
+										or{' '}
+										<SignInButton
+											mode="modal"
+											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
+										>
+											sign in
+										</SignInButton>
+										— complete subscription if you have not already.
+									</span>
+								</Show>
+								<Show when="signed-in">
+									<span>
+										<a
+											href={URL_ACCOUNT_USER}
+											class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
+										>
+											Open your account
+										</a>
+										— confirm subscription is active.
+									</span>
+								</Show>
+							</li>
+							<li>
+								Create or copy an MCP API key (Clerk user keys often look like{' '}
+								<code class="font-mono-cta text-slate-400">ak_…</code>).
+							</li>
+							<li>
+								Replace <code class="font-mono-cta text-emerald-300/90">&lt;your token here&gt;</code> in the JSON—use the
+								raw value (or <code class="font-mono-cta text-slate-400">Bearer ak_…</code> if your client expects it).
+							</li>
+							<li>
+								Save the file and reload the Cursor window (or restart MCP) so tools refresh—then use{' '}
+								<code class="font-mono-cta text-slate-400">standard_brief</code>,{' '}
+								<code class="font-mono-cta text-slate-400">fetch_auth</code>, etc., from the agent.
+							</li>
+						</ol>
+						<p class="mt-6 text-xs leading-relaxed text-slate-500">
+							Already have other servers? Merge the <code class="font-mono-cta text-slate-500">aadm</code> entry into your
+							existing <code class="font-mono-cta text-slate-500">mcpServers</code> object instead of replacing the whole file.
+						</p>
+						<p class="mt-3">
+							<a
+								href="#setup-mcp"
+								class="text-sm font-semibold text-slate-400 underline decoration-slate-600 underline-offset-4 hover:text-slate-200"
+							>
+								More detail on setup →
+							</a>
+						</p>
+					</div>
+
+					<div class="min-w-0 flex-1">
+						<div class="flex flex-wrap items-center justify-between gap-3">
+							<p class="text-xs font-medium uppercase tracking-wide text-slate-500">
+								<code class="font-mono-cta normal-case text-slate-400">~/.cursor/mcp.json</code> — copy ready
+							</p>
+							<button
+								type="button"
+								id="mcp-connect-copy-btn"
+								class="inline-flex items-center justify-center rounded-lg border border-violet-500/40 bg-violet-600/90 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-violet-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0d14]"
+							>
+								Copy JSON
+							</button>
+						</div>
+						<pre
+							class="mt-3 overflow-x-auto rounded-2xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-xs leading-relaxed text-slate-300 shadow-inner sm:text-sm"
+							id="mcp-connect-config-pre"
+							role="region"
+							aria-label="Example Cursor MCP configuration JSON"
+						><code id="mcp-connect-config-code">{cursorMcpFullConfigSnippet}</code></pre>
+						<p class="mt-3 text-xs text-slate-500">
+							Endpoint shown:{' '}
+							<code class="font-mono-cta text-slate-400">{cursorMcpRpcUrl}</code>
+							— must match your deploy (see{' '}
+							<a href="#technical" class="font-semibold text-accent-violet underline hover:text-accent-blue">technical</a>
+							).
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<script is:inline>
+			(function () {
+				const btn = document.getElementById('mcp-connect-copy-btn');
+				const code = document.getElementById('mcp-connect-config-code');
+				if (!btn || !code) return;
+				const defaultLabel = btn.textContent || 'Copy JSON';
+				btn.addEventListener('click', async function () {
+					const text = (code.textContent || '').trim();
+					try {
+						await navigator.clipboard.writeText(text);
+						btn.textContent = 'Copied!';
+						btn.classList.add('opacity-90');
+						window.setTimeout(function () {
+							btn.textContent = defaultLabel;
+							btn.classList.remove('opacity-90');
+						}, 2200);
+					} catch {
+						btn.textContent = 'Copy blocked — select text';
+						window.setTimeout(function () {
+							btn.textContent = defaultLabel;
+						}, 3200);
+					}
+				});
+			})();
+		</script>
 
 		<!-- 2 What the MCP gives you -->
 		<section class="border-y border-border-subtle bg-surface-mid/40 py-16 sm:py-20" aria-labelledby="mcp-cap-heading">
@@ -531,8 +824,8 @@ const cursorMcpJsonSnippet = `    "aadm": {
 				After you <strong class="text-slate-300">sign in</strong> and subscribe, mint or copy an API key for MCP from your
 				subscriber dashboard (Clerk user API keys look like <code class="font-mono-cta text-accent-violet">ak_…</code>). Then
 				add the server block below under <code class="font-mono-cta text-slate-400">mcpServers</code> in{' '}
-				<code class="font-mono-cta text-slate-400">~/.cursor/mcp.json</code>. Replace the placeholder with your real key—do
-				not commit it.
+				<code class="font-mono-cta text-slate-400">~/.cursor/mcp.json</code>. Replace{' '}
+				<code class="font-mono-cta text-emerald-300/90">&lt;your token here&gt;</code> with your real key—do not commit it.
 			</p>
 			<ol class="mt-6 max-w-3xl list-decimal space-y-3 pl-5 text-sm text-slate-300">
 				<li>
@@ -562,9 +855,9 @@ const cursorMcpJsonSnippet = `    "aadm": {
 			><code>{cursorMcpJsonSnippet}</code></pre>
 			<p class="mt-4 max-w-3xl text-sm text-slate-500">
 				Service discovery JSON lives at <code class="font-mono-cta text-slate-400">{discoveryUrl || `${cursorMcpHttpUrl}/`}</code>;
-				MCP JSON-RPC uses <code class="font-mono-cta text-accent-violet">{cursorMcpHttpUrl}</code> with Streamable HTTP (
+				MCP JSON-RPC posts to <code class="font-mono-cta text-accent-violet">{cursorMcpRpcUrl}</code> with Streamable HTTP (
 				<code class="font-mono-cta text-slate-400">Accept: application/json, text/event-stream</code>
-				)—your IDE sends that; you only configure the URL and auth header here.
+				)—your IDE sends that; <code class="font-mono-cta text-slate-400">mcp.json</code> must use the same RPC URL as your deploy.
 			</p>
 		</section>
 
@@ -581,49 +874,123 @@ const cursorMcpJsonSnippet = `    "aadm": {
 			</p>
 			{
 				urlMcpEndpoint ? (
-					<div class="mt-8 space-y-6">
-						<div class="flex flex-wrap gap-3">
+					<div class="mt-8 space-y-8">
+						<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
 							{healthUrl ? (
 								<a
 									href={healthUrl}
-									class="inline-flex items-center rounded-lg border border-border-subtle bg-surface-card px-4 py-2 text-sm font-semibold text-white transition hover:bg-surface-mid"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="group flex flex-col rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/15 transition hover:border-slate-500/40 hover:bg-surface-mid/60"
 								>
-									GET /health (MCP host)
+									<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Liveness</span>
+									<code class="mt-2 font-mono-cta text-sm font-semibold text-white">GET /health</code>
+									<p class="mt-2 flex-1 text-sm leading-relaxed text-slate-400">
+										JSON probe for deploy checks and uptime monitors—not the MCP session itself.
+									</p>
+									<span class="mt-4 text-sm font-semibold text-accent-violet group-hover:text-accent-blue">
+										Open endpoint →
+									</span>
 								</a>
 							) : null}
 							{discoveryUrl ? (
 								<a
 									href={discoveryUrl}
-									class="inline-flex items-center rounded-lg border border-border-subtle bg-surface-card px-4 py-2 text-sm font-semibold text-white transition hover:bg-surface-mid"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="group flex flex-col rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/15 transition hover:border-slate-500/40 hover:bg-surface-mid/60"
 								>
-									GET / (discovery)
+									<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Discovery</span>
+									<code class="mt-2 font-mono-cta text-sm font-semibold text-white">GET /</code>
+									<p class="mt-2 flex-1 text-sm leading-relaxed text-slate-400">
+										Service JSON on the MCP host (e.g. <span class="font-mono-cta text-slate-500">mcp_endpoint</span>)
+										for wiring proxies and clients.
+									</p>
+									<span class="mt-4 text-sm font-semibold text-accent-violet group-hover:text-accent-blue">
+										Open discovery →
+									</span>
+								</a>
+							) : null}
+							<a
+								href={urlMcpEndpoint}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="group flex flex-col rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/15 transition hover:border-slate-500/40 hover:bg-surface-mid/60"
+							>
+								<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Streamable HTTP</span>
+								<code class="mt-2 break-all font-mono-cta text-sm font-semibold text-accent-blue">{urlMcpEndpoint}</code>
+								<p class="mt-2 flex-1 text-sm leading-relaxed text-slate-400">
+									RPC origin your IDE <code class="font-mono-cta text-slate-500">POST</code>s to with{' '}
+									<code class="font-mono-cta text-slate-500">Accept: application/json, text/event-stream</code>.
+								</p>
+								<span class="mt-4 text-sm font-semibold text-accent-violet group-hover:text-accent-blue">
+									Open host →
+								</span>
+							</a>
+							<a
+								href="#setup-mcp"
+								class="group flex flex-col rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/15 transition hover:border-violet-500/35 hover:bg-surface-mid/60"
+							>
+								<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Integrations</span>
+								<span class="mt-2 font-mono-cta text-sm font-semibold text-white">Cursor · mcp.json</span>
+								<p class="mt-2 flex-1 text-sm leading-relaxed text-slate-400">
+									Subscriber token in <code class="font-mono-cta text-slate-500">Authorization</code>, Streamable HTTP URL,
+									and reload-after-save reminders.
+								</p>
+								<span class="mt-4 text-sm font-semibold text-accent-violet group-hover:text-accent-blue">
+									Jump to setup →
+								</span>
+							</a>
+							{urlStandard.startsWith('http') ? (
+								<a
+									href={urlStandard}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="group flex flex-col rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/15 transition hover:border-slate-500/40 hover:bg-surface-mid/60"
+								>
+									<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Standard</span>
+									<span class="mt-2 font-display text-sm font-semibold text-white">Public AADM narrative</span>
+									<p class="mt-2 flex-1 text-sm leading-relaxed text-slate-400">
+										Free, versioned standard text—the MCP is governed context on top of this story.
+									</p>
+									<span class="mt-4 text-sm font-semibold text-accent-violet group-hover:text-accent-blue">
+										Open standard →
+									</span>
+								</a>
+							) : null}
+							{urlMcpCustomerDocs ? (
+								<a
+									href={urlMcpCustomerDocs}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="group flex flex-col rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/15 transition hover:border-slate-500/40 hover:bg-surface-mid/60"
+								>
+									<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Subscriber</span>
+									<span class="mt-2 font-display text-sm font-semibold text-white">Integration docs</span>
+									<p class="mt-2 flex-1 text-sm leading-relaxed text-slate-400">
+										Portal or handbook material for org rollout—when this URL is configured at build time.
+									</p>
+									<span class="mt-4 text-sm font-semibold text-accent-violet group-hover:text-accent-blue">
+										Open docs →
+									</span>
 								</a>
 							) : null}
 							<a
 								href="/"
-								class="inline-flex items-center rounded-lg border border-dashed border-slate-600/60 px-4 py-2 text-sm font-semibold text-slate-400 transition hover:border-slate-500 hover:text-slate-200"
+								class="group flex flex-col rounded-2xl border border-dashed border-slate-600/60 bg-surface-card/40 p-5 transition hover:border-slate-500 hover:bg-surface-mid/40"
 							>
-								About
+								<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Marketing site</span>
+								<span class="mt-2 font-display text-sm font-semibold text-slate-200">About · aadm.io</span>
+								<p class="mt-2 flex-1 text-sm leading-relaxed text-slate-500">
+									This brochure site—not the MCP JSON-RPC host.
+								</p>
+								<span class="mt-4 text-sm font-semibold text-slate-400 group-hover:text-slate-200">Home →</span>
 							</a>
-						</div>
-						<div>
-							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
-								MCP service — Streamable HTTP origin (default <code class="text-slate-400">https://mcp.aadm.io</code>)
-							</p>
-							<p class="break-all font-mono-cta text-sm text-accent-blue">{urlMcpEndpoint}</p>
 						</div>
 						<div>
 							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">Smoke: initialize</p>
 							<pre class="overflow-x-auto rounded-2xl border border-border-subtle bg-surface-card/90 p-4 font-mono-cta text-xs leading-relaxed text-slate-300 sm:text-sm"><code>{curlInit}</code></pre>
 						</div>
-						{urlMcpCustomerDocs ? (
-							<p class="text-sm text-slate-500">
-								Internal / customer docs:{' '}
-								<a href={urlMcpCustomerDocs} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-									Subscriber documentation
-								</a>
-							</p>
-						) : null}
 					</div>
 				) : (
 					<p class="mt-6 text-sm text-slate-500">
@@ -632,6 +999,45 @@ const cursorMcpJsonSnippet = `    "aadm": {
 					</p>
 				)
 			}
+		</section>
+
+		<!-- MCP tools catalog -->
+		<section class="border-t border-border-subtle bg-surface-mid/25 py-16 sm:py-20" aria-labelledby="mcp-tools-heading">
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<h2 id="mcp-tools-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+					Typed tools & outcomes
+				</h2>
+				<p class="mt-3 max-w-3xl text-slate-400">
+					Each tool returns structured JSON for orchestrators and IDEs. After you connect,{' '}
+					<code class="font-mono-cta text-slate-400">tools/list</code> and{' '}
+					<code class="font-mono-cta text-slate-400">inputSchema</code> on the running server are authoritative—names below match
+					the hosted AADM MCP surface.
+				</p>
+				<ul class="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+					{
+						mcpToolsCatalog.map((row) => (
+							<li class="flex flex-col rounded-2xl border border-border-subtle bg-surface-card/70 p-5 shadow-lg shadow-black/15">
+								<div class="flex flex-wrap items-center gap-2">
+									<code class="break-all font-mono-cta text-sm font-semibold text-white">{row.tool}</code>
+								</div>
+								<div class="mt-3 flex flex-wrap gap-1.5">
+									{row.badges.map((b) => (
+										<span
+											class:list={[
+												'rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide',
+												toolBadgeClass[b],
+											]}
+										>
+											{b}
+										</span>
+									))}
+								</div>
+								<p class="mt-3 text-sm leading-relaxed text-slate-400">{row.outcome}</p>
+							</li>
+						))
+					}
+				</ul>
+			</div>
 		</section>
 
 	</main>

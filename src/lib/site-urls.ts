@@ -20,6 +20,33 @@ export function trim(v: string | undefined): string {
 	return typeof v === 'string' ? v.trim() : '';
 }
 
+/**
+ * Streamable HTTP MCP URL for IDE configs (`~/.cursor/mcp.json`, Claude Code, Claude Desktop).
+ * Appends `/mcp` when `PUBLIC_MCP_REPO_URL` is origin-only; preserves a non-root path when set.
+ */
+export function resolveHostedMcpRpcUrl(endpoint: string): string {
+	const raw = endpoint.trim() || 'https://mcp.aadm.io';
+	try {
+		const u = new URL(raw);
+		const path = u.pathname.replace(/\/+$/, '');
+		if (path && path !== '/') {
+			return `${u.origin}${path}`;
+		}
+		return `${u.origin}/mcp`;
+	} catch {
+		return 'https://mcp.aadm.io/mcp';
+	}
+}
+
+/** Origin only (e.g. discovery `GET /`) derived from a hosted MCP RPC URL. */
+export function hostedMcpOrigin(rpcUrl: string): string {
+	try {
+		return new URL(rpcUrl).origin;
+	} catch {
+		return 'https://mcp.aadm.io';
+	}
+}
+
 /** Normalize MCP **service** origin: the host you `POST` to (e.g. `https://mcp.aadm.io`). */
 export function normalizeMcpRpcUrl(raw: string): string {
 	const DEFAULT = 'https://mcp.aadm.io';
