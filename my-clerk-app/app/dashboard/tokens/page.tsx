@@ -205,12 +205,21 @@ export default function DashboardTokensPage() {
       <div className="rounded-2xl border border-violet-200 bg-violet-50/40 p-6 dark:border-violet-900 dark:bg-violet-950/25">
         <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Connect your MCP client</h2>
         <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
-          The MCP server accepts either an <strong className="text-zinc-900 dark:text-zinc-100">AADM token</strong> from
-          below (<code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">aadm_</code>) or a{" "}
+          The MCP server accepts an <strong className="text-zinc-900 dark:text-zinc-100">AADM token</strong> from below (
+          <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">aadm_</code>), a{" "}
           <strong className="text-zinc-900 dark:text-zinc-100">Clerk user API key</strong> (
-          <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">ak_</code>) you create in your hosted
-          Clerk account under <strong className="text-zinc-900 dark:text-zinc-100">API keys</strong> (same Clerk project
-          as this app).
+          <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">ak_</code>) from your hosted account
+          under <strong className="text-zinc-900 dark:text-zinc-100">API keys</strong>, or a short-lived{" "}
+          <strong className="text-zinc-900 dark:text-zinc-100">OAuth access token</strong> (
+          <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">Bearer</code>) from{" "}
+          <a
+            href="/oauth/mcp/start"
+            className="font-medium text-violet-800 underline-offset-2 hover:underline dark:text-violet-300"
+          >
+            Get OAuth token for MCP
+          </a>{" "}
+          (when the MCP host enables <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">CLERK_OAUTH_CLIENT_ID</code>
+          ).
         </p>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-300">
           <li>
