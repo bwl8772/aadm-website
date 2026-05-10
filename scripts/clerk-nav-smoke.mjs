@@ -2,8 +2,8 @@
  * Playwright smoke for the @clerk/astro nav.
  *
  * - Loads `/`, captures hrefs/buttons signed-out users see.
- * - Clicks Sign in to confirm Clerk redirects to its Account Portal (no bounce-back loop).
- * - Loads `/mcp`, confirms Get access / Sign in are Clerk components and resolve to the portal.
+ * - Clicks Sign in (Account Portal link) to confirm navigation to Clerk-hosted sign-in.
+ * - Loads `/mcp`, confirms Get access / Sign in CTAs are anchors with expected ids/text.
  *
  * Run: BASE_URL=http://127.0.0.1:4322 npm run test:clerk-smoke
  *      BASE_URL=https://aadm.io npm run test:clerk-smoke
@@ -50,12 +50,12 @@ try {
 	log('Home page (signed-out)', { url: page.url(), ...homeData });
 
 	navigations.length = 0;
-	const signInBtn = page.locator('header button', { hasText: 'Sign in' }).first();
-	await signInBtn.click({ timeout: 10000 });
+	const signInLink = page.locator('header a', { hasText: 'Sign in' }).first();
+	await signInLink.click({ timeout: 10000 });
 	await page.waitForLoadState('domcontentloaded', { timeout: timeoutMs }).catch(() => {});
 	await page.waitForTimeout(2000);
 
-	log('After clicking Sign in (Clerk component)', {
+	log('After clicking Sign in (portal link)', {
 		finalUrl: page.url(),
 		title: await page.title(),
 		isClerkPortal:
@@ -75,8 +75,8 @@ try {
 		};
 		return {
 			getAccess: get('#get-access'),
-			heroSignIn: Array.from(document.querySelectorAll('main button')).find(
-				(b) => /Sign in/i.test(b.textContent || ''),
+			heroSignIn: Array.from(document.querySelectorAll('main a')).find((el) =>
+				/Sign in/i.test(el.textContent || ''),
 			)?.textContent?.trim() || null,
 		};
 	});

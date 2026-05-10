@@ -73,8 +73,11 @@ export type SiteUrlConfig = {
 	curlInit: string;
 };
 
+/** Default when `PUBLIC_STANDARD_REPO_URL` is unset — public standard repo (override per deploy). */
+export const DEFAULT_STANDARD_REPO_URL = 'https://github.com/bwl8772/aadm-standard';
+
 export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
-	const urlStandard = trim(env.PUBLIC_STANDARD_REPO_URL) || '#configure-standard-url';
+	const urlStandard = trim(env.PUBLIC_STANDARD_REPO_URL) || DEFAULT_STANDARD_REPO_URL;
 	const urlMcpRaw = trim(env.PUBLIC_MCP_REPO_URL);
 	const urlMcpEndpoint = normalizeMcpRpcUrl(urlMcpRaw || 'https://mcp.aadm.io');
 	const urlMcpMarketing =

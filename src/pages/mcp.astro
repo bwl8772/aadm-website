@@ -1,7 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Show, SignInButton, SignUpButton } from '@clerk/astro/components';
-import { URL_ACCOUNT_USER, getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
+import { Show } from '@clerk/astro/components';
+import { getClerkPortalUrls } from '../lib/clerk-portal-urls';
+import { getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const {
@@ -13,6 +14,8 @@ const {
 	discoveryUrl,
 	curlInit,
 } = cfg;
+
+const { signInUrl, signUpUrl, accountUserUrl } = getClerkPortalUrls(import.meta.env);
 
 /** Cursor `mcp.json` uses MCP service origin + trailing slash (no `/mcp` path segment). */
 const cursorMcpHttpUrl = hostedMcpOrigin(urlMcpEndpoint || 'https://mcp.aadm.io');
@@ -183,7 +186,7 @@ const toolBadgeClass: Record<
 	title="AADM MCP — What you can do with subscriber access"
 	description="Versioned AADM tools and resources for coding agents: Navigator delivery, Investigator defects, Sentinel assurance. Paid MCP access on Streamable HTTP."
 	headerActiveNav="mcp"
-	headerMcpNavHref="#connect-cursor"
+	headerMcpNavHref="/mcp#mcp-hero-heading"
 	footerVariant="mcp"
 >
 	<main id="main">
@@ -207,7 +210,7 @@ const toolBadgeClass: Record<
 					</p>
 					<h1
 						id="mcp-hero-heading"
-						class="font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl"
+						class="scroll-mt-24 font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:scroll-mt-28 sm:text-5xl lg:text-6xl"
 					>
 						What you can do with the
 						<span class="bg-gradient-to-r from-accent-violet to-accent-blue bg-clip-text text-transparent">
@@ -221,24 +224,24 @@ const toolBadgeClass: Record<
 					</p>
 					<div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
 						<Show when="signed-out">
-							<SignUpButton
-								mode="modal"
+							<a
 								id="get-access"
+								href={signUpUrl}
 								class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
 							>
 								Get access
-							</SignUpButton>
-							<SignInButton
-								mode="modal"
+							</a>
+							<a
+								href={signInUrl}
 								class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white transition hover:border-slate-500/40 hover:bg-surface-mid"
 							>
 								Sign in
-							</SignInButton>
+							</a>
 						</Show>
 						<Show when="signed-in">
 							<a
 								id="get-access"
-								href={URL_ACCOUNT_USER}
+								href={accountUserUrl}
 								class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
 							>
 								Manage account
@@ -308,27 +311,27 @@ const toolBadgeClass: Record<
 							<li>
 								<Show when="signed-out">
 									<span>
-										<SignUpButton
-											mode="modal"
+										<a
+											href={signUpUrl}
 											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
 										>
 											Sign up
-										</SignUpButton>
+										</a>
 										{' '}
 										or{' '}
-										<SignInButton
-											mode="modal"
+										<a
+											href={signInUrl}
 											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
 										>
 											sign in
-										</SignInButton>
+										</a>
 										— complete subscription if you have not already.
 									</span>
 								</Show>
 								<Show when="signed-in">
 									<span>
 										<a
-											href={URL_ACCOUNT_USER}
+											href={accountUserUrl}
 											class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
 										>
 											Open your account
@@ -784,22 +787,22 @@ const toolBadgeClass: Record<
 						</p>
 						<div class="mt-8 flex flex-col gap-3">
 							<Show when="signed-out">
-								<SignUpButton
-									mode="modal"
+								<a
+									href={signUpUrl}
 									class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
 								>
 									Get access — sign up
-								</SignUpButton>
-								<SignInButton
-									mode="modal"
+								</a>
+								<a
+									href={signInUrl}
 									class="inline-flex items-center justify-center rounded-xl border border-border-subtle px-6 py-3.5 text-center text-base font-semibold text-white transition hover:bg-surface-mid"
 								>
 									Already subscribed? Sign in
-								</SignInButton>
+								</a>
 							</Show>
 							<Show when="signed-in">
 								<a
-									href={URL_ACCOUNT_USER}
+									href={accountUserUrl}
 									class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
 								>
 									Manage account
@@ -829,7 +832,7 @@ const toolBadgeClass: Record<
 				</li>
 				<li>
 					Open your account portal and create or copy an MCP-capable API key (
-					<a href={URL_ACCOUNT_USER} class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue">manage account</a>
+					<a href={accountUserUrl} class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue">manage account</a>
 					).
 				</li>
 				<li>

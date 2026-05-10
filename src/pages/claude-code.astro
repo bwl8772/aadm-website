@@ -1,10 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Show, SignInButton, SignUpButton } from '@clerk/astro/components';
-import { URL_ACCOUNT_USER, getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
+import { Show } from '@clerk/astro/components';
+import { getClerkPortalUrls } from '../lib/clerk-portal-urls';
+import { getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const { urlStandard, urlMcpMarketing, urlMcpEndpoint } = cfg;
+const { signInUrl, signUpUrl, accountUserUrl } = getClerkPortalUrls(import.meta.env);
 
 /** Claude hosts expect the MCP service origin with trailing slash — no `/mcp` path segment. */
 const claudeMcpOriginOnly = hostedMcpOrigin(urlMcpEndpoint || 'https://mcp.aadm.io');
@@ -94,29 +96,29 @@ const claudeMcpFullConfigSnippet = `{
 							<li>
 								<Show when="signed-out">
 									<span>
-										<SignUpButton
-											mode="modal"
+										<a
+											href={signUpUrl}
 											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
 										>
 											Sign up
-										</SignUpButton>
+										</a>
 										{' '}
 										or{' '}
-										<SignInButton
-											mode="modal"
+										<a
+											href={signInUrl}
 											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
 										>
 											sign in
-										</SignInButton>
+										</a>
 										on <a href={urlMcpMarketing} class="text-accent-violet underline hover:text-accent-blue">aadm.io/mcp</a>,
 										subscribe, then open{' '}
-										<a href={URL_ACCOUNT_USER} class="text-accent-violet underline hover:text-accent-blue">your account</a>{' '}
+										<a href={accountUserUrl} class="text-accent-violet underline hover:text-accent-blue">your account</a>{' '}
 										to mint an MCP-capable API key.
 									</span>
 								</Show>
 								<Show when="signed-in">
 									<span>
-										<a href={URL_ACCOUNT_USER} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+										<a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
 											Open your account
 										</a>{' '}
 										and mint or copy an MCP API key (

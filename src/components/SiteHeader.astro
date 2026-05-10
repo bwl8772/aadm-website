@@ -1,5 +1,6 @@
 ---
-import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/astro/components';
+import { Show } from '@clerk/astro/components';
+import { getClerkPortalUrls } from '../lib/clerk-portal-urls';
 
 type ActiveNav = 'home' | 'mcp' | null;
 
@@ -9,7 +10,7 @@ interface Props {
 	urlMcpMarketing: string;
 	/** When set, highlights the matching nav control. */
 	activeNav?: ActiveNav;
-	/** Override href for the MCP nav chip (e.g. `/mcp#get-access` on the MCP sales page). */
+	/** Override href for the MCP nav chip (e.g. `/mcp#mcp-hero-heading` on the MCP sales page). */
 	mcpNavHref?: string;
 }
 
@@ -31,6 +32,8 @@ const baseChipClasses =
 const joinChipClasses =
 	'shrink-0 whitespace-nowrap rounded-lg border border-violet-500/40 bg-violet-950/40 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-violet-400/60 hover:bg-violet-900/50 sm:px-3 sm:py-2 sm:text-sm md:px-4';
 
+const { signInUrl, signUpUrl, accountUserUrl } = getClerkPortalUrls(import.meta.env);
+
 ---
 
 <header class="sticky top-0 z-40 border-b border-border-subtle bg-surface-deep/80 backdrop-blur-md">
@@ -38,6 +41,7 @@ const joinChipClasses =
 		<a
 			href="/"
 			aria-label="AADM — home"
+			aria-current={activeNav === 'home' ? 'page' : undefined}
 			class="shrink-0 rounded font-display text-base font-bold tracking-tight text-white transition hover:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 sm:text-lg"
 		>
 			AADM
@@ -49,7 +53,6 @@ const joinChipClasses =
 			<a
 				href={urlStandard}
 				aria-label="Open AADM standard — read and adopt"
-				aria-current={activeNav === 'home' ? 'page' : undefined}
 				class:list={[
 					'shrink-0 whitespace-nowrap rounded-lg border border-border-subtle bg-surface-card/80 px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid sm:px-3 sm:py-2 sm:text-sm md:px-4',
 					standardChip,
@@ -71,14 +74,22 @@ const joinChipClasses =
 				<span class="hidden md:inline">Hosted MCP</span>
 			</a>
 			<Show when="signed-out">
-				<SignInButton mode="modal" class={baseChipClasses}>Sign in</SignInButton>
-				<SignUpButton mode="modal" class={joinChipClasses}>
+				<a href={signInUrl} class:list={[baseChipClasses, 'inline-flex items-center justify-center']}>Sign in</a>
+				<a href={signUpUrl} class:list={[joinChipClasses, 'inline-flex items-center justify-center']}>
 					<span class="sm:hidden">Join</span>
 					<span class="hidden sm:inline">Sign up</span>
-				</SignUpButton>
+				</a>
 			</Show>
 			<Show when="signed-in">
-				<UserButton afterSignOutUrl="/" />
+				<a
+					href={accountUserUrl}
+					class:list={[
+						baseChipClasses,
+						'inline-flex items-center justify-center border-violet-500/40 bg-violet-950/30 hover:bg-violet-900/40',
+					]}
+				>
+					Account
+				</a>
 			</Show>
 		</nav>
 	</div>
