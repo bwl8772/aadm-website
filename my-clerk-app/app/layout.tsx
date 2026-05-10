@@ -74,10 +74,10 @@ export default async function RootLayout({
 									<span className="hidden sm:inline">Dashboard</span>
 								</Link>
 								<Link
-									href="/profile"
+									href="/user"
 									className="shrink-0 whitespace-nowrap text-sm text-zinc-700 hover:underline dark:text-zinc-300"
 								>
-									Profile
+									Account
 								</Link>
 								<Link
 									href="/subscription"

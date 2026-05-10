@@ -5,6 +5,7 @@ import { CLERK_POST_AUTH_DEFAULT_PATH } from "@/lib/clerk-redirects";
 
 const isProtectedRoute = createRouteMatcher([
 	"/profile(.*)",
+	"/user(.*)",
 	"/subscription(.*)",
 	"/dashboard(.*)",
 ]);

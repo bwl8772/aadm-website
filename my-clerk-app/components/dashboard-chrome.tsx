@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 const nav = [
   { href: "/dashboard/tokens", label: "MCP access tokens" },
-  { href: "/profile", label: "Profile" },
+  { href: "/user", label: "Account" },
   { href: "/subscription", label: "Subscription" },
 ] as const;
 
@@ -24,7 +24,9 @@ export function DashboardChrome({ children }: { children: React.ReactNode }) {
               const active =
                 href === "/dashboard/tokens"
                   ? pathname === "/dashboard/tokens" || pathname === "/dashboard"
-                  : pathname === href || pathname.startsWith(`${href}/`);
+                  : href === "/user"
+                    ? pathname === "/user" || pathname.startsWith("/user/")
+                    : pathname === href || pathname.startsWith(`${href}/`);
               return (
                 <Link
                   key={href}
