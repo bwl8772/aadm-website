@@ -71,10 +71,25 @@ export type SiteUrlConfig = {
 	healthUrl: string;
 	discoveryUrl: string;
 	curlInit: string;
+	/**
+	 * Clerk OAuth application Client ID for hosted MCP (public). Same value as `CLERK_OAUTH_CLIENT_ID` on aadm-mcp.
+	 * Set `PUBLIC_MCP_OAUTH_CLIENT_ID` for masked display + copy on marketing pages.
+	 */
+	publicMcpOAuthClientId: string;
 };
 
 /** Default when `PUBLIC_STANDARD_REPO_URL` is unset — public standard repo (override per deploy). */
 export const DEFAULT_STANDARD_REPO_URL = 'https://github.com/bwl8772/aadm-standard';
+
+/** Mask OAuth Client ID for display: first 5 characters, then bullets. */
+export function maskPublicMcpOAuthClientId(id: string): string {
+	const t = trim(id);
+	if (t.length === 0) return '';
+	if (t.length <= 5) return t;
+	const hidden = t.length - 5;
+	const dots = Math.min(hidden, 36);
+	return `${t.slice(0, 5)}${'•'.repeat(dots)}`;
+}
 
 export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
 	const urlStandard = trim(env.PUBLIC_STANDARD_REPO_URL) || DEFAULT_STANDARD_REPO_URL;
@@ -104,6 +119,8 @@ export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
   -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"smoke","version":"1.0.0"}}}'`
 		: '';
 
+	const publicMcpOAuthClientId = trim(env.PUBLIC_MCP_OAUTH_CLIENT_ID);
+
 	return {
 		urlStandard,
 		urlMcpEndpoint,
@@ -113,5 +130,6 @@ export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
 		healthUrl,
 		discoveryUrl,
 		curlInit,
+		publicMcpOAuthClientId,
 	};
 }
