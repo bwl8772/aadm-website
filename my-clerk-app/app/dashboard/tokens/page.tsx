@@ -221,6 +221,36 @@ export default function DashboardTokensPage() {
           (when the MCP host enables <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">CLERK_OAUTH_CLIENT_ID</code>
           ).
         </p>
+        <p className="mt-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
+          <strong className="text-zinc-800 dark:text-zinc-200">OAuth operators:</strong> Clerk’s docs put{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">Client ID</strong> +{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">Client Secret</strong> on the{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">OAuth client</strong> that exchanges codes for tokens. The{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">aadm-mcp</strong> process does{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">not</strong> read{" "}
+          <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">CLERK_OAUTH_CLIENT_SECRET</code> — it
+          verifies <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">Bearer</code> access tokens
+          with <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">CLERK_SECRET_KEY</code> +{" "}
+          <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">CLERK_OAUTH_CLIENT_ID</code> (
+          <a
+            href="https://github.com/bwl8772/aadm-mcp/blob/main/docs/INTEGRATION.md"
+            className="font-medium text-violet-800 underline-offset-2 hover:underline dark:text-violet-300"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            INTEGRATION.md
+          </a>
+          ,{" "}
+          <a
+            href="https://github.com/bwl8772/aadm-mcp/blob/main/AGENTS.md"
+            className="font-medium text-violet-800 underline-offset-2 hover:underline dark:text-violet-300"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            AGENTS.md
+          </a>
+          ).
+        </p>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-300">
           <li>
             <strong className="text-zinc-900 dark:text-zinc-100">Server URL</strong> — set the MCP URL to{" "}

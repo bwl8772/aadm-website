@@ -1,5 +1,6 @@
 import { SignUp } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { OauthMcpResourceServerNote } from "@/components/oauth-mcp-resource-server-note";
 import { clerkSignInUrl, clerkSignUpUrl, isClerkAuthHostedExternally } from "@/lib/clerk-host";
 export default function SignupPage() {
   if (isClerkAuthHostedExternally()) {
@@ -7,8 +8,9 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center p-8">
+    <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8">
       <SignUp path="/signup" routing="path" signInUrl={clerkSignInUrl()} />
+      <OauthMcpResourceServerNote />
     </div>
   );
 }

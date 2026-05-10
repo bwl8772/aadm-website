@@ -1,6 +1,7 @@
 import { SignIn } from "@clerk/nextjs";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { OauthMcpResourceServerNote } from "@/components/oauth-mcp-resource-server-note";
 import {
   clerkForgotPasswordHref,
   clerkSignInUrl,
@@ -23,6 +24,7 @@ export default function LoginPage() {
           Forgot password?
         </Link>
       </p>
+      <OauthMcpResourceServerNote />
     </div>
   );
 }
