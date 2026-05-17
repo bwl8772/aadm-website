@@ -166,13 +166,39 @@ export function OAuthApplicationsPanel() {
 		<section className="rounded-lg border border-zinc-200 p-6 dark:border-zinc-800">
 			<h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">OAuth applications</h2>
 			<p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-				Create a client id and secret for your own app (desktop agent, gateway, or server) to sign users in with Clerk
-				using this account and obtain access tokens. Store the secret securely; it is only shown once after create or
-				rotate (unless the client is public / PKCE-only).{" "}
-				<strong className="font-medium text-zinc-800 dark:text-zinc-200">Note:</strong> the hosted MCP endpoint only
-				accepts Bearer tokens from the OAuth application whose Client ID is configured on that server — use AADM tokens (
-				<code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">aadm_</code>) or the documented MCP OAuth app
-				there; these credentials are for your own integrations.
+				Follow Clerk’s IdP guidance: put <strong className="text-zinc-800 dark:text-zinc-200">Client ID</strong> and{" "}
+				<strong className="text-zinc-800 dark:text-zinc-200">Client Secret</strong> (when confidential) into the{" "}
+				<strong className="text-zinc-800 dark:text-zinc-200">third-party OAuth client</strong> — the app that runs the
+				authorization-code exchange. Store the secret securely; it is only shown once after create or rotate (public /
+				PKCE apps omit the secret).
+			</p>
+			<p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+				The hosted <strong className="text-zinc-800 dark:text-zinc-200">aadm-mcp</strong> server does{" "}
+				<strong className="text-zinc-800 dark:text-zinc-200">not</strong> use{" "}
+				<code className="rounded bg-zinc-100 px-1 font-mono text-xs dark:bg-zinc-800">CLERK_OAUTH_CLIENT_SECRET</code> — it
+				only verifies access tokens with{" "}
+				<code className="rounded bg-zinc-100 px-1 font-mono text-xs dark:bg-zinc-800">CLERK_SECRET_KEY</code> and{" "}
+				<code className="rounded bg-zinc-100 px-1 font-mono text-xs dark:bg-zinc-800">CLERK_OAUTH_CLIENT_ID</code> (
+				<a
+					href="https://github.com/bwl8772/aadm-mcp/blob/main/docs/INTEGRATION.md"
+					className="font-medium text-violet-700 underline-offset-2 hover:underline dark:text-violet-400"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					INTEGRATION.md
+				</a>
+				,{" "}
+				<a
+					href="https://github.com/bwl8772/aadm-mcp/blob/main/AGENTS.md"
+					className="font-medium text-violet-700 underline-offset-2 hover:underline dark:text-violet-400"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					AGENTS.md
+				</a>
+				). Use <code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">aadm_</code> dashboard tokens or the
+				operator-configured MCP OAuth app for hosted MCP — credentials you create here are for{" "}
+				<strong className="text-zinc-800 dark:text-zinc-200">your</strong> integrations.
 			</p>
 
 			{newSecret ? (

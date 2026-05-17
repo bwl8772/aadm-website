@@ -2,6 +2,7 @@
 
 import { useAuth } from "@clerk/nextjs";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { McpOAuthClientIdBox } from "@/components/mcp-oauth-client-id-box";
 import { mcpRpcUrlForNextApp } from "@/lib/mcp-public-endpoint";
 
 function safeMcpHost(endpoint: string): string {
@@ -140,15 +141,19 @@ export default function DashboardTokensPage() {
 
   if (!isSignedIn) {
     return (
-      <div className="rounded-2xl border border-zinc-200 bg-white p-8 dark:border-zinc-800 dark:bg-zinc-900">
-        <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">MCP access tokens</h1>
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Sign in to create and manage tokens.</p>
+      <div className="space-y-6">
+        <McpOAuthClientIdBox />
+        <div className="rounded-2xl border border-zinc-200 bg-white p-8 dark:border-zinc-800 dark:bg-zinc-900">
+          <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">MCP access tokens</h1>
+          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Sign in to create and manage tokens.</p>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="space-y-8">
+      <McpOAuthClientIdBox />
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
           MCP access tokens
@@ -219,6 +224,36 @@ export default function DashboardTokensPage() {
             Get OAuth token for MCP
           </a>{" "}
           (when the MCP host enables <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">CLERK_OAUTH_CLIENT_ID</code>
+          ).
+        </p>
+        <p className="mt-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
+          <strong className="text-zinc-800 dark:text-zinc-200">OAuth operators:</strong> Clerk’s docs put{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">Client ID</strong> +{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">Client Secret</strong> on the{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">OAuth client</strong> that exchanges codes for tokens. The{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">aadm-mcp</strong> process does{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">not</strong> read{" "}
+          <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">CLERK_OAUTH_CLIENT_SECRET</code> — it
+          verifies <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">Bearer</code> access tokens
+          with <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">CLERK_SECRET_KEY</code> +{" "}
+          <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">CLERK_OAUTH_CLIENT_ID</code> (
+          <a
+            href="https://github.com/bwl8772/aadm-mcp/blob/main/docs/INTEGRATION.md"
+            className="font-medium text-violet-800 underline-offset-2 hover:underline dark:text-violet-300"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            INTEGRATION.md
+          </a>
+          ,{" "}
+          <a
+            href="https://github.com/bwl8772/aadm-mcp/blob/main/AGENTS.md"
+            className="font-medium text-violet-800 underline-offset-2 hover:underline dark:text-violet-300"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            AGENTS.md
+          </a>
           ).
         </p>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-300">

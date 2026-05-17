@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { Show } from '@clerk/astro/components';
 import { getClerkPortalUrls } from '../lib/clerk-portal-urls';
-import { getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
+import { getSiteUrlConfig, hostedMcpOrigin, maskPublicMcpOAuthClientId } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const {
@@ -13,6 +13,7 @@ const {
 	healthUrl,
 	discoveryUrl,
 	curlInit,
+	publicMcpOAuthClientId,
 } = cfg;
 
 const { signInUrl, signUpUrl, accountUserUrl } = getClerkPortalUrls(import.meta.env);
@@ -190,6 +191,52 @@ const toolBadgeClass: Record<
 	footerVariant="mcp"
 >
 	<main id="main">
+		{
+			publicMcpOAuthClientId ? (
+				<section
+					class="mx-auto max-w-6xl px-4 pb-6 pt-8 sm:px-6 sm:pb-8 sm:pt-10"
+					aria-labelledby="mcp-oauth-client-id-heading"
+				>
+					<div class="rounded-2xl border border-violet-500/35 bg-surface-card/90 p-5 shadow-lg shadow-violet-950/20 sm:p-6">
+						<h2
+							id="mcp-oauth-client-id-heading"
+							class="font-display text-lg font-bold text-white sm:text-xl"
+						>
+							MCP OAuth Client ID
+						</h2>
+						<p class="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">
+							Paste this Client ID into your MCP host’s OAuth settings (e.g. Claude Connector <strong
+								class="text-slate-300">Advanced</strong
+							>). It must match the hosted MCP server’s{' '}
+							<code class="font-mono-cta text-slate-300">CLERK_OAUTH_CLIENT_ID</code>. Copy copies the full value;
+							only the first five characters are shown here.
+						</p>
+						<div class="mt-4 flex flex-wrap items-center gap-3">
+							<code
+								class="font-mono-cta min-w-0 flex-1 break-all rounded-xl border border-border-subtle bg-surface-mid px-4 py-3 text-sm text-slate-200"
+							>
+								{maskPublicMcpOAuthClientId(publicMcpOAuthClientId)}
+							</code>
+							<button
+								type="button"
+								id="mcp-oauth-client-id-copy-btn"
+								data-full={publicMcpOAuthClientId}
+								class="shrink-0 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-violet-950/40 transition hover:brightness-110"
+							>
+								Copy
+							</button>
+						</div>
+					</div>
+					<script is:inline>
+						document.getElementById('mcp-oauth-client-id-copy-btn')?.addEventListener('click', function () {
+							const el = document.getElementById('mcp-oauth-client-id-copy-btn');
+							const t = el?.getAttribute('data-full');
+							if (t) navigator.clipboard.writeText(t);
+						});
+					</script>
+				</section>
+			) : null
+		}
 		<!-- 1 Hero -->
 		<section
 			class="relative mx-auto max-w-6xl px-4 pb-16 pt-12 sm:px-6 sm:pb-24 sm:pt-16 lg:pt-20"
