@@ -82,6 +82,12 @@ const mcpToolsCatalog: Array<{
 		outcome: 'Pull the official markdown for a numbered AUTH control so prompts cite governance text, not paraphrase.',
 	},
 	{
+		tool: 'fetch_seam',
+		badges: ['Doctrine', 'Sentinel'],
+		outcome:
+			'Load a SEAM-00–15 handoff archetype—scope for trace/assurance (normalization, dispatch, persistence). Pair with the seam-check worksheet resource.',
+	},
+	{
 		tool: 'role_guide',
 		badges: ['Doctrine'],
 		outcome: 'Slice UDALI agent doctrine (Unifier, Designer, Adapter, Logician, Integrator) for the role and task you are in.',
@@ -529,6 +535,29 @@ const toolBadgeClass: Record<
 						</p>
 					</li>
 				</ul>
+				<div
+					class="mx-auto mt-10 max-w-3xl rounded-2xl border border-border-subtle bg-surface-card/60 p-5 text-left shadow-lg shadow-black/20"
+				>
+					<h3 class="font-display text-base font-bold text-white">Citation namespaces</h3>
+					<p class="mt-2 text-sm leading-relaxed text-slate-400">
+						Keep audit labels distinct:
+						<strong class="text-slate-300"> AUTH</strong> = must-enforce ·
+						<strong class="text-slate-300"> SEAM</strong> = which crossing to prove ·
+						<strong class="text-slate-300"> TRACE</strong> = drift pattern ·
+						<strong class="text-slate-300"> VERT/HORI</strong> = attestation depth and boundary kind (from
+						<code class="font-mono-cta text-slate-400">sentinel_closure</code>).
+					</p>
+					<p class="mt-2 text-sm text-slate-500">
+						Column-only traces miss dispatch-time ids—use
+						<strong class="text-slate-400"> SEAM-04</strong> / <strong class="text-slate-400">SEAM-05</strong> when
+						aliases are normalized in-process. Public policy:
+						<a
+							href="https://github.com/bwl8772/aadm-standard/blob/main/standards/seam-catalog.md"
+							class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-accent-blue"
+							>standards/seam-catalog.md</a
+						>.
+					</p>
+				</div>
 			</div>
 		</section>
 
