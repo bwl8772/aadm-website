@@ -1,0 +1,201 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteUrlConfig } from '../lib/site-urls';
+
+const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
+
+const initCmd = `npx aadm-init-repo --full`;
+
+const initMinimal = `npx aadm-init-repo --minimal`;
+
+const verifyNoShadow = `ls /usr/local/bin/aadm-init-repo 2>/dev/null && echo "REMOVE THIS" || echo "OK"`;
+
+const fixPermission = `sudo rm -f /usr/local/bin/aadm-init-repo
+sudo rm -rf /usr/local/lib/node_modules/aadm-mcp`;
+
+const multiRepo = `cd ~/projects/repo-a && npx aadm-init-repo --full
+cd ~/projects/repo-b && npx aadm-init-repo --full
+npx aadm-init-repo --full --target=~/projects/repo-c`;
+
+const schemaUrl = 'https://mcp.aadm.io/schemas/aadm-config.v1.schema.json';
+
+/** Paste into Cursor / Claude Code with this repo open after \`npx aadm-init-repo --full\`. */
+const customizeAgentPrompt = `You are customizing AADM governance for THIS repository only.
+
+1. Read \`.aadm/config.json\` at the repo root (created by \`npx aadm-init-repo --full\`).
+2. Inspect the real codebase layout (app/, src/, lib/, packages/, server/, etc.) and update \`udali_ownership.patterns\` so each UDALI band points at actual paths—not template placeholders like generic \`src/**\` or \`src/adapter/**\`.
+3. Replace placeholder org/team strings (@org/..., example team slugs) with values that match this repo, or remove blocks we do not use yet.
+4. In \`auth_ownership\` and \`seam_ownership\`, keep only AUTH-XX / SEAM-XX entries that apply to this product; fix or drop template IDs that do not match our stack.
+5. In \`metadata\`: set accurate \`repo_name\`, \`primary_language\`, and \`description\` for this app.
+6. Leave \`\${AADM_TOKEN}\` (or the template token placeholder) in the JSON—do NOT paste real API keys into \`.aadm/config.json\`. Secrets belong only in IDE MCP settings (~/.cursor/mcp.json).
+7. Do not delete entire top-level sections unless they are clearly unused; prefer tightening placeholders over gutting the file.
+8. When done, give me a short markdown summary: what you changed, what you left as TODO, and any paths you were unsure about.
+
+Work in the open repo. Propose edits to \`.aadm/config.json\` only after you have grep/read evidence for folder structure. Do not run init again unless I ask.`;
+---
+
+<Layout
+	title="AADM governance — init your repo"
+	description="Run npx aadm-init-repo to create .aadm/config.json, then customize for your codebase. Links to the AADM standard and hosted MCP."
+	headerActiveNav={null}
+>
+	<main id="main">
+		<section class="mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 sm:pt-24">
+			<h1 class="font-display max-w-3xl text-balance text-4xl font-bold leading-[1.15] tracking-normal text-white sm:text-5xl">
+				Init your repo
+			</h1>
+			<p class="mt-6 max-w-2xl text-lg text-slate-400">
+				In <strong class="text-slate-300">your application project</strong> (not the MCP server repo), from the folder
+				where you want <code class="font-mono-cta text-slate-300">.aadm/config.json</code>:
+			</p>
+			<p class="mt-6 text-sm font-medium text-amber-200/95">Before init — run this once (must say <code class="font-mono-cta">OK</code>):</p>
+			<pre
+				class="mt-2 max-w-lg overflow-x-auto rounded-xl border border-amber-500/30 bg-[#0a0d14] p-3 font-mono-cta text-sm text-amber-100/90"
+			><code>{verifyNoShadow}</code></pre>
+			<p class="mt-2 text-sm text-slate-500">If it says <code class="font-mono-cta text-xs">REMOVE THIS</code>, run the cleanup below first.</p>
+			<pre
+				class="mt-8 max-w-xl overflow-x-auto rounded-2xl border border-emerald-500/30 bg-[#0a0d14] p-5 font-mono-cta text-base leading-relaxed text-emerald-100 shadow-inner sm:text-lg"
+				aria-label="Init command"
+			><code>{initCmd}</code></pre>
+			<p class="mt-4 text-sm text-slate-500">
+				Faster template: <code class="font-mono-cta text-slate-400">{initMinimal}</code> · npm package{' '}
+				<a
+					href="https://www.npmjs.com/package/aadm-init-repo"
+					class="text-accent-violet underline hover:text-accent-blue"
+					rel="noopener noreferrer"
+					target="_blank"
+				>aadm-init-repo</a>
+				· Node 22+
+			</p>
+			<p class="mt-6 text-sm text-slate-500">
+				Then edit the JSON for <strong class="text-slate-400">your</strong> paths and teams—do not ship the template{' '}
+				<code class="font-mono-cta text-xs">src/adapter/**</code> defaults.{' '}
+				<a href="#customize" class="text-accent-violet underline hover:text-accent-blue">Customize checklist ↓</a>
+			</p>
+		</section>
+
+		<section
+			id="many-repos"
+			class="border-y border-border-subtle bg-surface-mid/40 py-14"
+			aria-labelledby="many-repos-heading"
+		>
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<h2 id="many-repos-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+					Many repos on the same machine
+				</h2>
+				<p class="mt-4 max-w-3xl text-slate-400">
+					Init is <strong class="text-slate-300">per repository</strong>, not per laptop. Each project gets its own{' '}
+					<code class="font-mono-cta text-slate-300">.aadm/config.json</code>, hooks, and workflow stub under that repo’s
+					root. Run the command once per app—customize each file for that codebase.
+				</p>
+				<pre
+					class="mt-6 overflow-x-auto rounded-2xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-sm text-slate-300"
+				><code>{multiRepo}</code></pre>
+				<ul class="mt-6 max-w-3xl space-y-2 text-sm text-slate-400">
+					<li>
+						<strong class="text-slate-300">IDE MCP</strong> — one connection in{' '}
+						<code class="font-mono-cta text-xs">~/.cursor/mcp.json</code> (or Claude equivalent) points at hosted AADM for
+						all repos.
+					</li>
+					<li>
+						<strong class="text-slate-300">Governance</strong> — each repo’s agents read the{' '}
+						<code class="font-mono-cta text-xs">.aadm/config.json</code> next to the code you have open.
+					</li>
+					<li>
+						<strong class="text-slate-300">Re-init</strong> — use <code class="font-mono-cta text-xs">--force</code> only
+						inside the repo you mean to overwrite.
+					</li>
+				</ul>
+				<p class="mt-8 text-sm text-slate-400">
+					<strong class="text-slate-300">Permission denied?</strong> One-time machine fix (stale global install), then
+					rerun:
+				</p>
+				<pre
+					class="mt-3 max-w-md overflow-x-auto rounded-xl bg-[#0a0d14] p-3 font-mono-cta text-sm text-slate-300"
+				><code>{fixPermission}</code></pre>
+			</div>
+		</section>
+
+		<section id="customize" class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="customize-heading">
+			<h2 id="customize-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
+				After init: customize
+			</h2>
+			<ul class="mt-6 max-w-3xl space-y-3 text-sm text-slate-300">
+				<li>Map <code class="font-mono-cta text-xs">udali_ownership.patterns</code> to real folders (<code class="font-mono-cta text-xs">app/</code>, <code class="font-mono-cta text-xs">lib/</code>, …).</li>
+				<li>Replace placeholder GitHub teams and AUTH/SEAM entries with yours.</li>
+				<li>Keep <code class="font-mono-cta text-emerald-300/90">${'${AADM_TOKEN}'}</code> in config; put the real token in IDE MCP settings only.</li>
+				<li>
+					Connect hosted MCP:{' '}
+					<a href={urlMcpMarketing} class="text-accent-violet underline hover:text-accent-blue">aadm.io/mcp</a>
+				</li>
+			</ul>
+
+			<div
+				class="mt-10 max-w-3xl rounded-2xl border border-violet-500/30 bg-surface-card/80 p-5 shadow-lg shadow-violet-950/20 sm:p-6"
+				aria-labelledby="customize-prompt-heading"
+			>
+				<div class="flex flex-wrap items-start justify-between gap-3">
+					<div>
+						<h3 id="customize-prompt-heading" class="font-display text-lg font-bold text-white">
+							Agent prompt — customize this repo
+						</h3>
+						<p class="mt-2 text-sm text-slate-400">
+							Open one app repo in Cursor or Claude Code, then paste this into chat. The agent should edit{' '}
+							<code class="font-mono-cta text-slate-300">.aadm/config.json</code> using your real folder layout.
+						</p>
+					</div>
+					<button
+						type="button"
+						id="governance-customize-copy-btn"
+						class="inline-flex shrink-0 items-center justify-center rounded-lg border border-violet-500/40 bg-violet-600/90 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-violet-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0d14]"
+					>
+						Copy prompt
+					</button>
+				</div>
+				<pre
+					class="mt-4 max-h-72 overflow-y-auto overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-xs leading-relaxed text-slate-300 shadow-inner sm:max-h-80 sm:text-sm"
+					id="governance-customize-prompt-pre"
+					role="region"
+					aria-label="Customize AADM config agent prompt"
+				><code id="governance-customize-prompt-code">{customizeAgentPrompt}</code></pre>
+			</div>
+
+			<ul class="mt-10 grid gap-4 sm:grid-cols-2">
+				<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-5">
+					<a href={schemaUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue"
+						>Config schema</a>
+				</li>
+				<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-5">
+					<a href={urlStandard} class="font-semibold text-accent-violet underline hover:text-accent-blue"
+						>Open standard</a>
+				</li>
+			</ul>
+		</section>
+	</main>
+
+	<script is:inline>
+		(function () {
+			const btn = document.getElementById('governance-customize-copy-btn');
+			const code = document.getElementById('governance-customize-prompt-code');
+			if (!btn || !code) return;
+			const defaultLabel = btn.textContent || 'Copy prompt';
+			btn.addEventListener('click', async function () {
+				const text = (code.textContent || '').trim();
+				try {
+					await navigator.clipboard.writeText(text);
+					btn.textContent = 'Copied!';
+					btn.classList.add('opacity-90');
+					window.setTimeout(function () {
+						btn.textContent = defaultLabel;
+						btn.classList.remove('opacity-90');
+					}, 2200);
+				} catch {
+					btn.textContent = 'Copy blocked — select text';
+					window.setTimeout(function () {
+						btn.textContent = defaultLabel;
+					}, 3200);
+				}
+			});
+		})();
+	</script>
+</Layout>

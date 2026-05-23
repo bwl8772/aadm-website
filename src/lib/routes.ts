@@ -10,6 +10,7 @@
 export const paths = {
 	home: '/',
 	mcp: '/mcp',
+	governance: '/governance',
 	health: '/health',
 } as const;
 

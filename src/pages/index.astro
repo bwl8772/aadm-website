@@ -324,7 +324,17 @@ const {
 
 		<section id="mcp-quickstart" class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
 			<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Wire your stack—quick MCP reference</h2>
-			<p class="mt-4 max-w-3xl text-slate-400">
+			<div
+				class="mt-6 max-w-3xl rounded-2xl border border-emerald-500/25 bg-emerald-950/20 px-5 py-4 text-sm text-slate-300"
+			>
+				<strong class="text-slate-200">Step 0 — in your app repo:</strong>{' '}
+				<code class="font-mono-cta text-emerald-200/90">npx aadm-init-repo --minimal</code> scaffolds{' '}
+				<code class="font-mono-cta text-slate-300">.aadm/config.json</code> in your app repo.{' '}
+				<a href="/governance" class="font-semibold text-accent-violet underline hover:text-accent-blue"
+					>Init guide →</a
+				>
+			</div>
+			<p class="mt-6 max-w-3xl text-slate-400">
 				When agents need stable, versioned access to the same resources your team already trusts, 				the MCP
 				<strong class="text-slate-300">service</strong> at{' '}
 				<code class="font-mono-cta text-sm text-accent-blue">{urlMcpEndpoint}</code> speaks
