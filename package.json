@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "typecheck": "astro check",
     "buuld": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -21,6 +22,8 @@
     "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
-    "playwright": "^1.52.0"
+    "@astrojs/check": "^0.9.9",
+    "playwright": "^1.52.0",
+    "typescript": "^5.9.3"
   }
 }
