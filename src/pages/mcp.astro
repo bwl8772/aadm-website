@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Show } from '@clerk/astro/components';
-import { getClerkPortalUrls } from '../lib/clerk-portal-urls';
+import { getAccountPortalUrls } from '../lib/account-portal-urls';
 import { getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
@@ -17,7 +17,7 @@ const {
 	aadmConfigSchemaUrl,
 } = cfg;
 
-const { signInUrl, signUpUrl, accountUserUrl, accountMcpTokensUrl } = getClerkPortalUrls(import.meta.env);
+const { signInUrl, signUpUrl, accountMcpTokensUrl } = getAccountPortalUrls(import.meta.env);
 
 /** Canonical Streamable HTTP JSON-RPC URL — always includes `/mcp` for production default. */
 const mcpRpcUrl = urlMcpRpcUrl;
@@ -41,7 +41,7 @@ const cursorMcpBearerAkSnippet = `{
       "type": "http",
       "url": "${mcpRpcUrl}",
       "headers": {
-        "Authorization": "Bearer ak_<paste your Clerk API key>"
+        "Authorization": "Bearer ak_<paste your AADM account API key>"
       }
     }
   }
@@ -241,7 +241,7 @@ const toolBadgeClass: Record<
 							href={signInUrl}
 							class="inline-flex items-center justify-center rounded-xl border border-border-subtle px-5 py-3 text-sm font-semibold text-white hover:bg-surface-mid"
 						>
-							Sign in
+							Sign in to AADM
 						</a>
 					</Show>
 					<Show when="signed-in">
@@ -305,7 +305,7 @@ const toolBadgeClass: Record<
 				>
 					<p class="text-xs font-bold uppercase tracking-wider text-accent-blue">1 · Bearer token</p>
 					<h3 class="font-display mt-2 text-lg font-bold text-white">Standard header token</h3>
-					<p class="mt-2 text-sm text-slate-400">Cursor, Windsurf, curl — paste <code class="font-mono-cta text-xs">aadm_…</code> or <code class="font-mono-cta text-xs">Bearer ak_…</code></p>
+					<p class="mt-2 text-sm text-slate-400">Cursor, Windsurf, curl — <code class="font-mono-cta text-xs">aadm_…</code> dashboard token or <code class="font-mono-cta text-xs">Bearer ak_…</code> account API key</p>
 				</a>
 				<a
 					href="#connect-oauth"
@@ -330,8 +330,9 @@ const toolBadgeClass: Record<
 					Bearer / header token
 				</h2>
 				<p class="mt-3 max-w-3xl text-sm text-slate-400">
-					Mint a token from your <a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">account dashboard</a>
-					(<code class="font-mono-cta text-slate-400">aadm_…</code>) or use a Clerk user API key (<code class="font-mono-cta text-slate-400">ak_…</code>).
+					Mint a token from your <a href={accountMcpTokensUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">AADM account dashboard</a>
+					(<code class="font-mono-cta text-slate-400">aadm_…</code>) or use an account API key (<code class="font-mono-cta text-slate-400">ak_…</code>) from
+					<strong class="text-slate-300">Account → API keys</strong> in your AADM account after you sign in at aadm.io.
 					<strong class="text-slate-300">Not</strong> for claude.ai web Connectors — they require OAuth below.
 				</p>
 
@@ -342,8 +343,8 @@ const toolBadgeClass: Record<
 						<pre class="mt-4 overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-3 font-mono-cta text-xs text-slate-300"><code>Authorization: aadm_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef</code></pre>
 					</div>
 					<div class="rounded-2xl border border-border-subtle bg-surface-card/90 p-5">
-						<h3 class="font-display text-base font-bold text-white">Clerk API key</h3>
-						<p class="mt-2 text-sm text-slate-400">Use <code class="font-mono-cta text-xs">Bearer</code> + full <code class="font-mono-cta text-xs">ak_…</code> key (Account → API keys).</p>
+						<h3 class="font-display text-base font-bold text-white">AADM account API key</h3>
+						<p class="mt-2 text-sm text-slate-400">Use <code class="font-mono-cta text-xs">Bearer</code> + full <code class="font-mono-cta text-xs">ak_…</code> key from your AADM account (<strong class="text-slate-300">API keys</strong>).</p>
 						<pre class="mt-4 overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-3 font-mono-cta text-xs text-slate-300"><code>Authorization: Bearer ak_22493YKV29XYSR37N44GMH3SNAK12CFM</code></pre>
 					</div>
 				</div>
@@ -356,11 +357,11 @@ const toolBadgeClass: Record<
 					<pre class="mt-3 overflow-x-auto rounded-2xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-xs text-slate-300 sm:text-sm" id="mcp-connect-config-pre"><code id="mcp-connect-config-code">{cursorMcpFullConfigSnippet}</code></pre>
 					<p class="mt-3 text-xs text-slate-500">
 						<code class="font-mono-cta text-slate-400">url</code> must be <code class="font-mono-cta text-accent-violet">{mcpRpcUrl}</code>.
-						For <code class="font-mono-cta text-slate-400">ak_</code> keys, use Bearer form:
+						For <code class="font-mono-cta text-slate-400">ak_</code> account API keys, use Bearer form:
 					</p>
 					<pre class="mt-2 overflow-x-auto rounded-xl border border-border-subtle bg-surface-card/60 p-3 font-mono-cta text-xs text-slate-400"><code>{cursorMcpBearerAkSnippet}</code></pre>
 					<ol class="mt-6 list-decimal space-y-2 pl-5 text-sm text-slate-300">
-						<li>Subscribe and create a token in your account dashboard.</li>
+						<li>Subscribe and create a token in your <a href={accountMcpTokensUrl} class="text-accent-violet underline">AADM account dashboard</a>.</li>
 						<li>Paste into <code class="font-mono-cta text-slate-400">Authorization</code> in <code class="font-mono-cta text-slate-400">mcp.json</code>.</li>
 						<li>Reload Cursor (or restart MCP) so <code class="font-mono-cta text-slate-400">tools/list</code> refreshes.</li>
 					</ol>
@@ -388,7 +389,7 @@ const toolBadgeClass: Record<
 			<div class="mt-8 rounded-2xl border border-violet-500/35 bg-surface-card/90 p-6">
 				<h3 class="font-display text-lg font-bold text-white">OAuth Client ID</h3>
 				<p class="mt-2 text-sm text-slate-400">
-					Not published on this public page. After you subscribe, copy it from your authenticated account dashboard.
+					Not published on this public page. After you subscribe at <strong class="text-slate-300">aadm.io</strong>, copy it from your account dashboard.
 				</p>
 				<code class="mt-4 block rounded-xl border border-border-subtle bg-surface-mid px-4 py-3 font-mono-cta text-sm text-slate-400">
 					OAuth Client ID = &lt;retrieved after login&gt;
@@ -399,7 +400,7 @@ const toolBadgeClass: Record<
 							href={signInUrl}
 							class="inline-flex rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white"
 						>
-							Sign in to retrieve Client ID
+							Sign in at aadm.io to retrieve Client ID
 						</a>
 					</Show>
 					<Show when="signed-in">
@@ -407,7 +408,7 @@ const toolBadgeClass: Record<
 							href={accountMcpTokensUrl}
 							class="inline-flex rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white"
 						>
-							Open dashboard — copy Client ID
+							Open your AADM dashboard — copy Client ID
 						</a>
 					</Show>
 				</div>
@@ -421,7 +422,7 @@ const toolBadgeClass: Record<
 						<li>Choose <strong class="text-slate-300">OAuth</strong> (not pasted API key).</li>
 						<li>Paste <strong class="text-slate-300">OAuth Client ID</strong> from your <a href={accountMcpTokensUrl} class="text-accent-violet underline">account dashboard</a> when asked.</li>
 						<li>Leave <strong class="text-slate-300">Client Secret</strong> empty.</li>
-						<li>Sign in with the same Clerk account as your AADM subscription.</li>
+						<li>Sign in with the <strong class="text-slate-300">same AADM account</strong> you used to subscribe when the OAuth consent screen appears.</li>
 					</ol>
 				</div>
 				<div class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6">
@@ -430,7 +431,7 @@ const toolBadgeClass: Record<
 						<li><em>Settings → Connectors → Add custom connector</em></li>
 						<li>Server URL: <code class="font-mono-cta text-xs text-accent-violet">{mcpRpcUrl}</code></li>
 						<li>Authentication: <strong class="text-slate-300">OAuth</strong></li>
-						<li><strong class="text-slate-300">Advanced</strong> → paste OAuth Client ID from <a href={accountMcpTokensUrl} class="text-accent-violet underline">your dashboard</a> (required with Clerk)</li>
+						<li><strong class="text-slate-300">Advanced</strong> → paste OAuth Client ID from <a href={accountMcpTokensUrl} class="text-accent-violet underline">your AADM dashboard</a> (paste manually — auto-registration is not supported)</li>
 						<li>Leave Client Secret empty · click Connect and sign in</li>
 					</ol>
 				</div>
@@ -870,7 +871,7 @@ npx aadm-init-repo --full</code></pre>
 						<p class="text-xs font-medium uppercase tracking-wide text-slate-500">Subscriber checkout</p>
 						<p class="mt-2 font-display text-2xl font-bold text-white">Get access</p>
 						<p class="mt-3 text-sm text-slate-400">
-							Create an account (or sign in), complete subscription, then mint MCP tokens from your dashboard.
+							Create an AADM account at aadm.io (or sign in), complete subscription, then mint MCP tokens from your dashboard.
 						</p>
 						<div class="mt-8 flex flex-col gap-3">
 							<Show when="signed-out">
@@ -878,21 +879,21 @@ npx aadm-init-repo --full</code></pre>
 									href={signUpUrl}
 									class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
 								>
-									Get access — sign up
+									Get access — create AADM account
 								</a>
 								<a
 									href={signInUrl}
 									class="inline-flex items-center justify-center rounded-xl border border-border-subtle px-6 py-3.5 text-center text-base font-semibold text-white transition hover:bg-surface-mid"
 								>
-									Already subscribed? Sign in
+									Already subscribed? Sign in to AADM
 								</a>
 							</Show>
 							<Show when="signed-in">
 								<a
-									href={accountUserUrl}
+									href={accountMcpTokensUrl}
 									class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
 								>
-									Manage account
+									My AADM account
 								</a>
 							</Show>
 						</div>

@@ -7,13 +7,12 @@
  * - **MCP service** — Streamable HTTP JSON-RPC at **`https://mcp.aadm.io/mcp`** (append `/mcp` when env is origin-only).
  *   Set host with `PUBLIC_MCP_REPO_URL`; defaults to `https://mcp.aadm.io`.
  *
- * Clerk: `PUBLIC_CLERK_PUBLISHABLE_KEY` + `CLERK_SECRET_KEY` only for auth.
+ * AADM auth env: `PUBLIC_CLERK_*` + `CLERK_SECRET_KEY` (implementation detail — not shown on marketing pages).
  *
- * Account Portal URLs (sign-in / sign-up / user) are configured in the Clerk Dashboard
- * (`accounts.aadm.io`); we only hard-code the user page link for signed-in CTAs.
+ * Account sign-in / sign-up URLs are configured in the operator dashboard; defaults use accounts.aadm.io.
  */
 
-/** Clerk Account Portal user page (configured in Clerk Dashboard, hard-coded for signed-in CTAs). */
+/** Default AADM account profile URL for signed-in CTAs on the marketing site. */
 export const URL_ACCOUNT_USER = 'https://accounts.aadm.io/user';
 
 export function trim(v: string | undefined): string {
