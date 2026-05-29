@@ -29,7 +29,7 @@ const cursorMcpFullConfigSnippet = `{
       "type": "http",
       "url": "${mcpRpcUrl}",
       "headers": {
-        "Authorization": "aadm_<paste your dashboard token>"
+        "Authorization": "aadm_<your token here>"
       }
     }
   }
@@ -41,7 +41,7 @@ const cursorMcpBearerAkSnippet = `{
       "type": "http",
       "url": "${mcpRpcUrl}",
       "headers": {
-        "Authorization": "Bearer ak_<paste your AADM account API key>"
+        "Authorization": "Bearer ak_<your token here>"
       }
     }
   }
@@ -51,7 +51,7 @@ const cursorMcpJsonSnippet = `    "aadm": {
       "type": "http",
       "url": "${mcpRpcUrl}",
       "headers": {
-        "Authorization": "aadm_<paste your dashboard token>"
+        "Authorization": "aadm_<your token here>"
       }
     }`;
 
@@ -340,12 +340,12 @@ const toolBadgeClass: Record<
 					<div class="rounded-2xl border border-border-subtle bg-surface-card/90 p-5">
 						<h3 class="font-display text-base font-bold text-white">AADM dashboard token</h3>
 						<p class="mt-2 text-sm text-slate-400">Full secret as the header value — <strong class="text-slate-300">no</strong> <code class="font-mono-cta text-xs">Bearer</code> prefix.</p>
-						<pre class="mt-4 overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-3 font-mono-cta text-xs text-slate-300"><code>Authorization: aadm_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef</code></pre>
+						<pre class="mt-4 overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-3 font-mono-cta text-xs text-slate-300"><code>Authorization: aadm_&lt;your token here&gt;</code></pre>
 					</div>
 					<div class="rounded-2xl border border-border-subtle bg-surface-card/90 p-5">
 						<h3 class="font-display text-base font-bold text-white">AADM account API key</h3>
 						<p class="mt-2 text-sm text-slate-400">Use <code class="font-mono-cta text-xs">Bearer</code> + full <code class="font-mono-cta text-xs">ak_…</code> key from your AADM account (<strong class="text-slate-300">API keys</strong>).</p>
-						<pre class="mt-4 overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-3 font-mono-cta text-xs text-slate-300"><code>Authorization: Bearer ak_22493YKV29XYSR37N44GMH3SNAK12CFM</code></pre>
+						<pre class="mt-4 overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-3 font-mono-cta text-xs text-slate-300"><code>Authorization: Bearer ak_&lt;your token here&gt;</code></pre>
 					</div>
 				</div>
 
