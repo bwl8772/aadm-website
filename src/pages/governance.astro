@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { getSiteUrlConfig } from '../lib/site-urls';
 
-const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
+const { urlStandard, urlMcpMarketing, aadmConfigSchemaUrl: schemaUrl } = getSiteUrlConfig(import.meta.env);
 
 const initCmd = `npx aadm-init-repo --full`;
 
@@ -16,8 +16,6 @@ sudo rm -rf /usr/local/lib/node_modules/aadm-mcp`;
 const multiRepo = `cd ~/projects/repo-a && npx aadm-init-repo --full
 cd ~/projects/repo-b && npx aadm-init-repo --full
 npx aadm-init-repo --full --target=~/projects/repo-c`;
-
-const schemaUrl = 'https://mcp.aadm.io/schemas/aadm-config.v1.schema.json';
 
 /** Paste into Cursor / Claude Code with this repo open after \`npx aadm-init-repo --full\`. */
 const customizeAgentPrompt = `You are customizing AADM governance for THIS repository only.

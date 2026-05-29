@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Show } from '@clerk/astro/components';
-import { getClerkPortalUrls } from '../lib/clerk-portal-urls';
-import { getSiteUrlConfig, hostedMcpOrigin, maskPublicMcpOAuthClientId } from '../lib/site-urls';
+import { getAccountPortalUrls } from '../lib/account-portal-urls';
+import { getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const {
@@ -10,25 +10,38 @@ const {
 	urlMcpMarketing,
 	urlMcpCustomerDocs,
 	urlMcpEndpoint,
+	urlMcpRpcUrl,
 	healthUrl,
 	discoveryUrl,
 	curlInit,
-	publicMcpOAuthClientId,
+	aadmConfigSchemaUrl,
 } = cfg;
 
-const { signInUrl, signUpUrl, accountUserUrl } = getClerkPortalUrls(import.meta.env);
+const { signInUrl, signUpUrl, accountMcpTokensUrl } = getAccountPortalUrls(import.meta.env);
 
-/** Cursor `mcp.json` uses MCP service origin + trailing slash (no `/mcp` path segment). */
-const cursorMcpHttpUrl = hostedMcpOrigin(urlMcpEndpoint || 'https://mcp.aadm.io');
-const cursorMcpConfigUrl = `${cursorMcpHttpUrl}/`;
+/** Canonical Streamable HTTP JSON-RPC URL — always includes `/mcp` for production default. */
+const mcpRpcUrl = urlMcpRpcUrl;
+const mcpOrigin = hostedMcpOrigin(mcpRpcUrl);
 
 const cursorMcpFullConfigSnippet = `{
   "mcpServers": {
     "aadm": {
       "type": "http",
-      "url": "${cursorMcpConfigUrl}",
+      "url": "${mcpRpcUrl}",
       "headers": {
-        "Authorization": "<your token here>"
+        "Authorization": "aadm_<paste your dashboard token>"
+      }
+    }
+  }
+}`;
+
+const cursorMcpBearerAkSnippet = `{
+  "mcpServers": {
+    "aadm": {
+      "type": "http",
+      "url": "${mcpRpcUrl}",
+      "headers": {
+        "Authorization": "Bearer ak_<paste your AADM account API key>"
       }
     }
   }
@@ -36,9 +49,9 @@ const cursorMcpFullConfigSnippet = `{
 
 const cursorMcpJsonSnippet = `    "aadm": {
       "type": "http",
-      "url": "${cursorMcpConfigUrl}",
+      "url": "${mcpRpcUrl}",
       "headers": {
-        "Authorization": "<your token here>"
+        "Authorization": "aadm_<paste your dashboard token>"
       }
     }`;
 
@@ -190,386 +203,275 @@ const toolBadgeClass: Record<
 ---
 
 <Layout
-	title="AADM MCP — What you can do with subscriber access"
-	description="Versioned AADM tools and resources for coding agents: Navigator delivery, Investigator defects, Sentinel assurance. Paid MCP access on Streamable HTTP."
+	title="AADM MCP — Connect to the hosted server"
+	description="Connect Cursor, Claude Code, and claude.ai to the hosted AADM MCP at https://mcp.aadm.io/mcp — bearer token or OAuth Client ID."
 	headerActiveNav="mcp"
 	headerMcpNavHref="/mcp#mcp-hero-heading"
 	footerVariant="mcp"
 >
 	<main id="main">
-		{
-			publicMcpOAuthClientId ? (
-				<section
-					class="mx-auto max-w-6xl px-4 pb-6 pt-8 sm:px-6 sm:pb-8 sm:pt-10"
-					aria-labelledby="mcp-oauth-client-id-heading"
-				>
-					<div class="rounded-2xl border border-violet-500/35 bg-surface-card/90 p-5 shadow-lg shadow-violet-950/20 sm:p-6">
-						<h2
-							id="mcp-oauth-client-id-heading"
-							class="font-display text-lg font-bold text-white sm:text-xl"
-						>
-							MCP OAuth Client ID
-						</h2>
-						<p class="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">
-							Paste this Client ID into your MCP host’s OAuth settings (e.g. Claude Connector <strong
-								class="text-slate-300">Advanced</strong
-							>). It must match the hosted MCP server’s{' '}
-							<code class="font-mono-cta text-slate-300">CLERK_OAUTH_CLIENT_ID</code>. Copy copies the full value;
-							only the first five characters are shown here.
-						</p>
-						<div class="mt-4 flex flex-wrap items-center gap-3">
-							<code
-								class="font-mono-cta min-w-0 flex-1 break-all rounded-xl border border-border-subtle bg-surface-mid px-4 py-3 text-sm text-slate-200"
-							>
-								{maskPublicMcpOAuthClientId(publicMcpOAuthClientId)}
-							</code>
-							<button
-								type="button"
-								id="mcp-oauth-client-id-copy-btn"
-								data-full={publicMcpOAuthClientId}
-								class="shrink-0 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-violet-950/40 transition hover:brightness-110"
-							>
-								Copy
-							</button>
-						</div>
-					</div>
-					<script is:inline>
-						document.getElementById('mcp-oauth-client-id-copy-btn')?.addEventListener('click', function () {
-							const el = document.getElementById('mcp-oauth-client-id-copy-btn');
-							const t = el?.getAttribute('data-full');
-							if (t) navigator.clipboard.writeText(t);
-						});
-					</script>
-				</section>
-			) : null
-		}
-		<!-- 1 Hero -->
+		<!-- Hero -->
 		<section
-			class="relative mx-auto max-w-6xl px-4 pb-16 pt-12 sm:px-6 sm:pb-24 sm:pt-16 lg:pt-20"
+			class="relative mx-auto max-w-6xl px-4 pb-10 pt-12 sm:px-6 sm:pb-14 sm:pt-16"
 			aria-labelledby="mcp-hero-heading"
 		>
-			<div class="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,420px)]">
-				<div>
-					<p
-						class="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-400"
-					>
-						<span
-							class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-violet"
-							>Subscriber MCP</span
-						>
-						<span class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-blue"
-							>Agents & teams</span
-						>
-					</p>
-					<h1
-						id="mcp-hero-heading"
-						class="scroll-mt-24 font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:scroll-mt-28 sm:text-5xl lg:text-6xl"
-					>
-						What you can do with the
-						<span class="bg-gradient-to-r from-accent-violet to-accent-blue bg-clip-text text-transparent">
-							AADM MCP
-						</span>
-					</h1>
-					<p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-400">
-						Give Cursor, Claude Code, and other MCP hosts the same governed context your organization expects:
-						AUTH slices, UDALI doctrine, workflow discipline, and troubleshooting rails—without open-sourcing the
-						server implementation.
-					</p>
-					<div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-						<Show when="signed-out">
-							<a
-								id="get-access"
-								href={signUpUrl}
-								class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
-							>
-								Get access
-							</a>
-							<a
-								href={signInUrl}
-								class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white transition hover:border-slate-500/40 hover:bg-surface-mid"
-							>
-								Sign in
-							</a>
-						</Show>
-						<Show when="signed-in">
-							<a
-								id="get-access"
-								href={accountUserUrl}
-								class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
-							>
-								Manage account
-							</a>
-						</Show>
-						<a
-							href={urlStandard}
-							class="inline-flex items-center justify-center text-sm font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
-						>
-							View the Standard (free, public)
-						</a>
-					</div>
-					<p class="mt-4 text-sm text-slate-500">
-						The MCP does not enforce production AUTH in your apps—your gateways, tests, and CI remain authoritative.
-					</p>
-				</div>
-				<div
-					class="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-border-subtle bg-surface-card/60 shadow-2xl shadow-violet-950/30"
-					aria-hidden="true"
+			<div class="max-w-3xl">
+				<p class="mb-4 text-xs font-bold uppercase tracking-wider text-accent-violet">Hosted MCP</p>
+				<h1
+					id="mcp-hero-heading"
+					class="scroll-mt-24 font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:scroll-mt-28 sm:text-5xl"
 				>
-					<div
-						class="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(157,123,245,0.35),transparent_55%),radial-gradient(ellipse_at_80%_60%,rgba(79,140,255,0.25),transparent_50%)]"
-					>
-					</div>
-					<svg
-						class="absolute inset-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] opacity-90"
-						viewBox="0 0 400 300"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<rect x="24" y="32" width="352" height="56" rx="12" stroke="rgba(148,163,184,0.25)" stroke-width="1.5" />
-						<circle cx="48" cy="60" r="6" fill="#22c55e" opacity="0.9" />
-						<text x="68" y="64" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="11">Streamable HTTP · MCP session</text>
-						<rect x="24" y="104" width="200" height="72" rx="10" fill="rgba(15,20,36,0.9)" stroke="rgba(157,123,245,0.35)" />
-						<text x="40" y="132" fill="#9d7bf5" font-family="JetBrains Mono, monospace" font-size="10">tools/list</text>
-						<text x="40" y="154" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="9">resources/read · AUTH-…</text>
-						<rect x="240" y="104" width="136" height="140" rx="10" fill="rgba(15,20,36,0.85)" stroke="rgba(79,140,255,0.35)" />
-						<text x="256" y="132" fill="#4f8cff" font-family="JetBrains Mono, monospace" font-size="10">standard_brief</text>
-						<text x="256" y="156" fill="#94a3b8" font-family="Plus Jakarta Sans, sans-serif" font-size="9">workflows · routing</text>
-						<text x="256" y="180" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="8">navigator · investigator</text>
-						<text x="256" y="200" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="8">sentinel</text>
-						<path d="M224 140 L240 140" stroke="rgba(148,163,184,0.3)" stroke-width="2" stroke-dasharray="4 4" />
-					</svg>
+					Connect to the
+					<span class="bg-gradient-to-r from-accent-violet to-accent-blue bg-clip-text text-transparent">AADM MCP</span>
+				</h1>
+				<p class="mt-5 text-lg leading-relaxed text-slate-400">
+					Point your MCP host at the subscriber service, authenticate with <strong class="text-slate-300">one</strong> method
+					below, and reload. The MCP does not scan your repo—your apps and CI still prove enforcement.
+				</p>
+				<div class="mt-6 flex flex-wrap gap-3">
+					<Show when="signed-out">
+						<a
+							id="get-access"
+							href={signUpUrl}
+							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110"
+						>
+							Get access
+						</a>
+						<a
+							href={signInUrl}
+							class="inline-flex items-center justify-center rounded-xl border border-border-subtle px-5 py-3 text-sm font-semibold text-white hover:bg-surface-mid"
+						>
+							Sign in to AADM
+						</a>
+					</Show>
+					<Show when="signed-in">
+						<a
+							id="get-access"
+							href={accountMcpTokensUrl}
+							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110"
+						>
+							MCP tokens &amp; OAuth Client ID
+						</a>
+					</Show>
+					<a href="#two-ways" class="text-sm font-semibold text-accent-violet underline underline-offset-4 hover:text-accent-blue">
+						Jump to connection steps →
+					</a>
 				</div>
 			</div>
 		</section>
 
-		<!-- Bootstrap repo governance (CLI — not the MCP server) -->
-		<section
-			id="bootstrap-repo"
-			class="scroll-mt-24 mx-auto max-w-6xl px-4 py-16 sm:scroll-mt-28 sm:px-6 sm:py-20"
-			aria-labelledby="bootstrap-repo-heading"
-		>
-			<p class="text-xs font-bold uppercase tracking-wider text-emerald-400/90">Step 0 · Any repo</p>
-			<h2 id="bootstrap-repo-heading" class="font-display mt-2 text-2xl font-bold text-white sm:text-3xl">
-				Bootstrap <code class="font-mono-cta text-xl text-slate-200">.aadm/config.json</code>
-			</h2>
-			<p class="mt-4 max-w-3xl text-slate-400">
-				Before you wire MCP in an IDE, scaffold governance in <strong class="text-slate-300">your application repo</strong>.
-				The npm package <code class="font-mono-cta text-slate-300">aadm-init-repo</code> is
-				<strong class="text-slate-300">CLI only</strong> (~14 KB)—it does
-				<strong class="text-slate-300">not</strong> include the hosted MCP server, doctrine bundle, or tools.
-			</p>
-			<pre
-				class="mt-6 max-w-2xl overflow-x-auto rounded-2xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-sm leading-relaxed text-slate-300 shadow-inner"
-				aria-label="Bootstrap command"
-			><code>npx aadm-init-repo --minimal
-npx aadm-init-repo --full</code></pre>
-			<p class="mt-3 text-sm text-slate-500">
-				<a
-					href="/governance"
-					class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-accent-blue"
-				>/governance</a>
-				· Package:{' '}
-				<a
-					href="https://www.npmjs.com/package/aadm-init-repo"
-					class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-accent-blue"
-					rel="noopener noreferrer"
-					target="_blank"
-				>
-					npmjs.com/package/aadm-init-repo
-				</a>
-				· Node 22+
-			</p>
-
-			<div class="mt-10 grid gap-6 lg:grid-cols-2">
-				<div class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6">
-					<h3 class="font-display text-lg font-bold text-accent-blue">--minimal</h3>
-					<p class="mt-2 text-sm text-slate-400">Fast start (~35 lines): MCP endpoint, UDALI path patterns, delivery + defect lanes.</p>
-					<ul class="mt-4 space-y-2 text-sm text-slate-400">
-						<li class="flex gap-2">
-							<span class="text-accent-blue">·</span>
-							<span>Good for spikes and single-team services</span>
-						</li>
-						<li class="flex gap-2">
-							<span class="text-accent-blue">·</span>
-							<span>No team ownership, AUTH rules, or tool-routing blocks yet</span>
-						</li>
-					</ul>
+		<!-- Endpoint -->
+		<section class="border-y border-border-subtle bg-surface-mid/50 py-10" aria-labelledby="mcp-endpoint-heading">
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<h2 id="mcp-endpoint-heading" class="font-display text-lg font-bold text-white">MCP server URL</h2>
+				<p class="mt-2 max-w-3xl text-sm text-slate-400">
+					Use this <strong class="text-slate-300">exact</strong> URL in every client — include the <code class="font-mono-cta text-slate-300">/mcp</code> path.
+				</p>
+				<div class="mt-4 flex flex-wrap items-center gap-3">
+					<code class="font-mono-cta break-all rounded-xl border border-violet-500/40 bg-surface-card px-4 py-3 text-sm font-semibold text-accent-blue">
+						{mcpRpcUrl}
+					</code>
+					<button
+						type="button"
+						id="mcp-url-copy-btn"
+						data-url={mcpRpcUrl}
+						class="rounded-lg bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-violet-500"
+					>
+						Copy URL
+					</button>
 				</div>
-				<div class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6">
-					<h3 class="font-display text-lg font-bold text-accent-violet">--full</h3>
-					<p class="mt-2 text-sm text-slate-400">
-						Production-shaped template (~280 lines): teams, AUTH/SEAM ownership, assurance lane, enforcement gates,
-						attestation, tool routing, Cursor/Claude/CI blocks.
+				<p class="mt-3 text-xs text-slate-500">
+					Discovery: <a href={discoveryUrl} class="text-accent-violet underline hover:text-accent-blue">{mcpOrigin}/</a>
+					· Health: <a href={healthUrl} class="text-accent-violet underline hover:text-accent-blue">{mcpOrigin}/health</a>
+				</p>
+			</div>
+		</section>
+
+		<!-- Two ways -->
+		<section
+			id="two-ways"
+			class="scroll-mt-24 mx-auto max-w-6xl px-4 py-14 sm:scroll-mt-28 sm:px-6"
+			aria-labelledby="two-ways-heading"
+		>
+			<h2 id="two-ways-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">Two ways to connect</h2>
+			<p class="mt-3 max-w-3xl text-slate-400">
+				Pick <strong class="text-slate-300">one</strong> method per client. Do not paste an <code class="font-mono-cta text-slate-400">aadm_</code> token
+				and an OAuth Client ID together — they are different auth paths.
+			</p>
+			<div class="mt-8 grid gap-4 sm:grid-cols-2">
+				<a
+					href="#connect-bearer"
+					class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 transition hover:border-violet-500/40"
+				>
+					<p class="text-xs font-bold uppercase tracking-wider text-accent-blue">1 · Bearer token</p>
+					<h3 class="font-display mt-2 text-lg font-bold text-white">Standard header token</h3>
+					<p class="mt-2 text-sm text-slate-400">Cursor, Windsurf, curl — <code class="font-mono-cta text-xs">aadm_…</code> dashboard token or <code class="font-mono-cta text-xs">Bearer ak_…</code> account API key</p>
+				</a>
+				<a
+					href="#connect-oauth"
+					class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 transition hover:border-violet-500/40"
+				>
+					<p class="text-xs font-bold uppercase tracking-wider text-accent-violet">2 · OAuth</p>
+					<h3 class="font-display mt-2 text-lg font-bold text-white">OAuth Client ID</h3>
+					<p class="mt-2 text-sm text-slate-400">Claude Code, claude.ai Connectors — OAuth login + public Client ID (no secret)</p>
+				</a>
+			</div>
+		</section>
+
+		<!-- Bearer / token -->
+		<section
+			id="connect-bearer"
+			class="scroll-mt-24 border-y border-border-subtle bg-surface-mid/40 py-14 sm:scroll-mt-28 sm:py-16"
+			aria-labelledby="connect-bearer-heading"
+		>
+			<div class="mx-auto max-w-6xl px-4 sm:px-6">
+				<p class="text-xs font-bold uppercase tracking-wider text-accent-blue">Method 1</p>
+				<h2 id="connect-bearer-heading" class="font-display mt-2 text-2xl font-bold text-white sm:text-3xl">
+					Bearer / header token
+				</h2>
+				<p class="mt-3 max-w-3xl text-sm text-slate-400">
+					Mint a token from your <a href={accountMcpTokensUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">AADM account dashboard</a>
+					(<code class="font-mono-cta text-slate-400">aadm_…</code>) or use an account API key (<code class="font-mono-cta text-slate-400">ak_…</code>) from
+					<strong class="text-slate-300">Account → API keys</strong> in your AADM account after you sign in at aadm.io.
+					<strong class="text-slate-300">Not</strong> for claude.ai web Connectors — they require OAuth below.
+				</p>
+
+				<div class="mt-8 grid gap-6 lg:grid-cols-2">
+					<div class="rounded-2xl border border-border-subtle bg-surface-card/90 p-5">
+						<h3 class="font-display text-base font-bold text-white">AADM dashboard token</h3>
+						<p class="mt-2 text-sm text-slate-400">Full secret as the header value — <strong class="text-slate-300">no</strong> <code class="font-mono-cta text-xs">Bearer</code> prefix.</p>
+						<pre class="mt-4 overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-3 font-mono-cta text-xs text-slate-300"><code>Authorization: aadm_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef</code></pre>
+					</div>
+					<div class="rounded-2xl border border-border-subtle bg-surface-card/90 p-5">
+						<h3 class="font-display text-base font-bold text-white">AADM account API key</h3>
+						<p class="mt-2 text-sm text-slate-400">Use <code class="font-mono-cta text-xs">Bearer</code> + full <code class="font-mono-cta text-xs">ak_…</code> key from your AADM account (<strong class="text-slate-300">API keys</strong>).</p>
+						<pre class="mt-4 overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-3 font-mono-cta text-xs text-slate-300"><code>Authorization: Bearer ak_22493YKV29XYSR37N44GMH3SNAK12CFM</code></pre>
+					</div>
+				</div>
+
+				<div class="mt-10">
+					<div class="flex flex-wrap items-center justify-between gap-3">
+						<h3 class="font-display text-base font-bold text-white">Cursor — <code class="font-mono-cta text-sm font-normal text-slate-400">~/.cursor/mcp.json</code></h3>
+						<button type="button" id="mcp-connect-copy-btn" class="rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-500">Copy JSON</button>
+					</div>
+					<pre class="mt-3 overflow-x-auto rounded-2xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-xs text-slate-300 sm:text-sm" id="mcp-connect-config-pre"><code id="mcp-connect-config-code">{cursorMcpFullConfigSnippet}</code></pre>
+					<p class="mt-3 text-xs text-slate-500">
+						<code class="font-mono-cta text-slate-400">url</code> must be <code class="font-mono-cta text-accent-violet">{mcpRpcUrl}</code>.
+						For <code class="font-mono-cta text-slate-400">ak_</code> account API keys, use Bearer form:
 					</p>
-					<ul class="mt-4 space-y-2 text-sm text-slate-400">
-						<li class="flex gap-2">
-							<span class="text-accent-violet">·</span>
-							<span>All three lanes including Sentinel (<code class="font-mono-cta text-xs">assurance</code>)</span>
-						</li>
-						<li class="flex gap-2">
-							<span class="text-accent-violet">·</span>
-							<span>Edit placeholders—then connect MCP below</span>
-						</li>
-					</ul>
+					<pre class="mt-2 overflow-x-auto rounded-xl border border-border-subtle bg-surface-card/60 p-3 font-mono-cta text-xs text-slate-400"><code>{cursorMcpBearerAkSnippet}</code></pre>
+					<ol class="mt-6 list-decimal space-y-2 pl-5 text-sm text-slate-300">
+						<li>Subscribe and create a token in your <a href={accountMcpTokensUrl} class="text-accent-violet underline">AADM account dashboard</a>.</li>
+						<li>Paste into <code class="font-mono-cta text-slate-400">Authorization</code> in <code class="font-mono-cta text-slate-400">mcp.json</code>.</li>
+						<li>Reload Cursor (or restart MCP) so <code class="font-mono-cta text-slate-400">tools/list</code> refreshes.</li>
+					</ol>
 				</div>
 			</div>
+		</section>
 
-			<div class="mt-10 rounded-2xl border border-border-subtle bg-surface-mid/40 p-6">
-				<h3 class="font-display text-base font-bold text-white">What it writes (same for both flags)</h3>
-				<ul class="mt-4 grid gap-2 text-sm text-slate-400 sm:grid-cols-2">
-					<li>
-						<code class="font-mono-cta text-slate-300">.aadm/config.json</code> — validated against AADM Config v1.0
-					</li>
-					<li>
-						<code class="font-mono-cta text-slate-300">.claude/hooks/session-start.sh</code>
-					</li>
-					<li>
-						<code class="font-mono-cta text-slate-300">.husky/pre-commit.aadm.sh</code> — JSON syntax check
-					</li>
-					<li>
-						<code class="font-mono-cta text-slate-300">.github/workflows/aadm-pre-merge.yml</code> — CI stub (wire MCP later)
-					</li>
-				</ul>
-				<p class="mt-4 text-sm text-slate-500">
-					Re-run with <code class="font-mono-cta text-slate-400">--force</code> to overwrite an existing config. Auth in templates
-					uses <code class="font-mono-cta text-emerald-300/90">${'${AADM_TOKEN}'}</code>—never commit real keys.
+		<!-- OAuth -->
+		<section
+			id="connect-oauth"
+			class="scroll-mt-24 mx-auto max-w-6xl px-4 py-14 sm:scroll-mt-28 sm:px-6"
+			aria-labelledby="connect-oauth-heading"
+		>
+			<p class="text-xs font-bold uppercase tracking-wider text-accent-violet">Method 2</p>
+			<h2 id="connect-oauth-heading" class="font-display mt-2 text-2xl font-bold text-white sm:text-3xl">OAuth (Claude Code, claude.ai)</h2>
+
+			<div class="mt-6 rounded-2xl border-2 border-amber-500/50 bg-amber-950/30 p-5">
+				<p class="text-sm font-semibold text-amber-100">Do not use your <code class="font-mono-cta text-xs">aadm_</code> token here</p>
+				<p class="mt-2 text-sm text-amber-100/90">
+					OAuth clients use the <strong>OAuth Client ID</strong> below plus a browser login. There is <strong>no Client Secret</strong> for standard setups.
+					Do not paste dashboard tokens into OAuth or Advanced connector fields.
 				</p>
 			</div>
 
-			<p class="mt-8 flex flex-wrap gap-x-4 gap-y-2 text-sm text-slate-400">
-				<a
-					href="/governance"
-					class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
-				>
-					Customize config (don’t ship defaults) →
-				</a>
-				<a
-					href="#connect-cursor"
-					class="font-semibold text-slate-300 underline decoration-slate-600 underline-offset-4 hover:text-white"
-				>
-					Connect MCP in Cursor →
-				</a>
-			</p>
+			<div class="mt-8 rounded-2xl border border-violet-500/35 bg-surface-card/90 p-6">
+				<h3 class="font-display text-lg font-bold text-white">OAuth Client ID</h3>
+				<p class="mt-2 text-sm text-slate-400">
+					Not published on this public page. After you subscribe at <strong class="text-slate-300">aadm.io</strong>, copy it from your account dashboard.
+				</p>
+				<code class="mt-4 block rounded-xl border border-border-subtle bg-surface-mid px-4 py-3 font-mono-cta text-sm text-slate-400">
+					OAuth Client ID = &lt;retrieved after login&gt;
+				</code>
+				<div class="mt-4 flex flex-wrap gap-3">
+					<Show when="signed-out">
+						<a
+							href={signInUrl}
+							class="inline-flex rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white"
+						>
+							Sign in at aadm.io to retrieve Client ID
+						</a>
+					</Show>
+					<Show when="signed-in">
+						<a
+							href={accountMcpTokensUrl}
+							class="inline-flex rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white"
+						>
+							Open your AADM dashboard — copy Client ID
+						</a>
+					</Show>
+				</div>
+			</div>
+
+			<div class="mt-8 grid gap-6 lg:grid-cols-2">
+				<div class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6">
+					<h3 class="font-display text-base font-bold text-white">Claude Code</h3>
+					<ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-400">
+						<li>Add MCP server URL: <code class="font-mono-cta text-xs text-accent-violet">{mcpRpcUrl}</code></li>
+						<li>Choose <strong class="text-slate-300">OAuth</strong> (not pasted API key).</li>
+						<li>Paste <strong class="text-slate-300">OAuth Client ID</strong> from your <a href={accountMcpTokensUrl} class="text-accent-violet underline">account dashboard</a> when asked.</li>
+						<li>Leave <strong class="text-slate-300">Client Secret</strong> empty.</li>
+						<li>Sign in with the <strong class="text-slate-300">same AADM account</strong> you used to subscribe when the OAuth consent screen appears.</li>
+					</ol>
+				</div>
+				<div class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6">
+					<h3 class="font-display text-base font-bold text-white">claude.ai Connectors</h3>
+					<ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-400">
+						<li><em>Settings → Connectors → Add custom connector</em></li>
+						<li>Server URL: <code class="font-mono-cta text-xs text-accent-violet">{mcpRpcUrl}</code></li>
+						<li>Authentication: <strong class="text-slate-300">OAuth</strong></li>
+						<li><strong class="text-slate-300">Advanced</strong> → paste OAuth Client ID from <a href={accountMcpTokensUrl} class="text-accent-violet underline">your AADM dashboard</a> (paste manually — auto-registration is not supported)</li>
+						<li>Leave Client Secret empty · click Connect and sign in</li>
+					</ol>
+				</div>
+			</div>
 		</section>
 
-		<!-- Connect with Cursor — first scroll below hero -->
+		<!-- Optional repo config -->
 		<section
-			id="connect-cursor"
-			class="scroll-mt-24 border-y border-border-subtle bg-surface-mid/50 py-14 sm:scroll-mt-28 sm:py-16"
-			aria-labelledby="connect-cursor-heading"
+			id="repo-config"
+			class="scroll-mt-24 border-y border-border-subtle bg-surface-mid/30 py-14 sm:scroll-mt-28 sm:py-16"
+			aria-labelledby="repo-config-heading"
 		>
 			<div class="mx-auto max-w-6xl px-4 sm:px-6">
-				<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
-					<div class="max-w-xl shrink-0">
-						<p class="text-xs font-bold uppercase tracking-wider text-accent-violet">Cursor · MCP</p>
-						<h2 id="connect-cursor-heading" class="font-display mt-2 text-2xl font-bold text-white sm:text-3xl">
-							Connect with Cursor
-						</h2>
-						<p class="mt-3 text-slate-400">
-							<a
-								href="#bootstrap-repo"
-								class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-accent-blue"
-							>
-								Bootstrap your repo
-							</a>
-							first with <code class="font-mono-cta text-slate-300">npx aadm-init-repo --full</code>, then subscribe, mint an MCP token,
-							paste into <code class="font-mono-cta text-slate-300">~/.cursor/mcp.json</code>, and reload Cursor so{' '}
-							<code class="font-mono-cta text-slate-300">tools/list</code> picks up AADM.
-						</p>
-						<ol class="mt-6 list-decimal space-y-3 pl-5 text-sm text-slate-300">
-							<li>
-								<Show when="signed-out">
-									<span>
-										<a
-											href={signUpUrl}
-											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
-										>
-											Sign up
-										</a>
-										{' '}
-										or{' '}
-										<a
-											href={signInUrl}
-											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
-										>
-											sign in
-										</a>
-										— complete subscription if you have not already.
-									</span>
-								</Show>
-								<Show when="signed-in">
-									<span>
-										<a
-											href={accountUserUrl}
-											class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
-										>
-											Open your account
-										</a>
-										— confirm subscription is active.
-									</span>
-								</Show>
-							</li>
-							<li>
-								Create or copy an MCP API key (Clerk user keys often look like{' '}
-								<code class="font-mono-cta text-slate-400">ak_…</code>).
-							</li>
-							<li>
-								Replace <code class="font-mono-cta text-emerald-300/90">&lt;your token here&gt;</code> in the JSON—use the
-								raw value (or <code class="font-mono-cta text-slate-400">Bearer ak_…</code> if your client expects it).
-							</li>
-							<li>
-								Save the file and reload the Cursor window (or restart MCP) so tools refresh—then use{' '}
-								<code class="font-mono-cta text-slate-400">standard_brief</code>,{' '}
-								<code class="font-mono-cta text-slate-400">fetch_auth</code>, etc., from the agent.
-							</li>
-						</ol>
-						<p class="mt-6 text-xs leading-relaxed text-slate-500">
-							Already have other servers? Merge the <code class="font-mono-cta text-slate-500">aadm</code> entry into your
-							existing <code class="font-mono-cta text-slate-500">mcpServers</code> object instead of replacing the whole file.
-						</p>
-						<p class="mt-3">
-							<a
-								href="#setup-mcp"
-								class="text-sm font-semibold text-slate-400 underline decoration-slate-600 underline-offset-4 hover:text-slate-200"
-							>
-								More detail on setup →
-							</a>
-						</p>
-					</div>
-
-					<div class="min-w-0 flex-1">
-						<div class="flex flex-wrap items-center justify-between gap-3">
-							<p class="text-xs font-medium uppercase tracking-wide text-slate-500">
-								<code class="font-mono-cta normal-case text-slate-400">~/.cursor/mcp.json</code> — copy ready
-							</p>
-							<button
-								type="button"
-								id="mcp-connect-copy-btn"
-								class="inline-flex items-center justify-center rounded-lg border border-violet-500/40 bg-violet-600/90 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-violet-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0d14]"
-							>
-								Copy JSON
-							</button>
-						</div>
-						<pre
-							class="mt-3 overflow-x-auto rounded-2xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-xs leading-relaxed text-slate-300 shadow-inner sm:text-sm"
-							id="mcp-connect-config-pre"
-							role="region"
-							aria-label="Example Cursor MCP configuration JSON"
-						><code id="mcp-connect-config-code">{cursorMcpFullConfigSnippet}</code></pre>
-						<p class="mt-3 text-xs text-slate-500">
-							<code class="font-mono-cta text-slate-400">url</code> is service origin + trailing slash (example production:{' '}
-							<code class="font-mono-cta text-slate-400">https://mcp.aadm.io/</code>
-							). Must match your deploy (see{' '}
-							<a href="#technical" class="font-semibold text-accent-violet underline hover:text-accent-blue">technical</a>
-							).
-						</p>
-					</div>
-				</div>
+				<p class="text-xs font-bold uppercase tracking-wider text-emerald-400/90">Optional</p>
+				<h2 id="repo-config-heading" class="font-display mt-2 text-2xl font-bold text-white sm:text-3xl">
+					Repo governance config (<code class="font-mono-cta text-xl text-slate-300">aadm-init-repo</code>)
+				</h2>
+				<p class="mt-3 max-w-3xl text-sm text-slate-400">
+					You <strong class="text-slate-300">do not</strong> need this to connect the hosted MCP. Use it when you want
+					<code class="font-mono-cta text-slate-300">.aadm/config.json</code> in an application repo (UDALI paths, lanes, CI stubs).
+					Tokens stay in your IDE — never commit secrets into the config file.
+				</p>
+				<pre class="mt-6 max-w-xl overflow-x-auto rounded-2xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-sm text-slate-300"><code>npx aadm-init-repo --minimal
+npx aadm-init-repo --full</code></pre>
+				<p class="mt-4 text-sm text-slate-500">
+					<a href="/governance" class="font-semibold text-accent-violet underline hover:text-accent-blue">Customize on /governance</a>
+					·{' '}
+					<a href={aadmConfigSchemaUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue" target="_blank" rel="noopener noreferrer">Config JSON Schema</a>
+					·{' '}
+					<a href="https://www.npmjs.com/package/aadm-init-repo" class="font-semibold text-accent-violet underline hover:text-accent-blue" target="_blank" rel="noopener noreferrer">npm package</a>
+				</p>
 			</div>
 		</section>
 
 		<script is:inline>
 			(function () {
+				document.getElementById('mcp-url-copy-btn')?.addEventListener('click', function () {
+					const url = document.getElementById('mcp-url-copy-btn')?.getAttribute('data-url');
+					if (url) navigator.clipboard.writeText(url);
+				});
 				const btn = document.getElementById('mcp-connect-copy-btn');
 				const code = document.getElementById('mcp-connect-config-code');
 				if (!btn || !code) return;
@@ -579,16 +481,10 @@ npx aadm-init-repo --full</code></pre>
 					try {
 						await navigator.clipboard.writeText(text);
 						btn.textContent = 'Copied!';
-						btn.classList.add('opacity-90');
-						window.setTimeout(function () {
-							btn.textContent = defaultLabel;
-							btn.classList.remove('opacity-90');
-						}, 2200);
+						window.setTimeout(function () { btn.textContent = defaultLabel; }, 2200);
 					} catch {
-						btn.textContent = 'Copy blocked — select text';
-						window.setTimeout(function () {
-							btn.textContent = defaultLabel;
-						}, 3200);
+						btn.textContent = 'Copy blocked';
+						window.setTimeout(function () { btn.textContent = defaultLabel; }, 3200);
 					}
 				});
 			})();
@@ -975,7 +871,7 @@ npx aadm-init-repo --full</code></pre>
 						<p class="text-xs font-medium uppercase tracking-wide text-slate-500">Subscriber checkout</p>
 						<p class="mt-2 font-display text-2xl font-bold text-white">Get access</p>
 						<p class="mt-3 text-sm text-slate-400">
-							Create an account (or sign in), complete subscription, then mint MCP tokens from your dashboard.
+							Create an AADM account at aadm.io (or sign in), complete subscription, then mint MCP tokens from your dashboard.
 						</p>
 						<div class="mt-8 flex flex-col gap-3">
 							<Show when="signed-out">
@@ -983,21 +879,21 @@ npx aadm-init-repo --full</code></pre>
 									href={signUpUrl}
 									class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
 								>
-									Get access — sign up
+									Get access — create AADM account
 								</a>
 								<a
 									href={signInUrl}
 									class="inline-flex items-center justify-center rounded-xl border border-border-subtle px-6 py-3.5 text-center text-base font-semibold text-white transition hover:bg-surface-mid"
 								>
-									Already subscribed? Sign in
+									Already subscribed? Sign in to AADM
 								</a>
 							</Show>
 							<Show when="signed-in">
 								<a
-									href={accountUserUrl}
+									href={accountMcpTokensUrl}
 									class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
 								>
-									Manage account
+									My AADM account
 								</a>
 							</Show>
 						</div>
@@ -1006,60 +902,7 @@ npx aadm-init-repo --full</code></pre>
 			</div>
 		</section>
 
-		<!-- Setup MCP (Cursor) -->
-		<section id="setup-mcp" class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="mcp-setup-heading">
-			<h2 id="mcp-setup-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
-				Setup MCP (Cursor)
-			</h2>
-			<p class="mt-4 max-w-3xl text-slate-400">
-				<strong class="text-slate-300">In your application repo</strong>, run the bootstrap CLI, then wire the hosted MCP in
-				Cursor. Tokens stay in the IDE config—not in <code class="font-mono-cta text-slate-400">.aadm/config.json</code>.
-			</p>
-			<ol class="mt-6 max-w-3xl list-decimal space-y-3 pl-5 text-sm text-slate-300">
-				<li>
-					From the repo root: <code class="font-mono-cta text-slate-300">npx aadm-init-repo --full</code> — see{' '}
-					<a
-						href="#bootstrap-repo"
-						class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-accent-blue"
-					>
-						bootstrap details
-					</a>
-					.
-				</li>
-				<li>
-					Sign in or sign up (header or “Get access”), complete subscription if you have not already.
-				</li>
-				<li>
-					Open your account portal and create or copy an MCP-capable API key (
-					<a href={accountUserUrl} class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue">manage account</a>
-					).
-				</li>
-				<li>
-					Paste the key into <code class="font-mono-cta text-slate-400">Authorization</code> as shown—use the raw{' '}
-					<code class="font-mono-cta text-slate-400">ak_…</code> value or{' '}
-					<code class="font-mono-cta text-slate-400">Bearer ak_…</code> if your client expects it.
-				</li>
-				<li>
-					Restart MCP in Cursor (or reload the window) so it picks up the change.
-				</li>
-			</ol>
-			<p class="mt-6 text-xs font-medium uppercase tracking-wide text-slate-500">
-				Example <span class="font-mono-cta normal-case text-slate-400">~/.cursor/mcp.json</span> fragment
-			</p>
-			<pre
-				class="mt-3 overflow-x-auto rounded-2xl border border-border-subtle bg-surface-card/90 p-4 font-mono-cta text-xs leading-relaxed text-slate-300 sm:text-sm"
-				role="region"
-				aria-label="Cursor MCP JSON snippet"
-			><code>{cursorMcpJsonSnippet}</code></pre>
-			<p class="mt-4 max-w-3xl text-sm text-slate-500">
-				Service discovery JSON lives at <code class="font-mono-cta text-slate-400">{discoveryUrl || `${cursorMcpHttpUrl}/`}</code>;
-				MCP JSON-RPC posts to <code class="font-mono-cta text-accent-violet">{cursorMcpConfigUrl}</code> with Streamable HTTP (
-				<code class="font-mono-cta text-slate-400">Accept: application/json, text/event-stream</code>
-				)—your IDE sends that; <code class="font-mono-cta text-slate-400">mcp.json</code> uses that same URL (origin + <code class="font-mono-cta text-slate-500">/</code>).
-			</p>
-		</section>
-
-		<!-- 9 Technical strip -->
+		<!-- Technical strip -->
 		<section id="technical" class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="mcp-tech-heading">
 			<h2 id="mcp-tech-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
 				Technical confidence (operators)
@@ -1110,30 +953,30 @@ npx aadm-init-repo --full</code></pre>
 								</a>
 							) : null}
 							<a
-								href={cursorMcpConfigUrl}
+								href={mcpRpcUrl}
 								target="_blank"
 								rel="noopener noreferrer"
 								class="group flex flex-col rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/15 transition hover:border-slate-500/40 hover:bg-surface-mid/60"
 							>
 								<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Streamable HTTP</span>
-								<code class="mt-2 break-all font-mono-cta text-sm font-semibold text-accent-blue">{cursorMcpConfigUrl}</code>
+								<code class="mt-2 break-all font-mono-cta text-sm font-semibold text-accent-blue">{mcpRpcUrl}</code>
 								<p class="mt-2 flex-1 text-sm leading-relaxed text-slate-400">
-									RPC origin your IDE <code class="font-mono-cta text-slate-500">POST</code>s to with{' '}
+									JSON-RPC <code class="font-mono-cta text-slate-500">POST</code> target — include{' '}
+									<code class="font-mono-cta text-slate-500">/mcp</code> and{' '}
 									<code class="font-mono-cta text-slate-500">Accept: application/json, text/event-stream</code>.
 								</p>
 								<span class="mt-4 text-sm font-semibold text-accent-violet group-hover:text-accent-blue">
-									Open host →
+									Open endpoint →
 								</span>
 							</a>
 							<a
-								href="#setup-mcp"
+								href="#connect-bearer"
 								class="group flex flex-col rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/15 transition hover:border-violet-500/35 hover:bg-surface-mid/60"
 							>
 								<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Integrations</span>
-								<span class="mt-2 font-mono-cta text-sm font-semibold text-white">Cursor · mcp.json</span>
+								<span class="mt-2 font-mono-cta text-sm font-semibold text-white">Connect guide</span>
 								<p class="mt-2 flex-1 text-sm leading-relaxed text-slate-400">
-									Subscriber token in <code class="font-mono-cta text-slate-500">Authorization</code>, Streamable HTTP URL,
-									and reload-after-save reminders.
+									Bearer token vs OAuth — copy-paste configs for Cursor and Claude.
 								</p>
 								<span class="mt-4 text-sm font-semibold text-accent-violet group-hover:text-accent-blue">
 									Jump to setup →

@@ -1,16 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Show } from '@clerk/astro/components';
-import { getClerkPortalUrls } from '../lib/clerk-portal-urls';
-import { getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
+import { getAccountPortalUrls } from '../lib/account-portal-urls';
+import { getSiteUrlConfig } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
-const { urlStandard, urlMcpMarketing, urlMcpEndpoint } = cfg;
-const { signInUrl, signUpUrl, accountUserUrl } = getClerkPortalUrls(import.meta.env);
+const { urlStandard, urlMcpMarketing, urlMcpRpcUrl, discoveryUrl } = cfg;
+const { signInUrl, signUpUrl, accountMcpTokensUrl } = getAccountPortalUrls(import.meta.env);
 
-/** Claude hosts expect the MCP service origin with trailing slash — no `/mcp` path segment. */
-const claudeMcpOriginOnly = hostedMcpOrigin(urlMcpEndpoint || 'https://mcp.aadm.io');
-const claudeMcpConfigUrl = `${claudeMcpOriginOnly}/`;
+const claudeMcpConfigUrl = urlMcpRpcUrl;
 
 const claudeMcpFullConfigSnippet = `{
   "mcpServers": {
@@ -18,7 +16,7 @@ const claudeMcpFullConfigSnippet = `{
       "type": "http",
       "url": "${claudeMcpConfigUrl}",
       "headers": {
-        "Authorization": "<your token here>"
+        "Authorization": "aadm_<paste your dashboard token>"
       }
     }
   }
@@ -91,9 +89,8 @@ const claudeMcpFullConfigSnippet = `{
 					Connect AADM MCP to Claude
 				</h2>
 				<p class="mt-3 max-w-3xl text-slate-400">
-					One subscriber token, one HTTP MCP endpoint. Replace{' '}
-					<code class="font-mono-cta text-emerald-300/90">&lt;your token here&gt;</code> with the key from your AADM
-					dashboard (often <code class="font-mono-cta text-slate-500">ak_…</code>). Do not commit real secrets.
+					One subscriber token, one MCP endpoint. Paste an <code class="font-mono-cta text-slate-500">aadm_…</code> dashboard token
+					or <code class="font-mono-cta text-slate-500">Bearer ak_…</code> account API key from your AADM dashboard. Do not commit real secrets.
 				</p>
 
 				<div class="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-12">
@@ -107,7 +104,7 @@ const claudeMcpFullConfigSnippet = `{
 											href={signUpUrl}
 											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
 										>
-											Sign up
+											Create an AADM account
 										</a>
 										{' '}
 										or{' '}
@@ -115,21 +112,19 @@ const claudeMcpFullConfigSnippet = `{
 											href={signInUrl}
 											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
 										>
-											sign in
+											sign in at aadm.io
 										</a>
-										on <a href={urlMcpMarketing} class="text-accent-violet underline hover:text-accent-blue">aadm.io/mcp</a>,
-										subscribe, then open{' '}
-										<a href={accountUserUrl} class="text-accent-violet underline hover:text-accent-blue">your account</a>{' '}
-										to mint an MCP-capable API key.
+										, subscribe, then open your{' '}
+										<a href={accountMcpTokensUrl} class="text-accent-violet underline hover:text-accent-blue">AADM dashboard</a>{' '}
+										to mint an MCP token.
 									</span>
 								</Show>
 								<Show when="signed-in">
 									<span>
-										<a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-											Open your account
+										<a href={accountMcpTokensUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+											Open your AADM dashboard
 										</a>{' '}
-										and mint or copy an MCP API key (
-										<code class="font-mono-cta text-slate-500">ak_…</code>).
+										and mint or copy an MCP token or account API key.
 									</span>
 								</Show>
 							</li>
@@ -207,9 +202,10 @@ const claudeMcpFullConfigSnippet = `{
 							aria-label="Example Claude MCP configuration JSON"
 						><code id="claude-connect-config-code">{claudeMcpFullConfigSnippet}</code></pre>
 						<p class="mt-3 text-xs text-slate-500">
-							<code class="font-mono-cta text-slate-400">url</code> uses service origin + trailing slash (example production:{' '}
-							<code class="font-mono-cta text-slate-400">https://mcp.aadm.io/</code>
-							). Discovery JSON: <code class="font-mono-cta text-slate-400">{claudeMcpOriginOnly}/</code>
+							<code class="font-mono-cta text-slate-400">url</code> must be{' '}
+							<code class="font-mono-cta text-accent-violet">{claudeMcpConfigUrl}</code> (include{' '}
+							<code class="font-mono-cta text-slate-400">/mcp</code>). Service discovery:{' '}
+							<code class="font-mono-cta text-slate-400">{discoveryUrl || 'https://mcp.aadm.io/'}</code>
 						</p>
 					</div>
 				</div>

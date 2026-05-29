@@ -2,7 +2,7 @@
 
 import { useAuth } from "@clerk/nextjs";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { McpOAuthClientIdBox } from "@/components/mcp-oauth-client-id-box";
+import { McpOAuthConnectCard } from "@/components/mcp-oauth-connect-card";
 import { mcpRpcUrlForNextApp } from "@/lib/mcp-public-endpoint";
 
 function safeMcpHost(endpoint: string): string {
@@ -142,7 +142,7 @@ export default function DashboardTokensPage() {
   if (!isSignedIn) {
     return (
       <div className="space-y-6">
-        <McpOAuthClientIdBox />
+        <McpOAuthConnectCard mcpServerUrl={mcpEndpoint} />
         <div className="rounded-2xl border border-zinc-200 bg-white p-8 dark:border-zinc-800 dark:bg-zinc-900">
           <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">MCP access tokens</h1>
           <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Sign in to create and manage tokens.</p>
@@ -153,11 +153,18 @@ export default function DashboardTokensPage() {
 
   return (
     <div className="space-y-8">
-      <McpOAuthClientIdBox />
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
           MCP access tokens
         </h1>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+          <strong className="text-zinc-800 dark:text-zinc-200">Two ways to connect — use one, not both.</strong>{" "}
+          <code className="rounded bg-zinc-100 px-1 py-0.5 text-xs dark:bg-zinc-800">aadm_</code> tokens below are for
+          Cursor, Windsurf, and curl only. Claude Code and claude.ai use{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">OAuth</strong> (Client ID in the card above) — do not paste
+          an <code className="rounded bg-zinc-100 px-1 py-0.5 text-xs dark:bg-zinc-800">aadm_</code> token into OAuth
+          settings or combine it with a client secret.
+        </p>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
           Secrets start with <code className="rounded bg-zinc-100 px-1 py-0.5 text-xs dark:bg-zinc-800">aadm_</code>{" "}
           and are shown in full only when you create or regenerate one. Each is valid for{" "}
@@ -207,54 +214,19 @@ export default function DashboardTokensPage() {
         </div>
       </div>
 
+      <McpOAuthConnectCard mcpServerUrl={mcpEndpoint} />
+
       <div className="rounded-2xl border border-violet-200 bg-violet-50/40 p-6 dark:border-violet-900 dark:bg-violet-950/25">
-        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Connect your MCP client</h2>
+        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Connect with a token (Cursor, curl)</h2>
         <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
-          The MCP server accepts an <strong className="text-zinc-900 dark:text-zinc-100">AADM token</strong> from below (
-          <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">aadm_</code>), a{" "}
+          Use this section <strong className="text-zinc-900 dark:text-zinc-100">only</strong> if your client accepts a
+          pasted credential — not for Claude Code or claude.ai OAuth. Paste an{" "}
+          <strong className="text-zinc-900 dark:text-zinc-100">AADM token</strong> from below (
+          <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">aadm_</code>) or a{" "}
           <strong className="text-zinc-900 dark:text-zinc-100">Clerk user API key</strong> (
-          <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">ak_</code>) from your hosted account
-          under <strong className="text-zinc-900 dark:text-zinc-100">API keys</strong>, or a short-lived{" "}
-          <strong className="text-zinc-900 dark:text-zinc-100">OAuth access token</strong> (
-          <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">Bearer</code>) from{" "}
-          <a
-            href="/oauth/mcp/start"
-            className="font-medium text-violet-800 underline-offset-2 hover:underline dark:text-violet-300"
-          >
-            Get OAuth token for MCP
-          </a>{" "}
-          (when the MCP host enables <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">CLERK_OAUTH_CLIENT_ID</code>
-          ).
-        </p>
-        <p className="mt-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-          <strong className="text-zinc-800 dark:text-zinc-200">OAuth operators:</strong> Clerk’s docs put{" "}
-          <strong className="text-zinc-800 dark:text-zinc-200">Client ID</strong> +{" "}
-          <strong className="text-zinc-800 dark:text-zinc-200">Client Secret</strong> on the{" "}
-          <strong className="text-zinc-800 dark:text-zinc-200">OAuth client</strong> that exchanges codes for tokens. The{" "}
-          <strong className="text-zinc-800 dark:text-zinc-200">aadm-mcp</strong> process does{" "}
-          <strong className="text-zinc-800 dark:text-zinc-200">not</strong> read{" "}
-          <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">CLERK_OAUTH_CLIENT_SECRET</code> — it
-          verifies <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">Bearer</code> access tokens
-          with <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">CLERK_SECRET_KEY</code> +{" "}
-          <code className="rounded bg-white/90 px-1 font-mono text-[11px] dark:bg-zinc-900">CLERK_OAUTH_CLIENT_ID</code> (
-          <a
-            href="https://github.com/bwl8772/aadm-mcp/blob/main/docs/INTEGRATION.md"
-            className="font-medium text-violet-800 underline-offset-2 hover:underline dark:text-violet-300"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            INTEGRATION.md
-          </a>
-          ,{" "}
-          <a
-            href="https://github.com/bwl8772/aadm-mcp/blob/main/AGENTS.md"
-            className="font-medium text-violet-800 underline-offset-2 hover:underline dark:text-violet-300"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            AGENTS.md
-          </a>
-          ).
+          <code className="rounded bg-white/90 px-1 text-xs dark:bg-zinc-900">ak_</code>). Do{" "}
+          <strong className="text-zinc-900 dark:text-zinc-100">not</strong> add OAuth Client ID or client secret when
+          using a token.
         </p>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-300">
           <li>
@@ -314,7 +286,8 @@ export default function DashboardTokensPage() {
       <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
         <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Create a token</h2>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          Use a label you will recognize later (e.g. laptop, CI job, Cursor workspace).
+          For Cursor, Windsurf, and curl — <strong className="text-zinc-800 dark:text-zinc-200">not</strong> for Claude
+          OAuth. Label tokens so you recognize them later (e.g. laptop, CI job).
         </p>
         <form onSubmit={handleCreateToken} className="mt-4 flex flex-col gap-3 sm:flex-row">
           <input
@@ -357,11 +330,9 @@ export default function DashboardTokensPage() {
               </button>
             </div>
             <p className="mt-3 text-xs text-green-800/90 dark:text-green-300/90">
-              Paste this exact string as the <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">Authorization</code> header value on every request to{" "}
-              <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">{mcpEndpoint}</code> — nothing before{" "}
-              <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">aadm_</code> (no{" "}
-              <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">Bearer</code>). The MCP host must use the same Clerk project as this site (
-              <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">CLERK_SECRET_KEY</code> on the server).
+              Paste this exact string as the <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">Authorization</code>{" "}
+              header on <code className="rounded bg-white/80 px-1 dark:bg-zinc-900">{mcpEndpoint}</code> — token clients
+              only. Do not use with OAuth Client ID, client secret, or claude.ai Connectors.
             </p>
           </div>
         )}

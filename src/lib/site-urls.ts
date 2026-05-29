@@ -4,16 +4,15 @@
  *
  * - **Marketing** — public copy and CTAs live at **`https://aadm.io/mcp`** (main site path).
  *   Override with `PUBLIC_MCP_QUICKSTART_URL` when needed (e.g. local preview: `http://localhost:4321/mcp`).
- * - **MCP service** — Streamable HTTP JSON-RPC at **`https://mcp.aadm.io`** (origin only; no `/mcp` path).
- *   Set with `PUBLIC_MCP_REPO_URL`; defaults to `https://mcp.aadm.io`.
+ * - **MCP service** — Streamable HTTP JSON-RPC at **`https://mcp.aadm.io/mcp`** (append `/mcp` when env is origin-only).
+ *   Set host with `PUBLIC_MCP_REPO_URL`; defaults to `https://mcp.aadm.io`.
  *
- * Clerk: `PUBLIC_CLERK_PUBLISHABLE_KEY` + `CLERK_SECRET_KEY` only for auth.
+ * AADM auth env: `PUBLIC_CLERK_*` + `CLERK_SECRET_KEY` (implementation detail — not shown on marketing pages).
  *
- * Account Portal URLs (sign-in / sign-up / user) are configured in the Clerk Dashboard
- * (`accounts.aadm.io`); we only hard-code the user page link for signed-in CTAs.
+ * Account sign-in / sign-up URLs are configured in the operator dashboard; defaults use accounts.aadm.io.
  */
 
-/** Clerk Account Portal user page (configured in Clerk Dashboard, hard-coded for signed-in CTAs). */
+/** Default AADM account profile URL for signed-in CTAs on the marketing site. */
 export const URL_ACCOUNT_USER = 'https://accounts.aadm.io/user';
 
 export function trim(v: string | undefined): string {
@@ -62,8 +61,10 @@ export function normalizeMcpRpcUrl(raw: string): string {
 
 export type SiteUrlConfig = {
 	urlStandard: string;
-	/** Streamable HTTP MCP host (actual API). */
+	/** MCP service host origin (e.g. `https://mcp.aadm.io`). */
 	urlMcpEndpoint: string;
+	/** Streamable HTTP JSON-RPC URL clients POST to (includes `/mcp` when origin-only). */
+	urlMcpRpcUrl: string;
 	/** Public marketing page for MCP (default production: `https://aadm.io/mcp`). */
 	urlMcpMarketing: string;
 	urlMcpCustomerDocs: string;
@@ -71,17 +72,27 @@ export type SiteUrlConfig = {
 	healthUrl: string;
 	discoveryUrl: string;
 	curlInit: string;
-	/**
-	 * Clerk OAuth application Client ID for hosted MCP (public). Same value as `CLERK_OAUTH_CLIENT_ID` on aadm-mcp.
-	 * Set `PUBLIC_MCP_OAUTH_CLIENT_ID` for masked display + copy on marketing pages.
-	 */
-	publicMcpOAuthClientId: string;
+	/** AADM Config v1 JSON Schema (`$schema` in `.aadm/config.json`). */
+	aadmConfigSchemaUrl: string;
 };
 
 /** Default when `PUBLIC_STANDARD_REPO_URL` is unset — public standard repo (override per deploy). */
 export const DEFAULT_STANDARD_REPO_URL = 'https://github.com/bwl8772/aadm-standard';
 
-/** Mask OAuth Client ID for display: first 5 characters, then bullets. */
+/** JSON Schema for `.aadm/config.json` — served from this marketing site (`/schemas/…`). */
+export function aadmConfigSchemaUrl(env: ImportMetaEnv): string {
+	const marketing = trim(env.PUBLIC_MCP_QUICKSTART_URL) || 'https://aadm.io/mcp';
+	try {
+		return `${new URL(marketing).origin}/schemas/aadm-config.v1.schema.json`;
+	} catch {
+		return 'https://aadm.io/schemas/aadm-config.v1.schema.json';
+	}
+}
+
+/** @deprecated Use `aadmConfigSchemaUrl(import.meta.env)` — kept for static imports. */
+export const AADM_CONFIG_SCHEMA_URL = 'https://aadm.io/schemas/aadm-config.v1.schema.json';
+
+/** @deprecated Marketing site does not publish OAuth Client ID — use accounts dashboard. */
 export function maskPublicMcpOAuthClientId(id: string): string {
 	const t = trim(id);
 	if (t.length === 0) return '';
@@ -95,6 +106,7 @@ export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
 	const urlStandard = trim(env.PUBLIC_STANDARD_REPO_URL) || DEFAULT_STANDARD_REPO_URL;
 	const urlMcpRaw = trim(env.PUBLIC_MCP_REPO_URL);
 	const urlMcpEndpoint = normalizeMcpRpcUrl(urlMcpRaw || 'https://mcp.aadm.io');
+	const urlMcpRpcUrl = resolveHostedMcpRpcUrl(urlMcpEndpoint);
 	const urlMcpMarketing =
 		trim(env.PUBLIC_MCP_QUICKSTART_URL) || 'https://aadm.io/mcp';
 	const urlMcpCustomerDocs = trim(env.PUBLIC_MCP_CUSTOMER_DOCS_URL);
@@ -112,24 +124,23 @@ export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
 		/* ignore invalid PUBLIC_MCP_REPO_URL */
 	}
 
-	const curlInit = urlMcpEndpoint
-		? `curl -s -X POST ${urlMcpEndpoint} \\
+	const curlInit = urlMcpRpcUrl
+		? `curl -s -X POST ${urlMcpRpcUrl} \\
   -H "Content-Type: application/json" \\
   -H "Accept: application/json, text/event-stream" \\
   -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"smoke","version":"1.0.0"}}}'`
 		: '';
 
-	const publicMcpOAuthClientId = trim(env.PUBLIC_MCP_OAUTH_CLIENT_ID);
-
 	return {
 		urlStandard,
 		urlMcpEndpoint,
+		urlMcpRpcUrl,
 		urlMcpMarketing,
 		urlMcpCustomerDocs,
 		hasMcpMarketingLink,
 		healthUrl,
 		discoveryUrl,
 		curlInit,
-		publicMcpOAuthClientId,
+		aadmConfigSchemaUrl: aadmConfigSchemaUrl(env),
 	};
 }
