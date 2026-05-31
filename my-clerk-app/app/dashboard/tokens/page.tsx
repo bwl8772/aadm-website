@@ -259,13 +259,13 @@ export default function DashboardTokensPage() {
         <p className="mt-4 text-xs text-zinc-600 dark:text-zinc-400">
           Example — AADM token (header value is the whole secret):{" "}
           <code className="mt-1 block break-all rounded-lg border border-violet-200/80 bg-white/90 p-2 font-mono text-[11px] text-zinc-800 dark:border-violet-900 dark:bg-zinc-950 dark:text-zinc-200">
-            Authorization: aadm_&lt;your token here&gt;
+            Authorization: &lt;your token here&gt;
           </code>
         </p>
         <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-400">
           Example — Clerk API key:{" "}
           <code className="mt-1 block break-all rounded-lg border border-violet-200/80 bg-white/90 p-2 font-mono text-[11px] text-zinc-800 dark:border-violet-900 dark:bg-zinc-950 dark:text-zinc-200">
-            Authorization: Bearer ak_&lt;your token here&gt;
+            Authorization: Bearer &lt;your token here&gt;
           </code>
         </p>
         <p className="mt-3 text-xs text-zinc-600 dark:text-zinc-400">

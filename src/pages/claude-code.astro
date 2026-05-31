@@ -6,7 +6,7 @@ import { getSiteUrlConfig } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const { urlStandard, urlMcpMarketing, urlMcpRpcUrl, discoveryUrl } = cfg;
-const { signInUrl, signUpUrl, accountMcpTokensUrl } = getAccountPortalUrls(import.meta.env);
+const { signInUrl, signUpUrl } = getAccountPortalUrls(import.meta.env);
 
 const claudeMcpConfigUrl = urlMcpRpcUrl;
 
@@ -16,7 +16,7 @@ const claudeMcpFullConfigSnippet = `{
       "type": "http",
       "url": "${claudeMcpConfigUrl}",
       "headers": {
-        "Authorization": "aadm_<your token here>"
+        "Authorization": "<your token here>"
       }
     }
   }
@@ -114,15 +114,14 @@ const claudeMcpFullConfigSnippet = `{
 										>
 											sign in at aadm.io
 										</a>
-										, subscribe, then open your{' '}
-										<a href={accountMcpTokensUrl} class="text-accent-violet underline hover:text-accent-blue">AADM dashboard</a>{' '}
+										, subscribe, then <a href={signInUrl} class="text-accent-violet underline hover:text-accent-blue">sign in to AADM</a>{' '}
 										to mint an MCP token.
 									</span>
 								</Show>
 								<Show when="signed-in">
 									<span>
-										<a href={accountMcpTokensUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-											Open your AADM dashboard
+										<a href={signInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+											Sign in to AADM
 										</a>{' '}
 										and mint or copy an MCP token or account API key.
 									</span>
