@@ -247,10 +247,10 @@ const toolBadgeClass: Record<
 					<Show when="signed-in">
 						<a
 							id="get-access"
-							href={accountMcpTokensUrl}
+							href={signInUrl}
 							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110"
 						>
-							MCP tokens &amp; OAuth Client ID
+							Sign in to AADM — MCP tokens &amp; OAuth
 						</a>
 					</Show>
 					<a href="#two-ways" class="text-sm font-semibold text-accent-violet underline underline-offset-4 hover:text-accent-blue">
@@ -330,9 +330,9 @@ const toolBadgeClass: Record<
 					Bearer / header token
 				</h2>
 				<p class="mt-3 max-w-3xl text-sm text-slate-400">
-					Mint a token from your <a href={accountMcpTokensUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">AADM account dashboard</a>
-					(<code class="font-mono-cta text-slate-400">aadm_…</code>) or use an account API key (<code class="font-mono-cta text-slate-400">ak_…</code>) from
-					<strong class="text-slate-300">Account → API keys</strong> in your AADM account after you sign in at aadm.io.
+					<a href={signInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">Sign in to AADM</a>
+					to mint a dashboard token (<code class="font-mono-cta text-slate-400">aadm_…</code>) or create an account API key (<code class="font-mono-cta text-slate-400">ak_…</code>) under
+					<strong class="text-slate-300">Account → API keys</strong>.
 					<strong class="text-slate-300">Not</strong> for claude.ai web Connectors — they require OAuth below.
 				</p>
 
