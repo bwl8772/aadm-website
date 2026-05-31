@@ -7,7 +7,6 @@ import { getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
 const cfg = getSiteUrlConfig(import.meta.env);
 const {
 	urlStandard,
-	urlMcpMarketing,
 	urlMcpCustomerDocs,
 	urlMcpEndpoint,
 	urlMcpRpcUrl,
@@ -46,14 +45,6 @@ const cursorMcpBearerAkSnippet = `{
     }
   }
 }`;
-
-const cursorMcpJsonSnippet = `    "aadm": {
-      "type": "http",
-      "url": "${mcpRpcUrl}",
-      "headers": {
-        "Authorization": "aadm_<your token here>"
-      }
-    }`;
 
 /** Marketing snapshot — names align with hosted MCP `tools/list`; schema evolves with server version. */
 const mcpToolsCatalog: Array<{
