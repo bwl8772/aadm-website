@@ -1,25 +1,38 @@
-import { trim, URL_ACCOUNT_USER } from './site-urls';
+import { trim, URL_ACCOUNT_USER, getSiteUrlConfig } from './site-urls';
 
-/** Defaults match Account Portal host for aadm.io; override per deploy via `PUBLIC_*`. */
+/**
+ * CANONICAL AUTH URLS — see docs/CLERK-AUTH.md
+ *
+ * Login/account: Clerk hosted Account Portal at accounts.aadm.io (Clerk CNAME — do not repoint).
+ * aadm.io: marketing + MCP setup only. OAuth client_id copy: aadm.io/mcp#connect-oauth.
+ */
 const DEFAULT_SIGN_IN = 'https://accounts.aadm.io/sign-in';
 const DEFAULT_SIGN_UP = 'https://accounts.aadm.io/sign-up';
 
 export type ClerkPortalUrls = {
 	signInUrl: string;
 	signUpUrl: string;
-	/** Clerk Account Portal profile (accounts.aadm.io/user). */
+	/** Clerk hosted UserProfile — accounts.aadm.io/user (API keys, profile). */
 	accountUserUrl: string;
-	/** Astro subscriber page — shared OAuth Client ID (`/account/mcp` on this site). */
+	/** Public MCP setup anchor — OAuth Client ID copy (not login). */
 	accountMcpOAuthUrl: string;
 };
 
-/** Full-page Account Portal links — work without `clerk.browser.js` (unlike modal `SignInButton`). */
+function accountUserBase(env: ImportMetaEnv): string {
+	return trim(env.PUBLIC_CLERK_USER_PROFILE_URL) || URL_ACCOUNT_USER;
+}
+
+function mcpOAuthSetupUrl(env: ImportMetaEnv): string {
+	const base = getSiteUrlConfig(env).urlMcpMarketing.replace(/#.*$/, '').replace(/\/+$/, '');
+	return `${base}#connect-oauth`;
+}
+
+/** Subscriber links for marketing pages. Auth → accounts.aadm.io (Clerk). OAuth ID → /mcp setup. */
 export function getClerkPortalUrls(env: ImportMetaEnv): ClerkPortalUrls {
-	const signInUrl = trim(env.PUBLIC_CLERK_SIGN_IN_URL) || DEFAULT_SIGN_IN;
 	return {
-		signInUrl,
+		signInUrl: trim(env.PUBLIC_CLERK_SIGN_IN_URL) || DEFAULT_SIGN_IN,
 		signUpUrl: trim(env.PUBLIC_CLERK_SIGN_UP_URL) || DEFAULT_SIGN_UP,
-		accountUserUrl: trim(env.PUBLIC_CLERK_USER_PROFILE_URL) || URL_ACCOUNT_USER,
-		accountMcpOAuthUrl: '/account/mcp',
+		accountUserUrl: accountUserBase(env),
+		accountMcpOAuthUrl: mcpOAuthSetupUrl(env),
 	};
 }

@@ -15,10 +15,12 @@ const masked = maskPublicMcpOAuthClientId(clientId);
 	class="rounded-2xl border border-violet-500/35 bg-surface-card/90 p-6"
 	aria-labelledby="oauth-client-id-heading"
 >
-	<h2 id="oauth-client-id-heading" class="font-display text-lg font-bold text-white">OAuth Client ID</h2>
+	<h3 id="oauth-client-id-heading" class="font-display text-lg font-bold text-white">OAuth Client ID</h3>
 	<p class="mt-2 text-sm text-slate-400">
-		Shared for all AADM accounts. Paste into Claude Code or claude.ai Connectors when asked for{' '}
-		<code class="font-mono-cta text-xs">client_id</code>. Leave <strong class="text-slate-300">Client Secret</strong> empty.
+		Shared for all AADM accounts (public identifier — not a secret). Paste into Claude Code or claude.ai when asked for{' '}
+		<code class="font-mono-cta text-xs">client_id</code>. Leave Client Secret empty. For Cursor/curl, use an{' '}
+		<code class="font-mono-cta text-xs">ak_…</code> API key from{' '}
+		<a href={accountUserUrl} class="text-accent-violet underline hover:text-accent-blue">accounts.aadm.io/user</a> instead.
 	</p>
 
 	{
@@ -27,7 +29,6 @@ const masked = maskPublicMcpOAuthClientId(clientId);
 				<code
 					class="min-w-0 flex-1 break-all rounded-xl border border-border-subtle bg-surface-mid px-4 py-3 font-mono-cta text-sm text-slate-200"
 					title="Full Client ID is copied when you use Copy"
-					data-masked-oauth-id
 				>
 					{masked}
 				</code>
@@ -42,9 +43,8 @@ const masked = maskPublicMcpOAuthClientId(clientId);
 		) : (
 			<div class="mt-4 rounded-xl border border-amber-500/40 bg-amber-950/30 p-4">
 				<p class="text-sm text-amber-100">
-					OAuth Client ID is not configured on this site. Set{' '}
-					<code class="font-mono-cta text-xs">CLERK_OAUTH_CLIENT_ID</code> on the Astro deploy (same Clerk OAuth app
-					as the MCP server).
+					OAuth Client ID is not configured. Set <code class="font-mono-cta text-xs">CLERK_OAUTH_CLIENT_ID</code> on
+					this Astro deploy (same Clerk OAuth app as the MCP server).
 				</p>
 			</div>
 		)
@@ -52,13 +52,6 @@ const masked = maskPublicMcpOAuthClientId(clientId);
 
 	<p class="mt-4 text-xs text-slate-500">
 		MCP server URL: <code class="font-mono-cta text-xs text-accent-violet">{mcpRpcUrl}</code>
-	</p>
-	<p class="mt-2 text-xs text-slate-500">
-		Profile and API keys:{' '}
-		<a href={accountUserUrl} class="text-accent-violet underline hover:text-accent-blue">
-			{accountUserUrl.replace(/^https:\/\//, '')}
-		</a>{' '}
-		(Clerk Account Portal — no OAuth Client ID there).
 	</p>
 </section>
 

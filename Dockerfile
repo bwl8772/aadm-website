@@ -1,9 +1,7 @@
-# Astro SSR (Node standalone) — AADM website.
-#
-# Railway: service root = this repo root, builder = Dockerfile.
+# Astro SSR — aadm.io marketing only. Login = Clerk CNAME on accounts.aadm.io (see docs/CLERK-AUTH.md).
 # Runtime (Railway Variables — not build args):
 #   CLERK_SECRET_KEY          required for clerkMiddleware
-#   CLERK_OAUTH_CLIENT_ID     OAuth Client ID on /account/mcp (preferred over PUBLIC_MCP_OAUTH_CLIENT_ID)
+#   CLERK_OAUTH_CLIENT_ID     OAuth client_id copy card on aadm.io/mcp#connect-oauth
 #   PUBLIC_CLERK_PUBLISHABLE_KEY  re-set at runtime if you change keys without rebuilding
 # Build-time (Docker build args or Railway Build Args):
 #   PUBLIC_* above — baked into the Astro SSR bundle; defaults in src/lib/site-urls.ts if omitted

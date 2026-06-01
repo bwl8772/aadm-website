@@ -120,15 +120,12 @@ const claudeMcpFullConfigSnippet = `{
 								</Show>
 								<Show when="signed-in">
 									<span>
-										Open{' '}
+										Create an <code class="font-mono-cta text-xs">ak_…</code> API key at{' '}
 										<a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-											Account Portal
-										</a>{' '}
-										to create an API key (<code class="font-mono-cta text-xs">ak_…</code>), or{' '}
-										<a href={accountMcpOAuthUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-											OAuth Client ID
-										</a>{' '}
-										for Claude OAuth setup.
+											accounts.aadm.io/user
+										</a>
+										. For Claude OAuth, use the <code class="font-mono-cta text-xs">client_id</code> on{' '}
+										<a href={accountMcpOAuthUrl} class="text-accent-violet underline hover:text-accent-blue">MCP setup (OAuth)</a>.
 									</span>
 								</Show>
 							</li>
