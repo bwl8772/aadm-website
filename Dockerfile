@@ -1,9 +1,12 @@
-# Astro SSR (Node standalone) — optimized for Railway Docker deploy.
+# Astro SSR (Node standalone) — AADM website.
 #
-# Railway: set service root to this repo, builder = Dockerfile (auto-detected).
-# Runtime env (Dashboard → Variables): HOST is optional (defaults below); PORT is
-# injected by Railway. CLERK_SECRET_KEY + PUBLIC_CLERK_PUBLISHABLE_KEY required.
-# Build-time: map the same PUBLIC_* keys as Docker build args (see README).
+# Railway: service root = this repo root, builder = Dockerfile.
+# Runtime (Railway Variables — not build args):
+#   CLERK_SECRET_KEY          required for clerkMiddleware
+#   CLERK_OAUTH_CLIENT_ID     OAuth Client ID on /account/mcp (preferred over PUBLIC_MCP_OAUTH_CLIENT_ID)
+#   PUBLIC_CLERK_PUBLISHABLE_KEY  re-set at runtime if you change keys without rebuilding
+# Build-time (Docker build args or Railway Build Args):
+#   PUBLIC_* above — baked into the Astro SSR bundle; defaults in src/lib/site-urls.ts if omitted
 #
 # https://docs.railway.app/deploy/dockerfiles
 # https://docs.railway.app/deploy/healthchecks
@@ -15,12 +18,16 @@ ARG PUBLIC_MCP_REPO_URL=""
 ARG PUBLIC_MCP_QUICKSTART_URL=""
 ARG PUBLIC_MCP_CUSTOMER_DOCS_URL=""
 ARG PUBLIC_CLERK_PUBLISHABLE_KEY=""
+ARG PUBLIC_CLERK_AUTHORIZED_PARTIES=""
+ARG PUBLIC_MCP_OAUTH_CLIENT_ID=""
 
 ENV PUBLIC_STANDARD_REPO_URL=$PUBLIC_STANDARD_REPO_URL \
 	PUBLIC_MCP_REPO_URL=$PUBLIC_MCP_REPO_URL \
 	PUBLIC_MCP_QUICKSTART_URL=$PUBLIC_MCP_QUICKSTART_URL \
 	PUBLIC_MCP_CUSTOMER_DOCS_URL=$PUBLIC_MCP_CUSTOMER_DOCS_URL \
-	PUBLIC_CLERK_PUBLISHABLE_KEY=$PUBLIC_CLERK_PUBLISHABLE_KEY
+	PUBLIC_CLERK_PUBLISHABLE_KEY=$PUBLIC_CLERK_PUBLISHABLE_KEY \
+	PUBLIC_CLERK_AUTHORIZED_PARTIES=$PUBLIC_CLERK_AUTHORIZED_PARTIES \
+	PUBLIC_MCP_OAUTH_CLIENT_ID=$PUBLIC_MCP_OAUTH_CLIENT_ID
 
 COPY package.json package-lock.json ./
 # Railway rejects arbitrary BuildKit cache `id=` values (requires cacheKey/service prefix).
