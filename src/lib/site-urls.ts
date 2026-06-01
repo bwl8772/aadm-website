@@ -7,9 +7,7 @@
  * - **MCP service** — Streamable HTTP JSON-RPC at **`https://mcp.aadm.io/mcp`** (append `/mcp` when env is origin-only).
  *   Set host with `PUBLIC_MCP_REPO_URL`; defaults to `https://mcp.aadm.io`.
  *
- * AADM auth env: `PUBLIC_CLERK_*` + `CLERK_SECRET_KEY` (implementation detail — not shown on marketing pages).
- *
- * Account sign-in / sign-up URLs are configured in the operator dashboard; defaults use accounts.aadm.io.
+ * AADM auth: Clerk only, accounts.aadm.io — see docs/CLERK-AUTH.md. Not configured on marketing pages.
  */
 
 /** Default AADM account profile URL for signed-in CTAs on the marketing site. */
@@ -91,16 +89,6 @@ export function aadmConfigSchemaUrl(env: ImportMetaEnv): string {
 
 /** @deprecated Use `aadmConfigSchemaUrl(import.meta.env)` — kept for static imports. */
 export const AADM_CONFIG_SCHEMA_URL = 'https://aadm.io/schemas/aadm-config.v1.schema.json';
-
-/** Mask OAuth Client ID for display; full value copied from `/account/mcp`. */
-export function maskPublicMcpOAuthClientId(id: string): string {
-	const t = trim(id);
-	if (t.length === 0) return '';
-	if (t.length <= 5) return t;
-	const hidden = t.length - 5;
-	const dots = Math.min(hidden, 36);
-	return `${t.slice(0, 5)}${'•'.repeat(dots)}`;
-}
 
 export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
 	const urlStandard = trim(env.PUBLIC_STANDARD_REPO_URL) || DEFAULT_STANDARD_REPO_URL;
