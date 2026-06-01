@@ -1,9 +1,12 @@
 ---
-import { UserProfile } from '@clerk/astro/components';
-import MemberMcpOAuthPage from './MemberMcpOAuthPage.astro';
-import { memberAreaPathFromEnv, MEMBER_MCP_OAUTH_SEGMENT } from '../lib/member-area';
-import { mcpOAuthClientIdForDisplay } from '../lib/mcp-oauth-client-id';
-import { getSiteUrlConfig } from '../lib/site-urls';
+import { UserProfile } from "@clerk/astro/components";
+import { mcpOAuthClientIdForDisplay } from "../lib/mcp-oauth-client-id";
+import {
+	MEMBER_MCP_OAUTH_SEGMENT,
+	memberAreaPathFromEnv,
+} from "../lib/member-area";
+import { getSiteUrlConfig } from "../lib/site-urls";
+import MemberMcpOAuthPage from "./MemberMcpOAuthPage.astro";
 
 const memberPath = memberAreaPathFromEnv(import.meta.env);
 const oauthClientId = mcpOAuthClientIdForDisplay(import.meta.env);

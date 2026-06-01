@@ -1,11 +1,14 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getAccountPortalUrls } from '../lib/account-portal-urls';
-import { getSiteUrlConfig } from '../lib/site-urls';
+import Layout from "../layouts/Layout.astro";
+import { getAccountPortalUrls } from "../lib/account-portal-urls";
+import { getSiteUrlConfig } from "../lib/site-urls";
 
 const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
-const { memberSignInUrl } = getAccountPortalUrls(import.meta.env, Astro.url.pathname + Astro.url.search);
-const mcpConnectHref = `${urlMcpMarketing.replace(/\/$/, '')}#connect-bearer`;
+const { memberSignInUrl } = getAccountPortalUrls(
+	import.meta.env,
+	Astro.url.pathname + Astro.url.search,
+);
+const mcpConnectHref = `${urlMcpMarketing.replace(/\/$/, "")}#connect-bearer`;
 ---
 
 <Layout

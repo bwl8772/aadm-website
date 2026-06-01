@@ -1,7 +1,7 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/astro/server';
-import { redirectAuthPathToAccounts } from './lib/clerk-auth-policy';
-import { getClerkIntegrationOptions } from './lib/clerk-portal-urls';
-import { clerkPrivateRoutePatterns } from './lib/routes';
+import { clerkMiddleware, createRouteMatcher } from "@clerk/astro/server";
+import { redirectAuthPathToAccounts } from "./lib/clerk-auth-policy";
+import { getClerkIntegrationOptions } from "./lib/clerk-portal-urls";
+import { clerkPrivateRoutePatterns } from "./lib/routes";
 
 /**
  * Clerk middleware + marketing-host guard.
@@ -15,7 +15,10 @@ const isPrivateRoute = createRouteMatcher([...clerkPrivateRoutePatterns]);
 const clerkOptions = getClerkIntegrationOptions(import.meta.env);
 
 export const onRequest = clerkMiddleware((auth, context, next) => {
-	const authRedirect = redirectAuthPathToAccounts(context.request, import.meta.env);
+	const authRedirect = redirectAuthPathToAccounts(
+		context.request,
+		import.meta.env,
+	);
 	if (authRedirect) {
 		return authRedirect;
 	}

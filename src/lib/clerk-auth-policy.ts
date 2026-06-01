@@ -4,48 +4,58 @@
  * accounts.aadm.io = Clerk hosted Account Portal (CNAME — sign-in/up only).
  * aadm.io/member = embedded UserProfile; legacy /user and /account redirect to Clerk.
  */
-import { trim } from './site-urls';
+import { trim } from "./site-urls";
 
-export const ACCOUNTS_HOST_DEFAULT = 'accounts.aadm.io';
+export const ACCOUNTS_HOST_DEFAULT = "accounts.aadm.io";
 
 /** Path prefixes served only on the accounts host (Clerk login area). */
-export const CLERK_AUTH_PATH_PREFIXES = ['/sign-in', '/sign-up', '/user', '/account'] as const;
+export const CLERK_AUTH_PATH_PREFIXES = [
+	"/sign-in",
+	"/sign-up",
+	"/user",
+	"/account",
+] as const;
 
 export function isClerkAuthPath(pathname: string): boolean {
-	const path = pathname.replace(/\/+$/, '') || '/';
+	const path = pathname.replace(/\/+$/, "") || "/";
 	return CLERK_AUTH_PATH_PREFIXES.some(
 		(prefix) => path === prefix || path.startsWith(`${prefix}/`),
 	);
 }
 
 export function accountsOriginFromEnv(env: ImportMetaEnv): string {
-	const signIn = trim(env.PUBLIC_CLERK_SIGN_IN_URL) || 'https://accounts.aadm.io/sign-in';
+	const signIn =
+		trim(env.PUBLIC_CLERK_SIGN_IN_URL) || "https://accounts.aadm.io/sign-in";
 	try {
 		return new URL(signIn).origin;
 	} catch {
-		return 'https://accounts.aadm.io';
+		return "https://accounts.aadm.io";
 	}
 }
 
 export function marketingHostFromEnv(env: ImportMetaEnv): string {
-	const marketing = trim(env.PUBLIC_MCP_QUICKSTART_URL) || 'https://aadm.io/mcp';
+	const marketing =
+		trim(env.PUBLIC_MCP_QUICKSTART_URL) || "https://aadm.io/mcp";
 	try {
 		return new URL(marketing).hostname;
 	} catch {
-		return 'aadm.io';
+		return "aadm.io";
 	}
 }
 
 /** True when request is on the marketing host (aadm.io), not accounts or localhost. */
 export function isMarketingHost(hostname: string, env: ImportMetaEnv): boolean {
-	if (hostname === 'localhost' || hostname === '127.0.0.1') {
+	if (hostname === "localhost" || hostname === "127.0.0.1") {
 		return false;
 	}
 	const marketing = marketingHostFromEnv(env);
 	return hostname === marketing || hostname === `www.${marketing}`;
 }
 
-export function redirectAuthPathToAccounts(request: Request, env: ImportMetaEnv): Response | null {
+export function redirectAuthPathToAccounts(
+	request: Request,
+	env: ImportMetaEnv,
+): Response | null {
 	const url = new URL(request.url);
 	if (!isMarketingHost(url.hostname, env) || !isClerkAuthPath(url.pathname)) {
 		return null;

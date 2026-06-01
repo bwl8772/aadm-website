@@ -23,9 +23,21 @@ html {
 body {
 	@apply bg-surface-deep text-slate-200 antialiased;
 	background-image:
-		radial-gradient(ellipse 100% 80% at 50% -30%, rgba(124, 58, 237, 0.22), transparent),
-		radial-gradient(ellipse 70% 50% at 100% 0%, rgba(37, 99, 235, 0.18), transparent),
-		radial-gradient(ellipse 60% 40% at 0% 60%, rgba(139, 92, 246, 0.12), transparent);
+		radial-gradient(
+			ellipse 100% 80% at 50% -30%,
+			rgba(124, 58, 237, 0.22),
+			transparent
+		),
+		radial-gradient(
+			ellipse 70% 50% at 100% 0%,
+			rgba(37, 99, 235, 0.18),
+			transparent
+		),
+		radial-gradient(
+			ellipse 60% 40% at 0% 60%,
+			rgba(139, 92, 246, 0.12),
+			transparent
+		);
 	background-attachment: fixed;
 }
 

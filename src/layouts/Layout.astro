@@ -1,10 +1,10 @@
 ---
-import '../styles/global.css';
-import SiteHeader from '../components/SiteHeader.astro';
-import SiteFooter from '../components/SiteFooter.astro';
-import { getSiteUrlConfig } from '../lib/site-urls';
+import "../styles/global.css";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import { getSiteUrlConfig } from "../lib/site-urls";
 
-type HeaderNav = 'home' | 'mcp' | null;
+type HeaderNav = "home" | "mcp" | null;
 
 interface Props {
 	title: string;
@@ -14,17 +14,17 @@ interface Props {
 	/** Optional MCP chip href override (e.g. `#get-access` on `/mcp`). */
 	headerMcpNavHref?: string;
 	/** Footer variant — shorter tagline on MCP page. */
-	footerVariant?: 'default' | 'mcp';
+	footerVariant?: "default" | "mcp";
 	/** Set to false to suppress the footer on this page. */
 	showFooter?: boolean;
 }
 
 const {
 	title,
-	description = 'Agentic Authority Delivery Model — governed architecture for humans and coding agents.',
+	description = "Agentic Authority Delivery Model — governed architecture for humans and coding agents.",
 	headerActiveNav = null,
 	headerMcpNavHref,
-	footerVariant = 'default',
+	footerVariant = "default",
 	showFooter = true,
 } = Astro.props;
 

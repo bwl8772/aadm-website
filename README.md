@@ -49,6 +49,6 @@ See [`docs/CLERK-AUTH.md`](docs/CLERK-AUTH.md) and `.env.example`.
 **Railway:** one service, custom domain **`aadm.io` only**. `accounts.aadm.io` stays on Clerk DNS.
 
 ```bash
-npm run build && npm run typecheck
+npm run check
 BASE_URL=https://aadm.io npm run test:clerk-smoke
 ```

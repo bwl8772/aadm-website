@@ -1,4 +1,4 @@
-import { MEMBER_AREA_PATH } from './member-area';
+import { MEMBER_AREA_PATH } from "./member-area";
 
 /**
  * Protected route patterns for clerkMiddleware — see docs/CLERK-AUTH.md.

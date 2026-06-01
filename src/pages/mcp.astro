@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Show } from '@clerk/astro/components';
-import { getAccountPortalUrls } from '../lib/account-portal-urls';
-import { getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
+import { Show } from "@clerk/astro/components";
+import Layout from "../layouts/Layout.astro";
+import { getAccountPortalUrls } from "../lib/account-portal-urls";
+import { getSiteUrlConfig, hostedMcpOrigin } from "../lib/site-urls";
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const {
@@ -23,7 +23,10 @@ const {
 	memberMcpOAuthUrl,
 	memberSignInUrl,
 	memberMcpOAuthSignInUrl,
-} = getAccountPortalUrls(import.meta.env, Astro.url.pathname + Astro.url.search);
+} = getAccountPortalUrls(
+	import.meta.env,
+	Astro.url.pathname + Astro.url.search,
+);
 
 /** Canonical Streamable HTTP JSON-RPC URL — always includes `/mcp` for production default. */
 const mcpRpcUrl = urlMcpRpcUrl;
@@ -56,147 +59,166 @@ const cursorMcpBearerAkSnippet = `{
 /** Marketing snapshot — names align with hosted MCP `tools/list`; schema evolves with server version. */
 const mcpToolsCatalog: Array<{
 	tool: string;
-	badges: Array<'Orchestration' | 'Navigator' | 'Investigator' | 'Sentinel' | 'Doctrine'>;
+	badges: Array<
+		"Orchestration" | "Navigator" | "Investigator" | "Sentinel" | "Doctrine"
+	>;
 	outcome: string;
 }> = [
 	{
-		tool: 'standard_brief',
-		badges: ['Orchestration'],
+		tool: "standard_brief",
+		badges: ["Orchestration"],
 		outcome:
-			'One call loads workflow parity, orchestrator contract, follow-on catalog, and Sentinel assurance JSON hosts branch on.',
+			"One call loads workflow parity, orchestrator contract, follow-on catalog, and Sentinel assurance JSON hosts branch on.",
 	},
 	{
-		tool: 'route_lane',
-		badges: ['Orchestration'],
+		tool: "route_lane",
+		badges: ["Orchestration"],
 		outcome:
-			'When intent is already delivery, defect, or assurance, return deterministic routing metadata—no keyword roulette.',
+			"When intent is already delivery, defect, or assurance, return deterministic routing metadata—no keyword roulette.",
 	},
 	{
-		tool: 'orchestrator_anchor',
-		badges: ['Orchestration'],
+		tool: "orchestrator_anchor",
+		badges: ["Orchestration"],
 		outcome:
-			'Long-running jobs get a stable checklist: what to persist outside MCP, session notes, and when to refresh the brief.',
+			"Long-running jobs get a stable checklist: what to persist outside MCP, session notes, and when to refresh the brief.",
 	},
 	{
-		tool: 'plan_delivery',
-		badges: ['Navigator'],
-		outcome: 'Turn a task into UDALI-shaped delivery handoffs with doctrine-backed scope and integrator-ready language.',
-	},
-	{
-		tool: 'map_feature',
-		badges: ['Navigator'],
-		outcome: 'Seed layer and AUTH-XX hints from a short feature description—explicitly suggestive until your architecture confirms.',
-	},
-	{
-		tool: 'fetch_auth',
-		badges: ['Doctrine'],
-		outcome: 'Pull the official markdown for a numbered AUTH control so prompts cite governance text, not paraphrase.',
-	},
-	{
-		tool: 'fetch_seam',
-		badges: ['Doctrine', 'Sentinel'],
+		tool: "plan_delivery",
+		badges: ["Navigator"],
 		outcome:
-			'Load a SEAM-00–15 handoff archetype—scope for trace/assurance (normalization, dispatch, persistence). Pair with the seam-check worksheet resource.',
+			"Turn a task into UDALI-shaped delivery handoffs with doctrine-backed scope and integrator-ready language.",
 	},
 	{
-		tool: 'role_guide',
-		badges: ['Doctrine'],
-		outcome: 'Slice UDALI agent doctrine (Unifier, Designer, Adapter, Logician, Integrator) for the role and task you are in.',
-	},
-	{
-		tool: 'debug_defect',
-		badges: ['Investigator'],
+		tool: "map_feature",
+		badges: ["Navigator"],
 		outcome:
-			'Gated defect machine: Path A recon, Path B only after proof, execution-control appendix, and troubleshooter response gates.',
+			"Seed layer and AUTH-XX hints from a short feature description—explicitly suggestive until your architecture confirms.",
 	},
 	{
-		tool: 'debug_bundle',
-		badges: ['Investigator'],
-		outcome: 'Advanced hosts send a full integrated troubleshooter payload when they need the bundled diagnosis shape.',
-	},
-	{
-		tool: 'debug_hint',
-		badges: ['Investigator'],
-		outcome: 'Lightweight recon-vs-diagnose hint before you commit to a full debug_defect turn.',
-	},
-	{
-		tool: 'classify_bug',
-		badges: ['Investigator'],
-		outcome: 'Classify ownership and routing early so the right lane—not the loudest symptom—owns the next step.',
-	},
-	{
-		tool: 'triage_bug',
-		badges: ['Investigator'],
-		outcome: 'Map a rough symptom to suggested AUTH topics and stack band for intake before deeper debugging.',
-	},
-	{
-		tool: 'fix_pack',
-		badges: ['Investigator'],
+		tool: "fetch_auth",
+		badges: ["Doctrine"],
 		outcome:
-			'After evidence and gates pass, emit an authorized fix prompt pack sized for coding agents—no premature refactor stories.',
+			"Pull the official markdown for a numbered AUTH control so prompts cite governance text, not paraphrase.",
 	},
 	{
-		tool: 'audit_interview',
-		badges: ['Sentinel'],
-		outcome: 'Step through vertical depth and horizontal seams until scope is confirmable; then merge into outline-shaped intake.',
-	},
-	{
-		tool: 'audit_outline',
-		badges: ['Sentinel'],
-		outcome: 'Produce the assurance scaffold: sections, checklist pointers, coder requests, and human-editable confirmation.',
-	},
-	{
-		tool: 'audit_run',
-		badges: ['Sentinel'],
+		tool: "fetch_seam",
+		badges: ["Doctrine", "Sentinel"],
 		outcome:
-			'Plain-language “run an audit” asks become a program-aware intake plus top-findings brief for a repo-connected agent.',
+			"Load a SEAM-00–15 handoff archetype—scope for trace/assurance (normalization, dispatch, persistence). Pair with the seam-check worksheet resource.",
 	},
 	{
-		tool: 'sentinel_programs',
-		badges: ['Sentinel'],
-		outcome: 'Snapshot every bundled Sentinel audit program template without pulling the full standard_brief payload.',
+		tool: "role_guide",
+		badges: ["Doctrine"],
+		outcome:
+			"Slice UDALI agent doctrine (Unifier, Designer, Adapter, Logician, Integrator) for the role and task you are in.",
 	},
 	{
-		tool: 'sentinel_program',
-		badges: ['Sentinel'],
-		outcome: 'Fetch one audit program row by id when hosts only need that template’s rigor spine and evidence expectations.',
+		tool: "debug_defect",
+		badges: ["Investigator"],
+		outcome:
+			"Gated defect machine: Path A recon, Path B only after proof, execution-control appendix, and troubleshooter response gates.",
 	},
 	{
-		tool: 'sentinel_attestation_examples',
-		badges: ['Sentinel'],
-		outcome: 'Shipped seam-tier examples so teams see how depth and boundaries translate to must-prove vs latent seams.',
+		tool: "debug_bundle",
+		badges: ["Investigator"],
+		outcome:
+			"Advanced hosts send a full integrated troubleshooter payload when they need the bundled diagnosis shape.",
 	},
 	{
-		tool: 'sentinel_closure',
-		badges: ['Sentinel'],
-		outcome: 'Resolve closure tiers from attestation depth, vertical claim, and horizontal seams—deterministic seam language.',
+		tool: "debug_hint",
+		badges: ["Investigator"],
+		outcome:
+			"Lightweight recon-vs-diagnose hint before you commit to a full debug_defect turn.",
 	},
 	{
-		tool: 'sentinel_stage_guide',
-		badges: ['Sentinel'],
-		outcome: 'Gate helper for one assurance stage of a chosen program—keeps humans oriented inside the three-stage spine.',
+		tool: "classify_bug",
+		badges: ["Investigator"],
+		outcome:
+			"Classify ownership and routing early so the right lane—not the loudest symptom—owns the next step.",
 	},
 	{
-		tool: 'sentinel_handoff_hint',
-		badges: ['Sentinel'],
-		outcome: 'After a sentinel_audit_exit_kind, get deterministic wording for staying in assurance or opening Navigator or Investigator.',
+		tool: "triage_bug",
+		badges: ["Investigator"],
+		outcome:
+			"Map a rough symptom to suggested AUTH topics and stack band for intake before deeper debugging.",
 	},
 	{
-		tool: 'sentinel_canonical_refs',
-		badges: ['Sentinel'],
-		outcome: 'Curated resources/read URIs for delivery and assurance lanes so hosts wire doctrine without hunting the catalog.',
+		tool: "fix_pack",
+		badges: ["Investigator"],
+		outcome:
+			"After evidence and gates pass, emit an authorized fix prompt pack sized for coding agents—no premature refactor stories.",
+	},
+	{
+		tool: "audit_interview",
+		badges: ["Sentinel"],
+		outcome:
+			"Step through vertical depth and horizontal seams until scope is confirmable; then merge into outline-shaped intake.",
+	},
+	{
+		tool: "audit_outline",
+		badges: ["Sentinel"],
+		outcome:
+			"Produce the assurance scaffold: sections, checklist pointers, coder requests, and human-editable confirmation.",
+	},
+	{
+		tool: "audit_run",
+		badges: ["Sentinel"],
+		outcome:
+			"Plain-language “run an audit” asks become a program-aware intake plus top-findings brief for a repo-connected agent.",
+	},
+	{
+		tool: "sentinel_programs",
+		badges: ["Sentinel"],
+		outcome:
+			"Snapshot every bundled Sentinel audit program template without pulling the full standard_brief payload.",
+	},
+	{
+		tool: "sentinel_program",
+		badges: ["Sentinel"],
+		outcome:
+			"Fetch one audit program row by id when hosts only need that template’s rigor spine and evidence expectations.",
+	},
+	{
+		tool: "sentinel_attestation_examples",
+		badges: ["Sentinel"],
+		outcome:
+			"Shipped seam-tier examples so teams see how depth and boundaries translate to must-prove vs latent seams.",
+	},
+	{
+		tool: "sentinel_closure",
+		badges: ["Sentinel"],
+		outcome:
+			"Resolve closure tiers from attestation depth, vertical claim, and horizontal seams—deterministic seam language.",
+	},
+	{
+		tool: "sentinel_stage_guide",
+		badges: ["Sentinel"],
+		outcome:
+			"Gate helper for one assurance stage of a chosen program—keeps humans oriented inside the three-stage spine.",
+	},
+	{
+		tool: "sentinel_handoff_hint",
+		badges: ["Sentinel"],
+		outcome:
+			"After a sentinel_audit_exit_kind, get deterministic wording for staying in assurance or opening Navigator or Investigator.",
+	},
+	{
+		tool: "sentinel_canonical_refs",
+		badges: ["Sentinel"],
+		outcome:
+			"Curated resources/read URIs for delivery and assurance lanes so hosts wire doctrine without hunting the catalog.",
 	},
 ];
 
 const toolBadgeClass: Record<
-	(typeof mcpToolsCatalog)[number]['badges'][number],
+	(typeof mcpToolsCatalog)[number]["badges"][number],
 	string
 > = {
-	Orchestration: 'border-amber-500/35 bg-amber-500/10 text-amber-100',
-	Navigator: 'border-violet-500/35 bg-violet-500/10 text-accent-violet',
-	Investigator: 'border-blue-500/35 bg-blue-500/10 text-accent-blue',
-	Sentinel: 'border-violet-400/30 bg-violet-950/50 text-violet-200',
-	Doctrine: 'border-emerald-500/35 bg-emerald-500/10 text-emerald-200',
+	Orchestration: "border-amber-500/35 bg-amber-500/10 text-amber-100",
+	Navigator: "border-violet-500/35 bg-violet-500/10 text-accent-violet",
+	Investigator: "border-blue-500/35 bg-blue-500/10 text-accent-blue",
+	Sentinel: "border-violet-400/30 bg-violet-950/50 text-violet-200",
+	Doctrine: "border-emerald-500/35 bg-emerald-500/10 text-emerald-200",
 };
 ---
 

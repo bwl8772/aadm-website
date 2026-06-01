@@ -1,13 +1,22 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Show } from '@clerk/astro/components';
-import { getAccountPortalUrls } from '../lib/account-portal-urls';
-import { getSiteUrlConfig } from '../lib/site-urls';
+import { Show } from "@clerk/astro/components";
+import Layout from "../layouts/Layout.astro";
+import { getAccountPortalUrls } from "../lib/account-portal-urls";
+import { getSiteUrlConfig } from "../lib/site-urls";
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const { urlStandard, urlMcpMarketing, urlMcpRpcUrl, discoveryUrl } = cfg;
-const { signInUrl, signUpUrl, memberAreaUrl, memberMcpOAuthUrl, memberSignInUrl, memberMcpOAuthSignInUrl } =
-	getAccountPortalUrls(import.meta.env, Astro.url.pathname + Astro.url.search);
+const {
+	signInUrl,
+	signUpUrl,
+	memberAreaUrl,
+	memberMcpOAuthUrl,
+	memberSignInUrl,
+	memberMcpOAuthSignInUrl,
+} = getAccountPortalUrls(
+	import.meta.env,
+	Astro.url.pathname + Astro.url.search,
+);
 
 const claudeMcpConfigUrl = urlMcpRpcUrl;
 
