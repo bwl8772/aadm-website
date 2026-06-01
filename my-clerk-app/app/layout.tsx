@@ -70,15 +70,15 @@ export default async function RootLayout({
 									href="/dashboard/tokens"
 									className="shrink-0 whitespace-nowrap text-sm font-medium text-zinc-800 hover:underline dark:text-zinc-200"
 								>
-									<span className="sm:hidden">Tokens</span>
-									<span className="hidden sm:inline">Dashboard</span>
+									<span className="sm:hidden">MCP</span>
+									<span className="hidden sm:inline">MCP access</span>
 								</Link>
-								<Link
-									href="/user"
+								<a
+									href={hostedUserProfileUrl ?? "https://accounts.aadm.io/user"}
 									className="shrink-0 whitespace-nowrap text-sm text-zinc-700 hover:underline dark:text-zinc-300"
 								>
 									Account
-								</Link>
+								</a>
 								<Link
 									href="/subscription"
 									className="shrink-0 whitespace-nowrap text-sm text-zinc-700 hover:underline dark:text-zinc-300"

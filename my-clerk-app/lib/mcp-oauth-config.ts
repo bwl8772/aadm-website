@@ -30,6 +30,15 @@ export function clerkOAuthClientId(): string | undefined {
 	return id || undefined;
 }
 
+/** Shared MCP OAuth Client ID for dashboard copy — runtime on the accounts portal. */
+export function mcpOAuthClientIdForDisplay(): string {
+	return (
+		clerkOAuthClientId() ??
+		process.env.NEXT_PUBLIC_MCP_OAUTH_CLIENT_ID?.trim() ??
+		""
+	);
+}
+
 export function clerkOAuthClientSecret(): string | undefined {
 	const s = process.env.CLERK_OAUTH_CLIENT_SECRET?.trim();
 	return s || undefined;

@@ -5,7 +5,6 @@ import { CLERK_POST_AUTH_DEFAULT_PATH } from "@/lib/clerk-redirects";
 
 const isProtectedRoute = createRouteMatcher([
 	"/profile(.*)",
-	"/user(.*)",
 	"/subscription(.*)",
 	"/dashboard(.*)",
 ]);
@@ -23,7 +22,8 @@ export default clerkMiddleware(async (auth, request) => {
 
 export const config = {
 	matcher: [
-		"/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+		// `/user` is Clerk Account Portal — do not run Next.js middleware or routes on it.
+		"/((?!user(?:/|$)|_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
 		"/(api|trpc)(.*)",
 	],
 };
