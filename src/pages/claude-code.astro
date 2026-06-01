@@ -13,10 +13,7 @@ const {
 	memberMcpOAuthUrl,
 	memberSignInUrl,
 	memberMcpOAuthSignInUrl,
-} = getAccountPortalUrls(
-	import.meta.env,
-	Astro.url.pathname + Astro.url.search,
-);
+} = getAccountPortalUrls(import.meta.env);
 
 const claudeMcpConfigUrl = urlMcpRpcUrl;
 

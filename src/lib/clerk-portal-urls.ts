@@ -103,7 +103,7 @@ export function getMemberMcpOAuthSignInUrl(env: ImportMetaEnv): string {
 
 /**
  * Auth links for marketing pages.
- * Pass `returnPath` for sign-in/up redirect (defaults to current page).
+ * Pass `returnPath` to override post-auth redirect (defaults to member area).
  * Member credential URLs always point at aadm.io/member.
  */
 export function getClerkPortalUrls(
@@ -114,7 +114,7 @@ export function getClerkPortalUrls(
 		trim(env.PUBLIC_CLERK_SIGN_IN_URL) || CLERK_ACCOUNTS_SIGN_IN;
 	const signUpBase =
 		trim(env.PUBLIC_CLERK_SIGN_UP_URL) || CLERK_ACCOUNTS_SIGN_UP;
-	const path = returnPath ?? "/";
+	const path = returnPath ?? memberAreaPathFromEnv(env);
 	const member = memberAreaUrl(env);
 	return {
 		signInUrl: withAccountPortalRedirect(signInBase, path, env),

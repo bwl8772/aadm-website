@@ -43,13 +43,30 @@ export function marketingHostFromEnv(env: ImportMetaEnv): string {
 	}
 }
 
+function marketingHostsFromEnv(env: ImportMetaEnv): Set<string> {
+	const hosts = new Set<string>(["aadm.io", "www.aadm.io"]);
+	const marketing = marketingHostFromEnv(env);
+	hosts.add(marketing);
+	hosts.add(`www.${marketing}`);
+	for (const party of (trim(env.PUBLIC_CLERK_AUTHORIZED_PARTIES) || "")
+		.split(",")
+		.map((s) => s.trim())
+		.filter(Boolean)) {
+		try {
+			hosts.add(new URL(party).hostname);
+		} catch {
+			/* skip invalid authorized party */
+		}
+	}
+	return hosts;
+}
+
 /** True when request is on the marketing host (aadm.io), not accounts or localhost. */
 export function isMarketingHost(hostname: string, env: ImportMetaEnv): boolean {
 	if (hostname === "localhost" || hostname === "127.0.0.1") {
 		return false;
 	}
-	const marketing = marketingHostFromEnv(env);
-	return hostname === marketing || hostname === `www.${marketing}`;
+	return marketingHostsFromEnv(env).has(hostname);
 }
 
 export function redirectAuthPathToAccounts(

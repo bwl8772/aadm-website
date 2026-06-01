@@ -23,10 +23,7 @@ const {
 	memberMcpOAuthUrl,
 	memberSignInUrl,
 	memberMcpOAuthSignInUrl,
-} = getAccountPortalUrls(
-	import.meta.env,
-	Astro.url.pathname + Astro.url.search,
-);
+} = getAccountPortalUrls(import.meta.env);
 
 /** Canonical Streamable HTTP JSON-RPC URL — always includes `/mcp` for production default. */
 const mcpRpcUrl = urlMcpRpcUrl;
