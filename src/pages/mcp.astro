@@ -304,7 +304,7 @@ const toolBadgeClass: Record<
 				>
 					<p class="text-xs font-bold uppercase tracking-wider text-accent-violet">2 · OAuth</p>
 					<h3 class="font-display mt-2 text-lg font-bold text-white">OAuth Client ID</h3>
-					<p class="mt-2 text-sm text-slate-400">Claude Code, claude.ai Connectors — OAuth login + public Client ID (no secret)</p>
+					<p class="mt-2 text-sm text-slate-400">Claude Code, claude.ai Connectors — OAuth login; users enter the <code class="font-mono-cta text-xs">client_id</code> from their dashboard (no client secret)</p>
 				</a>
 			</div>
 		</section>
@@ -372,7 +372,7 @@ const toolBadgeClass: Record<
 			<div class="mt-6 rounded-2xl border-2 border-amber-500/50 bg-amber-950/30 p-5">
 				<p class="text-sm font-semibold text-amber-100">Do not use your <code class="font-mono-cta text-xs">aadm_</code> token here</p>
 				<p class="mt-2 text-sm text-amber-100/90">
-					OAuth clients use the <strong>OAuth Client ID</strong> below plus a browser login. There is <strong>no Client Secret</strong> for standard setups.
+					Users enter the <code class="font-mono-cta text-xs">client_id</code> from their dashboard, then complete browser OAuth login. There is <strong>no Client Secret</strong> for standard setups.
 					Do not paste dashboard tokens into OAuth or Advanced connector fields.
 				</p>
 			</div>
@@ -413,7 +413,7 @@ const toolBadgeClass: Record<
 					<ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-400">
 						<li>Add MCP server URL: <code class="font-mono-cta text-xs text-accent-violet">{mcpRpcUrl}</code></li>
 						<li>Choose <strong class="text-slate-300">OAuth</strong> (not pasted API key).</li>
-						<li>Paste <strong class="text-slate-300">OAuth Client ID</strong> from <a href={accountMcpTokensUrl} class="text-accent-violet underline">your AADM dashboard</a> (Account or MCP access tokens).</li>
+						<li>Users enter the <code class="font-mono-cta text-xs">client_id</code> from their dashboard (<a href={accountMcpTokensUrl} class="text-accent-violet underline">MCP access tokens</a> or <a href={accountUserUrl} class="text-accent-violet underline">Account</a>) when Claude Code asks for OAuth Client ID.</li>
 						<li>Leave <strong class="text-slate-300">Client Secret</strong> empty.</li>
 						<li>Sign in with the <strong class="text-slate-300">same AADM account</strong> you used to subscribe when the OAuth consent screen appears.</li>
 					</ol>
@@ -424,8 +424,8 @@ const toolBadgeClass: Record<
 						<li><em>Settings → Connectors → Add custom connector</em></li>
 						<li>Server URL: <code class="font-mono-cta text-xs text-accent-violet">{mcpRpcUrl}</code></li>
 						<li>Authentication: <strong class="text-slate-300">OAuth</strong></li>
-						<li><strong class="text-slate-300">Advanced</strong> → paste OAuth Client ID from <a href={accountMcpTokensUrl} class="text-accent-violet underline">your AADM dashboard</a> (paste manually — auto-registration is not supported)</li>
-						<li>Leave Client Secret empty · click Connect and sign in</li>
+						<li><strong class="text-slate-300">Advanced</strong> → users enter the <code class="font-mono-cta text-xs">client_id</code> from their dashboard (<a href={accountMcpTokensUrl} class="text-accent-violet underline">copy from MCP access tokens</a> or <a href={accountUserUrl} class="text-accent-violet underline">Account</a>)</li>
+						<li>Leave Client Secret empty · click Connect and sign in with the same AADM account</li>
 					</ol>
 				</div>
 			</div>

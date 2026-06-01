@@ -53,11 +53,13 @@ export function McpOAuthConnectCard({ mcpServerUrl }: McpOAuthConnectCardProps) 
 				</p>
 				<ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-amber-950/90 dark:text-amber-100/90">
 					<li>
-						<strong>OAuth path (this card):</strong> paste only the <strong>OAuth Client ID</strong> below into your
-						connector’s OAuth / Advanced settings. Leave <strong>Client Secret</strong> empty. Do{" "}
+						<strong>OAuth path (this card):</strong> users enter the{" "}
+						<code className="rounded bg-amber-100/80 px-1 font-mono text-xs dark:bg-amber-900/60">client_id</code> from
+						their dashboard (copy below) in OAuth / Advanced settings. Leave <strong>Client Secret</strong> empty. Do{" "}
 						<strong>not</strong> paste your <code className="rounded bg-amber-100/80 px-1 font-mono text-xs dark:bg-amber-900/60">aadm_</code>{" "}
-						token anywhere in the OAuth flow — Claude obtains a <code className="rounded bg-amber-100/80 px-1 font-mono text-xs dark:bg-amber-900/60">Bearer</code>{" "}
-						access token automatically after you sign in.
+						token anywhere in the OAuth flow — after the Client ID is set, complete OAuth sign-in so Claude obtains a{" "}
+						<code className="rounded bg-amber-100/80 px-1 font-mono text-xs dark:bg-amber-900/60">Bearer</code> access
+						token.
 					</li>
 					<li>
 						<strong>Token path (below):</strong> paste only your <code className="rounded bg-amber-100/80 px-1 font-mono text-xs dark:bg-amber-900/60">aadm_</code>{" "}
@@ -79,10 +81,10 @@ export function McpOAuthConnectCard({ mcpServerUrl }: McpOAuthConnectCardProps) 
 						OAuth Client ID
 					</p>
 					<p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
-						<strong className="text-zinc-800 dark:text-zinc-200">Not</strong> your{" "}
-						<code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">aadm_</code> token. This is a public
-						identifier for OAuth setup only. There is <strong className="text-zinc-800 dark:text-zinc-200">no Client Secret</strong>{" "}
-						— leave that field empty.
+						Users enter this <code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">client_id</code> from their
+						dashboard — <strong className="text-zinc-800 dark:text-zinc-200">not</strong> an{" "}
+						<code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">aadm_</code> token. There is{" "}
+						<strong className="text-zinc-800 dark:text-zinc-200">no Client Secret</strong> — leave that field empty.
 					</p>
 					<div className="mt-3 flex flex-wrap items-center gap-2">
 						<code
@@ -129,7 +131,9 @@ export function McpOAuthConnectCard({ mcpServerUrl }: McpOAuthConnectCardProps) 
 				<ol className="mt-3 list-decimal space-y-3 pl-5 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
 					<li>
 						<strong className="text-zinc-900 dark:text-zinc-100">Claude Code</strong> — choose <strong>OAuth</strong>{" "}
-						(not a pasted API key). Paste the <strong>OAuth Client ID</strong> above when asked. Server URL:{" "}
+						(not a pasted API key). Users enter the{" "}
+						<code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">client_id</code> from their dashboard
+						(copy above) when asked. Server URL:{" "}
 						<code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">{mcpServerUrl}</code>. Leave{" "}
 						<strong className="text-zinc-900 dark:text-zinc-100">Client Secret</strong> blank. Do not paste an{" "}
 						<code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">aadm_</code> token.
@@ -137,8 +141,9 @@ export function McpOAuthConnectCard({ mcpServerUrl }: McpOAuthConnectCardProps) 
 					<li>
 						<strong className="text-zinc-900 dark:text-zinc-100">claude.ai</strong> —{" "}
 						<em>Settings → Connectors → Add custom connector</em>. Authentication: <strong>OAuth</strong> (not a
-						bearer token field). Open <strong>Advanced</strong> and paste the <strong>OAuth Client ID</strong> above
-						only — not your <code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">aadm_</code> token.
+						bearer token field). Open <strong>Advanced</strong> — users enter the{" "}
+						<code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">client_id</code> from their dashboard
+						(copy above), not an <code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">aadm_</code> token.
 						Server URL:{" "}
 						<code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">{mcpServerUrl}</code>.
 					</li>
