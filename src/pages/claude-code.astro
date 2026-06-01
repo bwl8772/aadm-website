@@ -6,7 +6,10 @@ import { getSiteUrlConfig } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const { urlStandard, urlMcpMarketing, urlMcpRpcUrl, discoveryUrl } = cfg;
-const { signInUrl, signUpUrl, accountUserUrl, accountMcpOAuthUrl } = getAccountPortalUrls(import.meta.env);
+const { signInUrl, signUpUrl, accountUserUrl } = getAccountPortalUrls(
+	import.meta.env,
+	Astro.url.pathname + Astro.url.search,
+);
 
 const claudeMcpConfigUrl = urlMcpRpcUrl;
 
@@ -112,7 +115,7 @@ const claudeMcpFullConfigSnippet = `{
 											href={signInUrl}
 											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
 										>
-											sign in at aadm.io
+											sign in at accounts.aadm.io
 										</a>
 										, subscribe, then <a href={signInUrl} class="text-accent-violet underline hover:text-accent-blue">sign in to AADM</a>{' '}
 										to mint an MCP token.
@@ -124,8 +127,11 @@ const claudeMcpFullConfigSnippet = `{
 										<a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
 											accounts.aadm.io/user
 										</a>
-										. For Claude OAuth, use the <code class="font-mono-cta text-xs">client_id</code> on{' '}
-										<a href={accountMcpOAuthUrl} class="text-accent-violet underline hover:text-accent-blue">MCP setup (OAuth)</a>.
+										. For Claude OAuth, sign in at{' '}
+										<a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+											accounts.aadm.io
+										</a>{' '}
+										for <strong class="text-slate-300">your client ID</strong>.
 									</span>
 								</Show>
 							</li>

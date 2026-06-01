@@ -16,7 +16,7 @@ Astro SSR marketing site at **`https://aadm.io`**. Subscriber login is **100% Cl
 
 **Do not** repoint `accounts.aadm.io` away from Clerk. **Do not** add login pages on `aadm.io` (middleware redirects auth paths to Clerk).
 
-Clerk’s hosted portal **cannot** add a custom “MCP OAuth” tab. The OAuth **`client_id`** is a **public** setup value — copy card on **`https://aadm.io/mcp#connect-oauth`**. API keys (`ak_…`) come from **`accounts.aadm.io/user`** only.
+Clerk’s hosted portal serves login and account at **`accounts.aadm.io`**. Public **`aadm.io/mcp`** explains setup and says **“your client ID”** — subscribers sign in at **`accounts.aadm.io/user`** for credentials (not shown on the public page).
 
 ---
 
@@ -37,7 +37,6 @@ See [`docs/CLERK-AUTH.md`](docs/CLERK-AUTH.md) and `.env.example`.
 | Variable | Purpose |
 |----------|---------|
 | `CLERK_SECRET_KEY` / `PUBLIC_CLERK_PUBLISHABLE_KEY` | `@clerk/astro` on marketing site |
-| `CLERK_OAUTH_CLIENT_ID` | Renders OAuth copy card on `/mcp` |
 | `PUBLIC_CLERK_*_URL` | Default `accounts.aadm.io/*` for auth links |
 
 ---

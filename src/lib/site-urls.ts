@@ -90,16 +90,6 @@ export function aadmConfigSchemaUrl(env: ImportMetaEnv): string {
 /** @deprecated Use `aadmConfigSchemaUrl(import.meta.env)` — kept for static imports. */
 export const AADM_CONFIG_SCHEMA_URL = 'https://aadm.io/schemas/aadm-config.v1.schema.json';
 
-/** Mask OAuth Client ID for display; full value copied from `/account/mcp`. */
-export function maskPublicMcpOAuthClientId(id: string): string {
-	const t = trim(id);
-	if (t.length === 0) return '';
-	if (t.length <= 5) return t;
-	const hidden = t.length - 5;
-	const dots = Math.min(hidden, 36);
-	return `${t.slice(0, 5)}${'•'.repeat(dots)}`;
-}
-
 export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
 	const urlStandard = trim(env.PUBLIC_STANDARD_REPO_URL) || DEFAULT_STANDARD_REPO_URL;
 	const urlMcpRaw = trim(env.PUBLIC_MCP_REPO_URL);

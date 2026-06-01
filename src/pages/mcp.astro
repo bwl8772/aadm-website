@@ -1,9 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Show } from '@clerk/astro/components';
-import McpOAuthClientIdCard from '../components/McpOAuthClientIdCard.astro';
 import { getAccountPortalUrls } from '../lib/account-portal-urls';
-import { mcpOAuthClientIdForDisplay } from '../lib/mcp-oauth-client-id';
 import { getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
@@ -18,8 +16,10 @@ const {
 	aadmConfigSchemaUrl,
 } = cfg;
 
-const { signInUrl, signUpUrl, accountUserUrl, accountMcpOAuthUrl } = getAccountPortalUrls(import.meta.env);
-const oauthClientId = mcpOAuthClientIdForDisplay(import.meta.env);
+const { signInUrl, signUpUrl, accountUserUrl } = getAccountPortalUrls(
+	import.meta.env,
+	Astro.url.pathname + Astro.url.search,
+);
 
 /** Canonical Streamable HTTP JSON-RPC URL — always includes `/mcp` for production default. */
 const mcpRpcUrl = urlMcpRpcUrl;
@@ -198,7 +198,7 @@ const toolBadgeClass: Record<
 
 <Layout
 	title="AADM MCP — Connect to the hosted server"
-	description="Connect Cursor, Claude Code, and claude.ai to the hosted AADM MCP at https://mcp.aadm.io/mcp — bearer token or OAuth Client ID."
+	description="Connect Cursor, Claude Code, and claude.ai to the hosted AADM MCP at https://mcp.aadm.io/mcp — API keys from accounts.aadm.io or OAuth sign-in."
 	headerActiveNav="mcp"
 	headerMcpNavHref="/mcp#mcp-hero-heading"
 	footerVariant="mcp"
@@ -241,10 +241,10 @@ const toolBadgeClass: Record<
 					<Show when="signed-in">
 						<a
 							id="get-access"
-							href={accountMcpOAuthUrl}
+							href={accountUserUrl}
 							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110"
 						>
-							Copy OAuth Client ID
+							Your client ID
 						</a>
 					</Show>
 					<a href="#two-ways" class="text-sm font-semibold text-accent-violet underline underline-offset-4 hover:text-accent-blue">
@@ -306,8 +306,8 @@ const toolBadgeClass: Record<
 					class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 transition hover:border-violet-500/40"
 				>
 					<p class="text-xs font-bold uppercase tracking-wider text-accent-violet">2 · OAuth</p>
-					<h3 class="font-display mt-2 text-lg font-bold text-white">OAuth Client ID</h3>
-					<p class="mt-2 text-sm text-slate-400">Claude Code, claude.ai Connectors — copy the shared <code class="font-mono-cta text-xs">client_id</code> from <a href={accountMcpOAuthUrl} class="text-accent-violet underline hover:text-accent-blue">MCP setup (OAuth section)</a>; sign in at accounts.aadm.io when OAuth prompts</p>
+					<h3 class="font-display mt-2 text-lg font-bold text-white">Clerk sign-in</h3>
+					<p class="mt-2 text-sm text-slate-400">Claude Code, claude.ai Connectors — sign in at <strong class="text-slate-300">accounts.aadm.io</strong> for <strong class="text-slate-300">your OAuth Client ID</strong> (not API keys)</p>
 				</a>
 			</div>
 		</section>
@@ -371,13 +371,44 @@ const toolBadgeClass: Record<
 			<div class="mt-6 rounded-2xl border-2 border-amber-500/50 bg-amber-950/30 p-5">
 				<p class="text-sm font-semibold text-amber-100">Do not use an API key (<code class="font-mono-cta text-xs">ak_…</code>) here</p>
 				<p class="mt-2 text-sm text-amber-100/90">
-					OAuth uses the shared <code class="font-mono-cta text-xs">client_id</code> below, then browser sign-in at{' '}
-					<a href={signInUrl} class="font-semibold underline">accounts.aadm.io</a>. No Client Secret. API keys stay on Clerk Account only.
+					OAuth uses <strong class="text-amber-50">your client ID</strong> from{' '}
+					<a href={accountUserUrl} class="font-semibold underline">accounts.aadm.io</a> (sign in required), then browser consent at the same account.
+					Leave Client Secret empty.
 				</p>
 			</div>
 
-			<div class="mt-8">
-				<McpOAuthClientIdCard clientId={oauthClientId} mcpRpcUrl={mcpRpcUrl} accountUserUrl={accountUserUrl} />
+			<div
+				class="mt-8 rounded-2xl border border-violet-500/35 bg-surface-card/90 p-6"
+				aria-labelledby="oauth-client-id-heading"
+			>
+				<h3 id="oauth-client-id-heading" class="font-display text-lg font-bold text-white">Your OAuth Client ID</h3>
+				<p class="mt-2 text-sm text-slate-400">
+					Credentials are not shown on this public page.{' '}
+					<a href={signInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">Sign in to AADM</a>{' '}
+					at <strong class="text-slate-300">accounts.aadm.io</strong> to copy <strong class="text-slate-300">your client ID</strong> from your account
+					(same login area as API keys). Paste it when Claude Code or claude.ai asks for an OAuth Client ID.
+				</p>
+				<div class="mt-4 flex flex-wrap gap-3">
+					<Show when="signed-out">
+						<a
+							href={signInUrl}
+							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
+						>
+							Sign in for your client ID
+						</a>
+					</Show>
+					<Show when="signed-in">
+						<a
+							href={accountUserUrl}
+							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
+						>
+							Open account — your client ID
+						</a>
+					</Show>
+				</div>
+				<p class="mt-4 text-xs text-slate-500">
+					MCP server URL: <code class="font-mono-cta text-xs text-accent-violet">{mcpRpcUrl}</code>
+				</p>
 			</div>
 
 			<div class="mt-8 grid gap-6 lg:grid-cols-2">
@@ -386,9 +417,12 @@ const toolBadgeClass: Record<
 					<ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-400">
 						<li>Add MCP server URL: <code class="font-mono-cta text-xs text-accent-violet">{mcpRpcUrl}</code></li>
 						<li>Choose <strong class="text-slate-300">OAuth</strong> (not pasted API key).</li>
-						<li>Copy the <code class="font-mono-cta text-xs">client_id</code> from <a href={accountMcpOAuthUrl} class="text-accent-violet underline">this page (OAuth section)</a> when Claude Code asks for OAuth Client ID.</li>
+						<li>
+							When Claude Code asks for OAuth Client ID, paste <strong class="text-slate-300">your client ID</strong> from{' '}
+							<a href={accountUserUrl} class="text-accent-violet underline">accounts.aadm.io</a> (sign in first).
+						</li>
 						<li>Leave <strong class="text-slate-300">Client Secret</strong> empty.</li>
-						<li>Sign in with the <strong class="text-slate-300">same AADM account</strong> you used to subscribe when the OAuth consent screen appears.</li>
+						<li>Sign in with the <strong class="text-slate-300">same AADM account</strong> when the OAuth consent screen appears.</li>
 					</ol>
 				</div>
 				<div class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6">
@@ -397,7 +431,10 @@ const toolBadgeClass: Record<
 						<li><em>Settings → Connectors → Add custom connector</em></li>
 						<li>Server URL: <code class="font-mono-cta text-xs text-accent-violet">{mcpRpcUrl}</code></li>
 						<li>Authentication: <strong class="text-slate-300">OAuth</strong></li>
-						<li><strong class="text-slate-300">Advanced</strong> → paste the <code class="font-mono-cta text-xs">client_id</code> from <a href={accountMcpOAuthUrl} class="text-accent-violet underline">aadm.io/mcp#connect-oauth</a></li>
+						<li>
+							<strong class="text-slate-300">Advanced</strong> → paste <strong class="text-slate-300">your client ID</strong> from{' '}
+							<a href={accountUserUrl} class="text-accent-violet underline">accounts.aadm.io</a>
+						</li>
 						<li>Leave Client Secret empty · click Connect and sign in with the same AADM account</li>
 					</ol>
 				</div>

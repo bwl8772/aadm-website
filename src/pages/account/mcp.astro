@@ -1,7 +1,0 @@
----
-import { getAccountPortalUrls } from '../../lib/account-portal-urls';
-
-const { accountMcpOAuthUrl } = getAccountPortalUrls(import.meta.env);
-
-return Astro.redirect(accountMcpOAuthUrl, 301);
----

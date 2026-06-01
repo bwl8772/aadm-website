@@ -5,13 +5,11 @@
 | Rule | Detail |
 |------|--------|
 | **Clerk owns login** | **`accounts.aadm.io`** = Clerk **hosted Account Portal** (CNAME to Clerk). **Do not remove or repoint the CNAME.** |
-| **One login area** | Sign-in, sign-up, profile, API keys → **`accounts.aadm.io` only** |
-| **aadm.io** | Marketing + MCP setup (`/mcp`). **No login/account pages.** Middleware redirects auth paths → Clerk. |
-| **No new app** | One Astro deploy for `aadm.io`. No Next.js, no second Railway service for accounts. |
-| **OAuth Client ID** | Public setup value on **`aadm.io/mcp#connect-oauth`** — Clerk hosted `/user` **cannot** add custom tabs |
-| **API keys** | **`accounts.aadm.io/user`** → API keys (Clerk only) |
+| **One login area** | Sign-in, sign-up, profile, API keys, **your OAuth Client ID** → **`accounts.aadm.io` only** |
+| **aadm.io** | Marketing + MCP setup (`/mcp`). **No credential values on public pages.** Middleware redirects auth paths → Clerk. |
+| **Public `/mcp` copy** | Say **“your client ID”** and link to **`accounts.aadm.io`** — never paste the actual Client ID on the public page. |
 
-**Forbidden:** repointing `accounts.aadm.io` to Railway; embedded `<UserProfile>` as production accounts; `/dashboard/*`; login UI on `aadm.io`.
+**Forbidden:** repointing `accounts.aadm.io` to Railway; publishing `client_id` values on public pages; login UI on `aadm.io`.
 
 Auth links: `src/lib/clerk-portal-urls.ts` → always `accounts.aadm.io/*`.
 

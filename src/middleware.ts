@@ -1,16 +1,18 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/astro/server';
 import { redirectAuthPathToAccounts } from './lib/clerk-auth-policy';
+import { getClerkIntegrationOptions } from './lib/clerk-portal-urls';
 import { clerkPrivateRoutePatterns } from './lib/routes';
 
 /**
  * Clerk middleware + marketing-host guard.
  *
- * POLICY (docs/CLERK-AUTH.md): The entire login area is Clerk on accounts.aadm.io only.
- * Auth paths on aadm.io redirect to accounts.aadm.io — no login surface on marketing host.
+ * POLICY (docs/CLERK-AUTH.md): Login UI is Clerk Account Portal on accounts.aadm.io only.
+ * Auth paths on aadm.io redirect to accounts.aadm.io — no embedded SignIn on marketing host.
  *
  * @see https://clerk.com/docs/reference/astro/clerk-middleware
  */
 const isPrivateRoute = createRouteMatcher([...clerkPrivateRoutePatterns]);
+const clerkOptions = getClerkIntegrationOptions(import.meta.env);
 
 export const onRequest = clerkMiddleware((auth, context, next) => {
 	const authRedirect = redirectAuthPathToAccounts(context.request, import.meta.env);
@@ -28,4 +30,4 @@ export const onRequest = clerkMiddleware((auth, context, next) => {
 	}
 
 	return next();
-});
+}, clerkOptions);

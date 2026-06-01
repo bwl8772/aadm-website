@@ -1,7 +1,6 @@
 # Astro SSR — aadm.io marketing only. Login = Clerk CNAME on accounts.aadm.io (see docs/CLERK-AUTH.md).
 # Runtime (Railway Variables — not build args):
 #   CLERK_SECRET_KEY          required for clerkMiddleware
-#   CLERK_OAUTH_CLIENT_ID     OAuth client_id copy card on aadm.io/mcp#connect-oauth
 #   PUBLIC_CLERK_PUBLISHABLE_KEY  re-set at runtime if you change keys without rebuilding
 # Build-time (Docker build args or Railway Build Args):
 #   PUBLIC_* above — baked into the Astro SSR bundle; defaults in src/lib/site-urls.ts if omitted
@@ -17,15 +16,13 @@ ARG PUBLIC_MCP_QUICKSTART_URL=""
 ARG PUBLIC_MCP_CUSTOMER_DOCS_URL=""
 ARG PUBLIC_CLERK_PUBLISHABLE_KEY=""
 ARG PUBLIC_CLERK_AUTHORIZED_PARTIES=""
-ARG PUBLIC_MCP_OAUTH_CLIENT_ID=""
 
 ENV PUBLIC_STANDARD_REPO_URL=$PUBLIC_STANDARD_REPO_URL \
 	PUBLIC_MCP_REPO_URL=$PUBLIC_MCP_REPO_URL \
 	PUBLIC_MCP_QUICKSTART_URL=$PUBLIC_MCP_QUICKSTART_URL \
 	PUBLIC_MCP_CUSTOMER_DOCS_URL=$PUBLIC_MCP_CUSTOMER_DOCS_URL \
 	PUBLIC_CLERK_PUBLISHABLE_KEY=$PUBLIC_CLERK_PUBLISHABLE_KEY \
-	PUBLIC_CLERK_AUTHORIZED_PARTIES=$PUBLIC_CLERK_AUTHORIZED_PARTIES \
-	PUBLIC_MCP_OAUTH_CLIENT_ID=$PUBLIC_MCP_OAUTH_CLIENT_ID
+	PUBLIC_CLERK_AUTHORIZED_PARTIES=$PUBLIC_CLERK_AUTHORIZED_PARTIES
 
 COPY package.json package-lock.json ./
 # Railway rejects arbitrary BuildKit cache `id=` values (requires cacheKey/service prefix).
