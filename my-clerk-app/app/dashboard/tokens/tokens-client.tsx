@@ -2,7 +2,6 @@
 
 import { useAuth } from "@clerk/nextjs";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { McpOAuthConnectCard } from "@/components/mcp-oauth-connect-card";
 import { mcpRpcUrlForNextApp } from "@/lib/mcp-public-endpoint";
 
 function safeMcpHost(endpoint: string): string {
@@ -22,11 +21,7 @@ interface McpToken {
   expired: boolean;
 }
 
-type DashboardTokensClientProps = {
-  clientId: string;
-};
-
-export function DashboardTokensClient({ clientId }: DashboardTokensClientProps) {
+export function DashboardTokensClient() {
   const { isLoaded, isSignedIn } = useAuth();
   const mcpEndpoint = useMemo(() => mcpRpcUrlForNextApp(), []);
   const mcpHost = useMemo(() => safeMcpHost(mcpEndpoint), [mcpEndpoint]);
@@ -145,12 +140,9 @@ export function DashboardTokensClient({ clientId }: DashboardTokensClientProps) 
 
   if (!isSignedIn) {
     return (
-      <div className="space-y-6">
-        {clientId ? <McpOAuthConnectCard mcpServerUrl={mcpEndpoint} clientId={clientId} /> : null}
-        <div className="rounded-2xl border border-zinc-200 bg-white p-8 dark:border-zinc-800 dark:bg-zinc-900">
-          <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">MCP access tokens</h1>
-          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Sign in to create and manage tokens.</p>
-        </div>
+      <div className="rounded-2xl border border-zinc-200 bg-white p-8 dark:border-zinc-800 dark:bg-zinc-900">
+        <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">MCP access</h1>
+        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Sign in to create and manage tokens.</p>
       </div>
     );
   }
@@ -159,15 +151,13 @@ export function DashboardTokensClient({ clientId }: DashboardTokensClientProps) 
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-          MCP access tokens
+          MCP access
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
           <strong className="text-zinc-800 dark:text-zinc-200">Two ways to connect — use one, not both.</strong>{" "}
+          Claude Code and claude.ai use the OAuth Client ID in the card above.{" "}
           <code className="rounded bg-zinc-100 px-1 py-0.5 text-xs dark:bg-zinc-800">aadm_</code> tokens below are for
-          Cursor, Windsurf, and curl only. Claude Code and claude.ai use{" "}
-          <strong className="text-zinc-800 dark:text-zinc-200">OAuth</strong> (Client ID in the card above) — do not paste
-          an <code className="rounded bg-zinc-100 px-1 py-0.5 text-xs dark:bg-zinc-800">aadm_</code> token into OAuth
-          settings or combine it with a client secret.
+          Cursor, Windsurf, and curl.
         </p>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
           Secrets start with <code className="rounded bg-zinc-100 px-1 py-0.5 text-xs dark:bg-zinc-800">aadm_</code>{" "}
@@ -217,8 +207,6 @@ export function DashboardTokensClient({ clientId }: DashboardTokensClientProps) 
           </button>
         </div>
       </div>
-
-      {clientId ? <McpOAuthConnectCard mcpServerUrl={mcpEndpoint} clientId={clientId} /> : null}
 
       <div className="rounded-2xl border border-violet-200 bg-violet-50/40 p-6 dark:border-violet-900 dark:bg-violet-950/25">
         <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Connect with a token (Cursor, curl)</h2>

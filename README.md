@@ -36,7 +36,7 @@ Copy `.env.example` to `.env`. **Do not put a space after `=`**.
 | `PUBLIC_MCP_REPO_URL` | **MCP service** host origin (default **`https://mcp.aadm.io`**). Client configs use **`/mcp`** appended automatically on this page and in dashboard copy. |
 | `PUBLIC_MCP_QUICKSTART_URL` (optional) | **MCP marketing** page URL. Default **`https://aadm.io/mcp`**. Override for local preview (e.g. `http://localhost:4321/mcp`). |
 | `PUBLIC_MCP_CUSTOMER_DOCS_URL` (optional) | Second documentation base (e.g. gated Notion). |
-| `NEXT_PUBLIC_MCP_OAUTH_CLIENT_ID` (**my-clerk-app** / accounts portal) | Clerk OAuth Client ID for the **Connect with OAuth** card on `/dashboard/tokens` — not published on public aadm.io/mcp. |
+| `CLERK_OAUTH_CLIENT_ID` (**my-clerk-app** on `accounts.aadm.io/dashboard/tokens`) | Clerk OAuth app Client ID for the **Connect with OAuth** card — not on Clerk-hosted `/user`, not on public aadm.io/mcp. |
 | `PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key (build + runtime). |
 | `CLERK_SECRET_KEY` | Clerk secret (runtime, server-only). Required for `clerkMiddleware()`. |
 | `PUBLIC_CLERK_AUTHORIZED_PARTIES` (optional) | Comma-separated origins for Clerk’s `authorizedParties` (e.g. `http://localhost:4321,https://aadm.io`). Use when Clerk otherwise redirects browsers to the Dashboard application URL. Wired in `astro.config.mjs`. |

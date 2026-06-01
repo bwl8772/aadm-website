@@ -7,8 +7,9 @@ const DEFAULT_SIGN_UP = 'https://accounts.aadm.io/sign-up';
 export type ClerkPortalUrls = {
 	signInUrl: string;
 	signUpUrl: string;
+	/** Clerk Account Portal profile (accounts.aadm.io/user) — not aadm.io. */
 	accountUserUrl: string;
-	/** MCP tokens + OAuth Client ID (authenticated dashboard). */
+	/** MCP OAuth Client ID + aadm_ tokens — Next.js `/dashboard/tokens` (not Clerk-hosted `/user`). */
 	accountMcpTokensUrl: string;
 };
 

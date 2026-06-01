@@ -9,19 +9,12 @@ export function McpOAuthClientIdMissingNotice() {
 				OAuth Client ID not available yet
 			</h2>
 			<p className="mt-2 text-sm leading-relaxed text-amber-950/90 dark:text-amber-100/90">
-				The shared MCP OAuth Client ID is not configured on the{" "}
-				<strong className="text-amber-950 dark:text-amber-100">accounts portal</strong> (
-				<code className="rounded bg-amber-100/80 px-1 font-mono text-xs dark:bg-amber-900/60">my-clerk-app</code>
-				), not the Astro marketing site. Set{" "}
+				Set{" "}
 				<code className="rounded bg-amber-100/80 px-1 font-mono text-xs dark:bg-amber-900/60">
 					CLERK_OAUTH_CLIENT_ID
 				</code>{" "}
-				(preferred, runtime) or{" "}
-				<code className="rounded bg-amber-100/80 px-1 font-mono text-xs dark:bg-amber-900/60">
-					NEXT_PUBLIC_MCP_OAUTH_CLIENT_ID
-				</code>{" "}
-				on that service and redeploy. All subscribers share the same public Client ID for Claude Code and claude.ai
-				Connectors.
+				on the <code className="rounded bg-amber-100/80 px-1 font-mono text-xs dark:bg-amber-900/60">my-clerk-app</code>{" "}
+				service (same Clerk OAuth application Client ID as on the MCP server), then redeploy.
 			</p>
 		</section>
 	);

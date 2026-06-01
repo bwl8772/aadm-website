@@ -196,9 +196,12 @@ export function OAuthApplicationsPanel() {
 				>
 					AGENTS.md
 				</a>
-				). For hosted MCP with Claude Code or claude.ai, users enter the{" "}
-				<code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">client_id</code> from their dashboard (Connect
-				with OAuth card) — not a custom OAuth app from this panel unless building a separate integration.
+				). For hosted MCP with Claude Code or claude.ai, copy the shared Clerk OAuth app{" "}
+				<code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">client_id</code> on{" "}
+				<strong className="text-zinc-800 dark:text-zinc-200">MCP access</strong> (
+				<code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">/dashboard/tokens</code>) — not{" "}
+				<code className="rounded bg-zinc-100 px-1 text-xs dark:bg-zinc-800">accounts.aadm.io/user</code> and not a custom
+				OAuth app from this panel unless building a separate integration.
 			</p>
 
 			{newSecret ? (
