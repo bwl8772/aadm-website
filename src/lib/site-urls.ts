@@ -92,7 +92,7 @@ export function aadmConfigSchemaUrl(env: ImportMetaEnv): string {
 /** @deprecated Use `aadmConfigSchemaUrl(import.meta.env)` — kept for static imports. */
 export const AADM_CONFIG_SCHEMA_URL = 'https://aadm.io/schemas/aadm-config.v1.schema.json';
 
-/** @deprecated Marketing site does not publish OAuth Client ID — use accounts dashboard. */
+/** Mask OAuth Client ID for display; full value copied from `/account/mcp`. */
 export function maskPublicMcpOAuthClientId(id: string): string {
 	const t = trim(id);
 	if (t.length === 0) return '';

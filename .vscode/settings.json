@@ -1,3 +1,9 @@
 {
-  "npm.exclude": ["**/my-clerk-app/**"]
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "files.exclude": {
+    "my-clerk-app": true
+  },
+  "search.exclude": {
+    "**/my-clerk-app": true
+  }
 }

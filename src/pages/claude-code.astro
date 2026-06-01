@@ -6,7 +6,7 @@ import { getSiteUrlConfig } from '../lib/site-urls';
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const { urlStandard, urlMcpMarketing, urlMcpRpcUrl, discoveryUrl } = cfg;
-const { signInUrl, signUpUrl } = getAccountPortalUrls(import.meta.env);
+const { signInUrl, signUpUrl, accountUserUrl, accountMcpOAuthUrl } = getAccountPortalUrls(import.meta.env);
 
 const claudeMcpConfigUrl = urlMcpRpcUrl;
 
@@ -120,10 +120,15 @@ const claudeMcpFullConfigSnippet = `{
 								</Show>
 								<Show when="signed-in">
 									<span>
-										<a href={signInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-											Sign in to AADM
+										Open{' '}
+										<a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+											Account Portal
 										</a>{' '}
-										and mint or copy an MCP token or account API key.
+										to create an API key (<code class="font-mono-cta text-xs">ak_…</code>), or{' '}
+										<a href={accountMcpOAuthUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+											OAuth Client ID
+										</a>{' '}
+										for Claude OAuth setup.
 									</span>
 								</Show>
 							</li>

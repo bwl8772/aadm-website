@@ -1,8 +1,6 @@
 node_modules
 dist
 .astro
-# Next app in repo — not part of the Astro image; keeps Railway context small.
-my-clerk-app
 .git
 .env
 .env.*
