@@ -34,6 +34,9 @@ export type ClerkIntegrationOptions = {
 	signInUrl: string;
 	signUpUrl: string;
 	authorizedParties?: string[];
+	isSatellite?: boolean;
+	domain?: string;
+	proxyUrl?: string;
 };
 
 function authorizedPartiesFromEnv(env: ImportMetaEnv): string[] {
@@ -41,6 +44,50 @@ function authorizedPartiesFromEnv(env: ImportMetaEnv): string[] {
 		.split(",")
 		.map((s) => s.trim())
 		.filter(Boolean);
+}
+
+function clerkDomainFromEnv(env: ImportMetaEnv): string {
+	const configured = trim(env.PUBLIC_CLERK_DOMAIN);
+	if (configured) return configured;
+	return new URL(marketingOriginFromEnv(env)).hostname;
+}
+
+function proxyUrlFromEnv(env: ImportMetaEnv): string | undefined {
+	const url =
+		trim(env.PUBLIC_CLERK_PROXY_URL) || trim(env.CLERK_PROXY_URL) || "";
+	return url || undefined;
+}
+
+/**
+ * aadm.io hosts the app; accounts.aadm.io is Clerk Account Portal (primary auth).
+ * Without satellite mode + sync param, sign-in loops: accounts → /member → sign-in → …
+ */
+export function isClerkSatelliteFromEnv(env: ImportMetaEnv): boolean {
+	const explicit = trim(env.PUBLIC_CLERK_IS_SATELLITE);
+	if (explicit) {
+		return explicit.toLowerCase() === "true" || explicit === "1";
+	}
+	const signIn =
+		trim(env.PUBLIC_CLERK_SIGN_IN_URL) || CLERK_ACCOUNTS_SIGN_IN;
+	try {
+		const signInHost = new URL(signIn).hostname;
+		const marketingHost = new URL(marketingOriginFromEnv(env)).hostname;
+		return signInHost !== marketingHost;
+	} catch {
+		return false;
+	}
+}
+
+/** Satellite return URLs need __clerk_synced=false so handshake runs on aadm.io. */
+function withSatelliteSyncParam(returnTo: string, env: ImportMetaEnv): string {
+	if (!isClerkSatelliteFromEnv(env)) return returnTo;
+	try {
+		const url = new URL(returnTo);
+		url.searchParams.set("__clerk_synced", "false");
+		return url.toString();
+	} catch {
+		return returnTo;
+	}
 }
 
 /** Marketing site origin — post-auth redirect target for Account Portal links. */
@@ -65,24 +112,29 @@ export function withAccountPortalRedirect(
 	const returnTo = returnPath.startsWith("http")
 		? returnPath
 		: `${origin}${path}`;
+	const syncedReturnTo = withSatelliteSyncParam(returnTo, env);
 	try {
 		const url = new URL(portalUrl);
-		url.searchParams.set("redirect_url", returnTo);
+		url.searchParams.set("redirect_url", syncedReturnTo);
 		return url.toString();
 	} catch {
 		return portalUrl;
 	}
 }
 
-/** Options for `clerk()` integration and `clerkMiddleware()` — Account Portal URLs on accounts.aadm.io. */
+/** Options for `clerk()` integration and `clerkMiddleware()` — Account Portal on accounts.aadm.io; aadm.io is satellite. */
 export function getClerkIntegrationOptions(
 	env: ImportMetaEnv,
 ): ClerkIntegrationOptions {
 	const authorizedParties = authorizedPartiesFromEnv(env);
+	const satellite = isClerkSatelliteFromEnv(env);
+	const proxyUrl = proxyUrlFromEnv(env);
 	return {
 		signInUrl: trim(env.PUBLIC_CLERK_SIGN_IN_URL) || CLERK_ACCOUNTS_SIGN_IN,
 		signUpUrl: trim(env.PUBLIC_CLERK_SIGN_UP_URL) || CLERK_ACCOUNTS_SIGN_UP,
 		...(authorizedParties.length > 0 ? { authorizedParties } : {}),
+		...(satellite ? { isSatellite: true, domain: clerkDomainFromEnv(env) } : {}),
+		...(proxyUrl ? { proxyUrl } : {}),
 	};
 }
 
