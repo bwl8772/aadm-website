@@ -32,7 +32,7 @@ const baseChipClasses =
 const joinChipClasses =
 	'shrink-0 whitespace-nowrap rounded-lg border border-violet-500/40 bg-violet-950/40 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-violet-400/60 hover:bg-violet-900/50 sm:px-3 sm:py-2 sm:text-sm md:px-4';
 
-const { signInUrl, signUpUrl, accountUserUrl } = getAccountPortalUrls(
+const { signInUrl, signUpUrl, memberAreaUrl } = getAccountPortalUrls(
 	import.meta.env,
 	Astro.url.pathname + Astro.url.search,
 );
@@ -85,14 +85,14 @@ const { signInUrl, signUpUrl, accountUserUrl } = getAccountPortalUrls(
 			</Show>
 			<Show when="signed-in">
 				<a
-					href={accountUserUrl}
+					href={memberAreaUrl}
 					class:list={[
 						baseChipClasses,
 						'inline-flex items-center justify-center border-violet-500/40 bg-violet-950/30 hover:bg-violet-900/40',
 					]}
-					title="Account — API keys and profile (accounts.aadm.io)"
+					title="Member area — API keys, profile, MCP OAuth"
 				>
-					Account
+					Member
 				</a>
 			</Show>
 		</nav>

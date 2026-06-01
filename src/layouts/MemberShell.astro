@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'Member area',
+	description = 'Manage your AADM account, API keys, and MCP OAuth credentials.',
+} = Astro.props;
+---
+
+<Layout title={title} description={description} headerActiveNav={null} footerVariant="default" showFooter={false}>
+	<main id="main" class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+		<div class="mb-6">
+			<h1 class="font-display text-2xl font-bold text-white sm:text-3xl">Member area</h1>
+			<p class="mt-2 text-sm text-slate-400">
+				API keys, profile, and MCP OAuth setup. Sign-in is managed by Clerk at{' '}
+				<strong class="text-slate-300">accounts.aadm.io</strong>.
+			</p>
+		</div>
+		<slot />
+	</main>
+</Layout>

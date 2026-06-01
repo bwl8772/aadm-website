@@ -81,6 +81,24 @@ try {
 		};
 	});
 	log('/mcp page (signed-out CTAs)', { url: page.url(), ...mcpData });
+
+	// Unauthenticated /member should redirect to Clerk sign-in (Account Portal)
+	navigations.length = 0;
+	await page.goto(`${base}/member`, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
+	await page.waitForTimeout(2500);
+	const memberUrl = page.url();
+	const memberRedirectOk =
+		/accounts\..+/.test(new URL(memberUrl).hostname) ||
+		/clerk\.accounts\.dev/.test(new URL(memberUrl).hostname) ||
+		/sign-in/.test(memberUrl);
+	log('/member (signed-out redirect)', {
+		finalUrl: memberUrl,
+		redirectedToClerk: memberRedirectOk,
+		navigations,
+	});
+	if (!memberRedirectOk) {
+		throw new Error(`/member did not redirect to Clerk sign-in; stayed at ${memberUrl}`);
+	}
 } catch (err) {
 	console.error('Smoke failed:', err);
 	exitCode = 1;

@@ -1,8 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getAccountPortalUrls } from '../lib/account-portal-urls';
 import { getSiteUrlConfig } from '../lib/site-urls';
 
 const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
+const { memberSignInUrl } = getAccountPortalUrls(import.meta.env, Astro.url.pathname + Astro.url.search);
+const mcpConnectHref = `${urlMcpMarketing.replace(/\/$/, '')}#connect-bearer`;
 ---
 
 <Layout
@@ -28,6 +31,12 @@ const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 			<p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
 				AADM defines the workflows, layer language, and evidence discipline. Cursor—and the model inside it—opens
 				your project and applies that standard to real code. Understanding the division makes both more useful.
+			</p>
+			<p class="mt-4 max-w-2xl text-sm text-slate-500">
+				<strong class="text-slate-400">MCP credentials:</strong>{' '}
+				<a href={mcpConnectHref} class="font-semibold text-accent-violet underline hover:text-accent-blue">connection steps on /mcp</a>
+				{' '}·{' '}
+				<a href={memberSignInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">sign in for API keys</a>
 			</p>
 			<p class="mt-4 max-w-2xl text-sm text-slate-500">
 				<strong class="text-slate-400">Step 0:</strong>{' '}

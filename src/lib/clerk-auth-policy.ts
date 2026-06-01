@@ -1,8 +1,8 @@
 /**
  * Clerk auth host policy — docs/CLERK-AUTH.md
  *
- * accounts.aadm.io = Clerk hosted Account Portal (CNAME — keep it).
- * aadm.io must not serve login; redirect auth paths to Clerk.
+ * accounts.aadm.io = Clerk hosted Account Portal (CNAME — sign-in/up only).
+ * aadm.io/member = embedded UserProfile; legacy /user and /account redirect to Clerk.
  */
 import { trim } from './site-urls';
 
@@ -19,9 +19,9 @@ export function isClerkAuthPath(pathname: string): boolean {
 }
 
 export function accountsOriginFromEnv(env: ImportMetaEnv): string {
-	const profile = trim(env.PUBLIC_CLERK_USER_PROFILE_URL) || 'https://accounts.aadm.io/user';
+	const signIn = trim(env.PUBLIC_CLERK_SIGN_IN_URL) || 'https://accounts.aadm.io/sign-in';
 	try {
-		return new URL(profile).origin;
+		return new URL(signIn).origin;
 	} catch {
 		return 'https://accounts.aadm.io';
 	}

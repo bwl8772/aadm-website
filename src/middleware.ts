@@ -6,7 +6,7 @@ import { clerkPrivateRoutePatterns } from './lib/routes';
 /**
  * Clerk middleware + marketing-host guard.
  *
- * POLICY (docs/CLERK-AUTH.md): Login UI is Clerk Account Portal on accounts.aadm.io only.
+ * POLICY (docs/CLERK-AUTH.md): Sign-in on accounts.aadm.io; member UI on aadm.io/member.
  * Auth paths on aadm.io redirect to accounts.aadm.io — no embedded SignIn on marketing host.
  *
  * @see https://clerk.com/docs/reference/astro/clerk-middleware

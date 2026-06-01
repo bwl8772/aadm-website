@@ -10,8 +10,18 @@
  * AADM auth: Clerk only, accounts.aadm.io — see docs/CLERK-AUTH.md. Not configured on marketing pages.
  */
 
-/** Default AADM account profile URL for signed-in CTAs on the marketing site. */
+/** @deprecated Use memberAreaUrl() — legacy Clerk hosted profile; product links use aadm.io/member. */
 export const URL_ACCOUNT_USER = 'https://accounts.aadm.io/user';
+
+/** Mask OAuth Client ID for display on protected member pages. */
+export function maskMcpOAuthClientId(id: string): string {
+	const t = trim(id);
+	if (t.length === 0) return '';
+	if (t.length <= 5) return t;
+	const hidden = t.length - 5;
+	const dots = Math.min(hidden, 36);
+	return `${t.slice(0, 5)}${'•'.repeat(dots)}`;
+}
 
 export function trim(v: string | undefined): string {
 	return typeof v === 'string' ? v.trim() : '';
