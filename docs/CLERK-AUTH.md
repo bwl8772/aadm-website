@@ -48,12 +48,15 @@
 | `PUBLIC_CLERK_SIGN_IN_URL` | `https://accounts.aadm.io/sign-in` |
 | `PUBLIC_CLERK_SIGN_UP_URL` | `https://accounts.aadm.io/sign-up` |
 | `PUBLIC_CLERK_AUTHORIZED_PARTIES` | `https://aadm.io`, `https://www.aadm.io` |
+| `PUBLIC_CLERK_IS_SATELLITE` | `true` (optional — auto-detected when sign-in host ≠ `aadm.io`) |
+| `PUBLIC_CLERK_DOMAIN` | `aadm.io` (satellite app domain) |
+| `PUBLIC_CLERK_PROXY_URL` | Optional — `https://clerk.aadm.io` if TLS/proxy breaks handshake |
 | `CLERK_OAUTH_CLIENT_ID` | Member MCP OAuth tab only |
 | `PUBLIC_MEMBER_AREA_PATH` | Optional; default `/member` |
 
-Credential sign-in links use `redirect_url=https://aadm.io/member`.
+Credential sign-in links use `redirect_url=https://aadm.io/member` with `__clerk_synced=false` for satellite handshake.
 
-**Clerk Dashboard:** Account Portal on `accounts.aadm.io` · API keys enabled · OAuth app for MCP.
+**Clerk Dashboard:** Account Portal on `accounts.aadm.io` · **add `aadm.io` as satellite domain** (Domains → Satellites) · add CNAME `clerk.aadm.io` → Clerk Frontend API · API keys enabled · OAuth app for MCP.
 
 ---
 
@@ -66,6 +69,23 @@ Credential sign-in links use `redirect_url=https://aadm.io/member`.
 | `src/lib/clerk-portal-urls.ts` | Portal + member URLs |
 | `src/middleware.ts` | `clerkMiddleware` + auth path redirects |
 | `src/components/SiteHeader.astro` | **Member** → `/member` |
+
+---
+
+## Redirect loop (`accounts.aadm.io` ↔ `aadm.io/member`)
+
+Sign-in on **accounts.aadm.io** and the app on **aadm.io** are different domains. Without **satellite** setup, the session never reaches `aadm.io` and you get an infinite loop:
+
+1. `accounts.aadm.io/sign-in` → user signs in  
+2. Redirect to `aadm.io/member` → no session on `aadm.io`  
+3. Middleware sends user back to sign-in → repeat  
+
+**Fix (all required):**
+
+1. **Clerk Dashboard → Domains → Satellites** — add `aadm.io`  
+2. **DNS** — CNAME `clerk.aadm.io` → Clerk Frontend API (DNS-only / gray cloud)  
+3. **Railway** — set `PUBLIC_CLERK_IS_SATELLITE=true`, `PUBLIC_CLERK_DOMAIN=aadm.io`, rebuild  
+4. **accounts.aadm.io** — DNS-only CNAME to Clerk (not Cloudflare orange-cloud proxy)
 
 ---
 
