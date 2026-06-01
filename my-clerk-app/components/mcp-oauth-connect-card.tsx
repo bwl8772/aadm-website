@@ -1,18 +1,15 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { maskMcpOAuthClientId } from "@/components/mcp-oauth-client-id-box";
 
 type McpOAuthConnectCardProps = {
 	mcpServerUrl: string;
+	clientId: string;
 };
 
-export function McpOAuthConnectCard({ mcpServerUrl }: McpOAuthConnectCardProps) {
-	const clientId = useMemo(
-		() => process.env.NEXT_PUBLIC_MCP_OAUTH_CLIENT_ID?.trim() ?? "",
-		[],
-	);
+export function McpOAuthConnectCard({ mcpServerUrl, clientId }: McpOAuthConnectCardProps) {
 	const [hint, setHint] = useState<string | null>(null);
 
 	const copy = useCallback((label: string, text: string) => {

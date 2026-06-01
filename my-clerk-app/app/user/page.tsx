@@ -4,11 +4,12 @@ import { DashboardChrome } from "@/components/dashboard-chrome";
 import { McpOAuthConnectCard } from "@/components/mcp-oauth-connect-card";
 import { McpOAuthClientIdMissingNotice } from "@/components/mcp-oauth-client-id-missing-notice";
 import { OAuthApplicationsPanel } from "@/components/oauth-applications-panel";
+import { mcpOAuthClientIdForDisplay } from "@/lib/mcp-oauth-config";
 import { mcpRpcUrlForNextApp } from "@/lib/mcp-public-endpoint";
 
 export default function UserAccountPage() {
 	const mcpServerUrl = mcpRpcUrlForNextApp();
-	const clientId = process.env.NEXT_PUBLIC_MCP_OAUTH_CLIENT_ID?.trim() ?? "";
+	const clientId = mcpOAuthClientIdForDisplay();
 
 	return (
 		<DashboardChrome>
@@ -30,7 +31,7 @@ export default function UserAccountPage() {
 				</div>
 
 				{clientId ? (
-					<McpOAuthConnectCard mcpServerUrl={mcpServerUrl} />
+					<McpOAuthConnectCard mcpServerUrl={mcpServerUrl} clientId={clientId} />
 				) : (
 					<McpOAuthClientIdMissingNotice />
 				)}
