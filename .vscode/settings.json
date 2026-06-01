@@ -1,9 +1,4 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "files.exclude": {
-    "my-clerk-app": true
-  },
-  "search.exclude": {
-    "**/my-clerk-app": true
-  }
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"biome.lsp.bin": "./node_modules/@biomejs/biome/bin/biome"
 }

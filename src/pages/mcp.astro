@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Show } from '@clerk/astro/components';
-import { getAccountPortalUrls } from '../lib/account-portal-urls';
-import { getSiteUrlConfig, hostedMcpOrigin } from '../lib/site-urls';
+import { Show } from "@clerk/astro/components";
+import Layout from "../layouts/Layout.astro";
+import { getAccountPortalUrls } from "../lib/account-portal-urls";
+import { getSiteUrlConfig, hostedMcpOrigin } from "../lib/site-urls";
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const {
@@ -16,10 +16,14 @@ const {
 	aadmConfigSchemaUrl,
 } = cfg;
 
-const { signInUrl, signUpUrl, accountUserUrl } = getAccountPortalUrls(
-	import.meta.env,
-	Astro.url.pathname + Astro.url.search,
-);
+const {
+	signInUrl,
+	signUpUrl,
+	memberAreaUrl,
+	memberMcpOAuthUrl,
+	memberSignInUrl,
+	memberMcpOAuthSignInUrl,
+} = getAccountPortalUrls(import.meta.env);
 
 /** Canonical Streamable HTTP JSON-RPC URL — always includes `/mcp` for production default. */
 const mcpRpcUrl = urlMcpRpcUrl;
@@ -52,153 +56,172 @@ const cursorMcpBearerAkSnippet = `{
 /** Marketing snapshot — names align with hosted MCP `tools/list`; schema evolves with server version. */
 const mcpToolsCatalog: Array<{
 	tool: string;
-	badges: Array<'Orchestration' | 'Navigator' | 'Investigator' | 'Sentinel' | 'Doctrine'>;
+	badges: Array<
+		"Orchestration" | "Navigator" | "Investigator" | "Sentinel" | "Doctrine"
+	>;
 	outcome: string;
 }> = [
 	{
-		tool: 'standard_brief',
-		badges: ['Orchestration'],
+		tool: "standard_brief",
+		badges: ["Orchestration"],
 		outcome:
-			'One call loads workflow parity, orchestrator contract, follow-on catalog, and Sentinel assurance JSON hosts branch on.',
+			"One call loads workflow parity, orchestrator contract, follow-on catalog, and Sentinel assurance JSON hosts branch on.",
 	},
 	{
-		tool: 'route_lane',
-		badges: ['Orchestration'],
+		tool: "route_lane",
+		badges: ["Orchestration"],
 		outcome:
-			'When intent is already delivery, defect, or assurance, return deterministic routing metadata—no keyword roulette.',
+			"When intent is already delivery, defect, or assurance, return deterministic routing metadata—no keyword roulette.",
 	},
 	{
-		tool: 'orchestrator_anchor',
-		badges: ['Orchestration'],
+		tool: "orchestrator_anchor",
+		badges: ["Orchestration"],
 		outcome:
-			'Long-running jobs get a stable checklist: what to persist outside MCP, session notes, and when to refresh the brief.',
+			"Long-running jobs get a stable checklist: what to persist outside MCP, session notes, and when to refresh the brief.",
 	},
 	{
-		tool: 'plan_delivery',
-		badges: ['Navigator'],
-		outcome: 'Turn a task into UDALI-shaped delivery handoffs with doctrine-backed scope and integrator-ready language.',
-	},
-	{
-		tool: 'map_feature',
-		badges: ['Navigator'],
-		outcome: 'Seed layer and AUTH-XX hints from a short feature description—explicitly suggestive until your architecture confirms.',
-	},
-	{
-		tool: 'fetch_auth',
-		badges: ['Doctrine'],
-		outcome: 'Pull the official markdown for a numbered AUTH control so prompts cite governance text, not paraphrase.',
-	},
-	{
-		tool: 'fetch_seam',
-		badges: ['Doctrine', 'Sentinel'],
+		tool: "plan_delivery",
+		badges: ["Navigator"],
 		outcome:
-			'Load a SEAM-00–15 handoff archetype—scope for trace/assurance (normalization, dispatch, persistence). Pair with the seam-check worksheet resource.',
+			"Turn a task into UDALI-shaped delivery handoffs with doctrine-backed scope and integrator-ready language.",
 	},
 	{
-		tool: 'role_guide',
-		badges: ['Doctrine'],
-		outcome: 'Slice UDALI agent doctrine (Unifier, Designer, Adapter, Logician, Integrator) for the role and task you are in.',
-	},
-	{
-		tool: 'debug_defect',
-		badges: ['Investigator'],
+		tool: "map_feature",
+		badges: ["Navigator"],
 		outcome:
-			'Gated defect machine: Path A recon, Path B only after proof, execution-control appendix, and troubleshooter response gates.',
+			"Seed layer and AUTH-XX hints from a short feature description—explicitly suggestive until your architecture confirms.",
 	},
 	{
-		tool: 'debug_bundle',
-		badges: ['Investigator'],
-		outcome: 'Advanced hosts send a full integrated troubleshooter payload when they need the bundled diagnosis shape.',
-	},
-	{
-		tool: 'debug_hint',
-		badges: ['Investigator'],
-		outcome: 'Lightweight recon-vs-diagnose hint before you commit to a full debug_defect turn.',
-	},
-	{
-		tool: 'classify_bug',
-		badges: ['Investigator'],
-		outcome: 'Classify ownership and routing early so the right lane—not the loudest symptom—owns the next step.',
-	},
-	{
-		tool: 'triage_bug',
-		badges: ['Investigator'],
-		outcome: 'Map a rough symptom to suggested AUTH topics and stack band for intake before deeper debugging.',
-	},
-	{
-		tool: 'fix_pack',
-		badges: ['Investigator'],
+		tool: "fetch_auth",
+		badges: ["Doctrine"],
 		outcome:
-			'After evidence and gates pass, emit an authorized fix prompt pack sized for coding agents—no premature refactor stories.',
+			"Pull the official markdown for a numbered AUTH control so prompts cite governance text, not paraphrase.",
 	},
 	{
-		tool: 'audit_interview',
-		badges: ['Sentinel'],
-		outcome: 'Step through vertical depth and horizontal seams until scope is confirmable; then merge into outline-shaped intake.',
-	},
-	{
-		tool: 'audit_outline',
-		badges: ['Sentinel'],
-		outcome: 'Produce the assurance scaffold: sections, checklist pointers, coder requests, and human-editable confirmation.',
-	},
-	{
-		tool: 'audit_run',
-		badges: ['Sentinel'],
+		tool: "fetch_seam",
+		badges: ["Doctrine", "Sentinel"],
 		outcome:
-			'Plain-language “run an audit” asks become a program-aware intake plus top-findings brief for a repo-connected agent.',
+			"Load a SEAM-00–15 handoff archetype—scope for trace/assurance (normalization, dispatch, persistence). Pair with the seam-check worksheet resource.",
 	},
 	{
-		tool: 'sentinel_programs',
-		badges: ['Sentinel'],
-		outcome: 'Snapshot every bundled Sentinel audit program template without pulling the full standard_brief payload.',
+		tool: "role_guide",
+		badges: ["Doctrine"],
+		outcome:
+			"Slice UDALI agent doctrine (Unifier, Designer, Adapter, Logician, Integrator) for the role and task you are in.",
 	},
 	{
-		tool: 'sentinel_program',
-		badges: ['Sentinel'],
-		outcome: 'Fetch one audit program row by id when hosts only need that template’s rigor spine and evidence expectations.',
+		tool: "debug_defect",
+		badges: ["Investigator"],
+		outcome:
+			"Gated defect machine: Path A recon, Path B only after proof, execution-control appendix, and troubleshooter response gates.",
 	},
 	{
-		tool: 'sentinel_attestation_examples',
-		badges: ['Sentinel'],
-		outcome: 'Shipped seam-tier examples so teams see how depth and boundaries translate to must-prove vs latent seams.',
+		tool: "debug_bundle",
+		badges: ["Investigator"],
+		outcome:
+			"Advanced hosts send a full integrated troubleshooter payload when they need the bundled diagnosis shape.",
 	},
 	{
-		tool: 'sentinel_closure',
-		badges: ['Sentinel'],
-		outcome: 'Resolve closure tiers from attestation depth, vertical claim, and horizontal seams—deterministic seam language.',
+		tool: "debug_hint",
+		badges: ["Investigator"],
+		outcome:
+			"Lightweight recon-vs-diagnose hint before you commit to a full debug_defect turn.",
 	},
 	{
-		tool: 'sentinel_stage_guide',
-		badges: ['Sentinel'],
-		outcome: 'Gate helper for one assurance stage of a chosen program—keeps humans oriented inside the three-stage spine.',
+		tool: "classify_bug",
+		badges: ["Investigator"],
+		outcome:
+			"Classify ownership and routing early so the right lane—not the loudest symptom—owns the next step.",
 	},
 	{
-		tool: 'sentinel_handoff_hint',
-		badges: ['Sentinel'],
-		outcome: 'After a sentinel_audit_exit_kind, get deterministic wording for staying in assurance or opening Navigator or Investigator.',
+		tool: "triage_bug",
+		badges: ["Investigator"],
+		outcome:
+			"Map a rough symptom to suggested AUTH topics and stack band for intake before deeper debugging.",
 	},
 	{
-		tool: 'sentinel_canonical_refs',
-		badges: ['Sentinel'],
-		outcome: 'Curated resources/read URIs for delivery and assurance lanes so hosts wire doctrine without hunting the catalog.',
+		tool: "fix_pack",
+		badges: ["Investigator"],
+		outcome:
+			"After evidence and gates pass, emit an authorized fix prompt pack sized for coding agents—no premature refactor stories.",
+	},
+	{
+		tool: "audit_interview",
+		badges: ["Sentinel"],
+		outcome:
+			"Step through vertical depth and horizontal seams until scope is confirmable; then merge into outline-shaped intake.",
+	},
+	{
+		tool: "audit_outline",
+		badges: ["Sentinel"],
+		outcome:
+			"Produce the assurance scaffold: sections, checklist pointers, coder requests, and human-editable confirmation.",
+	},
+	{
+		tool: "audit_run",
+		badges: ["Sentinel"],
+		outcome:
+			"Plain-language “run an audit” asks become a program-aware intake plus top-findings brief for a repo-connected agent.",
+	},
+	{
+		tool: "sentinel_programs",
+		badges: ["Sentinel"],
+		outcome:
+			"Snapshot every bundled Sentinel audit program template without pulling the full standard_brief payload.",
+	},
+	{
+		tool: "sentinel_program",
+		badges: ["Sentinel"],
+		outcome:
+			"Fetch one audit program row by id when hosts only need that template’s rigor spine and evidence expectations.",
+	},
+	{
+		tool: "sentinel_attestation_examples",
+		badges: ["Sentinel"],
+		outcome:
+			"Shipped seam-tier examples so teams see how depth and boundaries translate to must-prove vs latent seams.",
+	},
+	{
+		tool: "sentinel_closure",
+		badges: ["Sentinel"],
+		outcome:
+			"Resolve closure tiers from attestation depth, vertical claim, and horizontal seams—deterministic seam language.",
+	},
+	{
+		tool: "sentinel_stage_guide",
+		badges: ["Sentinel"],
+		outcome:
+			"Gate helper for one assurance stage of a chosen program—keeps humans oriented inside the three-stage spine.",
+	},
+	{
+		tool: "sentinel_handoff_hint",
+		badges: ["Sentinel"],
+		outcome:
+			"After a sentinel_audit_exit_kind, get deterministic wording for staying in assurance or opening Navigator or Investigator.",
+	},
+	{
+		tool: "sentinel_canonical_refs",
+		badges: ["Sentinel"],
+		outcome:
+			"Curated resources/read URIs for delivery and assurance lanes so hosts wire doctrine without hunting the catalog.",
 	},
 ];
 
 const toolBadgeClass: Record<
-	(typeof mcpToolsCatalog)[number]['badges'][number],
+	(typeof mcpToolsCatalog)[number]["badges"][number],
 	string
 > = {
-	Orchestration: 'border-amber-500/35 bg-amber-500/10 text-amber-100',
-	Navigator: 'border-violet-500/35 bg-violet-500/10 text-accent-violet',
-	Investigator: 'border-blue-500/35 bg-blue-500/10 text-accent-blue',
-	Sentinel: 'border-violet-400/30 bg-violet-950/50 text-violet-200',
-	Doctrine: 'border-emerald-500/35 bg-emerald-500/10 text-emerald-200',
+	Orchestration: "border-amber-500/35 bg-amber-500/10 text-amber-100",
+	Navigator: "border-violet-500/35 bg-violet-500/10 text-accent-violet",
+	Investigator: "border-blue-500/35 bg-blue-500/10 text-accent-blue",
+	Sentinel: "border-violet-400/30 bg-violet-950/50 text-violet-200",
+	Doctrine: "border-emerald-500/35 bg-emerald-500/10 text-emerald-200",
 };
 ---
 
 <Layout
 	title="AADM MCP — Connect to the hosted server"
-	description="Connect Cursor, Claude Code, and claude.ai to the hosted AADM MCP at https://mcp.aadm.io/mcp — API keys from accounts.aadm.io or OAuth sign-in."
+	description="Connect Cursor, Claude Code, and claude.ai to the hosted AADM MCP at https://mcp.aadm.io/mcp — credentials in the member area after sign-in."
 	headerActiveNav="mcp"
 	headerMcpNavHref="/mcp#mcp-hero-heading"
 	footerVariant="mcp"
@@ -241,7 +264,7 @@ const toolBadgeClass: Record<
 					<Show when="signed-in">
 						<a
 							id="get-access"
-							href={accountUserUrl}
+							href={memberMcpOAuthUrl}
 							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110"
 						>
 							Your client ID
@@ -299,7 +322,7 @@ const toolBadgeClass: Record<
 				>
 					<p class="text-xs font-bold uppercase tracking-wider text-accent-blue">1 · Bearer token</p>
 					<h3 class="font-display mt-2 text-lg font-bold text-white">Standard header token</h3>
-					<p class="mt-2 text-sm text-slate-400">Cursor, Windsurf, curl — create an <code class="font-mono-cta text-xs">ak_…</code> API key under <strong class="text-slate-300">Account → API keys</strong> on accounts.aadm.io</p>
+					<p class="mt-2 text-sm text-slate-400">Cursor, Windsurf, curl — create an <code class="font-mono-cta text-xs">ak_…</code> API key under <strong class="text-slate-300">Member area → API keys</strong></p>
 				</a>
 				<a
 					href="#connect-oauth"
@@ -307,7 +330,7 @@ const toolBadgeClass: Record<
 				>
 					<p class="text-xs font-bold uppercase tracking-wider text-accent-violet">2 · OAuth</p>
 					<h3 class="font-display mt-2 text-lg font-bold text-white">Clerk sign-in</h3>
-					<p class="mt-2 text-sm text-slate-400">Claude Code, claude.ai Connectors — sign in at <strong class="text-slate-300">accounts.aadm.io</strong> for <strong class="text-slate-300">your OAuth Client ID</strong> (not API keys)</p>
+					<p class="mt-2 text-sm text-slate-400">Claude Code, claude.ai Connectors — copy <strong class="text-slate-300">your OAuth Client ID</strong> from <a href={memberMcpOAuthSignInUrl} class="text-accent-violet underline hover:text-accent-blue">Member area → MCP OAuth</a> (sign in required)</p>
 				</a>
 			</div>
 		</section>
@@ -324,17 +347,16 @@ const toolBadgeClass: Record<
 					Bearer / header token
 				</h2>
 				<p class="mt-3 max-w-3xl text-sm text-slate-400">
-					<a href={signInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">Sign in to AADM</a>
-					to create an account API key (<code class="font-mono-cta text-slate-400">ak_…</code>) under{' '}
-					<a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">Account → API keys</a>{' '}
-					on <a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">accounts.aadm.io</a>.
+					<a href={memberSignInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">Sign in to AADM</a>
+					to open the member area and create an API key (<code class="font-mono-cta text-slate-400">ak_…</code>) under{' '}
+					<strong class="text-slate-300">API keys</strong>.
 					<strong class="text-slate-300">Not</strong> for claude.ai web Connectors — they require OAuth below.
 				</p>
 
 				<div class="mt-8 grid gap-6 lg:grid-cols-2">
 					<div class="rounded-2xl border border-border-subtle bg-surface-card/90 p-5">
 						<h3 class="font-display text-base font-bold text-white">Clerk API key</h3>
-						<p class="mt-2 text-sm text-slate-400">Use <code class="font-mono-cta text-xs">Bearer</code> + full <code class="font-mono-cta text-xs">ak_…</code> from <strong class="text-slate-300">Account → API keys</strong> on accounts.aadm.io.</p>
+						<p class="mt-2 text-sm text-slate-400">Use <code class="font-mono-cta text-xs">Bearer</code> + full <code class="font-mono-cta text-xs">ak_…</code> from <strong class="text-slate-300">Member area → API keys</strong>.</p>
 						<pre class="mt-4 overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-3 font-mono-cta text-xs text-slate-300"><code>Authorization: Bearer &lt;your token here&gt;</code></pre>
 					</div>
 				</div>
@@ -351,7 +373,7 @@ const toolBadgeClass: Record<
 					</p>
 					<pre class="mt-2 overflow-x-auto rounded-xl border border-border-subtle bg-surface-card/60 p-3 font-mono-cta text-xs text-slate-400"><code>{cursorMcpBearerAkSnippet}</code></pre>
 					<ol class="mt-6 list-decimal space-y-2 pl-5 text-sm text-slate-300">
-						<li><a href={signInUrl} class="text-accent-violet underline">Sign in to AADM</a>, subscribe if needed, and create a token.</li>
+						<li><a href={memberSignInUrl} class="text-accent-violet underline">Sign in to AADM</a>, subscribe if needed, then create an API key in the member area.</li>
 						<li>Paste into <code class="font-mono-cta text-slate-400">Authorization</code> in <code class="font-mono-cta text-slate-400">mcp.json</code>.</li>
 						<li>Reload Cursor (or restart MCP) so <code class="font-mono-cta text-slate-400">tools/list</code> refreshes.</li>
 					</ol>
@@ -371,9 +393,9 @@ const toolBadgeClass: Record<
 			<div class="mt-6 rounded-2xl border-2 border-amber-500/50 bg-amber-950/30 p-5">
 				<p class="text-sm font-semibold text-amber-100">Do not use an API key (<code class="font-mono-cta text-xs">ak_…</code>) here</p>
 				<p class="mt-2 text-sm text-amber-100/90">
-					OAuth uses <strong class="text-amber-50">your client ID</strong> from{' '}
-					<a href={accountUserUrl} class="font-semibold underline">accounts.aadm.io</a> (sign in required), then browser consent at the same account.
-					Leave Client Secret empty.
+					OAuth uses <strong class="text-amber-50">your client ID</strong> from the{' '}
+					<a href={memberMcpOAuthSignInUrl} class="font-semibold underline">member area</a>, then browser sign-in at{' '}
+					<a href={signInUrl} class="font-semibold underline">accounts.aadm.io</a> when Claude prompts. Leave Client Secret empty.
 				</p>
 			</div>
 
@@ -384,14 +406,14 @@ const toolBadgeClass: Record<
 				<h3 id="oauth-client-id-heading" class="font-display text-lg font-bold text-white">Your OAuth Client ID</h3>
 				<p class="mt-2 text-sm text-slate-400">
 					Credentials are not shown on this public page.{' '}
-					<a href={signInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">Sign in to AADM</a>{' '}
-					at <strong class="text-slate-300">accounts.aadm.io</strong> to copy <strong class="text-slate-300">your client ID</strong> from your account
-					(same login area as API keys). Paste it when Claude Code or claude.ai asks for an OAuth Client ID.
+					<a href={memberSignInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">Sign in to AADM</a>{' '}
+					to open the <a href={memberMcpOAuthSignInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">member area</a> and copy{' '}
+					<strong class="text-slate-300">your client ID</strong>. Paste it when Claude Code or claude.ai asks for an OAuth Client ID.
 				</p>
 				<div class="mt-4 flex flex-wrap gap-3">
 					<Show when="signed-out">
 						<a
-							href={signInUrl}
+							href={memberMcpOAuthSignInUrl}
 							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
 						>
 							Sign in for your client ID
@@ -399,10 +421,10 @@ const toolBadgeClass: Record<
 					</Show>
 					<Show when="signed-in">
 						<a
-							href={accountUserUrl}
+							href={memberMcpOAuthUrl}
 							class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
 						>
-							Open account — your client ID
+							Open member area — your client ID
 						</a>
 					</Show>
 				</div>
@@ -419,7 +441,7 @@ const toolBadgeClass: Record<
 						<li>Choose <strong class="text-slate-300">OAuth</strong> (not pasted API key).</li>
 						<li>
 							When Claude Code asks for OAuth Client ID, paste <strong class="text-slate-300">your client ID</strong> from{' '}
-							<a href={accountUserUrl} class="text-accent-violet underline">accounts.aadm.io</a> (sign in first).
+							<a href={memberMcpOAuthSignInUrl} class="text-accent-violet underline">Member area → MCP OAuth</a>.
 						</li>
 						<li>Leave <strong class="text-slate-300">Client Secret</strong> empty.</li>
 						<li>Sign in with the <strong class="text-slate-300">same AADM account</strong> when the OAuth consent screen appears.</li>
@@ -433,7 +455,7 @@ const toolBadgeClass: Record<
 						<li>Authentication: <strong class="text-slate-300">OAuth</strong></li>
 						<li>
 							<strong class="text-slate-300">Advanced</strong> → paste <strong class="text-slate-300">your client ID</strong> from{' '}
-							<a href={accountUserUrl} class="text-accent-violet underline">accounts.aadm.io</a>
+							<a href={memberMcpOAuthSignInUrl} class="text-accent-violet underline">Member area → MCP OAuth</a>
 						</li>
 						<li>Leave Client Secret empty · click Connect and sign in with the same AADM account</li>
 					</ol>
@@ -876,7 +898,7 @@ npx aadm-init-repo --full</code></pre>
 						<p class="mt-3 text-sm text-slate-400">
 							Create an account at{' '}
 							<a href={signUpUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">accounts.aadm.io</a>
-							, then open <a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">Account</a> for API keys or MCP OAuth.
+							, then open <a href={memberSignInUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">Member area</a> for API keys or MCP OAuth.
 						</p>
 						<div class="mt-8 flex flex-col gap-3">
 							<Show when="signed-out">
@@ -895,10 +917,10 @@ npx aadm-init-repo --full</code></pre>
 							</Show>
 							<Show when="signed-in">
 								<a
-									href={accountUserUrl}
+									href={memberAreaUrl}
 									class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-6 py-3.5 text-center text-base font-semibold text-white shadow-lg transition hover:brightness-110"
 								>
-									Open account — API keys (Clerk)
+									Open member area — API keys
 								</a>
 							</Show>
 						</div>

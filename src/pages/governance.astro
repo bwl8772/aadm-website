@@ -1,8 +1,12 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getSiteUrlConfig } from '../lib/site-urls';
+import Layout from "../layouts/Layout.astro";
+import { getSiteUrlConfig } from "../lib/site-urls";
 
-const { urlStandard, urlMcpMarketing, aadmConfigSchemaUrl: schemaUrl } = getSiteUrlConfig(import.meta.env);
+const {
+	urlStandard,
+	urlMcpMarketing,
+	aadmConfigSchemaUrl: schemaUrl,
+} = getSiteUrlConfig(import.meta.env);
 
 const initCmd = `npx aadm-init-repo --full`;
 

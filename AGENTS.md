@@ -4,15 +4,13 @@
 
 | Rule | Detail |
 |------|--------|
-| **Clerk owns login** | **`accounts.aadm.io`** = Clerk **hosted Account Portal** (CNAME to Clerk). **Do not remove or repoint the CNAME.** |
-| **One login area** | Sign-in, sign-up, profile, API keys, **your OAuth Client ID** → **`accounts.aadm.io` only** |
-| **aadm.io** | Marketing + MCP setup (`/mcp`). **No credential values on public pages.** Middleware redirects auth paths → Clerk. |
-| **Public `/mcp` copy** | Say **“your client ID”** and link to **`accounts.aadm.io`** — never paste the actual Client ID on the public page. |
+| **Clerk owns login** | **`accounts.aadm.io`** CNAME — sign-in/sign-up only |
+| **Member area** | **`aadm.io/member`** — protected, embedded `<UserProfile>`, MCP OAuth tab |
+| **aadm.io marketing** | Public `/mcp` — no credential values |
+| **CNAME** | Do not repoint `accounts.aadm.io` |
 
-**Forbidden:** repointing `accounts.aadm.io` to Railway; publishing `client_id` values on public pages; login UI on `aadm.io`.
-
-Auth links: `src/lib/clerk-portal-urls.ts` → always `accounts.aadm.io/*`.
+Auth links: `src/lib/clerk-portal-urls.ts` · Member page: `src/pages/member/[[...rest]].astro`
 
 ## Commands
 
-`npm run dev` · `npm run build`
+`npm run dev` · `npm run build` · `npm run test:clerk-smoke`

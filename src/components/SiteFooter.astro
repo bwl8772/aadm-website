@@ -1,14 +1,14 @@
 ---
 interface Props {
 	/** Shorter line under the MCP sales page. */
-	variant?: 'default' | 'mcp';
+	variant?: "default" | "mcp";
 }
 
-const { variant = 'default' } = Astro.props;
+const { variant = "default" } = Astro.props;
 const tagline =
-	variant === 'mcp'
-		? 'AADM MCP works with your existing code. Your production AUTH, gateways, and CI stay authoritative.'
-		: 'Not a substitute for organizational sign-off or audits.';
+	variant === "mcp"
+		? "AADM MCP works with your existing code. Your production AUTH, gateways, and CI stay authoritative."
+		: "Not a substitute for organizational sign-off or audits.";
 ---
 
 <footer class="border-t border-border-subtle py-10">

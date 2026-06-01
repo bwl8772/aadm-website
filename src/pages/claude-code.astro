@@ -1,15 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Show } from '@clerk/astro/components';
-import { getAccountPortalUrls } from '../lib/account-portal-urls';
-import { getSiteUrlConfig } from '../lib/site-urls';
+import { Show } from "@clerk/astro/components";
+import Layout from "../layouts/Layout.astro";
+import { getAccountPortalUrls } from "../lib/account-portal-urls";
+import { getSiteUrlConfig } from "../lib/site-urls";
 
 const cfg = getSiteUrlConfig(import.meta.env);
 const { urlStandard, urlMcpMarketing, urlMcpRpcUrl, discoveryUrl } = cfg;
-const { signInUrl, signUpUrl, accountUserUrl } = getAccountPortalUrls(
-	import.meta.env,
-	Astro.url.pathname + Astro.url.search,
-);
+const {
+	signInUrl,
+	signUpUrl,
+	memberAreaUrl,
+	memberMcpOAuthUrl,
+	memberSignInUrl,
+	memberMcpOAuthSignInUrl,
+} = getAccountPortalUrls(import.meta.env);
 
 const claudeMcpConfigUrl = urlMcpRpcUrl;
 
@@ -115,23 +119,29 @@ const claudeMcpFullConfigSnippet = `{
 											href={signInUrl}
 											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
 										>
-											sign in at accounts.aadm.io
+											sign in
 										</a>
-										, subscribe, then <a href={signInUrl} class="text-accent-violet underline hover:text-accent-blue">sign in to AADM</a>{' '}
-										to mint an MCP token.
+										, subscribe, then copy your OAuth client ID from{' '}
+										<a href={memberMcpOAuthSignInUrl} class="text-accent-violet underline hover:text-accent-blue">
+											Member area → MCP OAuth
+										</a>
+										{' '}
+										(or create an <code class="font-mono-cta text-xs">ak_…</code> key in{' '}
+										<a href={memberSignInUrl} class="text-accent-violet underline hover:text-accent-blue">
+											Member area → API keys
+										</a>).
 									</span>
 								</Show>
 								<Show when="signed-in">
 									<span>
-										Create an <code class="font-mono-cta text-xs">ak_…</code> API key at{' '}
-										<a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-											accounts.aadm.io/user
+										Create an <code class="font-mono-cta text-xs">ak_…</code> API key in{' '}
+										<a href={memberAreaUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+											Member area → API keys
 										</a>
-										. For Claude OAuth, sign in at{' '}
-										<a href={accountUserUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-											accounts.aadm.io
-										</a>{' '}
-										for <strong class="text-slate-300">your client ID</strong>.
+										. For Claude OAuth, copy <strong class="text-slate-300">your client ID</strong> from{' '}
+										<a href={memberMcpOAuthUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
+											Member area → MCP OAuth
+										</a>.
 									</span>
 								</Show>
 							</li>

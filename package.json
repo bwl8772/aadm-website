@@ -8,6 +8,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "check": "astro check && astro build",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
     "typecheck": "astro check",
     "preview": "astro preview",
     "astro": "astro",
@@ -22,6 +25,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@biomejs/biome": "2.4.16",
     "playwright": "^1.52.0",
     "typescript": "^5.9.3"
   }

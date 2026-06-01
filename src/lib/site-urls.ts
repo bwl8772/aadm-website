@@ -10,11 +10,21 @@
  * AADM auth: Clerk only, accounts.aadm.io — see docs/CLERK-AUTH.md. Not configured on marketing pages.
  */
 
-/** Default AADM account profile URL for signed-in CTAs on the marketing site. */
-export const URL_ACCOUNT_USER = 'https://accounts.aadm.io/user';
+/** @deprecated Use memberAreaUrl() — legacy Clerk hosted profile; product links use aadm.io/member. */
+export const URL_ACCOUNT_USER = "https://accounts.aadm.io/user";
+
+/** Mask OAuth Client ID for display on protected member pages. */
+export function maskMcpOAuthClientId(id: string): string {
+	const t = trim(id);
+	if (t.length === 0) return "";
+	if (t.length <= 5) return t;
+	const hidden = t.length - 5;
+	const dots = Math.min(hidden, 36);
+	return `${t.slice(0, 5)}${"•".repeat(dots)}`;
+}
 
 export function trim(v: string | undefined): string {
-	return typeof v === 'string' ? v.trim() : '';
+	return typeof v === "string" ? v.trim() : "";
 }
 
 /**
@@ -22,16 +32,16 @@ export function trim(v: string | undefined): string {
  * Appends `/mcp` when `PUBLIC_MCP_REPO_URL` is origin-only; preserves a non-root path when set.
  */
 export function resolveHostedMcpRpcUrl(endpoint: string): string {
-	const raw = endpoint.trim() || 'https://mcp.aadm.io';
+	const raw = endpoint.trim() || "https://mcp.aadm.io";
 	try {
 		const u = new URL(raw);
-		const path = u.pathname.replace(/\/+$/, '');
-		if (path && path !== '/') {
+		const path = u.pathname.replace(/\/+$/, "");
+		if (path && path !== "/") {
 			return `${u.origin}${path}`;
 		}
 		return `${u.origin}/mcp`;
 	} catch {
-		return 'https://mcp.aadm.io/mcp';
+		return "https://mcp.aadm.io/mcp";
 	}
 }
 
@@ -40,18 +50,18 @@ export function hostedMcpOrigin(rpcUrl: string): string {
 	try {
 		return new URL(rpcUrl).origin;
 	} catch {
-		return 'https://mcp.aadm.io';
+		return "https://mcp.aadm.io";
 	}
 }
 
 /** Normalize MCP **service** origin: the host you `POST` to (e.g. `https://mcp.aadm.io`). */
 export function normalizeMcpRpcUrl(raw: string): string {
-	const DEFAULT = 'https://mcp.aadm.io';
+	const DEFAULT = "https://mcp.aadm.io";
 	const v = raw.trim();
 	if (!v) return DEFAULT;
 	try {
 		const u = new URL(v);
-		return `${u.origin}${u.pathname === '/' ? '' : u.pathname.replace(/\/+$/, '')}`;
+		return `${u.origin}${u.pathname === "/" ? "" : u.pathname.replace(/\/+$/, "")}`;
 	} catch {
 		return DEFAULT;
 	}
@@ -75,33 +85,38 @@ export type SiteUrlConfig = {
 };
 
 /** Default when `PUBLIC_STANDARD_REPO_URL` is unset — public standard repo (override per deploy). */
-export const DEFAULT_STANDARD_REPO_URL = 'https://github.com/bwl8772/aadm-standard';
+export const DEFAULT_STANDARD_REPO_URL =
+	"https://github.com/bwl8772/aadm-standard";
 
 /** JSON Schema for `.aadm/config.json` — served from this marketing site (`/schemas/…`). */
 export function aadmConfigSchemaUrl(env: ImportMetaEnv): string {
-	const marketing = trim(env.PUBLIC_MCP_QUICKSTART_URL) || 'https://aadm.io/mcp';
+	const marketing =
+		trim(env.PUBLIC_MCP_QUICKSTART_URL) || "https://aadm.io/mcp";
 	try {
 		return `${new URL(marketing).origin}/schemas/aadm-config.v1.schema.json`;
 	} catch {
-		return 'https://aadm.io/schemas/aadm-config.v1.schema.json';
+		return "https://aadm.io/schemas/aadm-config.v1.schema.json";
 	}
 }
 
 /** @deprecated Use `aadmConfigSchemaUrl(import.meta.env)` — kept for static imports. */
-export const AADM_CONFIG_SCHEMA_URL = 'https://aadm.io/schemas/aadm-config.v1.schema.json';
+export const AADM_CONFIG_SCHEMA_URL =
+	"https://aadm.io/schemas/aadm-config.v1.schema.json";
 
 export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
-	const urlStandard = trim(env.PUBLIC_STANDARD_REPO_URL) || DEFAULT_STANDARD_REPO_URL;
+	const urlStandard =
+		trim(env.PUBLIC_STANDARD_REPO_URL) || DEFAULT_STANDARD_REPO_URL;
 	const urlMcpRaw = trim(env.PUBLIC_MCP_REPO_URL);
-	const urlMcpEndpoint = normalizeMcpRpcUrl(urlMcpRaw || 'https://mcp.aadm.io');
+	const urlMcpEndpoint = normalizeMcpRpcUrl(urlMcpRaw || "https://mcp.aadm.io");
 	const urlMcpRpcUrl = resolveHostedMcpRpcUrl(urlMcpEndpoint);
 	const urlMcpMarketing =
-		trim(env.PUBLIC_MCP_QUICKSTART_URL) || 'https://aadm.io/mcp';
+		trim(env.PUBLIC_MCP_QUICKSTART_URL) || "https://aadm.io/mcp";
 	const urlMcpCustomerDocs = trim(env.PUBLIC_MCP_CUSTOMER_DOCS_URL);
-	const hasMcpMarketingLink = urlMcpMarketing.length > 0 && !urlMcpMarketing.startsWith('#');
+	const hasMcpMarketingLink =
+		urlMcpMarketing.length > 0 && !urlMcpMarketing.startsWith("#");
 
-	let healthUrl = '';
-	let discoveryUrl = '';
+	let healthUrl = "";
+	let discoveryUrl = "";
 	try {
 		if (urlMcpEndpoint) {
 			const u = new URL(urlMcpEndpoint);
@@ -117,7 +132,7 @@ export function getSiteUrlConfig(env: ImportMetaEnv): SiteUrlConfig {
   -H "Content-Type: application/json" \\
   -H "Accept: application/json, text/event-stream" \\
   -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"smoke","version":"1.0.0"}}}'`
-		: '';
+		: "";
 
 	return {
 		urlStandard,

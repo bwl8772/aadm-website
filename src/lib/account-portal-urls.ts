@@ -1,5 +1,7 @@
-/** Re-export auth URLs — see docs/CLERK-AUTH.md. All links target accounts.aadm.io, not aadm.io. */
+/** Re-export auth URLs — see docs/CLERK-AUTH.md. */
 export {
-	getClerkPortalUrls as getAccountPortalUrls,
 	type ClerkPortalUrls as AccountPortalUrls,
-} from './clerk-portal-urls';
+	getClerkPortalUrls as getAccountPortalUrls,
+	getMemberMcpOAuthSignInUrl,
+	getMemberSignInUrl,
+} from "./clerk-portal-urls";

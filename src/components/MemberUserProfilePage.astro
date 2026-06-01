@@ -1,0 +1,33 @@
+---
+import { UserProfile } from "@clerk/astro/components";
+import { mcpOAuthClientIdForDisplay } from "../lib/mcp-oauth-client-id";
+import {
+	MEMBER_MCP_OAUTH_SEGMENT,
+	memberAreaPathFromEnv,
+} from "../lib/member-area";
+import { getSiteUrlConfig } from "../lib/site-urls";
+import MemberMcpOAuthPage from "./MemberMcpOAuthPage.astro";
+
+const memberPath = memberAreaPathFromEnv(import.meta.env);
+const oauthClientId = mcpOAuthClientIdForDisplay(import.meta.env);
+const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
+---
+
+<div class="clerk-member-profile rounded-2xl border border-border-subtle bg-surface-card/40 p-2 sm:p-4">
+	<UserProfile path={memberPath} routing="path">
+		<UserProfile.Page label="MCP OAuth" url={MEMBER_MCP_OAUTH_SEGMENT}>
+			<svg slot="label-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
+				<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path>
+			</svg>
+			<MemberMcpOAuthPage clientId={oauthClientId} mcpRpcUrl={urlMcpRpcUrl} />
+		</UserProfile.Page>
+		<UserProfile.Page label="account" />
+		<UserProfile.Page label="security" />
+	</UserProfile>
+</div>
+
+<style>
+	.clerk-member-profile :global(.cl-rootBox) {
+		width: 100%;
+	}
+</style>
