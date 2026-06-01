@@ -55,8 +55,11 @@ const clerkDomain =
 		}
 	})();
 
-const proxyUrl =
+const configuredProxyUrl =
 	trim(env.PUBLIC_CLERK_PROXY_URL) || trim(env.CLERK_PROXY_URL) || "";
+const proxyUrl =
+	configuredProxyUrl ||
+	(isSatellite ? "https://clerk.aadm.io" : "");
 
 export default defineConfig({
 	output: "server",
@@ -66,8 +69,12 @@ export default defineConfig({
 			signInUrl,
 			signUpUrl,
 			...(authorizedParties.length > 0 ? { authorizedParties } : {}),
-			...(isSatellite ? { isSatellite: true, domain: clerkDomain } : {}),
-			...(proxyUrl ? { proxyUrl } : {}),
+			...(isSatellite ? { isSatellite: true } : {}),
+			...(proxyUrl
+				? { proxyUrl }
+				: isSatellite
+					? { domain: clerkDomain }
+					: {}),
 		}),
 	],
 	vite: {

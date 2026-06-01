@@ -49,14 +49,14 @@
 | `PUBLIC_CLERK_SIGN_UP_URL` | `https://accounts.aadm.io/sign-up` |
 | `PUBLIC_CLERK_AUTHORIZED_PARTIES` | `https://aadm.io`, `https://www.aadm.io` |
 | `PUBLIC_CLERK_IS_SATELLITE` | `true` (optional — auto-detected when sign-in host ≠ `aadm.io`) |
-| `PUBLIC_CLERK_DOMAIN` | `aadm.io` (satellite app domain) |
-| `PUBLIC_CLERK_PROXY_URL` | Optional — `https://clerk.aadm.io` if TLS/proxy breaks handshake |
+| `PUBLIC_CLERK_PROXY_URL` | **`https://clerk.aadm.io`** (required for satellite handshake; code defaults to this) |
+| `PUBLIC_CLERK_DOMAIN` | Only if **not** using `PUBLIC_CLERK_PROXY_URL` (Clerk: never set both) |
 | `CLERK_OAUTH_CLIENT_ID` | Member MCP OAuth tab only |
 | `PUBLIC_MEMBER_AREA_PATH` | Optional; default `/member` |
 
 Credential sign-in links use `redirect_url=https://aadm.io/member` with `__clerk_synced=false` for satellite handshake.
 
-**Clerk Dashboard:** Account Portal on `accounts.aadm.io` · **add `aadm.io` as satellite domain** (Domains → Satellites) · add CNAME `clerk.aadm.io` → Clerk Frontend API · API keys enabled · OAuth app for MCP.
+**Clerk Dashboard:** Account Portal on `accounts.aadm.io` · **Domains → Satellites → `aadm.io`** with proxy URL **`https://clerk.aadm.io`** · CNAME `clerk.aadm.io` → Clerk Frontend API (gray cloud) · API keys enabled · OAuth app for MCP.
 
 ---
 
@@ -82,10 +82,10 @@ Sign-in on **accounts.aadm.io** and the app on **aadm.io** are different domains
 
 **Fix (all required):**
 
-1. **Clerk Dashboard → Domains → Satellites** — add `aadm.io`  
-2. **DNS** — CNAME `clerk.aadm.io` → Clerk Frontend API (DNS-only / gray cloud)  
-3. **Railway** — set `PUBLIC_CLERK_IS_SATELLITE=true`, `PUBLIC_CLERK_DOMAIN=aadm.io`, rebuild  
-4. **accounts.aadm.io** — DNS-only CNAME to Clerk (not Cloudflare orange-cloud proxy)
+1. **Clerk Dashboard → Domains → Satellites → `aadm.io`** — set proxy URL to **`https://clerk.aadm.io`**  
+2. **DNS `clerk.aadm.io`** — CNAME → Clerk Frontend API (**gray cloud** / DNS-only)  
+3. **DNS `accounts.aadm.io`** — CNAME → Clerk Account Portal (**gray cloud** — orange cloud + Bot Fight causes 403 / loop)  
+4. **Railway** — `PUBLIC_CLERK_IS_SATELLITE=true`, `PUBLIC_CLERK_PROXY_URL=https://clerk.aadm.io`, rebuild (do **not** set `PUBLIC_CLERK_DOMAIN` when proxy is set)
 
 ---
 

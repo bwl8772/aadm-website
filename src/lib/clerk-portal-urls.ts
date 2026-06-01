@@ -14,6 +14,8 @@ import { trim } from "./site-urls";
  */
 export const CLERK_ACCOUNTS_SIGN_IN = "https://accounts.aadm.io/sign-in";
 export const CLERK_ACCOUNTS_SIGN_UP = "https://accounts.aadm.io/sign-up";
+/** Clerk Frontend API CNAME for aadm.io satellite handshake — see docs/CLERK-AUTH.md */
+export const CLERK_SATELLITE_FAPI_PROXY_DEFAULT = "https://clerk.aadm.io";
 
 export type ClerkPortalUrls = {
 	signInUrl: string;
@@ -56,6 +58,14 @@ function proxyUrlFromEnv(env: ImportMetaEnv): string | undefined {
 	const url =
 		trim(env.PUBLIC_CLERK_PROXY_URL) || trim(env.CLERK_PROXY_URL) || "";
 	return url || undefined;
+}
+
+/** Satellite apps need FAPI proxy; default clerk.aadm.io when unset. */
+export function effectiveClerkProxyUrl(env: ImportMetaEnv): string | undefined {
+	const configured = proxyUrlFromEnv(env);
+	if (configured) return configured;
+	if (isClerkSatelliteFromEnv(env)) return CLERK_SATELLITE_FAPI_PROXY_DEFAULT;
+	return undefined;
 }
 
 /**
@@ -128,13 +138,18 @@ export function getClerkIntegrationOptions(
 ): ClerkIntegrationOptions {
 	const authorizedParties = authorizedPartiesFromEnv(env);
 	const satellite = isClerkSatelliteFromEnv(env);
-	const proxyUrl = proxyUrlFromEnv(env);
+	const proxyUrl = effectiveClerkProxyUrl(env);
 	return {
 		signInUrl: trim(env.PUBLIC_CLERK_SIGN_IN_URL) || CLERK_ACCOUNTS_SIGN_IN,
 		signUpUrl: trim(env.PUBLIC_CLERK_SIGN_UP_URL) || CLERK_ACCOUNTS_SIGN_UP,
 		...(authorizedParties.length > 0 ? { authorizedParties } : {}),
-		...(satellite ? { isSatellite: true, domain: clerkDomainFromEnv(env) } : {}),
-		...(proxyUrl ? { proxyUrl } : {}),
+		...(satellite ? { isSatellite: true } : {}),
+		// Clerk: on satellite, proxyUrl replaces domain — never set both.
+		...(proxyUrl
+			? { proxyUrl }
+			: satellite
+				? { domain: clerkDomainFromEnv(env) }
+				: {}),
 	};
 }
 
