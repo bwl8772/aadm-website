@@ -14,6 +14,12 @@ export function OauthMcpResourceServerNote() {
 				<code className="rounded bg-zinc-200/90 px-1 font-mono dark:bg-zinc-800">/oauth/token</code>).
 			</p>
 			<p className="mt-2">
+				For <strong className="text-zinc-900 dark:text-zinc-100">Claude Code</strong> and{" "}
+				<strong className="text-zinc-900 dark:text-zinc-100">claude.ai Connectors</strong>, users enter the{" "}
+				<code className="rounded bg-zinc-200/90 px-1 font-mono text-[11px] dark:bg-zinc-800">client_id</code> from their
+				dashboard after sign-in — leave Client Secret empty.
+			</p>
+			<p className="mt-2">
 				The hosted <strong className="text-zinc-900 dark:text-zinc-100">aadm-mcp</strong> server does{" "}
 				<strong className="text-zinc-900 dark:text-zinc-100">not</strong> use{" "}
 				<code className="rounded bg-zinc-200/90 px-1 font-mono text-[11px] dark:bg-zinc-800">
