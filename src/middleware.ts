@@ -1,6 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/astro/server";
 import { redirectAuthPathToAccounts } from "./lib/clerk-auth-policy";
-import { getClerkIntegrationOptions } from "./lib/clerk-portal-urls";
+import {
+	getClerkIntegrationOptions,
+	isSatelliteHandshakePending,
+} from "./lib/clerk-portal-urls";
 import { clerkPrivateRoutePatternsFromEnv } from "./lib/routes";
 
 /**
@@ -31,6 +34,12 @@ export const onRequest = clerkMiddleware((auth, context, next) => {
 
 	const { isAuthenticated, redirectToSignIn } = auth();
 	if (!isAuthenticated) {
+		// Satellite SSR: after Account Portal sign-in the session cookie is not on
+		// aadm.io yet. Let the page load (or Clerk handshake redirect) instead of
+		// bouncing back to accounts.aadm.io — otherwise already-signed-in users loop.
+		if (isSatelliteHandshakePending(context.request)) {
+			return next();
+		}
 		return redirectToSignIn();
 	}
 

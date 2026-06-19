@@ -88,12 +88,27 @@ export function isClerkSatelliteFromEnv(env: ImportMetaEnv): boolean {
 	}
 }
 
+/** Matches Clerk `ClerkSyncStatus.NeedsSync` — session not yet on the satellite host. */
+export const CLERK_SYNC_NEEDS_SYNC = "false";
+
+/** True when user just returned from Account Portal and satellite handshake must run. */
+export function isSatelliteHandshakePending(request: Request): boolean {
+	try {
+		return (
+			new URL(request.url).searchParams.get("__clerk_synced") ===
+			CLERK_SYNC_NEEDS_SYNC
+		);
+	} catch {
+		return false;
+	}
+}
+
 /** Satellite return URLs need __clerk_synced=false so handshake runs on aadm.io. */
 function withSatelliteSyncParam(returnTo: string, env: ImportMetaEnv): string {
 	if (!isClerkSatelliteFromEnv(env)) return returnTo;
 	try {
 		const url = new URL(returnTo);
-		url.searchParams.set("__clerk_synced", "false");
+		url.searchParams.set("__clerk_synced", CLERK_SYNC_NEEDS_SYNC);
 		return url.toString();
 	} catch {
 		return returnTo;

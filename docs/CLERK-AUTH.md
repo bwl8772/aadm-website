@@ -82,10 +82,13 @@ Sign-in on **accounts.aadm.io** and the app on **aadm.io** are different domains
 
 **Fix (all required):**
 
-1. **Clerk Dashboard → Domains → Satellites → `aadm.io`** — set proxy URL to **`https://clerk.aadm.io`**  
-2. **DNS `clerk.aadm.io`** — CNAME → Clerk Frontend API (**gray cloud** / DNS-only)  
-3. **DNS `accounts.aadm.io`** — CNAME → Clerk Account Portal (**gray cloud** — orange cloud + Bot Fight causes 403 / loop)  
-4. **Railway** — `PUBLIC_CLERK_IS_SATELLITE=true`, `PUBLIC_CLERK_PROXY_URL=https://clerk.aadm.io`, rebuild (do **not** set `PUBLIC_CLERK_DOMAIN` when proxy is set)
+1. **Clerk Dashboard → Domains → Satellites → `aadm.io`** — set proxy URL to **`https://clerk.aadm.io`** (status **Verified**)  
+2. **DNS `clerk.aadm.io`** — CNAME → `frontend-api.clerk.services` (**gray cloud** / DNS-only)  
+3. **DNS `accounts.aadm.io`** — CNAME → `accounts.clerk.services` (**gray cloud**)  
+4. **Railway** — `PUBLIC_CLERK_IS_SATELLITE=true`, `PUBLIC_CLERK_PROXY_URL=https://clerk.aadm.io`, rebuild (do **not** set `PUBLIC_CLERK_DOMAIN` when proxy is set)  
+5. **Astro middleware** — `src/middleware.ts` must **not** call `redirectToSignIn()` when the request has `__clerk_synced=false` (user just returned from Account Portal; handshake runs on `aadm.io` before the session cookie exists). Without this guard, SSR middleware loops: accounts → `/member` → sign-in → accounts → …
+
+**Cloudflare (your current DNS is correct):** `accounts` and `clerk` gray-clouded; `aadm.io` proxied to Railway is fine. Zone-level **Bot Fight** can still interfere — add a skip rule for `accounts.aadm.io` if challenges persist.
 
 ---
 
