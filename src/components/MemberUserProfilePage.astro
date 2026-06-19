@@ -1,25 +1,31 @@
 ---
 import { UserProfile } from "@clerk/astro/components";
-import { mcpOAuthClientIdForDisplay } from "../lib/mcp-oauth-client-id";
 import {
 	MEMBER_MCP_OAUTH_SEGMENT,
 	memberAreaPathFromEnv,
 } from "../lib/member-area";
+import { primaryOAuthClientIdFromEnv } from "../lib/member-oauth-client-ids";
 import { getSiteUrlConfig } from "../lib/site-urls";
-import MemberMcpOAuthPage from "./MemberMcpOAuthPage.astro";
+import MemberOAuthClientIdPage from "./MemberOAuthClientIdPage.astro";
+import MemberOAuthTabIcon from "./MemberOAuthTabIcon.astro";
 
 const memberPath = memberAreaPathFromEnv(import.meta.env);
-const oauthClientId = mcpOAuthClientIdForDisplay(import.meta.env);
+/** One AADM Clerk OAuth app — same Client ID for every member (CLERK_OAUTH_CLIENT_ID on Railway). */
+const oauthClientId = primaryOAuthClientIdFromEnv(import.meta.env);
 const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
 ---
 
 <div class="clerk-member-profile rounded-2xl border border-border-subtle bg-surface-card/40 p-2 sm:p-4">
 	<UserProfile path={memberPath} routing="path">
-		<UserProfile.Page label="MCP OAuth" url={MEMBER_MCP_OAUTH_SEGMENT}>
-			<svg slot="label-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
-				<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path>
-			</svg>
-			<MemberMcpOAuthPage clientId={oauthClientId} mcpRpcUrl={urlMcpRpcUrl} />
+		<UserProfile.Page label="apiKeys" />
+		<UserProfile.Page label="Connectors OAuth" url={MEMBER_MCP_OAUTH_SEGMENT}>
+			<MemberOAuthTabIcon />
+			<MemberOAuthClientIdPage
+				title="Connectors OAuth"
+				lead="AADM uses <strong>one</strong> Clerk OAuth application for all members. This Client ID comes from <code>CLERK_OAUTH_CLIENT_ID</code> on the server — it is <strong>not</strong> personal or per-user. Paste it for <strong>Claude Code</strong>, <strong>claude.ai Connectors</strong>, and other OAuth MCP clients; leave Client Secret empty. For Cursor or curl, use an <code>ak_…</code> key from <strong>API keys</strong> instead."
+				clientId={oauthClientId}
+				mcpRpcUrl={urlMcpRpcUrl}
+			/>
 		</UserProfile.Page>
 		<UserProfile.Page label="account" />
 		<UserProfile.Page label="security" />

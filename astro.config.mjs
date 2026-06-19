@@ -30,6 +30,19 @@ const authorizedParties = (trim(env.PUBLIC_CLERK_AUTHORIZED_PARTIES) || "")
 	.map((s) => s.trim())
 	.filter(Boolean);
 
+const memberAreaPath =
+	trim(env.PUBLIC_MEMBER_AREA_PATH) || "/member";
+const memberFallbackPath = memberAreaPath.startsWith("/")
+	? memberAreaPath
+	: `/${memberAreaPath}`;
+const signInFallbackRedirectUrl =
+	trim(env.PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL) || memberFallbackPath;
+const signUpFallbackRedirectUrl =
+	trim(env.PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL) || memberFallbackPath;
+const marketingOrigin = marketingOriginFromEnv();
+const allowedRedirectOrigins =
+	authorizedParties.length > 0 ? authorizedParties : [marketingOrigin];
+
 const explicitSatellite = trim(env.PUBLIC_CLERK_IS_SATELLITE);
 const isSatellite =
 	explicitSatellite !== ""
@@ -68,6 +81,9 @@ export default defineConfig({
 		clerk({
 			signInUrl,
 			signUpUrl,
+			signInFallbackRedirectUrl,
+			signUpFallbackRedirectUrl,
+			allowedRedirectOrigins,
 			...(authorizedParties.length > 0 ? { authorizedParties } : {}),
 			...(isSatellite ? { isSatellite: true } : {}),
 			...(proxyUrl

@@ -3,6 +3,7 @@ import { trim } from "./site-urls";
 /** Protected subscriber area on aadm.io (embedded Clerk UserProfile). */
 export const MEMBER_AREA_PATH = "/member";
 
+/** Connectors OAuth tab (shared CLERK_OAUTH_CLIENT_ID) — aadm.io/member/mcp-oauth */
 export const MEMBER_MCP_OAUTH_SEGMENT = "mcp-oauth";
 
 function marketingOrigin(env: ImportMetaEnv): string {

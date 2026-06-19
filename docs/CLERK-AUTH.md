@@ -34,8 +34,8 @@
 | Need | Where |
 |------|--------|
 | Sign in / sign up | `accounts.aadm.io` |
-| API key (`ak_…`) | `aadm.io/member` → **API keys** tab |
-| OAuth Client ID | `aadm.io/member/mcp-oauth` |
+| API key (`ak_…`) | `aadm.io/member` → **API keys** tab (per-user; created in Clerk) |
+| OAuth Client ID (all members) | `aadm.io/member/mcp-oauth` → **Connectors OAuth** tab — one shared `CLERK_OAUTH_CLIENT_ID` |
 | MCP server URL | Public on `aadm.io/mcp` |
 
 ---

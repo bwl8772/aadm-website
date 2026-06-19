@@ -35,11 +35,29 @@ export type ClerkPortalUrls = {
 export type ClerkIntegrationOptions = {
 	signInUrl: string;
 	signUpUrl: string;
+	signInFallbackRedirectUrl?: string;
+	signUpFallbackRedirectUrl?: string;
+	allowedRedirectOrigins?: string[];
 	authorizedParties?: string[];
 	isSatellite?: boolean;
 	domain?: string;
 	proxyUrl?: string;
 };
+
+function memberFallbackRedirectFromEnv(env: ImportMetaEnv): string {
+	const configured =
+		trim(env.PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL) ||
+		trim(env.PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL) ||
+		"";
+	if (configured) return configured;
+	return memberAreaPathFromEnv(env);
+}
+
+function allowedRedirectOriginsFromEnv(env: ImportMetaEnv): string[] {
+	const parties = authorizedPartiesFromEnv(env);
+	if (parties.length > 0) return parties;
+	return [marketingOriginFromEnv(env)];
+}
 
 function authorizedPartiesFromEnv(env: ImportMetaEnv): string[] {
 	return (trim(env.PUBLIC_CLERK_AUTHORIZED_PARTIES) || "")
@@ -152,11 +170,20 @@ export function getClerkIntegrationOptions(
 	env: ImportMetaEnv,
 ): ClerkIntegrationOptions {
 	const authorizedParties = authorizedPartiesFromEnv(env);
+	const allowedRedirectOrigins = allowedRedirectOriginsFromEnv(env);
 	const satellite = isClerkSatelliteFromEnv(env);
 	const proxyUrl = effectiveClerkProxyUrl(env);
+	const memberFallback = memberFallbackRedirectFromEnv(env);
+	const signInFallback =
+		trim(env.PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL) || memberFallback;
+	const signUpFallback =
+		trim(env.PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL) || memberFallback;
 	return {
 		signInUrl: trim(env.PUBLIC_CLERK_SIGN_IN_URL) || CLERK_ACCOUNTS_SIGN_IN,
 		signUpUrl: trim(env.PUBLIC_CLERK_SIGN_UP_URL) || CLERK_ACCOUNTS_SIGN_UP,
+		signInFallbackRedirectUrl: signInFallback,
+		signUpFallbackRedirectUrl: signUpFallback,
+		allowedRedirectOrigins,
 		...(authorizedParties.length > 0 ? { authorizedParties } : {}),
 		...(satellite ? { isSatellite: true } : {}),
 		// Clerk: on satellite, proxyUrl replaces domain — never set both.
