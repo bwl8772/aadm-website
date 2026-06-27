@@ -1,0 +1,19 @@
+---
+/**
+ * Renders member credentials only when SSR auth is present.
+ * During satellite handshake (__clerk_synced=false) shows sync shell — no UserProfile or secrets.
+ */
+import MemberSatelliteSyncPage from "./MemberSatelliteSyncPage.astro";
+import MemberUserProfilePage from "./MemberUserProfilePage.astro";
+
+const { userId } = Astro.locals.auth();
+const syncPending = Astro.locals.satelliteSyncPending === true;
+---
+
+{
+	userId ? (
+		<MemberUserProfilePage />
+	) : syncPending ? (
+		<MemberSatelliteSyncPage />
+	) : null
+}

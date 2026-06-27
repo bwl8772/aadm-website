@@ -4,13 +4,14 @@
  * - Loads `/`, captures hrefs/buttons signed-out users see.
  * - Clicks Sign in (Account Portal link) to confirm navigation to Clerk-hosted sign-in.
  * - Loads `/mcp`, confirms Get access / Sign in CTAs are anchors with expected ids/text.
+ * - Asserts unsigned `/member` redirects; forged sync param must not expose credentials.
  *
- * Run: BASE_URL=http://127.0.0.1:4322 npm run test:clerk-smoke
+ * Run: BASE_URL=http://127.0.0.1:4321 npm run test:clerk-smoke
  *      BASE_URL=https://aadm.io npm run test:clerk-smoke
  */
 import { chromium } from "playwright";
 
-const base = (process.env.BASE_URL || "http://127.0.0.1:4322").replace(
+const base = (process.env.BASE_URL || "http://127.0.0.1:4321").replace(
 	/\/$/,
 	"",
 );
@@ -128,6 +129,33 @@ try {
 	if (!memberRedirectOk) {
 		throw new Error(
 			`/member did not redirect to Clerk sign-in; stayed at ${memberUrl}`,
+		);
+	}
+
+	// Forged satellite sync param — SSR must show sync shell only (no credentials).
+	// Use API request so Clerk client JS does not navigate to accounts (422 on localhost).
+	const syncReq = await context.request.get(
+		`${base}/member?__clerk_synced=false`,
+	);
+	const syncHtml = await syncReq.text();
+	const syncStatus = syncReq.status();
+	const leaksCredentials =
+		/data-copy-oauth-id=/i.test(syncHtml) ||
+		/clerk-user-profile/i.test(syncHtml) ||
+		/Connectors OAuth/i.test(syncHtml);
+	log("/member?__clerk_synced=false (unsigned sync shell)", {
+		httpStatus: syncStatus,
+		hasSyncShell: /Syncing your session/i.test(syncHtml),
+		leaksCredentials,
+	});
+	if (leaksCredentials) {
+		throw new Error(
+			"Unsigned /member?__clerk_synced=false leaked member credentials or UserProfile UI",
+		);
+	}
+	if (!/Syncing your session/i.test(syncHtml)) {
+		throw new Error(
+			"Unsigned /member?__clerk_synced=false did not render satellite sync shell",
 		);
 	}
 } catch (err) {

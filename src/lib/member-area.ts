@@ -16,10 +16,9 @@ function marketingOrigin(env: ImportMetaEnv): string {
 	}
 }
 
-export function memberAreaPathFromEnv(env: ImportMetaEnv): string {
-	const configured = trim(env.PUBLIC_MEMBER_AREA_PATH);
-	const path = configured || MEMBER_AREA_PATH;
-	return path.startsWith("/") ? path : `/${path}`;
+/** Member area path — fixed at `/member` (must match `src/pages/member/` on disk). */
+export function memberAreaPathFromEnv(_env?: ImportMetaEnv): string {
+	return MEMBER_AREA_PATH;
 }
 
 export function memberAreaUrl(env: ImportMetaEnv): string {

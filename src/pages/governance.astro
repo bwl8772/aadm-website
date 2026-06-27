@@ -9,7 +9,6 @@ const {
 } = getSiteUrlConfig(import.meta.env);
 
 const initCmd = `npx aadm-init-repo --full`;
-
 const initMinimal = `npx aadm-init-repo --minimal`;
 
 const verifyNoShadow = `ls /usr/local/bin/aadm-init-repo 2>/dev/null && echo "REMOVE THIS" || echo "OK"`;
@@ -38,140 +37,262 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 
 <Layout
 	title="AADM governance — init your repo"
-	description="Run npx aadm-init-repo to create .aadm/config.json, then customize for your codebase. Links to the AADM standard and hosted MCP."
+	description="Optional. Run npx aadm-init-repo to create .aadm/config.json, then customize it for your codebase. The hosted MCP works fine without it."
 	headerActiveNav={null}
 >
-	<main id="main">
-		<section class="mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 sm:pt-24">
-			<h1 class="font-display max-w-3xl text-balance text-4xl font-bold leading-[1.15] tracking-normal text-white sm:text-5xl">
-				Init your repo
-			</h1>
-			<p class="mt-6 max-w-2xl text-lg text-slate-400">
-				In <strong class="text-slate-300">your application project</strong> (not the MCP server repo), from the folder
-				where you want <code class="font-mono-cta text-slate-300">.aadm/config.json</code>:
-			</p>
-			<p class="mt-6 text-sm font-medium text-amber-200/95">Before init — run this once (must say <code class="font-mono-cta">OK</code>):</p>
-			<pre
-				class="mt-2 max-w-lg overflow-x-auto rounded-xl border border-amber-500/30 bg-[#0a0d14] p-3 font-mono-cta text-sm text-amber-100/90"
-			><code>{verifyNoShadow}</code></pre>
-			<p class="mt-2 text-sm text-slate-500">If it says <code class="font-mono-cta text-xs">REMOVE THIS</code>, run the cleanup below first.</p>
-			<pre
-				class="mt-8 max-w-xl overflow-x-auto rounded-2xl border border-emerald-500/30 bg-[#0a0d14] p-5 font-mono-cta text-base leading-relaxed text-emerald-100 shadow-inner sm:text-lg"
-				aria-label="Init command"
-			><code>{initCmd}</code></pre>
-			<p class="mt-4 text-sm text-slate-500">
-				Faster template: <code class="font-mono-cta text-slate-400">{initMinimal}</code> · npm package{' '}
-				<a
-					href="https://www.npmjs.com/package/aadm-init-repo"
-					class="text-accent-violet underline hover:text-accent-blue"
-					rel="noopener noreferrer"
-					target="_blank"
-				>aadm-init-repo</a>
-				· Node 22+
-			</p>
-			<p class="mt-6 text-sm text-slate-500">
-				Then edit the JSON for <strong class="text-slate-400">your</strong> paths and teams—do not ship the template{' '}
-				<code class="font-mono-cta text-xs">src/adapter/**</code> defaults.{' '}
-				<a href="#customize" class="text-accent-violet underline hover:text-accent-blue">Customize checklist ↓</a>
-			</p>
-		</section>
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
 
-		<section
-			id="many-repos"
-			class="border-y border-border-subtle bg-surface-mid/40 py-14"
-			aria-labelledby="many-repos-heading"
-		>
-			<div class="mx-auto max-w-6xl px-4 sm:px-6">
-				<h2 id="many-repos-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
-					Many repos on the same machine
-				</h2>
-				<p class="mt-4 max-w-3xl text-slate-400">
-					Init is <strong class="text-slate-300">per repository</strong>, not per laptop. Each project gets its own{' '}
-					<code class="font-mono-cta text-slate-300">.aadm/config.json</code>, hooks, and workflow stub under that repo’s
-					root. Run the command once per app—customize each file for that codebase.
-				</p>
-				<pre
-					class="mt-6 overflow-x-auto rounded-2xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-sm text-slate-300"
-				><code>{multiRepo}</code></pre>
-				<ul class="mt-6 max-w-3xl space-y-2 text-sm text-slate-400">
-					<li>
-						<strong class="text-slate-300">IDE MCP</strong> — one connection in{' '}
-						<code class="font-mono-cta text-xs">~/.cursor/mcp.json</code> (or Claude equivalent) points at hosted AADM for
-						all repos.
-					</li>
-					<li>
-						<strong class="text-slate-300">Governance</strong> — each repo’s agents read the{' '}
-						<code class="font-mono-cta text-xs">.aadm/config.json</code> next to the code you have open.
-					</li>
-					<li>
-						<strong class="text-slate-300">Re-init</strong> — use <code class="font-mono-cta text-xs">--force</code> only
-						inside the repo you mean to overwrite.
-					</li>
-				</ul>
-				<p class="mt-8 text-sm text-slate-400">
-					<strong class="text-slate-300">Permission denied?</strong> One-time machine fix (stale global install), then
-					rerun:
-				</p>
-				<pre
-					class="mt-3 max-w-md overflow-x-auto rounded-xl bg-[#0a0d14] p-3 font-mono-cta text-sm text-slate-300"
-				><code>{fixPermission}</code></pre>
-			</div>
-		</section>
+		<!-- =============================================================
+		     §00 — Hero
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
+			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.06] blur-3xl"></div>
 
-		<section id="customize" class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="customize-heading">
-			<h2 id="customize-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
-				After init: customize
-			</h2>
-			<ul class="mt-6 max-w-3xl space-y-3 text-sm text-slate-300">
-				<li>Map <code class="font-mono-cta text-xs">udali_ownership.patterns</code> to real folders (<code class="font-mono-cta text-xs">app/</code>, <code class="font-mono-cta text-xs">lib/</code>, …).</li>
-				<li>Replace placeholder GitHub teams and AUTH/SEAM entries with yours.</li>
-				<li>Keep <code class="font-mono-cta text-emerald-300/90">${'${AADM_TOKEN}'}</code> in config; put the real token in IDE MCP settings only.</li>
-				<li>
-					Connect hosted MCP:{' '}
-					<a href={urlMcpMarketing} class="text-accent-violet underline hover:text-accent-blue">aadm.io/mcp</a>
-				</li>
-			</ul>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Governance</span>
+				</aside>
 
-			<div
-				class="mt-10 max-w-3xl rounded-2xl border border-violet-500/30 bg-surface-card/80 p-5 shadow-lg shadow-violet-950/20 sm:p-6"
-				aria-labelledby="customize-prompt-heading"
-			>
-				<div class="flex flex-wrap items-start justify-between gap-3">
-					<div>
-						<h3 id="customize-prompt-heading" class="font-display text-lg font-bold text-white">
-							Agent prompt — customize this repo
-						</h3>
-						<p class="mt-2 text-sm text-slate-400">
-							Open one app repo in Cursor or Claude Code, then paste this into chat. The agent should edit{' '}
-							<code class="font-mono-cta text-slate-300">.aadm/config.json</code> using your real folder layout.
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="text-amber-200/90">▸</span> Optional · the hosted MCP works fine without this
+					</p>
+
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-black leading-[0.9] tracking-[-0.04em] text-white">
+						Init your <span class="font-extralight italic text-slate-400">repo.</span>
+					</h1>
+
+					<div class="mt-12 grid grid-cols-12 gap-6">
+						<div class="col-span-12 sm:col-span-4">
+							<div class="border-l border-amber-300/40 pl-5">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-amber-200/80">When to use this</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+									Only when you want a versioned <code class="font-mono-cta text-amber-200/85">.aadm/config.json</code>
+									in an application repo — UDALI paths, lane defaults, CI stubs. Skip otherwise.
+								</p>
+							</div>
+						</div>
+						<div class="col-span-12 sm:col-span-8">
+							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+								Run this in <span class="text-white">your application project</span> — not the MCP server repo. From the folder
+								where you want <code class="font-mono-cta text-emerald-200/85">.aadm/config.json</code> to live. Per-repo, not
+								<span class="font-extralight italic text-slate-400"> per-laptop.</span>
+							</p>
+						</div>
+					</div>
+
+					<!-- Pre-check -->
+					<div class="mt-14 border border-amber-300/30 bg-amber-950/[0.12] p-6">
+						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/90">
+							<span class="text-amber-300">▸</span> Before init · run this once
+						</p>
+						<p class="mt-3 text-sm leading-relaxed text-slate-300">
+							Must print <code class="font-mono-cta text-amber-200/85">OK</code>. If it says
+							<code class="font-mono-cta text-red-300/90">REMOVE THIS</code>, run the cleanup further down first.
+						</p>
+						<pre class="font-mono-cta mt-4 overflow-x-auto border border-white/10 bg-[#050810] p-4 text-xs text-slate-300 sm:text-sm"><code>{verifyNoShadow}</code></pre>
+					</div>
+
+					<!-- Init command -->
+					<div class="mt-10">
+						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">
+							<span class="text-emerald-300">▸</span> The init command
+						</p>
+						<pre class="font-mono-cta mt-4 overflow-x-auto border border-emerald-300/40 bg-[#050810] p-6 text-base leading-relaxed text-emerald-200 sm:text-lg"><code>{initCmd}</code></pre>
+						<p class="mt-4 text-sm text-slate-500">
+							Faster template · <code class="font-mono-cta text-slate-300">{initMinimal}</code> · npm package{' '}
+							<a href="https://www.npmjs.com/package/aadm-init-repo" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300" rel="noopener noreferrer" target="_blank">
+								aadm-init-repo
+							</a>
+							· Node 22+
+						</p>
+						<p class="mt-4 max-w-3xl text-sm text-slate-500">
+							Edit the JSON for <span class="text-slate-300">your</span> paths and teams. Don't ship the template{' '}
+							<code class="font-mono-cta text-slate-300">src/adapter/**</code> defaults.
+							<a href="#customize" class="ml-2 text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
+								Customize checklist ↓
+							</a>
 						</p>
 					</div>
-					<button
-						type="button"
-						id="governance-customize-copy-btn"
-						class="inline-flex shrink-0 items-center justify-center rounded-lg border border-violet-500/40 bg-violet-600/90 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-violet-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0d14]"
-					>
-						Copy prompt
-					</button>
 				</div>
-				<pre
-					class="mt-4 max-h-72 overflow-y-auto overflow-x-auto rounded-xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-xs leading-relaxed text-slate-300 shadow-inner sm:max-h-80 sm:text-sm"
-					id="governance-customize-prompt-pre"
-					role="region"
-					aria-label="Customize AADM config agent prompt"
-				><code id="governance-customize-prompt-code">{customizeAgentPrompt}</code></pre>
 			</div>
+		</section>
 
-			<ul class="mt-10 grid gap-4 sm:grid-cols-2">
-				<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-5">
-					<a href={schemaUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue"
-						>Config schema</a>
-				</li>
-				<li class="rounded-2xl border border-border-subtle bg-surface-card/80 p-5">
-					<a href={urlStandard} class="font-semibold text-accent-violet underline hover:text-accent-blue"
-						>Open standard</a>
-				</li>
-			</ul>
+		<!-- =============================================================
+		     §01 — Many repos
+		     ============================================================= -->
+		<section
+			id="many-repos"
+			class="relative border-b border-white/[0.06] bg-[#06080f]"
+			aria-labelledby="many-repos-heading"
+		>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 01</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Many repos</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 id="many-repos-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						One machine. <span class="font-extralight italic text-slate-400">Many repos.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						Init is <span class="text-white">per repository</span>, not per laptop. Each project gets its own{' '}
+						<code class="font-mono-cta text-emerald-200/85">.aadm/config.json</code>, hooks, and workflow stub under that repo's
+						root. Run the command once per app — customize each file for that codebase.
+					</p>
+
+					<pre class="font-mono-cta mt-10 overflow-x-auto border border-white/10 bg-[#050810] p-5 text-sm text-slate-300"><code>{multiRepo}</code></pre>
+
+					<ul class="mt-12 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+						{
+							[
+								{ num: "A", title: "IDE MCP", body: "One connection in ~/.cursor/mcp.json (or Claude equivalent) points at hosted AADM for all repos." },
+								{ num: "B", title: "Governance", body: "Each repo's agents read the .aadm/config.json next to the code you have open." },
+								{ num: "C", title: "Re-init", body: "Use --force only inside the repo you mean to overwrite." },
+							].map((item) => (
+								<li class="bg-[#06080f] p-6 sm:p-7">
+									<div class="flex items-baseline gap-4">
+										<span class="font-display text-[3rem] font-extralight leading-[0.85] text-emerald-200/85">{item.num}</span>
+									</div>
+									<h3 class="font-display mt-6 text-balance text-base font-bold leading-snug tracking-tight text-white">
+										{item.title}
+									</h3>
+									<p class="mt-3 text-sm leading-relaxed text-slate-400">{item.body}</p>
+								</li>
+							))
+						}
+					</ul>
+
+					<div class="mt-16 border-l-2 border-amber-300/40 pl-6">
+						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/85">Permission denied?</p>
+						<p class="mt-3 text-sm text-slate-300">One-time machine fix (stale global install), then rerun init:</p>
+						<pre class="font-mono-cta mt-4 max-w-md overflow-x-auto border border-white/10 bg-[#050810] p-4 text-xs text-slate-300"><code>{fixPermission}</code></pre>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §02 — Customize
+		     ============================================================= -->
+		<section id="customize" class="relative border-b border-white/[0.06]" aria-labelledby="customize-heading">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-violet-200/70">§ 02</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">After init</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 id="customize-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						After init. <span class="font-extralight italic text-slate-400">Customize.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						The init command scaffolds a template. Replace the placeholder paths and teams with yours — the agent will help.
+					</p>
+
+					<ul class="mt-12 divide-y divide-white/[0.06] border-y border-white/[0.06]">
+						{
+							[
+								{ num: "01", body: <>Map <code class="font-mono-cta text-xs text-violet-200/85">udali_ownership.patterns</code> to real folders (<code class="font-mono-cta text-xs text-slate-300">app/</code>, <code class="font-mono-cta text-xs text-slate-300">lib/</code>, …).</> },
+								{ num: "02", body: <>Replace placeholder GitHub teams and AUTH/SEAM entries with yours.</> },
+								{ num: "03", body: <>Keep <code class="font-mono-cta text-xs text-emerald-200/85">{"${AADM_TOKEN}"}</code> in config. Put the real token in IDE MCP settings only.</> },
+								{ num: "04", body: <>Connect hosted MCP · <a href={urlMcpMarketing} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">aadm.io/mcp</a></> },
+							].map((s) => (
+								<li class="group grid grid-cols-[auto_1fr] items-baseline gap-5 py-4">
+									<span class="font-mono-cta text-[11px] text-violet-300/80">{s.num}</span>
+									<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">{s.body}</span>
+								</li>
+							))
+						}
+					</ul>
+
+					<!-- Agent prompt -->
+					<div class="mt-14 border border-violet-400/30 bg-[#070b13]" aria-labelledby="customize-prompt-heading">
+						<div class="flex flex-wrap items-start justify-between gap-4 border-b border-white/[0.06] px-7 py-5 sm:px-8">
+							<div>
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-violet-200/85">Agent prompt</p>
+								<h3 id="customize-prompt-heading" class="font-display mt-2 text-xl font-bold text-white sm:text-2xl">
+									Customize this repo
+								</h3>
+								<p class="mt-3 max-w-2xl text-sm text-slate-400">
+									Open one app repo in Cursor or Claude Code, then paste this into chat. The agent will edit{' '}
+									<code class="font-mono-cta text-xs text-slate-300">.aadm/config.json</code> using your real folder layout.
+								</p>
+							</div>
+							<button
+								type="button"
+								id="governance-customize-copy-btn"
+								class="font-mono-cta shrink-0 border border-white/20 bg-transparent px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] text-white transition hover:border-white/40 hover:bg-white/[0.04]"
+							>
+								Copy prompt
+							</button>
+						</div>
+						<pre
+							class="font-mono-cta max-h-80 overflow-y-auto overflow-x-auto p-6 text-xs leading-relaxed text-slate-300 sm:text-sm"
+							id="governance-customize-prompt-pre"
+							role="region"
+							aria-label="Customize AADM config agent prompt"
+						><code id="governance-customize-prompt-code">{customizeAgentPrompt}</code></pre>
+					</div>
+
+					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
+						<a href={schemaUrl} class="group bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-8" target="_blank" rel="noopener noreferrer">
+							<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Reference</p>
+							<h3 class="font-display mt-3 text-xl font-bold text-white">Config JSON Schema</h3>
+							<p class="mt-3 text-sm leading-relaxed text-slate-400">The authoritative schema for <code class="font-mono-cta text-xs text-emerald-200/85">.aadm/config.json</code>.</p>
+							<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-emerald-300">Open schema <span aria-hidden="true">↗</span></span>
+						</a>
+						<a href={urlStandard} class="group bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-8" target="_blank" rel="noopener noreferrer">
+							<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/85">Reference</p>
+							<h3 class="font-display mt-3 text-xl font-bold text-white">Open standard</h3>
+							<p class="mt-3 text-sm leading-relaxed text-slate-400">The public standard your engineers, security team, and partners can read.</p>
+							<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-amber-300">Open standard <span aria-hidden="true">↗</span></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §03 — Final note
+		     ============================================================= -->
+		<section class="relative bg-surface-deep">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.06),transparent_60%)]"></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 03</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Next</span>
+				</aside>
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[20ch] text-balance text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.05] tracking-[-0.025em] text-white">
+						Now connect the agent.
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-300">
+						The <code class="font-mono-cta text-emerald-200/85">.aadm/config.json</code> is just scaffolding. The actual
+						discipline arrives when an MCP-capable IDE points at the hosted server.
+					</p>
+					<div class="mt-10 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+						<a
+							href={urlMcpMarketing}
+							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Connect production agents</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href="/ides"
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04]"
+						>
+							Pick an IDE
+						</a>
+					</div>
+				</div>
+			</div>
 		</section>
 	</main>
 
@@ -192,7 +313,7 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 						btn.classList.remove('opacity-90');
 					}, 2200);
 				} catch {
-					btn.textContent = 'Copy blocked — select text';
+					btn.textContent = 'Copy blocked';
 					window.setTimeout(function () {
 						btn.textContent = defaultLabel;
 					}, 3200);

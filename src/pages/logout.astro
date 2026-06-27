@@ -1,11 +1,12 @@
 ---
 /**
  * Clerk / UserButton may navigate here to complete sign-out.
- * Astro’s route manifest referenced this path when the file was missing (ENOENT in dev).
+ * Satellite: also clears primary-domain session by redirecting to Account Portal sign-in.
  */
 export const prerender = false;
 
 import Layout from "../layouts/Layout.astro";
+import { CLERK_ACCOUNTS_SIGN_IN } from "../lib/clerk-portal-urls";
 ---
 
 <Layout
@@ -19,29 +20,29 @@ import Layout from "../layouts/Layout.astro";
 	</main>
 </Layout>
 
-<script>
+<script is:inline define:vars={{ accountsSignIn: CLERK_ACCOUNTS_SIGN_IN }}>
 	function signOutWhenReady() {
 		async function trySignOut() {
 			try {
 				const clerk = window.Clerk;
-				if (clerk && typeof clerk.signOut === 'function') {
-					if (typeof clerk.load === 'function') {
+				if (clerk && typeof clerk.signOut === "function") {
+					if (typeof clerk.load === "function") {
 						await clerk.load();
 					}
-					await clerk.signOut({ redirectUrl: '/' });
+					await clerk.signOut({ redirectUrl: accountsSignIn });
 					return;
 				}
 			} catch {
 				/* fall through */
 			}
-			window.location.replace('/');
+			window.location.replace(accountsSignIn);
 		}
 		void trySignOut();
 	}
 
-	if (document.readyState === 'complete') {
+	if (document.readyState === "complete") {
 		signOutWhenReady();
 	} else {
-		window.addEventListener('load', signOutWhenReady, { once: true });
+		window.addEventListener("load", signOutWhenReady, { once: true });
 	}
 </script>

@@ -12,7 +12,8 @@ const trim = (v) => (typeof v === "string" ? v.trim() : "");
 
 /** Mirror src/lib/clerk-portal-urls.ts — keep clerk() + middleware in sync. */
 function marketingOriginFromEnv() {
-	const quickstart = trim(env.PUBLIC_MCP_QUICKSTART_URL) || "https://aadm.io/mcp";
+	const quickstart =
+		trim(env.PUBLIC_MCP_QUICKSTART_URL) || "https://aadm.io/mcp";
 	try {
 		return new URL(quickstart).origin;
 	} catch {
@@ -30,11 +31,8 @@ const authorizedParties = (trim(env.PUBLIC_CLERK_AUTHORIZED_PARTIES) || "")
 	.map((s) => s.trim())
 	.filter(Boolean);
 
-const memberAreaPath =
-	trim(env.PUBLIC_MEMBER_AREA_PATH) || "/member";
-const memberFallbackPath = memberAreaPath.startsWith("/")
-	? memberAreaPath
-	: `/${memberAreaPath}`;
+const memberAreaPath = "/member";
+const memberFallbackPath = memberAreaPath;
 const signInFallbackRedirectUrl =
 	trim(env.PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL) || memberFallbackPath;
 const signUpFallbackRedirectUrl =
@@ -71,8 +69,7 @@ const clerkDomain =
 const configuredProxyUrl =
 	trim(env.PUBLIC_CLERK_PROXY_URL) || trim(env.CLERK_PROXY_URL) || "";
 const proxyUrl =
-	configuredProxyUrl ||
-	(isSatellite ? "https://clerk.aadm.io" : "");
+	configuredProxyUrl || (isSatellite ? "https://clerk.aadm.io" : "");
 
 export default defineConfig({
 	output: "server",
@@ -86,11 +83,7 @@ export default defineConfig({
 			allowedRedirectOrigins,
 			...(authorizedParties.length > 0 ? { authorizedParties } : {}),
 			...(isSatellite ? { isSatellite: true } : {}),
-			...(proxyUrl
-				? { proxyUrl }
-				: isSatellite
-					? { domain: clerkDomain }
-					: {}),
+			...(proxyUrl ? { proxyUrl } : isSatellite ? { domain: clerkDomain } : {}),
 		}),
 	],
 	vite: {

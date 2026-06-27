@@ -35,9 +35,9 @@ export const onRequest = clerkMiddleware((auth, context, next) => {
 	const { isAuthenticated, redirectToSignIn } = auth();
 	if (!isAuthenticated) {
 		// Satellite SSR: after Account Portal sign-in the session cookie is not on
-		// aadm.io yet. Let the page load (or Clerk handshake redirect) instead of
-		// bouncing back to accounts.aadm.io — otherwise already-signed-in users loop.
+		// aadm.io yet. Allow a sync-only shell (no credentials) — never full member UI.
 		if (isSatelliteHandshakePending(context.request)) {
+			context.locals.satelliteSyncPending = true;
 			return next();
 		}
 		return redirectToSignIn();

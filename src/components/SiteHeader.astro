@@ -2,7 +2,16 @@
 import { Show } from "@clerk/astro/components";
 import { getAccountPortalUrls } from "../lib/account-portal-urls";
 
-type ActiveNav = "home" | "mcp" | null;
+type ActiveNav =
+	| "home"
+	| "mcp"
+	| "why"
+	| "tools"
+	| "ides"
+	| "enterprise"
+	| "standard"
+	| "stories"
+	| null;
 
 interface Props {
 	urlStandard: string;
@@ -23,46 +32,66 @@ const {
 
 const mcpNavHref = mcpNavHrefProp ?? urlMcpMarketing;
 
-const standardChip =
-	activeNav === "home"
-		? "ring-2 ring-accent-violet/60 ring-offset-2 ring-offset-surface-deep"
-		: "";
-const mcpChip =
-	activeNav === "mcp"
-		? "ring-2 ring-white/40 ring-offset-2 ring-offset-surface-deep"
-		: "";
+const ringActive = (color: string) =>
+	`ring-1 ring-${color}/60 ring-offset-2 ring-offset-surface-deep`;
+
+const standardChip = activeNav === "standard" ? ringActive("emerald-300") : "";
+const whyChip = activeNav === "why" ? ringActive("amber-300") : "";
+const mcpChip = activeNav === "mcp" ? ringActive("emerald-300") : "";
+const toolsChip = activeNav === "tools" ? ringActive("emerald-300") : "";
+const idesChip = activeNav === "ides" ? ringActive("emerald-300") : "";
+const enterpriseChip =
+	activeNav === "enterprise" ? ringActive("amber-300") : "";
+const storiesChip = activeNav === "stories" ? ringActive("emerald-300") : "";
+
+const ghostChipClasses =
+	"shrink-0 whitespace-nowrap rounded-none border border-white/15 bg-transparent px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.04] sm:px-3 sm:py-2 sm:text-sm md:px-4";
+
+const secondaryGhostChipClasses =
+	"shrink-0 whitespace-nowrap rounded-none border border-white/10 bg-transparent px-2.5 py-1.5 text-xs font-medium text-slate-300 transition hover:border-white/25 hover:bg-white/[0.04] hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4";
 
 const baseChipClasses =
-	"shrink-0 whitespace-nowrap rounded-lg border border-border-subtle px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-slate-500/50 hover:bg-surface-card/60 hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4";
+	"shrink-0 whitespace-nowrap rounded-none border border-white/15 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.04] hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4";
 const joinChipClasses =
-	"shrink-0 whitespace-nowrap rounded-lg border border-violet-500/40 bg-violet-950/40 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-violet-400/60 hover:bg-violet-900/50 sm:px-3 sm:py-2 sm:text-sm md:px-4";
+	"shrink-0 whitespace-nowrap rounded-none border border-emerald-300/30 bg-emerald-950/30 px-2.5 py-1.5 text-xs font-semibold text-emerald-100 transition hover:border-emerald-300/60 hover:bg-emerald-900/40 sm:px-3 sm:py-2 sm:text-sm md:px-4";
 
 const { signInUrl, signUpUrl, memberAreaUrl } = getAccountPortalUrls(
 	import.meta.env,
 );
 ---
 
-<header class="sticky top-0 z-40 border-b border-border-subtle bg-surface-deep/80 backdrop-blur-md">
-	<div class="mx-auto flex min-h-14 max-w-6xl items-center gap-2 px-3 py-2 sm:h-16 sm:gap-4 sm:px-6 sm:py-0">
+<header class="sticky top-0 z-40 border-b border-white/[0.08] bg-surface-deep/85 backdrop-blur-md">
+	<div class="mx-auto flex min-h-14 max-w-7xl items-center gap-2 px-3 py-2 sm:h-16 sm:gap-3 sm:px-6 sm:py-0 lg:gap-4 lg:px-8">
 		<a
 			href="/"
 			aria-label="AADM — home"
 			aria-current={activeNav === 'home' ? 'page' : undefined}
-			class="shrink-0 rounded font-display text-base font-bold tracking-tight text-white transition hover:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 sm:text-lg"
+			class="shrink-0 rounded font-display text-base font-bold tracking-tight text-white transition hover:text-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 sm:text-lg"
 		>
 			AADM
 		</a>
 		<nav
-			class="scrollbar-none flex min-w-0 flex-1 flex-nowrap items-center justify-end gap-1.5 overflow-x-auto pb-0.5 sm:gap-2 sm:overflow-visible sm:pb-0 md:gap-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+			class="scrollbar-none flex min-w-0 flex-1 flex-nowrap items-center justify-end gap-1.5 overflow-x-auto pb-0.5 sm:gap-2 sm:overflow-visible sm:pb-0 md:gap-2.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex-wrap-reverse-none"
 			aria-label="Primary"
+			data-mobile-nav
 		>
 			<a
-				href={urlStandard}
-				aria-label="Open AADM standard — read and adopt"
+				href="/why-aadm"
+				aria-label="Why AADM — governance vs raw agent loops"
+				aria-current={activeNav === 'why' ? 'page' : undefined}
 				class:list={[
-					'shrink-0 whitespace-nowrap rounded-lg border border-border-subtle bg-surface-card/80 px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid sm:px-3 sm:py-2 sm:text-sm md:px-4',
-					standardChip,
+					'shrink-0 whitespace-nowrap rounded-none border border-amber-300/30 bg-transparent px-2.5 py-1.5 text-xs font-semibold text-amber-100 transition hover:border-amber-300/60 hover:bg-amber-500/[0.06] sm:px-3 sm:py-2 sm:text-sm md:px-4',
+					whyChip,
 				]}
+			>
+				<span class="md:hidden">Why</span>
+				<span class="hidden md:inline">Why AADM</span>
+			</a>
+			<a
+				href="/standard"
+				aria-label="Open AADM standard — read and adopt"
+				aria-current={activeNav === 'standard' ? 'page' : undefined}
+				class:list={[ghostChipClasses, standardChip]}
 			>
 				<span class="md:hidden">Standard</span>
 				<span class="hidden md:inline">Open standard</span>
@@ -72,15 +101,50 @@ const { signInUrl, signUpUrl, memberAreaUrl } = getAccountPortalUrls(
 				aria-label="MCP marketing — overview and access (aadm.io/mcp)"
 				aria-current={activeNav === 'mcp' ? 'page' : undefined}
 				class:list={[
-					'shrink-0 whitespace-nowrap rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-2.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-violet-900/30 transition hover:brightness-110 sm:px-3 sm:py-2 sm:text-sm md:px-4',
+					'shrink-0 whitespace-nowrap rounded-none bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-950 shadow-sm transition hover:bg-emerald-200 sm:px-3 sm:py-2 sm:text-sm md:px-4',
 					mcpChip,
 				]}
 			>
 				<span class="md:hidden">MCP</span>
 				<span class="hidden md:inline">Hosted MCP</span>
 			</a>
+			<a
+				href="/ides"
+				aria-label="IDE clients that connect to AADM MCP"
+				aria-current={activeNav === 'ides' ? 'page' : undefined}
+				class:list={[secondaryGhostChipClasses, idesChip, 'hidden md:inline-flex']}
+			>
+				IDEs
+			</a>
+			<a
+				href="/tools"
+				aria-label="AADM MCP typed tools catalog"
+				aria-current={activeNav === 'tools' ? 'page' : undefined}
+				class:list={[secondaryGhostChipClasses, toolsChip, 'hidden md:inline-flex']}
+			>
+				Tools
+			</a>
+			<a
+				href="/case-studies"
+				aria-label="AADM stories — patterns from the field"
+				aria-current={activeNav === 'stories' ? 'page' : undefined}
+				class:list={[secondaryGhostChipClasses, storiesChip, 'hidden md:inline-flex']}
+			>
+				Stories
+			</a>
+			<a
+				href="/enterprise"
+				aria-label="AADM for the enterprise"
+				aria-current={activeNav === 'enterprise' ? 'page' : undefined}
+				class:list={[secondaryGhostChipClasses, enterpriseChip, 'hidden md:inline-flex']}
+			>
+				Enterprise
+			</a>
 			<Show when="signed-out">
-				<a href={signInUrl} class:list={[baseChipClasses, 'inline-flex items-center justify-center']}>Sign in to AADM</a>
+				<a href={signInUrl} class:list={[baseChipClasses, 'inline-flex items-center justify-center']}>
+					<span class="md:hidden">Sign in</span>
+					<span class="hidden md:inline">Sign in to AADM</span>
+				</a>
 				<a href={signUpUrl} class:list={[joinChipClasses, 'inline-flex items-center justify-center']}>
 					<span class="sm:hidden">Join</span>
 					<span class="hidden sm:inline">Create account</span>
@@ -91,7 +155,7 @@ const { signInUrl, signUpUrl, memberAreaUrl } = getAccountPortalUrls(
 					href={memberAreaUrl}
 					class:list={[
 						baseChipClasses,
-						'inline-flex items-center justify-center border-violet-500/40 bg-violet-950/30 hover:bg-violet-900/40',
+						'inline-flex items-center justify-center border-emerald-300/30 bg-emerald-950/20 hover:bg-emerald-900/30',
 					]}
 					title="Member area — API keys, profile, MCP OAuth"
 				>

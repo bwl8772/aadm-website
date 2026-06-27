@@ -9,32 +9,76 @@ const tagline =
 	variant === "mcp"
 		? "AADM MCP works with your existing code. Your production AUTH, gateways, and CI stay authoritative."
 		: "Not a substitute for organizational sign-off or audits.";
+
+const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-border-subtle py-10">
-	<div class="mx-auto max-w-6xl px-4 sm:px-6">
-		<div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-			<a
-				href="/"
-				class="font-display font-semibold text-slate-400 transition-colors hover:text-white hover:underline"
-			>
-				AADM
-			</a>
-			<nav class="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer navigation">
+<footer class="relative border-t border-white/[0.06] bg-surface-deep">
+	<div class="mx-auto max-w-7xl px-4 py-14 sm:px-8 sm:py-16">
+		<!-- Editorial top row -->
+		<div class="grid grid-cols-12 gap-6 border-b border-white/[0.06] pb-10">
+			<div class="col-span-12 sm:col-span-4">
 				<a
-					href="/mcp"
-					class="text-sm text-slate-400 underline-offset-4 transition-colors hover:text-white hover:underline"
-				>Hosted MCP</a>
-				<a
-					href="/cursor"
-					class="text-sm text-slate-400 underline-offset-4 transition-colors hover:text-white hover:underline"
-				>AADM + Cursor</a>
-				<a
-					href="/claude-code"
-					class="text-sm text-slate-400 underline-offset-4 transition-colors hover:text-white hover:underline"
-				>AADM + Claude Code</a>
+					href="/"
+					class="font-display inline-flex items-baseline gap-3 text-2xl font-black tracking-tight text-white transition hover:text-emerald-200"
+				>
+					AADM
+					<span class="font-mono-cta text-[10px] font-medium uppercase tracking-[0.28em] text-slate-500">
+						/ Agentic Authority Delivery Model
+					</span>
+				</a>
+				<p class="mt-4 max-w-xs text-sm leading-relaxed text-slate-400">
+					Open standard for governed agent-assisted delivery. Hosted MCP keeps your tooling versioned, online, and maintained.
+				</p>
+			</div>
+			<nav class="col-span-12 grid grid-cols-2 gap-x-6 gap-y-8 sm:col-span-8 sm:grid-cols-4" aria-label="Footer navigation">
+				<div>
+					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/85">Product</p>
+					<ul class="mt-4 space-y-2.5 text-sm">
+						<li><a href="/mcp" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Hosted MCP</a></li>
+						<li><a href="/tools" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Tools catalog</a></li>
+						<li><a href="/ides" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">IDEs</a></li>
+					</ul>
+				</div>
+				<div>
+					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/85">Read</p>
+					<ul class="mt-4 space-y-2.5 text-sm">
+						<li><a href="/why-aadm" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Why AADM</a></li>
+						<li><a href="/standard" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Open standard</a></li>
+						<li><a href="/case-studies" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Stories</a></li>
+					</ul>
+				</div>
+				<div>
+					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-violet-200/85">Connect</p>
+					<ul class="mt-4 space-y-2.5 text-sm">
+						<li><a href="/cursor" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">AADM + Cursor</a></li>
+						<li><a href="/claude-code" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">AADM + Claude Code</a></li>
+						<li><a href="/governance" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Init your repo</a></li>
+					</ul>
+				</div>
+				<div>
+					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-sky-200/85">Buyer</p>
+					<ul class="mt-4 space-y-2.5 text-sm">
+						<li><a href="/enterprise" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Enterprise</a></li>
+						<li><a href="/mcp#two-ways" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Get access</a></li>
+					</ul>
+				</div>
 			</nav>
 		</div>
-		<p class="mt-6 text-xs text-slate-400 sm:mt-4">{tagline}</p>
+
+		<!-- Colophon row -->
+		<div class="mt-10 grid grid-cols-12 gap-6">
+			<div class="col-span-12 lg:col-span-8">
+				<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">
+					<span class="text-amber-200/85">▸</span> Honest boundary
+				</p>
+				<p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">{tagline}</p>
+			</div>
+			<div class="col-span-12 lg:col-span-4 lg:text-right">
+				<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-600">
+					<span class="text-slate-500">© {year} AADM</span> · Streamable HTTP / MCP
+				</p>
+			</div>
+		</div>
 	</div>
 </footer>

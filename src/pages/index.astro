@@ -13,511 +13,832 @@ const {
 	discoveryUrl,
 	curlInit,
 } = cfg;
+
+type Lane = {
+	num: string;
+	name: string;
+	tagline: string;
+	plain: string;
+	bullets: string[];
+	tone: "violet" | "blue" | "emerald";
+};
+
+const lanes: Lane[] = [
+	{
+		num: "I",
+		name: "Navigator",
+		tagline: "Delivery · building something new",
+		plain:
+			"Turn a vague feature ask into layer-aware slices — with authorization, ownership, and acceptance criteria baked in before any code is written.",
+		bullets: [
+			"Scope work across UDALI layers so ownership is clear before the first commit",
+			"Map AUTH controls and acceptance criteria into the plan, not after the fact",
+			"Gate readiness with structured checklists instead of ad-hoc review threads",
+		],
+		tone: "violet",
+	},
+	{
+		num: "II",
+		name: "Investigator",
+		tagline: "Defects · something is broken",
+		plain:
+			"Find what's actually wrong before changing anything. Path A recon classifies the failure; Path B diagnosis is gated until proof crosses the router.",
+		bullets: [
+			"Evidence-first recon: classify the failure before proposing any code change",
+			"Structured Path A / Path B flow prevents speculative rewrites and scope creep",
+			"Guardrails block timeout inflation, premature fixes, and multi-file drift",
+		],
+		tone: "blue",
+	},
+	{
+		num: "III",
+		name: "Sentinel",
+		tagline: "Assurance · proving it's aligned",
+		plain:
+			"Show — in language an auditor or compliance lead accepts — that the controls you say you have are actually in place across every seam.",
+		bullets: [
+			"Trace AUTH controls, UDALI placement, and evidence across every seam",
+			"Vertical and horizontal audit programs so releases are defensible, not vibes",
+			"Findings hand off to Investigator or Navigator when action is needed",
+		],
+		tone: "emerald",
+	},
+];
+
+const laneToneClasses: Record<
+	Lane["tone"],
+	{
+		numeral: string;
+		rule: string;
+		chip: string;
+		accent: string;
+		glow: string;
+		bullet: string;
+	}
+> = {
+	violet: {
+		numeral: "text-violet-300/90",
+		rule: "border-violet-400/40",
+		chip: "border-violet-400/30 text-violet-200",
+		accent: "text-violet-200",
+		glow: "bg-violet-500/[0.07]",
+		bullet: "bg-violet-300",
+	},
+	blue: {
+		numeral: "text-sky-300/90",
+		rule: "border-sky-400/40",
+		chip: "border-sky-400/30 text-sky-200",
+		accent: "text-sky-200",
+		glow: "bg-sky-500/[0.07]",
+		bullet: "bg-sky-300",
+	},
+	emerald: {
+		numeral: "text-emerald-300/90",
+		rule: "border-emerald-400/40",
+		chip: "border-emerald-400/30 text-emerald-200",
+		accent: "text-emerald-200",
+		glow: "bg-emerald-500/[0.07]",
+		bullet: "bg-emerald-300",
+	},
+};
+
+type MentalModelTier = {
+	num: string;
+	label: string;
+	title: string;
+	body: string;
+	tone: "amber" | "emerald" | "white";
+};
+
+const mentalModel: MentalModelTier[] = [
+	{
+		num: "01",
+		label: "Source of truth",
+		title: "Your app repo",
+		body: "Real code, authorization enforcement, tests, CI, evidence. This is where “done” is actually proven.",
+		tone: "white",
+	},
+	{
+		num: "02",
+		label: "Governance context",
+		title: "The hosted MCP",
+		body: "Teaches and structures agent behavior against the AADM standard — workflows, doctrine, gates. Does not run your product.",
+		tone: "emerald",
+	},
+	{
+		num: "03",
+		label: "Open document",
+		title: "Public standard",
+		body: "Human-readable templates, definitions, and education in the aadm-standard repo. Free to read, free to adopt.",
+		tone: "amber",
+	},
+];
+
+const mentalToneClasses: Record<
+	MentalModelTier["tone"],
+	{ numeral: string; pill: string; rule: string }
+> = {
+	amber: {
+		numeral: "text-amber-300/90",
+		pill: "border-amber-300/30 text-amber-200",
+		rule: "border-amber-300/40",
+	},
+	emerald: {
+		numeral: "text-emerald-300/90",
+		pill: "border-emerald-300/30 text-emerald-200",
+		rule: "border-emerald-300/40",
+	},
+	white: {
+		numeral: "text-white/90",
+		pill: "border-white/20 text-white",
+		rule: "border-white/30",
+	},
+};
+
+type Surface = {
+	letter: string;
+	name: string;
+	tagline: string;
+	body: string;
+	examples: string;
+};
+
+const surfaces: Surface[] = [
+	{
+		letter: "A",
+		name: "Resources",
+		tagline: "Markdown the agent reads",
+		body: "AADM definition, UDALI layers, AUTH and SEAM catalogs, TRACE spine, audit templates, troubleshooting modes, architecture doctrine slices.",
+		examples: "aadm://auth/… · aadm://seams/…",
+	},
+	{
+		letter: "B",
+		name: "Prompts",
+		tagline: "Packaged workflows",
+		body: "Capabilities overview, troubleshooter mode, skill-library pairing, and other packaged workflows the agent invokes directly.",
+		examples: "Invoked from the IDE",
+	},
+	{
+		letter: "C",
+		name: "Tools",
+		tagline: "Typed JSON responses",
+		body: "Structured calls that guide the agent. Each returns deterministic JSON for orchestrators — names match the running server's tools/list.",
+		examples:
+			"standard_brief · route_lane · debug_defect · plan_delivery · fetch_auth",
+	},
+];
+
+type Outcome = {
+	num: string;
+	title: string;
+	body: string;
+};
+
+const outcomes: Outcome[] = [
+	{
+		num: "01",
+		title: "Slice a feature into layer-aware work items",
+		body: "Ordered vertical slices with UDALI placement, AUTH tags, and acceptance criteria per slice.",
+	},
+	{
+		num: "02",
+		title: "Scope attestation dimensions per slice",
+		body: "Declare vertical depth and horizontal seams so the agent knows what to check, not guess.",
+	},
+	{
+		num: "03",
+		title: "Get required seam tiers back",
+		body: "Know exactly which boundaries need proof before release — not “tests pass and we hope.”",
+	},
+	{
+		num: "04",
+		title: "Route defects through evidence-gated investigation",
+		body: "Classify before fixing. No speculative rewrites, no premature code changes.",
+	},
+	{
+		num: "05",
+		title: "Prove alignment before release with structured audit programs",
+		body: "Bind evidence per seam so releases are defensible, not vibes.",
+	},
+];
 ---
 
 <Layout
 	title="AADM — Agentic Authority Delivery Model"
-	description="Open standard for governed software delivery with agents—read and adopt in public. Optional hosted MCP keeps your tooling versioned, online, and maintained."
+	description="Open standard for governed software delivery with agents — read and adopt in public. Hosted MCP keeps your tooling versioned, online, and maintained."
 	headerActiveNav="home"
 >
-	<main id="main">
-		<section class="mx-auto max-w-6xl px-4 pb-20 pt-16 sm:px-6 sm:pt-24">
-			<p
-				class="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-400"
-			>
-				<span
-					class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-blue"
-					>Open standard</span
-				>
-				<span class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-violet"
-					>Hosted MCP</span
-				>
-			</p>
-			<h1
-				class="font-display max-w-3xl text-balance text-4xl font-bold leading-[1.15] tracking-normal text-white sm:text-5xl lg:text-6xl"
-			>
-				Keep agent-assisted delivery
-				<span
-					class="bg-gradient-to-r from-violet-200 via-sky-200 to-blue-300 bg-clip-text text-transparent"
-				>
-					aligned, current, and online
-				</span>
-			</h1>
-			<p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
-				<strong class="font-semibold text-slate-300">The standard</strong> lives in the open—definitions,
-				templates, and governance narrative you can read, adopt, and improve with everyone else shipping software
-				the same way. <strong class="font-semibold text-slate-300">Hosted MCP access</strong> is separate: a
-				private service so your agents get versioned tools and resources on infrastructure that stays updated and
-				maintained—without requiring an open-source MCP implementation.
-			</p>
-			<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-				<a
-					href={urlStandard}
-					class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid"
-				>
-					Read &amp; adopt the standard
-				</a>
-				<a
-					href={urlMcpMarketing}
-					class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-violet-600 to-blue-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-violet-950/40 transition hover:brightness-110"
-				>
-					Connect production agents
-				</a>
-			</div>
-			<p class="mt-4 text-sm text-slate-500">
-				MCP carries context and workflows—it does not replace your production AUTH, gateways, tests, or CI as the
-				source of truth.
-			</p>
-		</section>
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
 
-		<section class="border-y border-border-subtle bg-surface-mid/40 py-16 sm:py-20">
-			<div class="mx-auto max-w-6xl px-4 sm:px-6">
-				<h2 class="font-display text-center text-2xl font-bold text-white sm:text-3xl">
-					Three agent lanes <span class="text-slate-500">(equal weight)</span>
-				</h2>
-				<p class="mx-auto mt-3 max-w-2xl text-center text-slate-400">
-					Same vocabulary in the open standard; when you subscribe to hosted MCP, your tools expose three equal
-					lanes so the right workflow matches the question you are actually asking.
-				</p>
-				<ul class="mt-12 grid gap-6 sm:grid-cols-3">
-					<li
-						class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20"
-					>
-						<h3 class="font-display text-lg font-bold text-accent-violet">Navigator</h3>
-						<p class="mt-2 text-sm leading-relaxed text-slate-400">
-							<strong class="text-slate-300">New or improved features.</strong> Delivery framing,
-							mapping, and planning before code.
-						</p>
-						<ul class="mt-4 space-y-2 text-sm text-slate-400">
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-accent-violet"></span>
-								<span>Scope work across UDALI layers so ownership is clear before the first commit</span>
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-accent-violet"></span>
-								<span>Map AUTH controls and acceptance criteria into the plan, not after the fact</span>
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-accent-violet"></span>
-								<span>Gate readiness with structured checklists instead of ad-hoc review threads</span>
-							</li>
-						</ul>
-					</li>
-					<li
-						class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20"
-					>
-						<h3 class="font-display text-lg font-bold text-accent-blue">Investigator</h3>
-						<p class="mt-2 text-sm leading-relaxed text-slate-400">
-							<strong class="text-slate-300">Something broken vs expected.</strong> Call
-							<code class="font-mono-cta text-xs text-slate-300">debug_defect</code> first.
-						</p>
-						<ul class="mt-4 space-y-2 text-sm text-slate-400">
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-accent-blue"></span>
-								<span>Evidence-first recon: classify the failure before proposing any code change</span>
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-accent-blue"></span>
-								<span>Structured Path A / Path B flow prevents speculative rewrites and scope creep</span>
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-accent-blue"></span>
-								<span>Guardrails block timeout inflation, premature fixes, and multi-file drift</span>
-							</li>
-						</ul>
-					</li>
-					<li
-						class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20"
-					>
-						<h3 class="font-display text-lg font-bold text-violet-300">Sentinel</h3>
-						<p class="mt-2 text-sm leading-relaxed text-slate-400">
-							<strong class="text-slate-300">Prove alignment with the standard.</strong> Assurance and
-							audit-style tools.
-						</p>
-						<ul class="mt-4 space-y-2 text-sm text-slate-400">
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-violet-300"></span>
-								<span>Trace AUTH controls, UDALI placement, and evidence across every seam</span>
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-violet-300"></span>
-								<span>Vertical and horizontal audit programs so releases are defensible, not vibes</span>
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-violet-300"></span>
-								<span>Findings hand off to Investigator or Navigator when action is needed</span>
-							</li>
-						</ul>
-					</li>
-				</ul>
-
-				<div class="mt-16 grid gap-8 lg:grid-cols-2">
-					<div class="rounded-2xl border border-border-subtle bg-surface-card/60 p-6">
-						<h3 class="font-display text-base font-bold text-white">What it deliberately does not do</h3>
-						<ul class="mt-4 space-y-2.5 text-sm text-slate-400">
-							<li class="flex items-start gap-2">
-								<span class="mt-1.5 block h-1 w-1 shrink-0 rounded-full bg-red-400/60"></span>
-								Run business logic or mutate your database
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1.5 block h-1 w-1 shrink-0 rounded-full bg-red-400/60"></span>
-								Issue compliance certificates or legal verdicts
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1.5 block h-1 w-1 shrink-0 rounded-full bg-red-400/60"></span>
-								Replace code review, CI, or server-side authorization
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1.5 block h-1 w-1 shrink-0 rounded-full bg-red-400/60"></span>
-								Store long-lived secrets in the standard repo &mdash; credentials are your deployment concern
-							</li>
-						</ul>
-					</div>
-					<div class="rounded-2xl border border-border-subtle bg-surface-card/60 p-6">
-						<h3 class="font-display text-base font-bold text-white">When you'd use it</h3>
-						<p class="mt-4 text-sm leading-relaxed text-slate-400">
-							Connect the MCP in your IDE so the agent loads the same standard every session &mdash; UDALI
-							placement, AUTH references, build intent, troubleshooter discipline &mdash; instead of
-							improvising from random doc snippets.
-						</p>
-						<p class="mt-3 text-sm leading-relaxed text-slate-400">
-							Your <code class="font-mono-cta text-xs text-slate-300">~/.cursor/mcp.json</code> already
-							has an <code class="font-mono-cta text-xs text-accent-violet">aadm</code> entry pointing at
-							<code class="font-mono-cta text-xs text-accent-blue">https://mcp.aadm.io/mcp</code> with your
-							AADM access token &mdash; that's this kind of server (hosted), not the markdown files in the repo alone.
-						</p>
-						<ul class="mt-4 space-y-2.5 text-sm text-slate-400">
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-accent-blue"></span>
-								<span><strong class="text-slate-300">Any MCP-capable IDE can connect</strong> &mdash; Streamable HTTP transport works with any client that speaks the protocol</span>
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-accent-violet"></span>
-								<span><strong class="text-slate-300">Cursor + AADM</strong> &mdash; add the server in <code class="font-mono-cta text-xs text-slate-300">~/.cursor/mcp.json</code> and agents pick up lanes, doctrine, and tools automatically</span>
-							</li>
-							<li class="flex items-start gap-2">
-								<span class="mt-1 block h-1.5 w-1.5 shrink-0 rounded-full bg-violet-300"></span>
-								<span><strong class="text-slate-300">Claude Code + AADM</strong> &mdash; point the CLI at the same endpoint and get identical routing, troubleshooter discipline, and AUTH context</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<section id="how-it-works" class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-			<h2 class="font-display text-center text-2xl font-bold text-white sm:text-3xl">How it works</h2>
-			<p class="mx-auto mt-4 max-w-3xl text-center text-lg leading-relaxed text-slate-400">
-				A read-only <strong class="text-slate-300">"standard context" server</strong> for AI coding tools: it
-				exposes AADM definitions, UDALI/AUTH doctrine, prompts, and structured tools so agents plan, route, and
-				troubleshoot work the AADM way—without running your product or enforcing security in production.
-			</p>
-
-			<div class="mt-14">
-				<h3 class="font-display mb-6 text-center text-lg font-semibold text-slate-300">Mental model</h3>
-				<div class="mx-auto max-w-3xl space-y-3">
-					<div class="flex items-start gap-4 rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/20">
-						<span class="mt-0.5 shrink-0 rounded-lg bg-accent-blue/15 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-accent-blue">Your app repo</span>
-						<p class="text-sm leading-relaxed text-slate-400">Real code, AUTH enforcement, tests, CI, evidence—the <strong class="text-slate-300">source of truth</strong>.</p>
-					</div>
-					<div class="flex items-start gap-4 rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/20">
-						<span class="mt-0.5 shrink-0 rounded-lg bg-accent-violet/15 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-accent-violet">This MCP</span>
-						<p class="text-sm leading-relaxed text-slate-400">Teaches and structures <strong class="text-slate-300">agent behavior</strong> against the AADM standard.</p>
-					</div>
-					<div class="flex items-start gap-4 rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/20">
-						<span class="mt-0.5 shrink-0 rounded-lg bg-violet-300/15 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-violet-300">Public docs</span>
-						<p class="text-sm leading-relaxed text-slate-400">Human-readable templates and education in the open <strong class="text-slate-300">aadm-standard</strong> repo.</p>
-					</div>
-				</div>
-				<p class="mx-auto mt-6 max-w-2xl text-center text-sm text-slate-500">
-					The MCP does not replace your application. It does not scan your repo for pass/fail compliance. It
-					gives agents consistent framing and checklists.
-				</p>
-			</div>
-
-			<div class="mt-16">
-				<h3 class="font-display mb-8 text-center text-lg font-semibold text-slate-300">What it exposes over MCP</h3>
-				<div class="grid gap-6 sm:grid-cols-3">
-					<div class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20">
-						<h4 class="font-display text-base font-bold text-accent-blue">Resources</h4>
-						<p class="mt-3 text-sm leading-relaxed text-slate-400">
-							Markdown the agent can read: AADM definition, UDALI layers, AUTH and SEAM catalogs
-							(<code class="font-mono-cta text-xs text-slate-300">aadm://auth/…</code>,
-							<code class="font-mono-cta text-xs text-slate-300">aadm://seams/…</code>), TRACE spine, audit templates,
-							troubleshooting modes, architecture doctrine slices.
-						</p>
-					</div>
-					<div class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20">
-						<h4 class="font-display text-base font-bold text-accent-violet">Prompts</h4>
-						<p class="mt-3 text-sm leading-relaxed text-slate-400">
-							Packaged workflows the agent invokes directly—capabilities overview, troubleshooter mode,
-							skill-library pairing, and more.
-						</p>
-					</div>
-					<div class="rounded-2xl border border-border-subtle bg-surface-card/80 p-6 shadow-xl shadow-black/20">
-						<h4 class="font-display text-base font-bold text-violet-300">Tools</h4>
-						<p class="mt-3 text-sm leading-relaxed text-slate-400">
-							JSON responses that guide the agent:
-							<code class="font-mono-cta text-xs text-slate-300">standard_brief</code>,
-							<code class="font-mono-cta text-xs text-slate-300">route_lane</code>,
-							<code class="font-mono-cta text-xs text-slate-300">debug_defect</code>,
-							<code class="font-mono-cta text-xs text-slate-300">plan_delivery</code>,
-							<code class="font-mono-cta text-xs text-slate-300">map_feature</code>,
-							<code class="font-mono-cta text-xs text-slate-300">fetch_auth</code>,
-							<code class="font-mono-cta text-xs text-slate-300">fetch_seam</code>,
-							audit outlines, Sentinel helpers, architecture lenses, and more.
-						</p>
-					</div>
-				</div>
-				<p class="mt-6 text-center text-sm text-slate-500">
-					Transport is <strong class="text-slate-400">HTTP Streamable MCP</strong> at
-					<code class="font-mono-cta text-slate-400">/mcp</code> (plus
-					<code class="font-mono-cta text-slate-400">/health</code> for liveness). Connect from Cursor or
-					another MCP client with your org's URL and auth.
-				</p>
-			</div>
-
-			<div class="mt-16">
-				<h3 class="font-display mb-6 text-center text-lg font-semibold text-slate-300">What you can do</h3>
-				<p class="mx-auto mb-8 max-w-2xl text-center text-sm text-slate-400">
-					Concrete outcomes engineers get from the MCP in their daily workflow:
-				</p>
-				<ol class="mx-auto max-w-3xl space-y-4">
-					<li class="flex items-start gap-4 rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/20">
-						<span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-violet/15 text-xs font-bold text-accent-violet">1</span>
-						<p class="text-sm leading-relaxed text-slate-300">
-							<strong>Slice a feature into layer-aware work items</strong>
-							<span class="text-slate-500"> &mdash; ordered vertical slices with UDALI placement, AUTH tags, and acceptance criteria per slice.</span>
-						</p>
-					</li>
-					<li class="flex items-start gap-4 rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/20">
-						<span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-violet/15 text-xs font-bold text-accent-violet">2</span>
-						<p class="text-sm leading-relaxed text-slate-300">
-							<strong>Scope attestation dimensions per slice</strong>
-							<span class="text-slate-500"> &mdash; declare vertical depth and horizontal seams so the agent knows what to check, not guess.</span>
-						</p>
-					</li>
-					<li class="flex items-start gap-4 rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/20">
-						<span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-blue/15 text-xs font-bold text-accent-blue">3</span>
-						<p class="text-sm leading-relaxed text-slate-300">
-							<strong>Get required seam tiers back</strong>
-							<span class="text-slate-500"> &mdash; know exactly which boundaries need proof before release, not "tests pass and we hope."</span>
-						</p>
-					</li>
-					<li class="flex items-start gap-4 rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/20">
-						<span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-blue/15 text-xs font-bold text-accent-blue">4</span>
-						<p class="text-sm leading-relaxed text-slate-300">
-							<strong>Route defects through evidence-gated investigation</strong>
-							<span class="text-slate-500"> &mdash; classify before fixing; no speculative rewrites, no premature code changes.</span>
-						</p>
-					</li>
-					<li class="flex items-start gap-4 rounded-2xl border border-border-subtle bg-surface-card/80 p-5 shadow-lg shadow-black/20">
-						<span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-300/15 text-xs font-bold text-violet-300">5</span>
-						<p class="text-sm leading-relaxed text-slate-300">
-							<strong>Prove alignment before release with structured audit programs</strong>
-							<span class="text-slate-500"> &mdash; bind evidence per seam so releases are defensible, not vibes.</span>
-						</p>
-					</li>
-				</ol>
-			</div>
-		</section>
-
-		<section id="mcp-quickstart" class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-			<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Wire your stack—quick MCP reference</h2>
+		<!-- =============================================================
+		     §00 — HERO
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<!-- Blueprint dot grid -->
 			<div
-				class="mt-6 max-w-3xl rounded-2xl border border-emerald-500/25 bg-emerald-950/20 px-5 py-4 text-sm text-slate-300"
-			>
-				<strong class="text-slate-200">Step 0 — in your app repo:</strong>{' '}
-				<code class="font-mono-cta text-emerald-200/90">npx aadm-init-repo --minimal</code> scaffolds{' '}
-				<code class="font-mono-cta text-slate-300">.aadm/config.json</code> in your app repo.{' '}
-				<a href="/governance" class="font-semibold text-accent-violet underline hover:text-accent-blue"
-					>Init guide →</a
-				>
-			</div>
-			<p class="mt-6 max-w-3xl text-slate-400">
-				When agents need stable, versioned access to the same resources your team already trusts, 				the MCP
-				<strong class="text-slate-300">service</strong> at{' '}
-				<code class="font-mono-cta text-sm text-accent-blue">{urlMcpEndpoint}</code> speaks
-				<strong class="text-slate-300">Streamable HTTP</strong>:
-				<code class="rounded bg-surface-card px-1.5 py-0.5 font-mono-cta text-sm text-accent-violet">POST</code>
-				with <code class="font-mono-cta text-sm text-slate-300">Accept: application/json, text/event-stream</code>.
-				Browser GET to the MCP path without that header often returns <strong class="text-slate-300">406</strong>—expected.
-			</p>
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"
+			></div>
+			<!-- Soft emerald + amber washes -->
+			<div aria-hidden="true" class="absolute left-0 top-0 -z-10 h-[36rem] w-[36rem] -translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.07] blur-3xl"></div>
+			<div aria-hidden="true" class="absolute right-0 top-24 -z-10 h-[36rem] w-[36rem] translate-x-1/3 rounded-full bg-amber-500/[0.05] blur-3xl"></div>
+			<!-- Diagonal hairline -->
+			<svg aria-hidden="true" class="pointer-events-none absolute left-1/2 top-12 -z-10 hidden h-[120%] w-[1px] -translate-x-[18rem] rotate-[18deg] sm:block">
+				<line x1="0" y1="0" x2="0" y2="100%" stroke="rgba(110,231,183,0.18)" stroke-dasharray="2 6" />
+			</svg>
 
-			{
-				urlMcpEndpoint ? (
-					<div class="mt-8 space-y-6">
-						<div class="flex flex-wrap gap-3">
-							<a
-								href={urlMcpMarketing}
-								class="inline-flex items-center rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110"
-							>
-								MCP marketing (aadm.io/mcp)
-							</a>
-							{healthUrl ? (
-								<a
-									href={healthUrl}
-									class="inline-flex items-center rounded-lg border border-border-subtle bg-surface-card px-4 py-2 text-sm font-semibold text-white transition hover:bg-surface-mid"
-								>
-									GET /health
-								</a>
-							) : null}
-							{discoveryUrl ? (
-								<a
-									href={discoveryUrl}
-									class="inline-flex items-center rounded-lg border border-border-subtle bg-surface-card px-4 py-2 text-sm font-semibold text-white transition hover:bg-surface-mid"
-								>
-									GET / (discovery)
-								</a>
-							) : null}
-						</div>
-						<div>
-							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
-								MCP service (JSON-RPC — not the marketing page)
-							</p>
-							<p class="break-all font-mono-cta text-sm text-accent-blue">{urlMcpEndpoint}</p>
-						</div>
-						<div>
-							<p class="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
-								Smoke: initialize (JSON-RPC over HTTP)
-							</p>
-							<pre
-								class="overflow-x-auto rounded-2xl border border-border-subtle bg-surface-card/90 p-4 font-mono-cta text-xs leading-relaxed text-slate-300 sm:text-sm"><code>{curlInit}</code></pre>
-						</div>
-						{hasMcpMarketingLink ? (
-							<p class="text-sm text-slate-500">
-								Subscription covers the running service, updates, and subscriber guides—read the public MCP
-								marketing page at{' '}
-								<a href={urlMcpMarketing} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-									{urlMcpMarketing}
-								</a>
-								(default production: <code class="font-mono-cta text-slate-400">https://aadm.io/mcp</code>).
-							</p>
-						) : (
-							<p class="text-sm text-slate-500">
-								Set <code class="font-mono-cta text-slate-400">PUBLIC_MCP_QUICKSTART_URL</code> to your MCP marketing
-								URL (override default <code class="font-mono-cta text-slate-400">https://aadm.io/mcp</code> when needed).
-							</p>
-						)}
-						{urlMcpCustomerDocs ? (
-							<p class="text-sm text-slate-500">
-								Additional material:{' '}
-								<a href={urlMcpCustomerDocs} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-									Customer documentation
-								</a>
-							</p>
-						) : null}
-					</div>
-				) : (
-					<p class="mt-6 rounded-xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-4 text-sm text-slate-500">
-						Set <span class="font-mono-cta text-slate-400">PUBLIC_MCP_REPO_URL</span> in{' '}
-						<code class="font-mono-cta text-slate-400">.env</code> to show your MCP endpoint, health link, and curl
-						example.
-					</p>
-				)
-			}
-		</section>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-24 pt-10 sm:px-8 sm:pb-32 sm:pt-16">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">AADM / Overview</span>
+					<span class="hidden font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-600 sm:mt-auto sm:block">
+						<span class="text-slate-500">Filed under</span><br />
+						<span class="text-slate-400">Agent governance</span>
+					</span>
+				</aside>
 
-		<section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
-			<div class="grid gap-10 lg:grid-cols-2 lg:items-start">
-				<div>
-					<h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Open standard, hosted bridge</h2>
-					<p class="mt-4 text-slate-400">
-						<strong class="text-slate-300">One living standard, visible to everyone who ships with you.</strong>
-						The text stays public so your org, partners, and community can discuss changes, propose updates, and
-						stay on the same page—like any mature open project.
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta mb-8 flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="inline-flex items-center gap-2 border border-emerald-300/30 px-2.5 py-1 text-emerald-200/90">
+							<span class="block h-1 w-1 rounded-full bg-emerald-300"></span> Open standard
+						</span>
+						<span class="inline-flex items-center gap-2 border border-amber-300/30 px-2.5 py-1 text-amber-200/90">
+							<span class="block h-1 w-1 rounded-full bg-amber-300"></span> Hosted MCP
+						</span>
 					</p>
-					<p class="mt-4 text-slate-400">
-						<strong class="text-slate-300">Pay for uptime and evolution, not a zip file.</strong> Hosted MCP is
-						a separate subscription so the endpoint your agents call stays online, versioned, and maintained;
-						you get operational continuity instead of self-hosting a moving target.
-					</p>
-					<p class="mt-4 text-sm text-slate-500">
-						Your production AUTH, gateways, tests, and CI stay authoritative; MCP is how agents load the
-						standard’s context and workflows predictably.
-					</p>
-				</div>
-				<div class="space-y-4">
-					<div class="rounded-2xl border border-border-subtle bg-surface-card/90 p-6">
-						<h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">What you get</h3>
-						<ul class="mt-4 space-y-3 text-sm text-slate-400">
-							<li>
-								<span class="font-semibold text-accent-blue">Open standard</span> — always readable,
-								adoptable, and improvable in public; no paywall on the definitions.
-							</li>
-							<li>
-								<span class="font-semibold text-accent-violet">Hosted MCP</span> — versioned tools and
-								resources for subscribers’ agents; someone ships fixes and keeps the service current.
-							</li>
-						</ul>
-					</div>
-					<p class="rounded-2xl border border-dashed border-slate-600/50 bg-surface-mid/50 p-4 font-mono-cta text-xs leading-relaxed text-slate-500">
-						Deploying this site? Set <span class="text-accent-violet">PUBLIC_STANDARD_REPO_URL</span>,{' '}
-						<span class="text-accent-blue">PUBLIC_MCP_REPO_URL</span> to the MCP service (default{' '}
-						<code class="text-slate-400">https://mcp.aadm.io</code>), and optionally{' '}
-						<span class="text-accent-violet">PUBLIC_MCP_QUICKSTART_URL</span> for the marketing page (default{' '}
-						<code class="text-slate-400">https://aadm.io/mcp</code>).
-					</p>
-				</div>
-			</div>
-		</section>
 
-		<section
-			id="aadm-planning"
-			class="border-t border-border-subtle bg-surface-mid/30 py-16 sm:py-24"
-			aria-labelledby="aadm-planning-heading"
-		>
-			<div class="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14">
-				<div>
-					<p
-						class="mb-3 inline-flex rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-xs font-medium uppercase tracking-wider text-accent-violet"
+					<h1
+						class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.6rem)] font-black leading-[0.9] tracking-[-0.04em] text-white"
 					>
-						Navigator lane
-					</p>
-					<h2 id="aadm-planning-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
-						AADM for planning
-					</h2>
-					<p class="mt-4 text-lg leading-relaxed text-slate-400">
-						The AADM MCP helps you <strong class="font-semibold text-slate-300">plan before implementation</strong>:
-						turn vague goals into layer-aware work—who owns what across UDALI, which AUTH hooks matter, and in
-						what order changes should land. Your agents get the same routing and handoff language your team
-						uses, so “plan the sprint” and “classify the bug” do not collapse into one generic chat.
-					</p>
-					<p class="mt-4 text-slate-400">
-						Tools like <code class="font-mono-cta text-sm text-accent-blue">plan_delivery</code> and{' '}
-						<code class="font-mono-cta text-sm text-accent-blue">map_feature</code> sit in the{' '}
-						<strong class="text-slate-300">Navigator</strong> path: scope, verify, and readiness—without
-						guessing layer ownership after the fact.
-					</p>
-					<p class="mt-6">
+						The <span class="font-extralight italic text-slate-400">standard</span> your agents
+						<br class="hidden sm:inline" />
+						load on <span class="relative inline-block">
+							<span class="relative z-10 text-emerald-300">every turn.</span>
+							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
+						</span>
+					</h1>
+
+					<!-- Body + margin note -->
+					<div class="mt-14 grid grid-cols-12 gap-6">
+						<div class="col-span-12 sm:col-span-4">
+							<div class="border-l border-emerald-300/40 pl-5">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-emerald-200/80">Two products · one story</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+									<span class="text-white">The standard</span> is a public document anyone can read, adopt, and improve.
+									<span class="text-white">The hosted MCP</span> is a subscription service that streams that standard to your
+									agents as versioned tools and resources.
+								</p>
+							</div>
+						</div>
+						<div class="col-span-12 sm:col-span-8">
+							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+								Same vocabulary, three workflows: <span class="text-white">Navigator</span> for new features,
+								<span class="text-white">Investigator</span> for defects, <span class="text-white">Sentinel</span> for assurance —
+								loaded by Cursor, Claude Code, Windsurf, or anything that speaks MCP. The MCP carries
+								<span class="font-extralight italic text-slate-400">context and workflows.</span> It does not replace your AUTH,
+								gateways, tests, or CI.
+							</p>
+						</div>
+					</div>
+
+					<!-- CTAs -->
+					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<a
 							href={urlMcpMarketing}
-							class="inline-flex items-center text-sm font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 transition hover:text-accent-blue hover:decoration-accent-blue/50"
+							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
-							Connect agents to hosted MCP
+							<span>Connect production agents</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
 						</a>
-					</p>
-				</div>
-				<div>
-					<figure
-						class="overflow-hidden rounded-2xl border border-border-subtle bg-surface-card/50 shadow-2xl shadow-black/30"
-					>
-						<img
-							src="/images/aadm-planning-example.png"
-							width="1200"
-							height="800"
-							loading="lazy"
-							decoding="async"
-							class="h-auto w-full object-cover object-top"
-							alt="Example AADM analysis: friction points mapped to UDALI layers and roles, with phased implementation order."
-						/>
-						<figcaption class="border-t border-border-subtle px-4 py-3 text-xs leading-relaxed text-slate-500">
-							Example output: layer ownership matrix and phased implementation order from an agent-assisted planning pass.
-						</figcaption>
-					</figure>
+						<a
+							href={urlStandard}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Read &amp; adopt the standard
+						</a>
+						<a
+							href="/why-aadm"
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+						>
+							<span>Why AADM, vs raw loops</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
+						</a>
+					</div>
 				</div>
 			</div>
 		</section>
 
+		<!-- =============================================================
+		     §01 — Three lanes
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-violet-200/70">§ 01</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Three lanes</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Three workflows. <span class="font-extralight italic text-slate-400">Equal weight.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						Every coding task is one of three things. AADM gives each its own lane — so the agent picks the right workflow for the
+						question being asked, not whichever instinct fires first.
+					</p>
+
+					<div class="mt-16 space-y-px bg-white/[0.08]">
+						{
+							lanes.map((lane) => {
+								const t = laneToneClasses[lane.tone];
+								return (
+									<article class="group relative overflow-hidden bg-[#06080f] transition duration-300 hover:bg-[#080c16]">
+										<div aria-hidden="true" class:list={["pointer-events-none absolute -left-24 -top-24 -z-0 h-72 w-72 rounded-full blur-3xl opacity-50 transition duration-500 group-hover:opacity-100", t.glow]}></div>
+										<div class="relative grid grid-cols-12 gap-6 px-1 py-12 sm:px-2 sm:py-14">
+											<div class="col-span-12 sm:col-span-2">
+												<p class:list={["font-display text-[5rem] font-extralight leading-[0.85] tracking-tight sm:text-[6.5rem]", t.numeral]}>
+													{lane.num}
+												</p>
+												<div class:list={["mt-3 inline-flex items-center gap-2 border px-3 py-1.5 font-mono-cta text-[10px] uppercase tracking-[0.22em]", t.chip]}>
+													<span class:list={["block h-1.5 w-1.5 rounded-full", t.bullet]}></span>
+													{lane.name}
+												</div>
+											</div>
+
+											<div class="col-span-12 sm:col-span-6">
+												<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{lane.tagline}</p>
+												<p class="mt-5 text-[0.98rem] leading-[1.65] text-slate-200">{lane.plain}</p>
+											</div>
+
+											<div class="col-span-12 sm:col-span-4">
+												<div class:list={["border-l pl-5", t.rule]}>
+													<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">What you get</p>
+													<ul class="mt-4 space-y-3 text-sm leading-relaxed text-slate-300">
+														{lane.bullets.map((b) => (
+															<li class="grid grid-cols-[auto_1fr] items-start gap-3">
+																<span class:list={["mt-[0.5em] block h-1 w-1 rounded-full", t.bullet]}></span>
+																<span>{b}</span>
+															</li>
+														))}
+													</ul>
+												</div>
+											</div>
+										</div>
+									</article>
+								);
+							})
+						}
+					</div>
+
+					<!-- Boundary statement chip -->
+					<div class="mt-12 grid grid-cols-12 gap-6">
+						<div class="col-span-12 lg:col-span-7">
+							<div class="border-l-2 border-amber-300/40 pl-6">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/80">What it deliberately does not do</p>
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+									{
+										[
+											"Run business logic or mutate your database",
+											"Issue compliance certificates or legal verdicts",
+											"Replace code review, CI, or server-side authorization",
+											"Store long-lived secrets — credentials are your deployment concern",
+										].map((item, idx) => (
+											<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-3.5">
+												<span class="font-mono-cta text-[11px] text-amber-300/80">{String(idx + 1).padStart(2, "0")}</span>
+												<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">{item}</span>
+											</li>
+										))
+									}
+								</ul>
+							</div>
+						</div>
+						<div class="col-span-12 lg:col-span-5">
+							<div class="border border-white/10 bg-[#070b13] p-6 sm:p-7">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/80">When you'd use it</p>
+								<p class="mt-4 text-[0.95rem] leading-relaxed text-slate-300">
+									Connect the MCP in your IDE so the agent loads the same standard every session — UDALI placement, AUTH
+									references, build intent, troubleshooter discipline — instead of improvising from random doc snippets.
+								</p>
+								<p class="mt-3 text-sm leading-relaxed text-slate-400">
+									Any MCP-capable IDE works. Cursor and Claude Code are the most common; Windsurf, Cline, and others connect the
+									same way over Streamable HTTP.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §02 — Mental model (three tiers)
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[length:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_45%,transparent_80%)]"
+			></div>
+			<div id="how-it-works" class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 02</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Mental model</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Three pieces. <span class="font-extralight italic text-slate-400">Each does one job.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						A read-only standard-context server for AI coding tools: AADM definitions, UDALI/AUTH doctrine, prompts, and structured
+						tools so agents plan, route, and troubleshoot the AADM way — without running your product or enforcing security in
+						production.
+					</p>
+
+					<div class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+						{
+							mentalModel.map((tier) => {
+								const t = mentalToneClasses[tier.tone];
+								return (
+									<article class="group bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-9">
+										<div class="flex items-baseline gap-4">
+											<span class:list={["font-display text-5xl font-extralight leading-none tracking-tight sm:text-6xl", t.numeral]}>
+												{tier.num}
+											</span>
+											<span class:list={["inline-block border px-2.5 py-1 font-mono-cta text-[10px] uppercase tracking-[0.22em]", t.pill]}>
+												{tier.label}
+											</span>
+										</div>
+										<h3 class="font-display mt-7 text-balance text-[1.35rem] font-bold leading-[1.15] tracking-tight text-white sm:text-[1.5rem]">
+											{tier.title}
+										</h3>
+										<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-400">{tier.body}</p>
+										<div aria-hidden="true" class:list={["mt-7 h-px w-12 transition-all duration-500 group-hover:w-24", t.numeral.replace("text-", "bg-").replace("/90", "/60")]}></div>
+									</article>
+								);
+							})
+						}
+					</div>
+
+					<p class="mt-10 max-w-3xl text-sm leading-relaxed text-slate-500">
+						The MCP does not replace your application. It does not scan your repo for pass/fail compliance. It gives agents
+						consistent framing and checklists — your apps and CI still prove enforcement.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §03 — Surfaces (Resources / Prompts / Tools)
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 03</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">What the MCP exposes</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Three surfaces <span class="font-extralight italic text-slate-400">your agents read.</span>
+					</h2>
+
+					<div class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+						{
+							surfaces.map((s) => (
+								<article class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
+									<div class="flex items-baseline gap-4">
+										<span class="font-display text-[3.5rem] font-extralight leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
+											{s.letter}
+										</span>
+										<div>
+											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{s.tagline}</p>
+											<h3 class="font-display mt-1 text-xl font-bold leading-snug text-white sm:text-2xl">{s.name}</h3>
+										</div>
+									</div>
+									<p class="mt-6 text-sm leading-relaxed text-slate-400">{s.body}</p>
+									<div class="mt-6 border-t border-white/[0.06] pt-4">
+										<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Examples</p>
+										<p class="font-mono-cta mt-1.5 text-[11px] leading-relaxed text-emerald-200/85">{s.examples}</p>
+									</div>
+								</article>
+							))
+						}
+					</div>
+
+					<p class="mt-10 max-w-3xl text-sm leading-relaxed text-slate-500">
+						Transport is <span class="text-slate-300">HTTP Streamable MCP</span> at
+						<code class="font-mono-cta text-emerald-200/85">/mcp</code> (plus
+						<code class="font-mono-cta text-emerald-200/85">/health</code> for liveness). Connect from any MCP client with your org's
+						URL and auth.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §04 — What you can do (5 outcomes)
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 04</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Outcomes</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						What engineers get out of it <span class="font-extralight italic text-slate-400">on a normal day.</span>
+					</h2>
+
+					<ol class="mt-16 border-t border-white/[0.06]">
+						{
+							outcomes.map((o) => (
+								<li class="group grid grid-cols-12 gap-6 border-b border-white/[0.08] py-8 transition duration-300 hover:bg-white/[0.015]">
+									<div class="col-span-12 sm:col-span-2">
+										<span class="font-display text-4xl font-extralight leading-none tracking-tight text-emerald-200/80 transition duration-300 group-hover:text-emerald-300 sm:text-5xl">
+											{o.num}
+										</span>
+									</div>
+									<div class="col-span-12 sm:col-span-10">
+										<h3 class="font-display text-balance text-[1.25rem] font-bold leading-[1.2] tracking-tight text-white sm:text-[1.4rem]">
+											{o.title}
+										</h3>
+										<p class="mt-3 max-w-3xl text-[0.95rem] leading-relaxed text-slate-400">{o.body}</p>
+									</div>
+								</li>
+							))
+						}
+					</ol>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §05 — Wire your stack (technical quickstart)
+		     ============================================================= -->
+		<section id="mcp-quickstart" class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(110,231,183,0.04)_1px,transparent_1px)] bg-[length:36px_36px] [mask-image:radial-gradient(ellipse_at_top,black_45%,transparent_85%)]"
+			></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 05</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Wire your stack</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Quick MCP reference <span class="font-extralight italic text-slate-400">for engineers.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						The hosted service speaks <span class="text-white">Streamable HTTP</span>:
+						<code class="font-mono-cta bg-white/[0.04] px-1.5 py-0.5 text-emerald-200/90">POST</code> with
+						<code class="font-mono-cta text-emerald-200/85">Accept: application/json, text/event-stream</code>. A browser
+						<code class="font-mono-cta text-emerald-200/85">GET</code> to the MCP path without that header often returns
+						<span class="text-amber-200/90">406</span> — expected.
+					</p>
+
+					{
+						urlMcpEndpoint ? (
+							<div class="mt-12 grid grid-cols-12 gap-6">
+								<!-- Endpoint card -->
+								<div class="col-span-12 lg:col-span-7">
+									<div class="border border-white/10 bg-[#070b13] p-7 sm:p-8">
+										<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/80">
+											MCP service · JSON-RPC
+										</p>
+										<p class="mt-2 text-xs italic text-slate-500">(not the marketing page)</p>
+										<p class="font-mono-cta mt-5 break-all text-base font-semibold text-emerald-200 sm:text-lg">
+											{urlMcpEndpoint}
+										</p>
+										<div class="mt-7 flex flex-wrap gap-2">
+											<a
+												href={urlMcpMarketing}
+												class="inline-flex items-center gap-2 bg-white px-4 py-2 text-xs font-semibold text-slate-950 transition hover:bg-emerald-200"
+											>
+												MCP marketing
+											</a>
+											{healthUrl ? (
+												<a
+													href={healthUrl}
+													class="font-mono-cta inline-flex items-center gap-2 border border-white/20 bg-transparent px-4 py-2 text-xs uppercase tracking-[0.18em] text-slate-200 transition hover:border-white/40 hover:bg-white/[0.04]"
+												>
+													GET /health
+												</a>
+											) : null}
+											{discoveryUrl ? (
+												<a
+													href={discoveryUrl}
+													class="font-mono-cta inline-flex items-center gap-2 border border-white/20 bg-transparent px-4 py-2 text-xs uppercase tracking-[0.18em] text-slate-200 transition hover:border-white/40 hover:bg-white/[0.04]"
+												>
+													GET / discovery
+												</a>
+											) : null}
+										</div>
+									</div>
+								</div>
+								<!-- Curl card -->
+								<div class="col-span-12 lg:col-span-5">
+									<div class="border border-white/10 bg-[#050810] p-5">
+										<div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+											<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Smoke · initialize</span>
+											<span class="flex gap-1">
+												<span class="block h-1.5 w-1.5 rounded-full bg-emerald-400/70"></span>
+												<span class="block h-1.5 w-1.5 rounded-full bg-amber-400/70"></span>
+												<span class="block h-1.5 w-1.5 rounded-full bg-slate-500/70"></span>
+											</span>
+										</div>
+										<pre class="font-mono-cta mt-4 overflow-x-auto text-[11px] leading-relaxed text-slate-300 sm:text-xs"><code>{curlInit}</code></pre>
+									</div>
+								</div>
+							</div>
+						) : (
+							<p class="mt-8 border border-dashed border-white/15 bg-[#070b13] p-5 text-sm text-slate-500">
+								Set <code class="font-mono-cta text-slate-300">PUBLIC_MCP_REPO_URL</code> in
+								<code class="font-mono-cta text-slate-300">.env</code> to show your MCP endpoint, health link, and curl example.
+							</p>
+						)
+					}
+
+					<div class="mt-10 border border-emerald-300/20 bg-emerald-950/[0.15] p-5 text-sm text-slate-300 sm:p-6">
+						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">
+							<span class="text-emerald-300">▸</span> Step 0 · in your app repo
+						</p>
+						<p class="mt-3">
+							<code class="font-mono-cta text-emerald-200/95">npx aadm-init-repo --minimal</code> scaffolds{' '}
+							<code class="font-mono-cta text-slate-200">.aadm/config.json</code> in your app repo.{' '}
+							<a href="/governance" class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
+								Init guide →
+							</a>
+						</p>
+						<p class="mt-3 text-xs text-slate-500">
+							Optional — the hosted MCP works <span class="text-slate-300">standalone</span> without a repo config.
+						</p>
+					</div>
+
+					{
+						hasMcpMarketingLink || urlMcpCustomerDocs ? (
+							<div class="mt-8 flex flex-col gap-2 text-xs text-slate-500">
+								{hasMcpMarketingLink ? (
+									<p>
+										Subscription covers the running service, updates, and subscriber guides — see{' '}
+										<a href={urlMcpMarketing} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
+											{urlMcpMarketing}
+										</a>
+										.
+									</p>
+								) : null}
+								{urlMcpCustomerDocs ? (
+									<p>
+										Additional material:{' '}
+										<a href={urlMcpCustomerDocs} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
+											Customer documentation
+										</a>
+									</p>
+								) : null}
+							</div>
+						) : null
+					}
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §06 — Open standard, hosted bridge (the two-products story)
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 06</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Two products</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<div class="grid grid-cols-12 gap-8">
+						<div class="col-span-12 lg:col-span-7">
+							<h2 class="font-display text-balance text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.05] tracking-[-0.025em] text-white">
+								Open standard. <span class="font-extralight italic text-slate-400">Hosted bridge.</span>
+							</h2>
+							<p class="mt-6 text-base leading-relaxed text-slate-300">
+								<span class="font-semibold text-white">One living standard, visible to everyone who ships with you.</span>
+								The text stays public so your org, partners, and community can discuss changes, propose updates, and stay on
+								the same page — like any mature open project.
+							</p>
+							<p class="mt-4 text-base leading-relaxed text-slate-400">
+								<span class="font-semibold text-white">Pay for uptime and evolution, not a zip file.</span>
+								Hosted MCP is a separate subscription so the endpoint your agents call stays online, versioned, and maintained.
+								You get operational continuity instead of self-hosting a moving target.
+							</p>
+							<p class="mt-6 text-sm leading-relaxed text-slate-500">
+								Your production AUTH, gateways, tests, and CI stay authoritative. MCP is how agents load the standard's
+								context and workflows predictably.
+							</p>
+						</div>
+						<div class="col-span-12 lg:col-span-5">
+							<div class="border border-white/10 bg-[#070b13]">
+								<div class="border-b border-white/[0.08] p-6">
+									<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">What you get</p>
+								</div>
+								<ul class="divide-y divide-white/[0.06]">
+									<li class="group flex items-start gap-4 p-6">
+										<span class="font-display mt-1 text-2xl font-extralight leading-none text-amber-200/90">A</span>
+										<div>
+											<p class="font-semibold text-amber-200">Open standard</p>
+											<p class="mt-1 text-sm leading-relaxed text-slate-400">
+												Always readable, adoptable, and improvable in public. No paywall on the definitions.
+											</p>
+										</div>
+									</li>
+									<li class="group flex items-start gap-4 p-6">
+										<span class="font-display mt-1 text-2xl font-extralight leading-none text-emerald-200/90">B</span>
+										<div>
+											<p class="font-semibold text-emerald-200">Hosted MCP</p>
+											<p class="mt-1 text-sm leading-relaxed text-slate-400">
+												Versioned tools and resources for subscribers' agents. Someone ships fixes and keeps the service
+												current.
+											</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §07 — Final CTA
+		     ============================================================= -->
+		<section class="relative bg-surface-deep">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.08),transparent_60%)]"
+			></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:px-8 sm:py-40">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 07</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Start here</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="text-emerald-200/90">▸</span> Two paths · one rail
+					</p>
+					<h2 class="font-display mt-6 max-w-[16ch] text-balance text-[clamp(2.4rem,6.8vw,6rem)] font-black leading-[0.92] tracking-[-0.04em] text-white">
+						Read it in <span class="font-extralight italic text-slate-400">public.</span><br />
+						Run it in <span class="relative inline-block">
+							<span class="relative z-10 text-emerald-300">production.</span>
+							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.08em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
+						</span>
+					</h2>
+					<p class="mt-10 max-w-xl text-base leading-relaxed text-slate-300">
+						The standard is free to read and lives in public. When your agents need versioned context they can load on every
+						turn, connect the hosted MCP.
+					</p>
+
+					<div class="mt-12 flex flex-col flex-wrap items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
+						<a
+							href={urlMcpMarketing}
+							class="group inline-flex items-center gap-3 bg-white px-8 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Connect production agents</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href={urlStandard}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-8 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Read &amp; adopt the standard
+						</a>
+						<a
+							href="/why-aadm"
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+						>
+							<span>Why AADM, vs raw loops</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
+						</a>
+					</div>
+
+					<!-- Colophon -->
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Project</span> · AADM v1
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / MCP</span>
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Hosted at</span> · <span class="text-emerald-300/80">mcp.aadm.io</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 	</main>
 </Layout>
