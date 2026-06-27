@@ -444,13 +444,16 @@ const totalCount = tools.length;
 								{
 									toolsByLane[m.key].map((tool, i) => (
 										<li
+											id={tool.tool}
 											class:list={[
-												"group flex flex-col p-6 transition duration-300 hover:bg-[#080c16] sm:p-7",
+												"group flex scroll-mt-24 flex-col p-6 transition duration-300 hover:bg-[#080c16] sm:scroll-mt-28 sm:p-7",
 												laneIdx % 2 === 0 ? "bg-[#06080f]" : "bg-surface-deep",
 											]}
 										>
 											<div class="flex items-baseline justify-between gap-3">
-												<code class="font-mono-cta break-all text-[15px] font-semibold text-white">{tool.tool}</code>
+												<code class="font-mono-cta break-all text-[15px] font-semibold text-white">
+													<a href={`#${tool.tool}`} class="transition hover:text-emerald-200">{tool.tool}</a>
+												</code>
 												<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
 													{String(i + 1).padStart(2, "0")}
 												</span>
