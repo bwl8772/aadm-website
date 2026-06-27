@@ -1,0 +1,674 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getSiteUrlConfig } from "../lib/site-urls";
+
+const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
+
+type Industry =
+	| "Media"
+	| "Edtech"
+	| "Retail"
+	| "Analytics"
+	| "Fintech"
+	| "Insurance"
+	| "Construction"
+	| "Regtech"
+	| "Logistics"
+	| "Healthcare"
+	| "HR tech";
+
+type Vignette = {
+	id: string;
+	app: string;
+	industry: Industry;
+	title: string;
+	body: string;
+	hoursLow: number;
+	hoursHigh: number;
+	tools: string[];
+	tone: "violet" | "amber" | "sky" | "emerald";
+};
+
+const vignettes: Vignette[] = [
+	{
+		id: "01",
+		app: "StudioPublish",
+		industry: "Media",
+		title: "Two exits, not one Back",
+		body: "Producers drilling into an export sub-page kept landing in the wrong parent — campaign, QC queue, or library — because a single Back control ignored where they came from. ux_surface_pass, user_flow, and pressure_test modeled two intentional exits (return to origin vs return to hub) and named component tests before any header tweak shipped.",
+		hoursLow: 12,
+		hoursHigh: 18,
+		tools: ["ux_surface_pass", "user_flow", "pressure_test"],
+		tone: "violet",
+	},
+	{
+		id: "02",
+		app: "Vertex Learning",
+		industry: "Edtech",
+		title: "Integration gap inventory",
+		body: "Product committed to a full publish loop across slide, voice, video, and LMS vendors, but engineering only had partial async jobs and fourteen scattered tickets. ux_surface_pass captured the ten-step author journey; signal_stack_outline and journey_attest tagged what was proven vs latent on operator monitoring — producing one attested requirements brief instead of repeated cross-team workshops.",
+		hoursLow: 20,
+		hoursHigh: 30,
+		tools: ["ux_surface_pass", "signal_stack_outline", "journey_attest"],
+		tone: "emerald",
+	},
+	{
+		id: "03",
+		app: "Northstar Retail",
+		industry: "Retail",
+		title: "Slice the 4k monolith",
+		body: "One merchant-admin screen (~4k LOC) shared URL state and cross-deck cache invalidation across three in-page decks — a split-without-plan would have broken purge auth. route_lane and plan_delivery sequenced hook attribution first; fetch_auth pulled tenancy controls in; architecture_lens pressure-tested purge vs archive. Named slices shipped instead of delete-and-pray.",
+		hoursLow: 30,
+		hoursHigh: 45,
+		tools: ["route_lane", "plan_delivery", "fetch_auth", "architecture_lens"],
+		tone: "violet",
+	},
+	{
+		id: "04",
+		app: "Pulse Analytics",
+		industry: "Analytics",
+		title: "False-green dashboards",
+		body: "Tenant lifecycle tests passed while finance disputed usage percentages — client DTOs fabricated fields and mocks used the wrong metric name (unattributed_pct vs unattributed_usage_pct). prism_frame split integrity vs measurement; sentinel_closure forced explicit pass/fail on schema seams — surfacing false-green dashboards separate from delete proofs.",
+		hoursLow: 16,
+		hoursHigh: 24,
+		tools: ["prism_frame", "sentinel_closure"],
+		tone: "emerald",
+	},
+	{
+		id: "05",
+		app: "LedgerFlow",
+		industry: "Fintech",
+		title: "Billing cycle math",
+		body: "Month-end API credits overshot finance expectations because the usage query treated cycle end as inclusive when the contract said exclusive — and one webhook path skipped balance checks. debug_defect and prism_frame kept the thread evidence-first; journey_attest mapped reconcile nodes. Ledger fixes landed without dashboard band-aids or “upgrade the database” detours.",
+		hoursLow: 24,
+		hoursHigh: 40,
+		tools: ["debug_defect", "prism_frame", "sentinel_closure", "journey_attest"],
+		tone: "amber",
+	},
+	{
+		id: "06",
+		app: "Harbor Insurance",
+		industry: "Insurance",
+		title: "CORS preflight trap",
+		body: "Members saw empty account settings in production while Node integration tests passed — a custom client header was missing from the CORS allow-list. debug_defect chained DevTools proof → header setter → allow-list → contract test, halting timeout-padding guesses. Fix shipped in one attested path.",
+		hoursLow: 8,
+		hoursHigh: 14,
+		tools: ["debug_defect"],
+		tone: "amber",
+	},
+	{
+		id: "07",
+		app: "BridgeWorks",
+		industry: "Construction",
+		title: "Missing projection row",
+		body: "A new work package appeared in the spine but handoff preview returned 500 — partial projection lists skipped cold-start materialization. On-call proposed doubling query timeouts. triage_bug ruled out infra; digfind targeted materialization policy. Scoped fix, no rollback.",
+		hoursLow: 10,
+		hoursHigh: 16,
+		tools: ["triage_bug", "digfind"],
+		tone: "sky",
+	},
+	{
+		id: "08",
+		app: "Atlas Compliance",
+		industry: "Regtech",
+		title: "Alert noise, not incident",
+		body: "Monitoring fired 258 critical events in one day — all one self-healing backlog tick with duplicate worker emits and zero stale rows. Leadership wanted rollback. triage_bug and classify_bug downgraded to telemetry hygiene, not customer incident.",
+		hoursLow: 12,
+		hoursHigh: 20,
+		tools: ["triage_bug", "classify_bug"],
+		tone: "amber",
+	},
+	{
+		id: "09",
+		app: "FleetDispatch",
+		industry: "Logistics",
+		title: "Three IDs, silent FK failures",
+		body: "Mid-migration, org slug, depot UUID, and middleware scope coexisted while export routes still wrote slug into UUID FK columns. prism_frame documented partial ship; fetch_seam (SEAM-06) named contract drift; map_feature listed four product blockers. Cutover continued with a decision log — not depotId ?? orgSlug spread.",
+		hoursLow: 25,
+		hoursHigh: 35,
+		tools: ["prism_frame", "route_lane", "fetch_seam", "map_feature"],
+		tone: "violet",
+	},
+	{
+		id: "10",
+		app: "Meridian Health",
+		industry: "Healthcare",
+		title: "CI cites ghost tests",
+		body: "Proof-pack scripts referenced deleted 1,300-line monoliths while invariants register still claimed they ran — auditors assumed coverage that didn't exist. fix_pack required file-absence evidence before cutover; route_lane kept it Investigator hygiene. Registry matched disk.",
+		hoursLow: 14,
+		hoursHigh: 22,
+		tools: ["fix_pack", "route_lane"],
+		tone: "emerald",
+	},
+	{
+		id: "0B",
+		app: "ClearPath Talent",
+		industry: "HR tech",
+		title: "Skills map demo widget",
+		body: "A static three-row chip map proved nothing; engineering proposed client-side D3 with invented weights while server constellation APIs already existed. ux_surface_pass and map_feature tied Expand, filters, and clustering to authoritative read models before wireframes.",
+		hoursLow: 18,
+		hoursHigh: 28,
+		tools: ["ux_surface_pass", "map_feature", "user_flow"],
+		tone: "sky",
+	},
+	{
+		id: "11",
+		app: "StudioPublish",
+		industry: "Media",
+		title: "JSONB drift 500",
+		body: "Publish dashboard returned 500 when stored queue schema lagged reader expectations. Round 1 fixed the throw, but Round 2 found taxonomy saves not invalidating projections — UI would lie “ready” on stale verdicts. debug_defect plus journey_attest closed both classes in one train.",
+		hoursLow: 40,
+		hoursHigh: 60,
+		tools: ["debug_defect", "journey_attest", "prism_frame"],
+		tone: "amber",
+	},
+	{
+		id: "12",
+		app: "Atlas Compliance",
+		industry: "Regtech",
+		title: "Computing forever",
+		body: "Audit summaries hung for 20+ minutes — ten concurrent recompiles stampeded advisory locks at 8s pooler timeout while SQL ran in 5ms. Team wanted global timeout increases. debug_defect classified missing in-flight dedupe and listed forbidden fixes.",
+		hoursLow: 32,
+		hoursHigh: 48,
+		tools: ["debug_defect", "route_lane", "fetch_seam"],
+		tone: "amber",
+	},
+	{
+		id: "13",
+		app: "Vertex Learning",
+		industry: "Edtech",
+		title: "Empty after save",
+		body: "Lesson rows persisted with a success toast, but the plan panel stayed empty — the UI gated on a nullable hint while projections 500'd on cold miss. route_lane and fetch_seam rejected warm-all-first (60–90s hangs) and client-only fallback before multi-slice work.",
+		hoursLow: 35,
+		hoursHigh: 50,
+		tools: ["route_lane", "fetch_seam", "fetch_auth", "architecture_lens"],
+		tone: "sky",
+	},
+	{
+		id: "14",
+		app: "BridgeWorks",
+		industry: "Construction",
+		title: "Phantom 409",
+		body: "First brief save returned version mismatch — timestamp OCC tokens lost microsecond precision through JavaScript Date — and recovery copy sent users to re-import workflows. route_lane, coding_principles, and plan_delivery drove integer revision counters and lane-specific conflict codes in one attested cutover.",
+		hoursLow: 28,
+		hoursHigh: 40,
+		tools: ["route_lane", "coding_principles", "plan_delivery"],
+		tone: "violet",
+	},
+	{
+		id: "15",
+		app: "Harbor Insurance",
+		industry: "Insurance",
+		title: "Release transparency",
+		body: "Underwriters saw pass/fail gates with no artifact transparency; a seven-tile “what we're shipping” strip risked merge without proof. journey_attest returned ready_with_residual (21 nodes, 0 blocking); sentinel_closure signed horizontal seams. Shipped with residuals explicit.",
+		hoursLow: 24,
+		hoursHigh: 36,
+		tools: ["journey_attest", "sentinel_closure", "architecture_lens"],
+		tone: "emerald",
+	},
+	{
+		id: "16",
+		app: "ClearPath Talent",
+		industry: "HR tech",
+		title: "One assistant brain",
+		body: "Recruiting, onboarding, learning, and analytics each hardcoded different assistant actions — MCP and an assignment console would have added a fifth brain. map_feature, plan_delivery, and grill_questions locked one resolver, drop-reason codes, and CI guardrails before UI sprawl.",
+		hoursLow: 45,
+		hoursHigh: 70,
+		tools: ["map_feature", "plan_delivery", "grill_questions"],
+		tone: "violet",
+	},
+	{
+		id: "17",
+		app: "StudioPublish",
+		industry: "Media",
+		title: "Deletion test wins",
+		body: "A spec still required a four-verb dropdown while a per-slot rerun strip already shipped the same backend — building the menu would introduce a second client resolver with zero new capability. grill_questions and architecture_lens failed the menu on the deletion test; doc cleanup only.",
+		hoursLow: 30,
+		hoursHigh: 45,
+		tools: ["grill_questions", "architecture_lens"],
+		tone: "sky",
+	},
+	{
+		id: "18",
+		app: "Vertex Learning",
+		industry: "Edtech",
+		title: "Structure brain first",
+		body: "A headless cron worker was ready to wire Stage 2 outline generation beside the orchestrator — risk of divergent module plans and mismatched recipes. grill_questions audit_mode CONFIRM GO blocked Stage 2 until a pedagogy resolver landed.",
+		hoursLow: 16,
+		hoursHigh: 24,
+		tools: ["grill_questions", "route_lane", "architecture_lens"],
+		tone: "emerald",
+	},
+	{
+		id: "19",
+		app: "Atlas Compliance",
+		industry: "Regtech",
+		title: "Targeted test recovery",
+		body: "Remediation touched 50+ spec files; each guess triggered ~90-minute full CI. journey_attest smoke marked proven vs latent nodes; fix_pack anchored evidence per cluster. Recovery ran targeted bundles instead of shotgun CI.",
+		hoursLow: 50,
+		hoursHigh: 80,
+		tools: ["journey_attest", "fix_pack", "pressure_test"],
+		tone: "amber",
+	},
+	{
+		id: "20",
+		app: "FleetDispatch",
+		industry: "Logistics",
+		title: "Product decision menu",
+		body: "Engineering was ready for org→depot cutover but product hadn't decided catalog scope, scope columns, assistant rail, or agent API safety — and coders started assuming answers. slice_issues, grill_questions, and map_feature produced a numbered decision menu in one agent session.",
+		hoursLow: 20,
+		hoursHigh: 30,
+		tools: ["slice_issues", "grill_questions", "map_feature", "prism_frame"],
+		tone: "violet",
+	},
+];
+
+const toneClasses: Record<Vignette["tone"], { numeral: string; rule: string; chip: string; hour: string }> = {
+	violet: { numeral: "text-violet-300/90", rule: "border-violet-400/40", chip: "border-violet-400/30 text-violet-200", hour: "border-violet-300/30 bg-violet-950/30 text-violet-100" },
+	amber: { numeral: "text-amber-300/90", rule: "border-amber-300/40", chip: "border-amber-300/30 text-amber-200", hour: "border-amber-300/30 bg-amber-950/30 text-amber-100" },
+	sky: { numeral: "text-sky-300/90", rule: "border-sky-400/40", chip: "border-sky-400/30 text-sky-200", hour: "border-sky-300/30 bg-sky-950/30 text-sky-100" },
+	emerald: { numeral: "text-emerald-300/90", rule: "border-emerald-300/40", chip: "border-emerald-300/30 text-emerald-200", hour: "border-emerald-300/30 bg-emerald-950/30 text-emerald-100" },
+};
+
+const totalLow = vignettes.reduce((s, v) => s + v.hoursLow, 0);
+const totalHigh = vignettes.reduce((s, v) => s + v.hoursHigh, 0);
+
+const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
+	const map = new Map<Industry, number>();
+	for (const v of vignettes) map.set(v.industry, (map.get(v.industry) ?? 0) + 1);
+	return Array.from(map.entries())
+		.map(([industry, count]) => ({ industry, count }))
+		.sort((a, b) => b.count - a.count);
+})();
+---
+
+<Layout
+	title="AADM stories — patterns from the field"
+	description={`Twenty-one vignettes from agent sessions with the hosted AADM MCP — fictional apps, real patterns, illustrative hour ranges. Portfolio band ~${totalLow}–${totalHigh} engineer-hours redirected from wrong fixes.`}
+	headerActiveNav="stories"
+>
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+
+		<!-- =============================================================
+		     §00 — Hero
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
+			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.06] blur-3xl"></div>
+			<div aria-hidden="true" class="absolute left-0 top-40 -z-10 h-[32rem] w-[32rem] -translate-x-1/3 rounded-full bg-amber-500/[0.05] blur-3xl"></div>
+
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 00</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Stories · field</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="text-amber-200/90">▸</span> 21 vignettes · May 2026 → June 2026 · agent sessions with the hosted AADM MCP
+					</p>
+
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-black leading-[0.9] tracking-[-0.04em] text-white">
+						Patterns <span class="font-extralight italic text-slate-400">from the field.</span>
+					</h1>
+
+					<div class="mt-12 grid grid-cols-12 gap-6">
+						<div class="col-span-12 sm:col-span-4">
+							<div class="border-l border-emerald-300/40 pl-5">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-emerald-200/80">Portfolio band</p>
+								<p class="font-display mt-3 text-balance text-3xl font-black leading-tight text-white sm:text-4xl">
+									~{totalLow.toLocaleString()}–{totalHigh.toLocaleString()}<span class="font-mono-cta ml-2 align-middle text-[11px] uppercase tracking-[0.22em] text-emerald-200/85">engineer-hours</span>
+								</p>
+								<p class="mt-3 text-sm leading-relaxed text-slate-400">
+									Redirected from wrong fixes, duplicate UI, false CI, and meeting loops across these 20+1 patterns — not raw codegen
+									speed.
+								</p>
+							</div>
+						</div>
+						<div class="col-span-12 sm:col-span-8">
+							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+								These are real session patterns from teams running the AADM MCP. The app names are
+								<span class="font-extralight italic text-slate-400"> fictional.</span> The bugs, refactors, and decisions are not.
+								Hours are illustrative — the typical-wrong-path vs the attested-path, for a senior engineer + agent pair.
+							</p>
+						</div>
+					</div>
+
+					<div class="mt-12 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+						<a
+							href="#vignettes"
+							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Read the vignettes</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href={urlMcpMarketing}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Get access
+						</a>
+						<a
+							href="#honest-boundary"
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+						>
+							<span>The honest boundary</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↓</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §01 — Honesty box (apps fictional, patterns real)
+		     ============================================================= -->
+		<section id="honest-boundary" class="relative scroll-mt-24 border-b border-white/[0.06] bg-[#06080f] sm:scroll-mt-28">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-20 sm:px-8 sm:py-24">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 01</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Read this first</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[24ch] text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.05] tracking-[-0.025em] text-white">
+						Fictional apps. <span class="font-extralight italic text-slate-400">Real patterns.</span>
+					</h2>
+
+					<div class="mt-12 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+						{
+							[
+								{
+									num: "A",
+									title: "App names are fictional",
+									body: "StudioPublish, LedgerFlow, FleetDispatch — none of these are real customers. The bugs, refactors, and product calls behind each story are real; the brand has been anonymized.",
+								},
+								{
+									num: "B",
+									title: "Hours are illustrative",
+									body: "Ranges compare a typical wrong-path (meetings, false fixes, full CI, parallel UI) against the attested AADM path. A senior engineer + agent pair, not a guaranteed SLA.",
+								},
+								{
+									num: "C",
+									title: "AADM frames; your repo proves",
+									body: "AADM MCP frames problems, names seams, and enforces evidence obligations. Your repository's tests and CI still decide pass/fail. Nothing here is a compliance verdict.",
+								},
+							].map((item) => (
+								<article class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-8">
+									<div class="flex items-baseline gap-4">
+										<span class="font-display text-[3.5rem] font-extralight leading-[0.85] text-amber-300/85 transition duration-300 group-hover:text-amber-300">{item.num}</span>
+									</div>
+									<h3 class="font-display mt-6 text-balance text-lg font-bold leading-snug tracking-tight text-white">{item.title}</h3>
+									<p class="mt-3 text-sm leading-relaxed text-slate-400">{item.body}</p>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §02 — Vignette cards (all 21)
+		     ============================================================= -->
+		<section id="vignettes" class="relative scroll-mt-24 border-b border-white/[0.06] sm:scroll-mt-28">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 02</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">{vignettes.length} vignettes</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						The catalog. <span class="font-extralight italic text-slate-400">In one place.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						Each card · the app (fictional), the industry, what the team would have done without governance, what AADM tools moved
+						the conversation, and an illustrative hours-saved range. Read straight through, or skim for shapes that match your work.
+					</p>
+
+					<ul class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
+						{
+							vignettes.map((v) => {
+								const t = toneClasses[v.tone];
+								return (
+									<li class="group flex flex-col bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-9">
+										<header class="flex items-baseline justify-between gap-4">
+											<div class="flex items-baseline gap-4">
+												<span class:list={["font-display text-[3.5rem] font-extralight leading-[0.85] tracking-tight sm:text-[4rem]", t.numeral]}>
+													{v.id}
+												</span>
+												<div>
+													<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{v.industry}</p>
+													<h3 class="font-display mt-1 text-balance text-lg font-bold leading-snug text-white sm:text-xl">
+														{v.app}
+													</h3>
+												</div>
+											</div>
+											<span class:list={["border px-2.5 py-1 font-mono-cta text-[10px] uppercase tracking-[0.22em]", t.hour]}>
+												{v.hoursLow}–{v.hoursHigh} hrs
+											</span>
+										</header>
+
+										<p class="font-display mt-7 text-balance text-[1.05rem] font-bold leading-snug tracking-tight text-white sm:text-[1.15rem]">
+											{v.title}
+										</p>
+										<p class="mt-3 text-sm leading-relaxed text-slate-300">{v.body}</p>
+
+										<div class:list={["mt-6 border-l pl-4", t.rule]}>
+											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Tools the agent called</p>
+											<div class="mt-2 flex flex-wrap gap-1.5">
+												{v.tools.map((tool) => (
+													<code class:list={["font-mono-cta border bg-transparent px-2 py-0.5 text-[11px]", t.chip]}>
+														{tool}
+													</code>
+												))}
+											</div>
+										</div>
+
+										<div aria-hidden="true" class="mt-auto pt-6">
+											<div class:list={["h-px w-10 transition-all duration-500 group-hover:w-20", t.numeral.replace("text-", "bg-").replace("/90", "/50")]}></div>
+										</div>
+									</li>
+								);
+							})
+						}
+					</ul>
+
+					<p class="mt-12 max-w-3xl text-sm leading-relaxed text-slate-500">
+						Hour ranges are method · typical wrong path (meetings, wrong fixes, full CI, parallel UI) vs attested path (one
+						governed agent session). A senior engineer + agent pair. Not a guaranteed SLA. Not a compliance claim. Your repository's
+						tests and CI still decide pass/fail.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §03 — Industry rollup + portfolio band
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 03</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Rollup</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						The portfolio band. <span class="font-extralight italic text-slate-400">All 21 together.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						If the patterns above all ran in your quarter — they won't all show up, but the shapes recur — the redirected effort
+						adds up.
+					</p>
+
+					<div class="mt-14 grid grid-cols-12 gap-6">
+						<div class="col-span-12 lg:col-span-7">
+							<div class="border border-emerald-300/30 bg-[#070b13] p-7 sm:p-10">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">If the 21 patterns landed in one quarter</p>
+								<p class="font-display mt-5 text-balance text-[clamp(2.6rem,6vw,5rem)] font-black leading-[0.95] tracking-tight text-white">
+									~{totalLow.toLocaleString()}<span class="text-slate-500">–</span>{totalHigh.toLocaleString()}
+								</p>
+								<p class="font-mono-cta mt-2 text-[11px] uppercase tracking-[0.22em] text-emerald-200/85">engineer-hours redirected</p>
+								<p class="mt-6 text-sm leading-relaxed text-slate-300">
+									Redirected from wrong fixes, duplicate UI, false CI, and meeting loops. Not raw codegen throughput. Not a compliance
+									claim. A summed estimate of the kinds of wasted time these patterns prevent.
+								</p>
+							</div>
+						</div>
+						<div class="col-span-12 lg:col-span-5">
+							<div class="border-l-2 border-emerald-300/40 pl-6">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">By industry · {vignettes.length} vignettes</p>
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+									{
+										industryRollup.map((row) => (
+											<li class="group grid grid-cols-[1fr_auto] items-baseline gap-4 py-3">
+												<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">{row.industry}</span>
+												<span class="font-mono-cta text-[11px] uppercase tracking-[0.22em] text-emerald-200/85">{row.count}</span>
+											</li>
+										))
+									}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §04 — Copy rules / what AADM doesn't claim
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 04</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Copy rules</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.05] tracking-[-0.025em] text-white">
+						How we talk about this. <span class="font-extralight italic text-slate-400">How we don't.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						The framing rules we hold ourselves to when reporting these patterns. Useful if you're considering AADM and want to
+						know what claims we'll make in front of your auditor.
+					</p>
+
+					<div class="mt-14 grid grid-cols-12 gap-6">
+						<div class="col-span-12 lg:col-span-6">
+							<div class="border-l-2 border-emerald-300/40 pl-6">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">We say</p>
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+									{
+										[
+											"12–18 hours avoided wrong Back button implementation and review cycle",
+											"debug_defect classified root cause in one session; forbade timeout padding",
+											"Round 2 journey_attest caught stale verdicts before ship",
+											"Vertical through_domain_and_data plus horizontal seams signed off",
+										].map((line) => (
+											<li class="grid grid-cols-[auto_1fr] items-baseline gap-3 py-3">
+												<span class="font-mono-cta text-[11px] text-emerald-300/80">✓</span>
+												<span class="text-sm leading-relaxed text-slate-300">{line}</span>
+											</li>
+										))
+									}
+								</ul>
+							</div>
+						</div>
+						<div class="col-span-12 lg:col-span-6">
+							<div class="border-l-2 border-amber-300/40 pl-6">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/85">We don't say</p>
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+									{
+										[
+											"AADM saved 90% of development",
+											"AADM fixed production",
+											"Zero bugs after AADM",
+											"Certified compliant",
+										].map((line) => (
+											<li class="grid grid-cols-[auto_1fr] items-baseline gap-3 py-3">
+												<span class="font-mono-cta text-[11px] text-amber-300/80">✗</span>
+												<span class="text-sm leading-relaxed text-slate-400">{line}</span>
+											</li>
+										))
+									}
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<p class="mt-12 max-w-3xl text-base leading-relaxed text-slate-300">
+						<span class="font-semibold text-white">Honest boundary ·</span> AADM MCP frames problems, names seams, and enforces
+						proof obligations. <span class="font-extralight italic text-slate-400">Your repository's tests and evidence</span> still
+						decide pass/fail. That's the line, and we hold it.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §05 — Share your story + CTA
+		     ============================================================= -->
+		<section class="relative bg-surface-deep">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.07),transparent_60%)]"></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 05</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Yours</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[16ch] text-balance text-[clamp(2rem,5.5vw,4.4rem)] font-black leading-[0.95] tracking-[-0.03em] text-white">
+						The best case study <span class="font-extralight italic text-slate-400">is yours.</span>
+					</h2>
+					<p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
+						Try the patterns on something real this week. Catch a classification bug, attest a release without theater, onboard
+						a senior engineer in a week. When it works, tell us — we'll feature consenting teams here.
+					</p>
+
+					<div class="mt-12 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+						<a
+							href={urlMcpMarketing}
+							class="group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200"
+						>
+							<span>Connect production agents</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href={urlStandard}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-7 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04]"
+						>
+							Read the standard
+						</a>
+						<a
+							href="/why-aadm"
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+						>
+							<span>Why AADM, vs raw loops</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
+						</a>
+					</div>
+
+					<!-- Colophon -->
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Catalog</span> · {vignettes.length} vignettes
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Period</span> · <span class="text-emerald-300/80">2026-05-28 → 2026-06-27</span>
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Hours band</span> · <span class="text-emerald-300/80">~{totalLow.toLocaleString()}–{totalHigh.toLocaleString()} engineer-hours redirected</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>

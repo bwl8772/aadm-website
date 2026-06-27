@@ -53,7 +53,8 @@ const comparisons: Comparison[] = [
 	{
 		num: "05",
 		scenario: "A team using three different IDEs",
-		plain: "Same task, three different agent behaviours, three styles in review.",
+		plain:
+			"Same task, three different agent behaviours, three styles in review.",
 		without:
 			"Each engineer's prompts diverge. Quality depends on whoever was at the keyboard. Review gets noisy.",
 		with: "One hosted standard, one set of workflows. Every IDE — Cursor, Claude Code, Windsurf, anything that speaks MCP — loads the same lanes and gates.",
@@ -110,12 +111,20 @@ const lanes: Lane[] = [
 		plain:
 			"Show — in language an auditor or compliance lead will accept — that the controls you say you have are actually in place.",
 		tech: "Audit programs scope seams. Evidence binds per crossing. Closure tiers come back in VERT/HORI language.",
-		tools: ["audit_run", "audit_outline", "sentinel_closure", "sentinel_stage_guide"],
+		tools: [
+			"audit_run",
+			"audit_outline",
+			"sentinel_closure",
+			"sentinel_stage_guide",
+		],
 		tone: "emerald",
 	},
 ];
 
-const laneToneClasses: Record<Lane["tone"], { numeral: string; rule: string; chip: string; accent: string; glow: string }> = {
+const laneToneClasses: Record<
+	Lane["tone"],
+	{ numeral: string; rule: string; chip: string; accent: string; glow: string }
+> = {
 	violet: {
 		numeral: "text-violet-300/90",
 		rule: "border-violet-400/40",

@@ -2,9 +2,16 @@
 import Layout from "../layouts/Layout.astro";
 import { getSiteUrlConfig } from "../lib/site-urls";
 
-const { urlStandard, urlMcpMarketing, urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
+const { urlStandard, urlMcpMarketing, urlMcpRpcUrl } = getSiteUrlConfig(
+	import.meta.env,
+);
 
-type Lane = "Orchestration" | "Navigator" | "Investigator" | "Sentinel" | "Doctrine";
+type Lane =
+	| "Orchestration"
+	| "Navigator"
+	| "Investigator"
+	| "Sentinel"
+	| "Doctrine";
 
 type Tool = {
 	tool: string;
@@ -19,168 +26,192 @@ const tools: Tool[] = [
 		tool: "standard_brief",
 		primary: "Orchestration",
 		badges: ["Orchestration"],
-		purpose: "One call loads workflow parity, orchestrator contract, follow-on catalog, and Sentinel assurance JSON hosts branch on.",
+		purpose:
+			"One call loads workflow parity, orchestrator contract, follow-on catalog, and Sentinel assurance JSON hosts branch on.",
 		when: "First call in a session — gives the host its branching map before any specific work begins.",
 	},
 	{
 		tool: "route_lane",
 		primary: "Orchestration",
 		badges: ["Orchestration"],
-		purpose: "When intent is already delivery, defect, or assurance, return deterministic routing metadata — no keyword roulette.",
+		purpose:
+			"When intent is already delivery, defect, or assurance, return deterministic routing metadata — no keyword roulette.",
 		when: "When you already know the lane and want a stable handoff to the next tool.",
 	},
 	{
 		tool: "orchestrator_anchor",
 		primary: "Orchestration",
 		badges: ["Orchestration"],
-		purpose: "Long-running jobs get a stable checklist · what to persist outside MCP, session notes, when to refresh the brief.",
+		purpose:
+			"Long-running jobs get a stable checklist · what to persist outside MCP, session notes, when to refresh the brief.",
 		when: "Sessions that span hours — anchors the orchestrator so it doesn't drift.",
 	},
 	{
 		tool: "plan_delivery",
 		primary: "Navigator",
 		badges: ["Navigator"],
-		purpose: "Turn a task into UDALI-shaped delivery handoffs with doctrine-backed scope and integrator-ready language.",
+		purpose:
+			"Turn a task into UDALI-shaped delivery handoffs with doctrine-backed scope and integrator-ready language.",
 		when: "New feature, structural change, or material improvement — before any code is written.",
 	},
 	{
 		tool: "map_feature",
 		primary: "Navigator",
 		badges: ["Navigator"],
-		purpose: "Seed layer and AUTH-XX hints from a short feature description — explicitly suggestive until your architecture confirms.",
+		purpose:
+			"Seed layer and AUTH-XX hints from a short feature description — explicitly suggestive until your architecture confirms.",
 		when: "Quick recon on where a feature would land in your stack before sizing it.",
 	},
 	{
 		tool: "fetch_auth",
 		primary: "Doctrine",
 		badges: ["Doctrine"],
-		purpose: "Pull the official markdown for a numbered AUTH control so prompts cite governance text, not paraphrase.",
+		purpose:
+			"Pull the official markdown for a numbered AUTH control so prompts cite governance text, not paraphrase.",
 		when: "Any time AUTH-XX is in scope — never let the agent invent what a control says.",
 	},
 	{
 		tool: "fetch_seam",
 		primary: "Doctrine",
 		badges: ["Doctrine", "Sentinel"],
-		purpose: "Load a SEAM-00–15 handoff archetype — scope for trace/assurance (normalization, dispatch, persistence).",
+		purpose:
+			"Load a SEAM-00–15 handoff archetype — scope for trace/assurance (normalization, dispatch, persistence).",
 		when: "Anything that crosses a boundary · pair with the seam-check worksheet resource.",
 	},
 	{
 		tool: "role_guide",
 		primary: "Doctrine",
 		badges: ["Doctrine"],
-		purpose: "Slice UDALI agent doctrine (Unifier, Designer, Adapter, Logician, Integrator) for the role and task you are in.",
+		purpose:
+			"Slice UDALI agent doctrine (Unifier, Designer, Adapter, Logician, Integrator) for the role and task you are in.",
 		when: "When the role behind the task is unclear and you want the right doctrine slice.",
 	},
 	{
 		tool: "debug_defect",
 		primary: "Investigator",
 		badges: ["Investigator"],
-		purpose: "Gated defect machine · Path A recon, Path B only after proof, execution-control appendix, troubleshooter response gates.",
+		purpose:
+			"Gated defect machine · Path A recon, Path B only after proof, execution-control appendix, troubleshooter response gates.",
 		when: "Anything broken vs expected — the canonical defect entry point.",
 	},
 	{
 		tool: "debug_bundle",
 		primary: "Investigator",
 		badges: ["Investigator"],
-		purpose: "Advanced hosts send a full integrated troubleshooter payload when they need the bundled diagnosis shape.",
+		purpose:
+			"Advanced hosts send a full integrated troubleshooter payload when they need the bundled diagnosis shape.",
 		when: "Hosts that already know they want the full integrated payload — not for general use.",
 	},
 	{
 		tool: "debug_hint",
 		primary: "Investigator",
 		badges: ["Investigator"],
-		purpose: "Lightweight recon-vs-diagnose hint before you commit to a full debug_defect turn.",
+		purpose:
+			"Lightweight recon-vs-diagnose hint before you commit to a full debug_defect turn.",
 		when: "When you're not sure yet whether the issue is real or a misread.",
 	},
 	{
 		tool: "classify_bug",
 		primary: "Investigator",
 		badges: ["Investigator"],
-		purpose: "Classify ownership and routing early so the right lane — not the loudest symptom — owns the next step.",
+		purpose:
+			"Classify ownership and routing early so the right lane — not the loudest symptom — owns the next step.",
 		when: "Intake · before assigning the issue or starting investigation.",
 	},
 	{
 		tool: "triage_bug",
 		primary: "Investigator",
 		badges: ["Investigator"],
-		purpose: "Map a rough symptom to suggested AUTH topics and stack band for intake before deeper debugging.",
+		purpose:
+			"Map a rough symptom to suggested AUTH topics and stack band for intake before deeper debugging.",
 		when: "Earliest triage · noisy symptom, unclear which subsystem owns it.",
 	},
 	{
 		tool: "fix_pack",
 		primary: "Investigator",
 		badges: ["Investigator"],
-		purpose: "After evidence and gates pass, emit an authorized fix prompt pack sized for coding agents — no premature refactor stories.",
+		purpose:
+			"After evidence and gates pass, emit an authorized fix prompt pack sized for coding agents — no premature refactor stories.",
 		when: "Only after CLASSIFIED · the bridge from diagnosis to executable fix.",
 	},
 	{
 		tool: "audit_interview",
 		primary: "Sentinel",
 		badges: ["Sentinel"],
-		purpose: "Step through vertical depth and horizontal seams until scope is confirmable; then merge into outline-shaped intake.",
+		purpose:
+			"Step through vertical depth and horizontal seams until scope is confirmable; then merge into outline-shaped intake.",
 		when: "Audit prep · when scope is fuzzy and you need a structured interview to pin it down.",
 	},
 	{
 		tool: "audit_outline",
 		primary: "Sentinel",
 		badges: ["Sentinel"],
-		purpose: "Produce the assurance scaffold · sections, checklist pointers, coder requests, human-editable confirmation.",
+		purpose:
+			"Produce the assurance scaffold · sections, checklist pointers, coder requests, human-editable confirmation.",
 		when: "When scope is confirmed and you need the audit document scaffold.",
 	},
 	{
 		tool: "audit_run",
 		primary: "Sentinel",
 		badges: ["Sentinel"],
-		purpose: "Plain-language “run an audit” asks become a program-aware intake plus top-findings brief for a repo-connected agent.",
+		purpose:
+			"Plain-language “run an audit” asks become a program-aware intake plus top-findings brief for a repo-connected agent.",
 		when: "When a stakeholder says “run an audit” and you need that to become structured work.",
 	},
 	{
 		tool: "sentinel_programs",
 		primary: "Sentinel",
 		badges: ["Sentinel"],
-		purpose: "Snapshot every bundled Sentinel audit program template without pulling the full standard_brief payload.",
+		purpose:
+			"Snapshot every bundled Sentinel audit program template without pulling the full standard_brief payload.",
 		when: "Browsing available audit programs without the cost of a full brief.",
 	},
 	{
 		tool: "sentinel_program",
 		primary: "Sentinel",
 		badges: ["Sentinel"],
-		purpose: "Fetch one audit program row by id when hosts only need that template's rigor spine and evidence expectations.",
+		purpose:
+			"Fetch one audit program row by id when hosts only need that template's rigor spine and evidence expectations.",
 		when: "You know which audit program applies and just need its template.",
 	},
 	{
 		tool: "sentinel_attestation_examples",
 		primary: "Sentinel",
 		badges: ["Sentinel"],
-		purpose: "Shipped seam-tier examples so teams see how depth and boundaries translate to must-prove vs latent seams.",
+		purpose:
+			"Shipped seam-tier examples so teams see how depth and boundaries translate to must-prove vs latent seams.",
 		when: "Teaching a team how attestation depth maps to real seams in their stack.",
 	},
 	{
 		tool: "sentinel_closure",
 		primary: "Sentinel",
 		badges: ["Sentinel"],
-		purpose: "Resolve closure tiers from attestation depth, vertical claim, and horizontal seams — deterministic seam language.",
+		purpose:
+			"Resolve closure tiers from attestation depth, vertical claim, and horizontal seams — deterministic seam language.",
 		when: "Reporting an audit's outcome in language an auditor will accept.",
 	},
 	{
 		tool: "sentinel_stage_guide",
 		primary: "Sentinel",
 		badges: ["Sentinel"],
-		purpose: "Gate helper for one assurance stage of a chosen program — keeps humans oriented inside the three-stage spine.",
+		purpose:
+			"Gate helper for one assurance stage of a chosen program — keeps humans oriented inside the three-stage spine.",
 		when: "Mid-audit · when humans need to know where they are and what's next.",
 	},
 	{
 		tool: "sentinel_handoff_hint",
 		primary: "Sentinel",
 		badges: ["Sentinel"],
-		purpose: "After a sentinel_audit_exit_kind, get deterministic wording for staying in assurance or opening Navigator or Investigator.",
+		purpose:
+			"After a sentinel_audit_exit_kind, get deterministic wording for staying in assurance or opening Navigator or Investigator.",
 		when: "When an audit surfaces a gap and you need to route it to delivery or defect work.",
 	},
 	{
 		tool: "sentinel_canonical_refs",
 		primary: "Sentinel",
 		badges: ["Sentinel"],
-		purpose: "Curated resources/read URIs for delivery and assurance lanes so hosts wire doctrine without hunting the catalog.",
+		purpose:
+			"Curated resources/read URIs for delivery and assurance lanes so hosts wire doctrine without hunting the catalog.",
 		when: "Wiring a new host integration · the canonical resources to load first.",
 	},
 ];
@@ -201,7 +232,8 @@ const laneMeta: LaneMeta[] = [
 		key: "Orchestration",
 		numeral: "00",
 		tagline: "Routing · session anchors · the host's branching map",
-		plain: "Tools the host calls first. They tell the agent what kind of work is on the table and how to branch.",
+		plain:
+			"Tools the host calls first. They tell the agent what kind of work is on the table and how to branch.",
 		tone: "amber",
 		accent: "text-amber-300/90",
 		chip: "border-amber-300/40 text-amber-200",
@@ -211,7 +243,8 @@ const laneMeta: LaneMeta[] = [
 		key: "Navigator",
 		numeral: "I",
 		tagline: "Delivery · building something new",
-		plain: "Turn a vague ask into layer-aware slices with authorization, ownership, and acceptance criteria baked in.",
+		plain:
+			"Turn a vague ask into layer-aware slices with authorization, ownership, and acceptance criteria baked in.",
 		tone: "violet",
 		accent: "text-violet-300/90",
 		chip: "border-violet-400/40 text-violet-200",
@@ -221,7 +254,8 @@ const laneMeta: LaneMeta[] = [
 		key: "Investigator",
 		numeral: "II",
 		tagline: "Defect · something is broken",
-		plain: "Evidence-first. Recon classifies the failure; remediation is gated until proof crosses the router.",
+		plain:
+			"Evidence-first. Recon classifies the failure; remediation is gated until proof crosses the router.",
 		tone: "sky",
 		accent: "text-sky-300/90",
 		chip: "border-sky-400/40 text-sky-200",
@@ -231,7 +265,8 @@ const laneMeta: LaneMeta[] = [
 		key: "Sentinel",
 		numeral: "III",
 		tagline: "Assurance · proving alignment",
-		plain: "Audit programs scope seams. Evidence binds per crossing. Closure tiers come back in VERT/HORI language.",
+		plain:
+			"Audit programs scope seams. Evidence binds per crossing. Closure tiers come back in VERT/HORI language.",
 		tone: "emerald",
 		accent: "text-emerald-300/90",
 		chip: "border-emerald-400/40 text-emerald-200",
@@ -241,7 +276,8 @@ const laneMeta: LaneMeta[] = [
 		key: "Doctrine",
 		numeral: "IV",
 		tagline: "Reference · canonical text from the standard",
-		plain: "Pull canonical AUTH controls, SEAM archetypes, and role doctrine straight from the standard — verbatim, not paraphrased.",
+		plain:
+			"Pull canonical AUTH controls, SEAM archetypes, and role doctrine straight from the standard — verbatim, not paraphrased.",
 		tone: "slate",
 		accent: "text-slate-300/90",
 		chip: "border-slate-300/40 text-slate-200",
@@ -272,7 +308,7 @@ const totalCount = tools.length;
 <Layout
 	title="AADM tools catalog — every typed tool the MCP exposes"
 	description="All 24 typed MCP tools the AADM server exposes — grouped by lane, with plain-English purpose and when-to-call. tools/list on your running server is authoritative."
-	headerActiveNav={null}
+	headerActiveNav="tools"
 >
 	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
 

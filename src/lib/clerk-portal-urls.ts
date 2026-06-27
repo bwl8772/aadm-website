@@ -95,8 +95,7 @@ export function isClerkSatelliteFromEnv(env: ImportMetaEnv): boolean {
 	if (explicit) {
 		return explicit.toLowerCase() === "true" || explicit === "1";
 	}
-	const signIn =
-		trim(env.PUBLIC_CLERK_SIGN_IN_URL) || CLERK_ACCOUNTS_SIGN_IN;
+	const signIn = trim(env.PUBLIC_CLERK_SIGN_IN_URL) || CLERK_ACCOUNTS_SIGN_IN;
 	try {
 		const signInHost = new URL(signIn).hostname;
 		const marketingHost = new URL(marketingOriginFromEnv(env)).hostname;

@@ -9,9 +9,12 @@ import { trim } from "./site-urls";
  * which Vite inlines at build time and would stay empty when only set at deploy runtime.
  */
 export function primaryOAuthClientIdFromEnv(_env?: ImportMetaEnv): string {
-	const runtime = trim(
-		typeof process !== "undefined" ? process.env.CLERK_OAUTH_CLIENT_ID : "",
-	);
+	const proc = (
+		globalThis as {
+			process?: { env?: Record<string, string | undefined> };
+		}
+	).process;
+	const runtime = trim(proc?.env?.CLERK_OAUTH_CLIENT_ID ?? "");
 	if (runtime) return runtime;
 	return trim(_env?.CLERK_OAUTH_CLIENT_ID) || "";
 }

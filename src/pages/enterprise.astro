@@ -1,0 +1,441 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getSiteUrlConfig } from "../lib/site-urls";
+
+const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
+
+type Pillar = {
+	num: string;
+	title: string;
+	body: string;
+	tone: "amber" | "emerald" | "violet";
+};
+
+const pillars: Pillar[] = [
+	{
+		num: "01",
+		title: "Read-only by design",
+		body: "The MCP server does not scan your repository, mutate your database, or run your business logic. It returns versioned text and structured JSON — that's it. The blast radius of any agent call is bounded by what your IDE and your CI already allow.",
+		tone: "emerald",
+	},
+	{
+		num: "02",
+		title: "Open standard, public scrutiny",
+		body: "The AADM standard lives in public on GitHub. Your security and compliance teams can read every workflow, control reference, and seam definition. There is no proprietary black box behind what the agent loads.",
+		tone: "amber",
+	},
+	{
+		num: "03",
+		title: "Your AUTH stays authoritative",
+		body: "AADM describes how controls should apply. Your production gateways, services, and CI prove enforcement. The MCP never claims a release is “certified” — its language is recommendation, not verdict.",
+		tone: "violet",
+	},
+];
+
+const pillarToneClasses: Record<
+	Pillar["tone"],
+	{ numeral: string; rule: string; chip: string }
+> = {
+	emerald: {
+		numeral: "text-emerald-300/90",
+		rule: "border-emerald-300/40",
+		chip: "border-emerald-300/30 text-emerald-200",
+	},
+	amber: {
+		numeral: "text-amber-300/90",
+		rule: "border-amber-300/40",
+		chip: "border-amber-300/30 text-amber-200",
+	},
+	violet: {
+		numeral: "text-violet-300/90",
+		rule: "border-violet-300/40",
+		chip: "border-violet-300/30 text-violet-200",
+	},
+};
+
+const ddQuestions = [
+	{
+		num: "01",
+		q: "Does the MCP see our source code?",
+		a: "No. The MCP server returns versioned standard text and structured JSON. It does not have network access to your repo, your branches, or your CI. Your IDE and your agent read code locally — the MCP is told nothing about it.",
+	},
+	{
+		num: "02",
+		q: "Where does authentication happen?",
+		a: "Auth is brokered through Clerk. Subscribers receive either a Bearer API key (ak_…) or an OAuth client ID — both are managed in the member area. Tokens never need to leave your IDE; we don't see your IDE keystrokes.",
+	},
+	{
+		num: "03",
+		q: "What is logged on the server side?",
+		a: "Operational telemetry for service health (latency, error counts, tool-call rates) — not request bodies, not your code, not your conversations. Treat the MCP like any other governed SaaS API your platform team would approve.",
+	},
+	{
+		num: "04",
+		q: "Can we self-host?",
+		a: "The hosted MCP is the recommended path — versioned, maintained, and on rails. Talk to us about self-hosting if you have a hard data-residency requirement; the standard repo is open so you have leverage.",
+	},
+	{
+		num: "05",
+		q: "How do we rotate tokens?",
+		a: "Tokens are managed in the AADM member area. Revoke and reissue without redeploying your IDE config — paste the new token into the same mcpServers.aadm block.",
+	},
+	{
+		num: "06",
+		q: "Who is responsible for what?",
+		a: "AADM is responsible for the standard and the running service. You are responsible for your codebase, your AUTH enforcement, your tests, your CI. The MCP makes it easier to encode and enforce the boundary; it doesn't move it.",
+	},
+];
+
+const audiences = [
+	{
+		letter: "A",
+		role: "Procurement",
+		body: "Open standard text · Bearer-token or OAuth auth · no scanning of your repo · Clerk for identity · operational telemetry only. Brief security and skip the long RFP.",
+	},
+	{
+		letter: "B",
+		role: "Platform & DevEx",
+		body: "One hosted MCP, one Streamable HTTP endpoint. Versioned tools, deterministic routing, capability bumps on your schedule. No per-team prompt sprawl.",
+	},
+	{
+		letter: "C",
+		role: "Security & compliance",
+		body: "Audit programs, seam closure, AUTH references — your evidence gets a structure an auditor will accept. The MCP doesn't certify anything; your apps and CI still prove enforcement.",
+	},
+];
+
+const rolloutStages = [
+	{
+		num: "I",
+		stage: "Pilot",
+		who: "One senior engineer",
+		body: "Connect Cursor or Claude Code with a single Bearer token. Run an Investigator lane on a real defect. See the path-A-before-path-B discipline in their session.",
+	},
+	{
+		num: "II",
+		stage: "Team",
+		who: "A whole squad",
+		body: "Roll out the same MCP endpoint to the team. Optional · drop a versioned .aadm/config.json into the app repo so UDALI paths and lane defaults stay shared.",
+	},
+	{
+		num: "III",
+		stage: "Org",
+		who: "Multiple teams · multiple IDEs",
+		body: "Standardize on the hosted MCP across every MCP-capable IDE in use. Discipline becomes deterministic across the engineering org — even with contractors and new hires.",
+	},
+];
+---
+
+<Layout
+	title="AADM for the enterprise — governance for AI coding agents at scale"
+	description="Open standard. Hosted MCP. No repo scanning. The governance layer security and compliance teams can read in public — and engineering teams actually adopt."
+	headerActiveNav="enterprise"
+>
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+
+		<!-- =============================================================
+		     §00 — Hero
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
+			<div aria-hidden="true" class="absolute left-0 top-0 -z-10 h-[40rem] w-[40rem] -translate-x-1/3 -translate-y-1/3 rounded-full bg-amber-500/[0.05] blur-3xl"></div>
+			<div aria-hidden="true" class="absolute right-0 top-32 -z-10 h-[32rem] w-[32rem] translate-x-1/3 rounded-full bg-emerald-500/[0.06] blur-3xl"></div>
+
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 00</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Enterprise</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="text-amber-200/90">▸</span> Procurement-friendly · security-readable · engineering-adoptable
+					</p>
+
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,7.5vw,6.4rem)] font-black leading-[0.9] tracking-[-0.04em] text-white">
+						The governance layer <span class="font-extralight italic text-slate-400">for AI coding agents,</span><br />
+						<span class="relative inline-block">
+							<span class="relative z-10 text-emerald-300">at enterprise scale.</span>
+							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
+						</span>
+					</h1>
+
+					<div class="mt-12 grid grid-cols-12 gap-6">
+						<div class="col-span-12 sm:col-span-4">
+							<div class="border-l border-amber-300/40 pl-5">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-amber-200/80">The premise</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+									Your engineers are using Cursor, Claude Code, Windsurf — with or without you. AADM gives the org a
+									standard those agents load on every turn, so adoption stops being a per-engineer security risk.
+								</p>
+							</div>
+						</div>
+						<div class="col-span-12 sm:col-span-8">
+							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+								AADM is built for orgs where <em class="text-white">“the model shipped it”</em> isn't an acceptable incident
+								report. An open standard your security team can read, a hosted service your platform team can wire once, and
+								engineering discipline your reviewers
+								<span class="font-extralight italic text-slate-400"> stop having to argue for.</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="mt-12 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+						<a
+							href={urlMcpMarketing}
+							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Get access</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href={urlStandard}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Send your security team the standard
+						</a>
+						<a
+							href="#due-diligence"
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+						>
+							<span>Vendor due diligence answers</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↓</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §01 — Three pillars
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 01</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Boundary</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[20ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						The three things <span class="font-extralight italic text-slate-400">we deliberately are.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						AADM is opinionated about what it is — and aggressive about what it is not. The boundary is the product.
+					</p>
+
+					<div class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+						{
+							pillars.map((p) => {
+								const t = pillarToneClasses[p.tone];
+								return (
+									<article class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
+										<div class="flex items-baseline gap-4">
+											<span class:list={["font-display text-5xl font-extralight leading-none tracking-tight sm:text-6xl", t.numeral]}>
+												{p.num}
+											</span>
+										</div>
+										<h3 class="font-display mt-7 text-balance text-[1.25rem] font-bold leading-snug tracking-tight text-white sm:text-[1.4rem]">
+											{p.title}
+										</h3>
+										<p class="mt-4 text-sm leading-relaxed text-slate-300">{p.body}</p>
+										<div aria-hidden="true" class:list={["mt-7 h-px w-12 transition-all duration-500 group-hover:w-24", t.numeral.replace("text-", "bg-").replace("/90", "/50")]}></div>
+									</article>
+								);
+							})
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §02 — Who it's for
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 02</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Stakeholders</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Three stakeholders, <span class="font-extralight italic text-slate-400">one answer each.</span>
+					</h2>
+
+					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+						{
+							audiences.map((a) => (
+								<article class="group bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-9">
+									<div class="flex items-baseline gap-4">
+										<span class="font-display text-[3.5rem] font-extralight leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
+											{a.letter}
+										</span>
+										<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{a.role}</p>
+									</div>
+									<p class="mt-7 text-sm leading-relaxed text-slate-300">{a.body}</p>
+									<div aria-hidden="true" class="mt-7 h-px w-10 bg-emerald-300/40 transition-all duration-500 group-hover:w-20 group-hover:bg-emerald-300/70"></div>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §03 — Due diligence Q&A
+		     ============================================================= -->
+		<section id="due-diligence" class="relative scroll-mt-24 border-b border-white/[0.06] bg-[#06080f] sm:scroll-mt-28">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 03</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Due diligence</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Vendor due diligence, <span class="font-extralight italic text-slate-400">short answers.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						The questions your security team is going to ask anyway. Paste them into your RFP and skip the back-and-forth.
+					</p>
+
+					<div class="mt-14 border-t border-white/[0.06]">
+						{
+							ddQuestions.map((row) => (
+								<article class="group grid grid-cols-12 gap-6 border-b border-white/[0.08] py-8 transition duration-300 hover:bg-white/[0.015]">
+									<div class="col-span-12 sm:col-span-3">
+										<div class="flex items-baseline gap-3">
+											<span class="font-display text-3xl font-extralight leading-none text-amber-200/85 sm:text-4xl">{row.num}</span>
+											<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Question</span>
+										</div>
+										<p class="font-display mt-4 text-[1.05rem] font-bold leading-snug tracking-tight text-white sm:text-[1.15rem]">
+											{row.q}
+										</p>
+									</div>
+									<div class="col-span-12 sm:col-span-9">
+										<div class="border-l border-emerald-300/40 pl-5">
+											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Short answer</p>
+											<p class="mt-2 text-[0.95rem] leading-relaxed text-slate-200">{row.a}</p>
+										</div>
+									</div>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §04 — Rollout pattern
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-violet-200/70">§ 04</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Rollout</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Three stages. <span class="font-extralight italic text-slate-400">Pilot · team · org.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						Adoption is a per-engineer paste. You don't need a quarter of platform work to prove value.
+					</p>
+
+					<div class="mt-14 space-y-px bg-white/[0.08]">
+						{
+							rolloutStages.map((s) => (
+								<article class="grid grid-cols-12 gap-6 bg-surface-deep px-1 py-10 sm:px-2 sm:py-12">
+									<div class="col-span-12 sm:col-span-2">
+										<p class="font-display text-[4.5rem] font-extralight leading-[0.85] tracking-tight text-violet-300/90 sm:text-[6rem]">
+											{s.num}
+										</p>
+										<div class="mt-3 inline-flex items-center gap-2 border border-violet-400/30 px-3 py-1.5 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-violet-200">
+											{s.stage}
+										</div>
+									</div>
+									<div class="col-span-12 sm:col-span-10">
+										<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{s.who}</p>
+										<p class="mt-4 max-w-3xl text-[0.98rem] leading-[1.65] text-slate-200">{s.body}</p>
+									</div>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §05 — Final CTA
+		     ============================================================= -->
+		<section class="relative bg-surface-deep">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(252,211,77,0.07),transparent_60%)]"></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 05</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Start here</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[18ch] text-balance text-[clamp(2rem,5.5vw,4.4rem)] font-black leading-[0.95] tracking-[-0.03em] text-white">
+						Read the standard. <span class="font-extralight italic text-slate-400">Wire the MCP.</span><br />
+						<span class="relative inline-block">
+							<span class="relative z-10 text-emerald-300">Ship governed.</span>
+							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
+						</span>
+					</h2>
+					<p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
+						Engineering adoption starts with a single paste in a single IDE. The standard, the hosted service, and the answer
+						to your security team's questions are all already public — start there.
+					</p>
+
+					<div class="mt-12 flex flex-col flex-wrap items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
+						<a
+							href={urlMcpMarketing}
+							class="group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Get access</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href={urlStandard}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-7 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Read the standard
+						</a>
+						<a
+							href="/ides"
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+						>
+							<span>Every IDE that connects</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
+						</a>
+					</div>
+
+					<!-- Colophon -->
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">For</span> · Procurement · Security · Platform
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Identity</span> · <span class="text-emerald-300/80">Clerk</span>
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / MCP</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>

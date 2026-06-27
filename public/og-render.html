@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OG render</title>
+<style>
+  html,body{margin:0;padding:0;background:#05040a;overflow:hidden}
+  img{display:block;width:1200px;height:630px}
+</style>
+</head>
+<body>
+<img id="card" src="" alt="">
+<script>
+  const src = new URL(window.location.href).searchParams.get('src') || '/og-default.svg';
+  document.getElementById('card').src = src;
+</script>
+</body>
+</html>

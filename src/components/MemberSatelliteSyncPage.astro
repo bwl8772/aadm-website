@@ -20,7 +20,7 @@ const syncTimeoutMs = 20_000;
 	</p>
 </div>
 
-<script define:vars={{ signInUrl, syncTimeoutMs }}>
+<script is:inline define:vars={{ signInUrl, syncTimeoutMs }}>
 	async function waitForSatelliteSync() {
 		const statusEl = document.getElementById("member-sync-status");
 		const deadline = Date.now() + syncTimeoutMs;

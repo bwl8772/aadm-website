@@ -28,7 +28,8 @@ const lanes: Lane[] = [
 		num: "I",
 		name: "Navigator",
 		tagline: "Delivery · building something new",
-		plain: "Turn a vague feature ask into layer-aware slices — with authorization, ownership, and acceptance criteria baked in before any code is written.",
+		plain:
+			"Turn a vague feature ask into layer-aware slices — with authorization, ownership, and acceptance criteria baked in before any code is written.",
 		bullets: [
 			"Scope work across UDALI layers so ownership is clear before the first commit",
 			"Map AUTH controls and acceptance criteria into the plan, not after the fact",
@@ -40,7 +41,8 @@ const lanes: Lane[] = [
 		num: "II",
 		name: "Investigator",
 		tagline: "Defects · something is broken",
-		plain: "Find what's actually wrong before changing anything. Path A recon classifies the failure; Path B diagnosis is gated until proof crosses the router.",
+		plain:
+			"Find what's actually wrong before changing anything. Path A recon classifies the failure; Path B diagnosis is gated until proof crosses the router.",
 		bullets: [
 			"Evidence-first recon: classify the failure before proposing any code change",
 			"Structured Path A / Path B flow prevents speculative rewrites and scope creep",
@@ -52,7 +54,8 @@ const lanes: Lane[] = [
 		num: "III",
 		name: "Sentinel",
 		tagline: "Assurance · proving it's aligned",
-		plain: "Show — in language an auditor or compliance lead accepts — that the controls you say you have are actually in place across every seam.",
+		plain:
+			"Show — in language an auditor or compliance lead accepts — that the controls you say you have are actually in place across every seam.",
 		bullets: [
 			"Trace AUTH controls, UDALI placement, and evidence across every seam",
 			"Vertical and horizontal audit programs so releases are defensible, not vibes",
@@ -62,7 +65,17 @@ const lanes: Lane[] = [
 	},
 ];
 
-const laneToneClasses: Record<Lane["tone"], { numeral: string; rule: string; chip: string; accent: string; glow: string; bullet: string }> = {
+const laneToneClasses: Record<
+	Lane["tone"],
+	{
+		numeral: string;
+		rule: string;
+		chip: string;
+		accent: string;
+		glow: string;
+		bullet: string;
+	}
+> = {
 	violet: {
 		numeral: "text-violet-300/90",
 		rule: "border-violet-400/40",
@@ -121,10 +134,25 @@ const mentalModel: MentalModelTier[] = [
 	},
 ];
 
-const mentalToneClasses: Record<MentalModelTier["tone"], { numeral: string; pill: string; rule: string }> = {
-	amber: { numeral: "text-amber-300/90", pill: "border-amber-300/30 text-amber-200", rule: "border-amber-300/40" },
-	emerald: { numeral: "text-emerald-300/90", pill: "border-emerald-300/30 text-emerald-200", rule: "border-emerald-300/40" },
-	white: { numeral: "text-white/90", pill: "border-white/20 text-white", rule: "border-white/30" },
+const mentalToneClasses: Record<
+	MentalModelTier["tone"],
+	{ numeral: string; pill: string; rule: string }
+> = {
+	amber: {
+		numeral: "text-amber-300/90",
+		pill: "border-amber-300/30 text-amber-200",
+		rule: "border-amber-300/40",
+	},
+	emerald: {
+		numeral: "text-emerald-300/90",
+		pill: "border-emerald-300/30 text-emerald-200",
+		rule: "border-emerald-300/40",
+	},
+	white: {
+		numeral: "text-white/90",
+		pill: "border-white/20 text-white",
+		rule: "border-white/30",
+	},
 };
 
 type Surface = {
@@ -155,7 +183,8 @@ const surfaces: Surface[] = [
 		name: "Tools",
 		tagline: "Typed JSON responses",
 		body: "Structured calls that guide the agent. Each returns deterministic JSON for orchestrators — names match the running server's tools/list.",
-		examples: "standard_brief · route_lane · debug_defect · plan_delivery · fetch_auth",
+		examples:
+			"standard_brief · route_lane · debug_defect · plan_delivery · fetch_auth",
 	},
 ];
 

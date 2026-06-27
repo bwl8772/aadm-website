@@ -20,7 +20,7 @@ import { CLERK_ACCOUNTS_SIGN_IN } from "../lib/clerk-portal-urls";
 	</main>
 </Layout>
 
-<script define:vars={{ accountsSignIn: CLERK_ACCOUNTS_SIGN_IN }}>
+<script is:inline define:vars={{ accountsSignIn: CLERK_ACCOUNTS_SIGN_IN }}>
 	function signOutWhenReady() {
 		async function trySignOut() {
 			try {

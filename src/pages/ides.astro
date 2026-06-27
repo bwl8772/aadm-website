@@ -2,7 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import { getSiteUrlConfig } from "../lib/site-urls";
 
-const { urlStandard, urlMcpMarketing, urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
+const { urlStandard, urlMcpMarketing, urlMcpRpcUrl } = getSiteUrlConfig(
+	import.meta.env,
+);
 
 const universalSnippet = `{
   "mcpServers": {
@@ -143,30 +145,91 @@ const webHeadless: Ide[] = [
 	},
 ];
 
-const toneClasses: Record<Ide["tone"], { letter: string; chip: string; rule: string }> = {
-	amber: { letter: "text-amber-300/85", chip: "border-amber-300/30 text-amber-200", rule: "border-amber-300/40" },
-	violet: { letter: "text-violet-300/90", chip: "border-violet-400/30 text-violet-200", rule: "border-violet-400/40" },
-	sky: { letter: "text-sky-300/90", chip: "border-sky-400/30 text-sky-200", rule: "border-sky-400/40" },
-	emerald: { letter: "text-emerald-300/90", chip: "border-emerald-400/30 text-emerald-200", rule: "border-emerald-400/40" },
-	slate: { letter: "text-slate-300/90", chip: "border-slate-300/30 text-slate-200", rule: "border-slate-300/40" },
+const toneClasses: Record<
+	Ide["tone"],
+	{ letter: string; chip: string; rule: string }
+> = {
+	amber: {
+		letter: "text-amber-300/85",
+		chip: "border-amber-300/30 text-amber-200",
+		rule: "border-amber-300/40",
+	},
+	violet: {
+		letter: "text-violet-300/90",
+		chip: "border-violet-400/30 text-violet-200",
+		rule: "border-violet-400/40",
+	},
+	sky: {
+		letter: "text-sky-300/90",
+		chip: "border-sky-400/30 text-sky-200",
+		rule: "border-sky-400/40",
+	},
+	emerald: {
+		letter: "text-emerald-300/90",
+		chip: "border-emerald-400/30 text-emerald-200",
+		rule: "border-emerald-400/40",
+	},
+	slate: {
+		letter: "text-slate-300/90",
+		chip: "border-slate-300/30 text-slate-200",
+		rule: "border-slate-300/40",
+	},
 };
 
-type Group = { num: string; title: string; tagline: string; ides: Ide[]; aside: string };
+type Group = {
+	num: string;
+	title: string;
+	tagline: string;
+	ides: Ide[];
+	aside: string;
+};
 
 const groups: Group[] = [
-	{ num: "01", title: "AI-native editors", tagline: "Agent loops built in", aside: "Native chat + tool calls. Pasting the MCP snippet wires AADM directly into the agent.", ides: aiNative },
-	{ num: "02", title: "VS Code extensions", tagline: "Editor you already use", aside: "Bring AADM into VS Code via an extension's MCP servers panel — no editor switch required.", ides: vscodeExtensions },
-	{ num: "03", title: "General editors", tagline: "JetBrains · Zed · more", aside: "IDEs whose AI assistants support MCP servers. The universal snippet is the starting point.", ides: general },
-	{ num: "04", title: "Web · headless · scripts", tagline: "Not an IDE — still works", aside: "claude.ai Connectors (web) and raw curl (CI, custom hosts). Both speak the same Streamable HTTP wire.", ides: webHeadless },
+	{
+		num: "01",
+		title: "AI-native editors",
+		tagline: "Agent loops built in",
+		aside:
+			"Native chat + tool calls. Pasting the MCP snippet wires AADM directly into the agent.",
+		ides: aiNative,
+	},
+	{
+		num: "02",
+		title: "VS Code extensions",
+		tagline: "Editor you already use",
+		aside:
+			"Bring AADM into VS Code via an extension's MCP servers panel — no editor switch required.",
+		ides: vscodeExtensions,
+	},
+	{
+		num: "03",
+		title: "General editors",
+		tagline: "JetBrains · Zed · more",
+		aside:
+			"IDEs whose AI assistants support MCP servers. The universal snippet is the starting point.",
+		ides: general,
+	},
+	{
+		num: "04",
+		title: "Web · headless · scripts",
+		tagline: "Not an IDE — still works",
+		aside:
+			"claude.ai Connectors (web) and raw curl (CI, custom hosts). Both speak the same Streamable HTTP wire.",
+		ides: webHeadless,
+	},
 ];
 
-const totalIdes = aiNative.length + vscodeExtensions.length + general.length + webHeadless.length;
+const totalIdes =
+	aiNative.length +
+	vscodeExtensions.length +
+	general.length +
+	webHeadless.length;
 ---
 
 <Layout
 	title="AADM — every MCP-capable IDE, same wire"
 	description="Cursor, Claude Code, Windsurf, Cline, Continue, JetBrains AI, Zed, claude.ai Connectors, raw curl — every MCP-capable client connects to AADM over Streamable HTTP."
-	headerActiveNav={null}
+	headerActiveNav="ides"
 >
 	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
 

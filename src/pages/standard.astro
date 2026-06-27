@@ -1,0 +1,295 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getSiteUrlConfig } from "../lib/site-urls";
+
+const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
+
+type Section = {
+	letter: string;
+	name: string;
+	what: string;
+	when: string;
+	link: string;
+	tone: "emerald" | "amber" | "violet" | "sky";
+};
+
+const sections: Section[] = [
+	{
+		letter: "A",
+		name: "Workflows",
+		what: "The three lanes — Navigator (delivery), Investigator (defect), Sentinel (assurance) — with their stage spines and entry/exit gates.",
+		when: "Read first. Workflows are the spine of everything else.",
+		link: `${urlStandard}/tree/main/standards`,
+		tone: "emerald",
+	},
+	{
+		letter: "B",
+		name: "UDALI",
+		what: "Unifier, Designer, Adapter, Logician, Integrator — the layer language used to name where work belongs in your stack.",
+		when: "When scoping a feature or tracing a defect across layers.",
+		link: `${urlStandard}/tree/main/standards`,
+		tone: "violet",
+	},
+	{
+		letter: "C",
+		name: "AUTH catalog",
+		what: "Numbered authorization controls (AUTH-XX) with descriptions, applicability, and enforcement boundaries.",
+		when: "Any time authorization is in scope — the agent loads these via fetch_auth.",
+		link: `${urlStandard}/tree/main/standards`,
+		tone: "amber",
+	},
+	{
+		letter: "D",
+		name: "SEAM catalog",
+		what: "Numbered handoff archetypes (SEAM-00 through SEAM-15) with normalization, dispatch, and persistence patterns.",
+		when: "Anything that crosses a boundary — assurance binds evidence per seam.",
+		link: `${urlStandard}/blob/main/standards/seam-catalog.md`,
+		tone: "sky",
+	},
+	{
+		letter: "E",
+		name: "Doctrine",
+		what: "Role guides, troubleshooter mode, audit programs, attestation examples — the body of guidance the MCP loads on demand.",
+		when: "Reference material the agent pulls slice-by-slice via fetch tools.",
+		link: `${urlStandard}/tree/main/standards`,
+		tone: "emerald",
+	},
+	{
+		letter: "F",
+		name: "Templates",
+		what: "PRD, BIS, audit outlines, slice plans, evidence binders — the document shapes AADM tools emit.",
+		when: "When writing the kinds of documents AADM helps produce.",
+		link: `${urlStandard}/tree/main/standards`,
+		tone: "amber",
+	},
+];
+
+const toneClasses: Record<Section["tone"], { letter: string; rule: string }> = {
+	emerald: { letter: "text-emerald-300/90", rule: "border-emerald-300/40" },
+	amber: { letter: "text-amber-300/90", rule: "border-amber-300/40" },
+	violet: { letter: "text-violet-300/90", rule: "border-violet-300/40" },
+	sky: { letter: "text-sky-300/90", rule: "border-sky-300/40" },
+};
+---
+
+<Layout
+	title="The AADM standard — open, public, readable"
+	description="The AADM standard lives in public on GitHub. This page is your directory to its sections: workflows, UDALI, AUTH catalog, SEAM catalog, doctrine, templates."
+	headerActiveNav="standard"
+>
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+
+		<!-- =============================================================
+		     §00 — Hero
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
+			<div aria-hidden="true" class="absolute left-0 top-0 -z-10 h-[36rem] w-[36rem] -translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.06] blur-3xl"></div>
+
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Standard</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="text-emerald-200/90">▸</span> Open · public · free to read · free to adopt
+					</p>
+
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-black leading-[0.9] tracking-[-0.04em] text-white">
+						The standard, <span class="font-extralight italic text-slate-400">in public.</span>
+					</h1>
+
+					<div class="mt-12 grid grid-cols-12 gap-6">
+						<div class="col-span-12 sm:col-span-4">
+							<div class="border-l border-emerald-300/40 pl-5">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-emerald-200/80">Where it lives</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+									The canonical text lives on GitHub at <a href={urlStandard} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">aadm-standard</a>.
+									This page is your directory to its sections — not a fork.
+								</p>
+							</div>
+						</div>
+						<div class="col-span-12 sm:col-span-8">
+							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+								AADM is an open standard. Your engineers read it, your security team reads it, your partners read it. Changes
+								land via pull request like any mature open project. The hosted MCP packages this text into tools your agents load —
+								<span class="font-extralight italic text-slate-400"> nothing more.</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="mt-12 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+						<a
+							href={urlStandard}
+							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Open the standard on GitHub</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href="#sections"
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Browse sections
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §01 — Section directory
+		     ============================================================= -->
+		<section id="sections" class="relative scroll-mt-24 border-b border-white/[0.06] bg-[#06080f] sm:scroll-mt-28">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 01</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Sections</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Six sections. <span class="font-extralight italic text-slate-400">One body of work.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						Names match the standard repo. Click any section to open it on GitHub. The MCP loads the same text on demand via{' '}
+						<code class="font-mono-cta text-emerald-200/85">fetch_auth</code>,{' '}
+						<code class="font-mono-cta text-emerald-200/85">fetch_seam</code>, and{' '}
+						<code class="font-mono-cta text-emerald-200/85">role_guide</code>.
+					</p>
+
+					<ul class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+						{
+							sections.map((s) => {
+								const t = toneClasses[s.tone];
+								return (
+									<li class="group flex flex-col bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16] sm:p-7">
+										<div class="flex items-baseline gap-4">
+											<span class:list={["font-display text-[3rem] font-extralight leading-[0.85] transition duration-300", t.letter, "group-hover:opacity-100"]}>
+												{s.letter}
+											</span>
+											<h3 class="font-display text-xl font-bold leading-snug text-white">{s.name}</h3>
+										</div>
+										<p class="mt-5 text-sm leading-relaxed text-slate-300">{s.what}</p>
+										<div class:list={["mt-5 border-l pl-4", t.rule]}>
+											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">When to read</p>
+											<p class="mt-1.5 text-sm leading-relaxed text-slate-400">{s.when}</p>
+										</div>
+										<div class="mt-auto pt-6">
+											<a
+												href={s.link}
+												target="_blank"
+												rel="noopener noreferrer"
+												class="group/cta font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-emerald-300 underline decoration-emerald-300/30 underline-offset-[6px] transition hover:decoration-emerald-300"
+											>
+												<span>Open on GitHub</span>
+												<span aria-hidden="true" class="transition group-hover/cta:translate-x-0.5">↗</span>
+											</a>
+										</div>
+									</li>
+								);
+							})
+						}
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §02 — How to use / contribute
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 02</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Use · contribute</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Three ways to use it. <span class="font-extralight italic text-slate-400">One way to change it.</span>
+					</h2>
+
+					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+						{
+							[
+								{ num: "01", title: "Adopt", body: "Read the standard, pick the lanes that apply, encode them in your team's review bar. Free, no subscription required." },
+								{ num: "02", title: "Cite", body: "Reference AUTH-XX, SEAM-XX, and UDALI bands in your PRs, audits, and incident reports — give your engineering language a shared spine." },
+								{ num: "03", title: "Wire", body: "Subscribe to the hosted MCP so your agents load the same text on every turn — without you maintaining a fork." },
+							].map((s) => (
+								<article class="group bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-9">
+									<div class="flex items-baseline gap-4">
+										<span class="font-display text-5xl font-extralight leading-none text-emerald-200/85 sm:text-6xl">{s.num}</span>
+									</div>
+									<h3 class="font-display mt-7 text-balance text-xl font-bold leading-snug tracking-tight text-white">
+										{s.title}
+									</h3>
+									<p class="mt-3 text-sm leading-relaxed text-slate-400">{s.body}</p>
+								</article>
+							))
+						}
+					</div>
+
+					<div class="mt-16 border-l-2 border-amber-300/40 pl-6">
+						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/85">Change it</p>
+						<p class="mt-3 max-w-2xl text-base leading-relaxed text-slate-300">
+							The standard repo accepts pull requests. Open one for additions, corrections, or new section proposals. Big
+							changes start as issues so the community can weigh in before code review.
+						</p>
+						<p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-400">
+							The hosted MCP tracks the standard's published versions — your subscription doesn't bypass the process.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §03 — Final CTA
+		     ============================================================= -->
+		<section class="relative bg-surface-deep">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.07),transparent_60%)]"></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 03</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Start here</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[18ch] text-balance text-[clamp(2rem,5.5vw,4.4rem)] font-black leading-[0.95] tracking-[-0.03em] text-white">
+						Read it. <span class="font-extralight italic text-slate-400">Adopt it.</span><br />
+						<span class="relative inline-block">
+							<span class="relative z-10 text-emerald-300">Wire it.</span>
+							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
+						</span>
+					</h2>
+					<p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
+						The text is free. The subscription is for the running service that streams it to your agents on every turn.
+					</p>
+
+					<div class="mt-12 flex flex-col flex-wrap items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
+						<a
+							href={urlStandard}
+							class="group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200"
+						>
+							<span>Open the standard</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href={urlMcpMarketing}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-7 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04]"
+						>
+							Connect production agents
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
