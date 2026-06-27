@@ -1,0 +1,61 @@
+---
+import { getMemberSignInUrl } from "../lib/account-portal-urls";
+
+const signInUrl = getMemberSignInUrl(import.meta.env);
+/** Milliseconds before redirecting to sign-in if handshake never completes. */
+const syncTimeoutMs = 20_000;
+---
+
+<div
+	class="rounded-2xl border border-border-subtle bg-surface-card/40 p-8 text-center sm:p-12"
+	aria-live="polite"
+>
+	<p class="font-display text-lg font-semibold text-white">Syncing your session</p>
+	<p class="mt-2 text-sm text-slate-400">
+		Returning from <strong class="text-slate-300">accounts.aadm.io</strong>. This usually takes a
+		few seconds.
+	</p>
+	<p class="mt-6 text-xs text-slate-500" id="member-sync-status">
+		Waiting for Clerk satellite handshake…
+	</p>
+</div>
+
+<script define:vars={{ signInUrl, syncTimeoutMs }}>
+	async function waitForSatelliteSync() {
+		const statusEl = document.getElementById("member-sync-status");
+		const deadline = Date.now() + syncTimeoutMs;
+
+		while (Date.now() < deadline) {
+			await new Promise((resolve) => setTimeout(resolve, 400));
+			try {
+				const clerk = window.Clerk;
+				if (!clerk) continue;
+				if (typeof clerk.load === "function") {
+					await clerk.load();
+				}
+				if (clerk.user) {
+					const url = new URL(window.location.href);
+					url.searchParams.delete("__clerk_synced");
+					window.location.replace(url.toString());
+					return;
+				}
+			} catch {
+				/* retry until timeout */
+			}
+		}
+
+		if (statusEl) {
+			statusEl.textContent =
+				"Session sync timed out. Redirecting to sign-in…";
+		}
+		window.location.replace(signInUrl);
+	}
+
+	if (document.readyState === "complete") {
+		void waitForSatelliteSync();
+	} else {
+		window.addEventListener("load", () => void waitForSatelliteSync(), {
+			once: true,
+		});
+	}
+</script>

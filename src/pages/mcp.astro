@@ -1,5 +1,6 @@
 ---
 import { Show } from "@clerk/astro/components";
+import MemberMcpOAuthLink from "../components/MemberMcpOAuthLink.astro";
 import Layout from "../layouts/Layout.astro";
 import { getAccountPortalUrls } from "../lib/account-portal-urls";
 import { getSiteUrlConfig, hostedMcpOrigin } from "../lib/site-urls";
@@ -251,7 +252,13 @@ const outcomes: Array<{ num: string; title: string; body: string }> = [
 	},
 ];
 
-const lanes: Array<{ num: string; name: string; line: string; body: string; tone: "violet" | "blue" | "emerald" }> = [
+const lanes: Array<{
+	num: string;
+	name: string;
+	line: string;
+	body: string;
+	tone: "violet" | "blue" | "emerald";
+}> = [
 	{
 		num: "I",
 		name: "Navigator",
@@ -275,10 +282,28 @@ const lanes: Array<{ num: string; name: string; line: string; body: string; tone
 	},
 ];
 
-const laneToneClasses: Record<(typeof lanes)[number]["tone"], { numeral: string; chip: string; rule: string; bullet: string }> = {
-	violet: { numeral: "text-violet-300/90", chip: "border-violet-400/30 text-violet-200", rule: "border-violet-400/40", bullet: "bg-violet-300" },
-	blue: { numeral: "text-sky-300/90", chip: "border-sky-400/30 text-sky-200", rule: "border-sky-400/40", bullet: "bg-sky-300" },
-	emerald: { numeral: "text-emerald-300/90", chip: "border-emerald-400/30 text-emerald-200", rule: "border-emerald-400/40", bullet: "bg-emerald-300" },
+const laneToneClasses: Record<
+	(typeof lanes)[number]["tone"],
+	{ numeral: string; chip: string; rule: string; bullet: string }
+> = {
+	violet: {
+		numeral: "text-violet-300/90",
+		chip: "border-violet-400/30 text-violet-200",
+		rule: "border-violet-400/40",
+		bullet: "bg-violet-300",
+	},
+	blue: {
+		numeral: "text-sky-300/90",
+		chip: "border-sky-400/30 text-sky-200",
+		rule: "border-sky-400/40",
+		bullet: "bg-sky-300",
+	},
+	emerald: {
+		numeral: "text-emerald-300/90",
+		chip: "border-emerald-400/30 text-emerald-200",
+		rule: "border-emerald-400/40",
+		bullet: "bg-emerald-300",
+	},
 };
 
 const surfaces = [
@@ -494,7 +519,7 @@ const surfaces = [
 							</h3>
 							<p class="mt-3 text-sm leading-relaxed text-slate-400">
 								Claude Code, claude.ai Connectors — copy <span class="text-slate-300">your OAuth Client ID</span> from{' '}
-								<a href={memberMcpOAuthSignInUrl} class="text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300">Member area → MCP OAuth</a>
+								<MemberMcpOAuthLink class="text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300" />
 								(sign in required).
 							</p>
 							<div aria-hidden="true" class="mt-7 flex items-center gap-2 text-violet-300/80">
@@ -631,7 +656,10 @@ const surfaces = [
 						</p>
 						<p class="mt-3 text-sm leading-relaxed text-amber-100/95">
 							OAuth uses <span class="font-semibold text-amber-50">your client ID</span> from the{' '}
-							<a href={memberMcpOAuthSignInUrl} class="font-semibold text-amber-200 underline decoration-amber-300/50 underline-offset-4 hover:decoration-amber-200">member area</a>,
+							<MemberMcpOAuthLink
+								label="member area"
+								class="font-semibold text-amber-200 underline decoration-amber-300/50 underline-offset-4 hover:decoration-amber-200"
+							/>,
 							then browser sign-in at{' '}
 							<a href={signInUrl} class="font-semibold text-amber-200 underline decoration-amber-300/50 underline-offset-4 hover:decoration-amber-200">accounts.aadm.io</a>
 							when Claude prompts. Leave Client Secret empty.
@@ -646,7 +674,10 @@ const surfaces = [
 							Credentials are not shown on this public page.{' '}
 							<a href={memberSignInUrl} class="font-semibold text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300">Sign in to AADM</a>{' '}
 							to open the{' '}
-							<a href={memberMcpOAuthSignInUrl} class="font-semibold text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300">member area</a>{' '}
+							<MemberMcpOAuthLink
+								label="member area"
+								class="font-semibold text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300"
+							/>{' '}
 							and copy <span class="text-slate-300">your client ID</span>. Paste it when Claude Code or claude.ai asks for an OAuth Client ID.
 						</p>
 						<div class="mt-6 flex flex-wrap gap-3">
@@ -683,7 +714,7 @@ const surfaces = [
 									[
 										<>Add MCP server URL · <code class="font-mono-cta text-xs text-violet-300">{mcpRpcUrl}</code></>,
 										<>Choose <span class="text-white">OAuth</span> (not pasted API key).</>,
-										<>When Claude Code asks for OAuth Client ID, paste <span class="text-white">your client ID</span> from <a href={memberMcpOAuthSignInUrl} class="text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300">Member area → MCP OAuth</a>.</>,
+										<>When Claude Code asks for OAuth Client ID, paste <span class="text-white">your client ID</span> from <MemberMcpOAuthLink class="text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300" />.</>,
 										<>Leave <span class="text-white">Client Secret</span> empty.</>,
 										<>Sign in with the <span class="text-white">same AADM account</span> when the OAuth consent screen appears.</>,
 									].map((item, idx) => (
@@ -706,7 +737,7 @@ const surfaces = [
 										<><em>Settings → Connectors → Add custom connector</em></>,
 										<>Server URL · <code class="font-mono-cta text-xs text-violet-300">{mcpRpcUrl}</code></>,
 										<>Authentication · <span class="text-white">OAuth</span></>,
-										<><span class="text-white">Advanced</span> → paste <span class="text-white">your client ID</span> from <a href={memberMcpOAuthSignInUrl} class="text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300">Member area → MCP OAuth</a></>,
+										<><span class="text-white">Advanced</span> → paste <span class="text-white">your client ID</span> from <MemberMcpOAuthLink class="text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300" /></>,
 										<>Leave Client Secret empty · click Connect and sign in with the same AADM account</>,
 									].map((item, idx) => (
 										<li class="grid grid-cols-[auto_1fr] items-baseline gap-3">

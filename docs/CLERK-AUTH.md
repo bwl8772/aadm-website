@@ -51,8 +51,8 @@
 | `PUBLIC_CLERK_IS_SATELLITE` | `true` (optional — auto-detected when sign-in host ≠ `aadm.io`) |
 | `PUBLIC_CLERK_PROXY_URL` | **`https://clerk.aadm.io`** (required for satellite handshake; code defaults to this) |
 | `PUBLIC_CLERK_DOMAIN` | Only if **not** using `PUBLIC_CLERK_PROXY_URL` (Clerk: never set both) |
-| `CLERK_OAUTH_CLIENT_ID` | Member MCP OAuth tab only |
-| `PUBLIC_MEMBER_AREA_PATH` | Optional; default `/member` |
+| `CLERK_OAUTH_CLIENT_ID` | Member MCP OAuth tab only (runtime `process.env` on Railway) |
+| Member area path | Fixed at `/member` — must match `src/pages/member/` |
 
 Credential sign-in links use `redirect_url=https://aadm.io/member` with `__clerk_synced=false` for satellite handshake.
 
@@ -64,7 +64,8 @@ Credential sign-in links use `redirect_url=https://aadm.io/member` with `__clerk
 
 | File | Purpose |
 |------|---------|
-| `src/pages/member/[[...rest]].astro` | Embedded `<UserProfile>` + MCP OAuth tab |
+| `src/pages/member/index.astro` + `src/pages/member/[...rest].astro` | Embedded `<UserProfile>` + MCP OAuth tab (via `MemberPageGate`) |
+| `src/components/MemberSatelliteSyncPage.astro` | Sync-only shell during satellite handshake (no credentials) |
 | `src/lib/routes.ts` | `/member(.*)` protected |
 | `src/lib/clerk-portal-urls.ts` | Portal + member URLs |
 | `src/middleware.ts` | `clerkMiddleware` + auth path redirects |
@@ -86,7 +87,7 @@ Sign-in on **accounts.aadm.io** and the app on **aadm.io** are different domains
 2. **DNS `clerk.aadm.io`** — CNAME → `frontend-api.clerk.services` (**gray cloud** / DNS-only)  
 3. **DNS `accounts.aadm.io`** — CNAME → `accounts.clerk.services` (**gray cloud**)  
 4. **Railway** — `PUBLIC_CLERK_IS_SATELLITE=true`, `PUBLIC_CLERK_PROXY_URL=https://clerk.aadm.io`, rebuild (do **not** set `PUBLIC_CLERK_DOMAIN` when proxy is set)  
-5. **Astro middleware** — `src/middleware.ts` must **not** call `redirectToSignIn()` when the request has `__clerk_synced=false` (user just returned from Account Portal; handshake runs on `aadm.io` before the session cookie exists). Without this guard, SSR middleware loops: accounts → `/member` → sign-in → accounts → …
+5. **Astro middleware** — `src/middleware.ts` sets `satelliteSyncPending` when `__clerk_synced=false` and renders **sync-only shell** (no UserProfile or OAuth values) until Clerk completes handshake. Without this guard, SSR middleware loops: accounts → `/member` → sign-in → accounts → …
 
 **Cloudflare (your current DNS is correct):** `accounts` and `clerk` gray-clouded; `aadm.io` proxied to Railway is fine. Zone-level **Bot Fight** can still interfere — add a skip rule for `accounts.aadm.io` if challenges persist.
 

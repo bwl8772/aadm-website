@@ -1,0 +1,23 @@
+---
+import { Show } from "@clerk/astro/components";
+import { getAccountPortalUrls } from "../lib/account-portal-urls";
+
+interface Props {
+	class?: string;
+	label?: string;
+}
+
+const { class: className = "", label = "Member area → MCP OAuth" } =
+	Astro.props;
+
+const { memberMcpOAuthUrl, memberMcpOAuthSignInUrl } = getAccountPortalUrls(
+	import.meta.env,
+);
+---
+
+<Show when="signed-in">
+	<a href={memberMcpOAuthUrl} class={className}>{label}</a>
+</Show>
+<Show when="signed-out">
+	<a href={memberMcpOAuthSignInUrl} class={className}>{label}</a>
+</Show>
