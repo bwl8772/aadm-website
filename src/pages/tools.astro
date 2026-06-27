@@ -1,0 +1,540 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getSiteUrlConfig } from "../lib/site-urls";
+
+const { urlStandard, urlMcpMarketing, urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
+
+type Lane = "Orchestration" | "Navigator" | "Investigator" | "Sentinel" | "Doctrine";
+
+type Tool = {
+	tool: string;
+	primary: Lane;
+	badges: Lane[];
+	purpose: string;
+	when: string;
+};
+
+const tools: Tool[] = [
+	{
+		tool: "standard_brief",
+		primary: "Orchestration",
+		badges: ["Orchestration"],
+		purpose: "One call loads workflow parity, orchestrator contract, follow-on catalog, and Sentinel assurance JSON hosts branch on.",
+		when: "First call in a session — gives the host its branching map before any specific work begins.",
+	},
+	{
+		tool: "route_lane",
+		primary: "Orchestration",
+		badges: ["Orchestration"],
+		purpose: "When intent is already delivery, defect, or assurance, return deterministic routing metadata — no keyword roulette.",
+		when: "When you already know the lane and want a stable handoff to the next tool.",
+	},
+	{
+		tool: "orchestrator_anchor",
+		primary: "Orchestration",
+		badges: ["Orchestration"],
+		purpose: "Long-running jobs get a stable checklist · what to persist outside MCP, session notes, when to refresh the brief.",
+		when: "Sessions that span hours — anchors the orchestrator so it doesn't drift.",
+	},
+	{
+		tool: "plan_delivery",
+		primary: "Navigator",
+		badges: ["Navigator"],
+		purpose: "Turn a task into UDALI-shaped delivery handoffs with doctrine-backed scope and integrator-ready language.",
+		when: "New feature, structural change, or material improvement — before any code is written.",
+	},
+	{
+		tool: "map_feature",
+		primary: "Navigator",
+		badges: ["Navigator"],
+		purpose: "Seed layer and AUTH-XX hints from a short feature description — explicitly suggestive until your architecture confirms.",
+		when: "Quick recon on where a feature would land in your stack before sizing it.",
+	},
+	{
+		tool: "fetch_auth",
+		primary: "Doctrine",
+		badges: ["Doctrine"],
+		purpose: "Pull the official markdown for a numbered AUTH control so prompts cite governance text, not paraphrase.",
+		when: "Any time AUTH-XX is in scope — never let the agent invent what a control says.",
+	},
+	{
+		tool: "fetch_seam",
+		primary: "Doctrine",
+		badges: ["Doctrine", "Sentinel"],
+		purpose: "Load a SEAM-00–15 handoff archetype — scope for trace/assurance (normalization, dispatch, persistence).",
+		when: "Anything that crosses a boundary · pair with the seam-check worksheet resource.",
+	},
+	{
+		tool: "role_guide",
+		primary: "Doctrine",
+		badges: ["Doctrine"],
+		purpose: "Slice UDALI agent doctrine (Unifier, Designer, Adapter, Logician, Integrator) for the role and task you are in.",
+		when: "When the role behind the task is unclear and you want the right doctrine slice.",
+	},
+	{
+		tool: "debug_defect",
+		primary: "Investigator",
+		badges: ["Investigator"],
+		purpose: "Gated defect machine · Path A recon, Path B only after proof, execution-control appendix, troubleshooter response gates.",
+		when: "Anything broken vs expected — the canonical defect entry point.",
+	},
+	{
+		tool: "debug_bundle",
+		primary: "Investigator",
+		badges: ["Investigator"],
+		purpose: "Advanced hosts send a full integrated troubleshooter payload when they need the bundled diagnosis shape.",
+		when: "Hosts that already know they want the full integrated payload — not for general use.",
+	},
+	{
+		tool: "debug_hint",
+		primary: "Investigator",
+		badges: ["Investigator"],
+		purpose: "Lightweight recon-vs-diagnose hint before you commit to a full debug_defect turn.",
+		when: "When you're not sure yet whether the issue is real or a misread.",
+	},
+	{
+		tool: "classify_bug",
+		primary: "Investigator",
+		badges: ["Investigator"],
+		purpose: "Classify ownership and routing early so the right lane — not the loudest symptom — owns the next step.",
+		when: "Intake · before assigning the issue or starting investigation.",
+	},
+	{
+		tool: "triage_bug",
+		primary: "Investigator",
+		badges: ["Investigator"],
+		purpose: "Map a rough symptom to suggested AUTH topics and stack band for intake before deeper debugging.",
+		when: "Earliest triage · noisy symptom, unclear which subsystem owns it.",
+	},
+	{
+		tool: "fix_pack",
+		primary: "Investigator",
+		badges: ["Investigator"],
+		purpose: "After evidence and gates pass, emit an authorized fix prompt pack sized for coding agents — no premature refactor stories.",
+		when: "Only after CLASSIFIED · the bridge from diagnosis to executable fix.",
+	},
+	{
+		tool: "audit_interview",
+		primary: "Sentinel",
+		badges: ["Sentinel"],
+		purpose: "Step through vertical depth and horizontal seams until scope is confirmable; then merge into outline-shaped intake.",
+		when: "Audit prep · when scope is fuzzy and you need a structured interview to pin it down.",
+	},
+	{
+		tool: "audit_outline",
+		primary: "Sentinel",
+		badges: ["Sentinel"],
+		purpose: "Produce the assurance scaffold · sections, checklist pointers, coder requests, human-editable confirmation.",
+		when: "When scope is confirmed and you need the audit document scaffold.",
+	},
+	{
+		tool: "audit_run",
+		primary: "Sentinel",
+		badges: ["Sentinel"],
+		purpose: "Plain-language “run an audit” asks become a program-aware intake plus top-findings brief for a repo-connected agent.",
+		when: "When a stakeholder says “run an audit” and you need that to become structured work.",
+	},
+	{
+		tool: "sentinel_programs",
+		primary: "Sentinel",
+		badges: ["Sentinel"],
+		purpose: "Snapshot every bundled Sentinel audit program template without pulling the full standard_brief payload.",
+		when: "Browsing available audit programs without the cost of a full brief.",
+	},
+	{
+		tool: "sentinel_program",
+		primary: "Sentinel",
+		badges: ["Sentinel"],
+		purpose: "Fetch one audit program row by id when hosts only need that template's rigor spine and evidence expectations.",
+		when: "You know which audit program applies and just need its template.",
+	},
+	{
+		tool: "sentinel_attestation_examples",
+		primary: "Sentinel",
+		badges: ["Sentinel"],
+		purpose: "Shipped seam-tier examples so teams see how depth and boundaries translate to must-prove vs latent seams.",
+		when: "Teaching a team how attestation depth maps to real seams in their stack.",
+	},
+	{
+		tool: "sentinel_closure",
+		primary: "Sentinel",
+		badges: ["Sentinel"],
+		purpose: "Resolve closure tiers from attestation depth, vertical claim, and horizontal seams — deterministic seam language.",
+		when: "Reporting an audit's outcome in language an auditor will accept.",
+	},
+	{
+		tool: "sentinel_stage_guide",
+		primary: "Sentinel",
+		badges: ["Sentinel"],
+		purpose: "Gate helper for one assurance stage of a chosen program — keeps humans oriented inside the three-stage spine.",
+		when: "Mid-audit · when humans need to know where they are and what's next.",
+	},
+	{
+		tool: "sentinel_handoff_hint",
+		primary: "Sentinel",
+		badges: ["Sentinel"],
+		purpose: "After a sentinel_audit_exit_kind, get deterministic wording for staying in assurance or opening Navigator or Investigator.",
+		when: "When an audit surfaces a gap and you need to route it to delivery or defect work.",
+	},
+	{
+		tool: "sentinel_canonical_refs",
+		primary: "Sentinel",
+		badges: ["Sentinel"],
+		purpose: "Curated resources/read URIs for delivery and assurance lanes so hosts wire doctrine without hunting the catalog.",
+		when: "Wiring a new host integration · the canonical resources to load first.",
+	},
+];
+
+type LaneMeta = {
+	key: Lane;
+	numeral: string;
+	tagline: string;
+	plain: string;
+	tone: string;
+	accent: string;
+	chip: string;
+	rule: string;
+};
+
+const laneMeta: LaneMeta[] = [
+	{
+		key: "Orchestration",
+		numeral: "00",
+		tagline: "Routing · session anchors · the host's branching map",
+		plain: "Tools the host calls first. They tell the agent what kind of work is on the table and how to branch.",
+		tone: "amber",
+		accent: "text-amber-300/90",
+		chip: "border-amber-300/40 text-amber-200",
+		rule: "border-amber-300/40",
+	},
+	{
+		key: "Navigator",
+		numeral: "I",
+		tagline: "Delivery · building something new",
+		plain: "Turn a vague ask into layer-aware slices with authorization, ownership, and acceptance criteria baked in.",
+		tone: "violet",
+		accent: "text-violet-300/90",
+		chip: "border-violet-400/40 text-violet-200",
+		rule: "border-violet-400/40",
+	},
+	{
+		key: "Investigator",
+		numeral: "II",
+		tagline: "Defect · something is broken",
+		plain: "Evidence-first. Recon classifies the failure; remediation is gated until proof crosses the router.",
+		tone: "sky",
+		accent: "text-sky-300/90",
+		chip: "border-sky-400/40 text-sky-200",
+		rule: "border-sky-400/40",
+	},
+	{
+		key: "Sentinel",
+		numeral: "III",
+		tagline: "Assurance · proving alignment",
+		plain: "Audit programs scope seams. Evidence binds per crossing. Closure tiers come back in VERT/HORI language.",
+		tone: "emerald",
+		accent: "text-emerald-300/90",
+		chip: "border-emerald-400/40 text-emerald-200",
+		rule: "border-emerald-400/40",
+	},
+	{
+		key: "Doctrine",
+		numeral: "IV",
+		tagline: "Reference · canonical text from the standard",
+		plain: "Pull canonical AUTH controls, SEAM archetypes, and role doctrine straight from the standard — verbatim, not paraphrased.",
+		tone: "slate",
+		accent: "text-slate-300/90",
+		chip: "border-slate-300/40 text-slate-200",
+		rule: "border-slate-300/40",
+	},
+];
+
+const badgeClass: Record<Lane, string> = {
+	Orchestration: "border-amber-300/40 text-amber-200",
+	Navigator: "border-violet-300/40 text-violet-200",
+	Investigator: "border-sky-300/40 text-sky-200",
+	Sentinel: "border-emerald-300/40 text-emerald-200",
+	Doctrine: "border-slate-300/40 text-slate-200",
+};
+
+const toolsByLane: Record<Lane, Tool[]> = {
+	Orchestration: [],
+	Navigator: [],
+	Investigator: [],
+	Sentinel: [],
+	Doctrine: [],
+};
+for (const t of tools) toolsByLane[t.primary].push(t);
+
+const totalCount = tools.length;
+---
+
+<Layout
+	title="AADM tools catalog — every typed tool the MCP exposes"
+	description="All 24 typed MCP tools the AADM server exposes — grouped by lane, with plain-English purpose and when-to-call. tools/list on your running server is authoritative."
+	headerActiveNav={null}
+>
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+
+		<!-- =============================================================
+		     §00 — HERO
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
+			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.06] blur-3xl"></div>
+
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Tools / catalog</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="text-emerald-200/90">▸</span> {totalCount} typed tools · five lanes · all return structured JSON
+					</p>
+
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-black leading-[0.9] tracking-[-0.04em] text-white">
+						Every tool. <span class="font-extralight italic text-slate-400">Every contract.</span><br />
+						<span class="relative inline-block">
+							<span class="relative z-10 text-emerald-300">One catalog.</span>
+							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
+						</span>
+					</h1>
+
+					<div class="mt-12 grid grid-cols-12 gap-6">
+						<div class="col-span-12 sm:col-span-4">
+							<div class="border-l border-emerald-300/40 pl-5">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-emerald-200/80">Authoritative source</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+									This page mirrors the hosted server's published surface. After you connect,{' '}
+									<code class="font-mono-cta text-emerald-200/85">tools/list</code> and{' '}
+									<code class="font-mono-cta text-emerald-200/85">inputSchema</code> on your running MCP are the final word.
+								</p>
+							</div>
+						</div>
+						<div class="col-span-12 sm:col-span-8">
+							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+								AADM exposes a small, deliberate set of tools. Each one is named so a human reviewer can read the call log and
+								understand what just happened. None of them edit your repo —
+								<span class="font-extralight italic text-slate-400"> your agent does that.</span>
+							</p>
+						</div>
+					</div>
+
+					<!-- Lane jump chips -->
+					<nav class="mt-12 flex flex-wrap items-center gap-2" aria-label="Tool lanes">
+						{
+							laneMeta.map((m) => (
+								<a
+									href={`#lane-${m.key.toLowerCase()}`}
+									class:list={[
+										"group inline-flex items-center gap-2 border bg-transparent px-3 py-1.5 font-mono-cta text-[10px] uppercase tracking-[0.22em] transition hover:bg-white/[0.04]",
+										m.chip,
+									]}
+								>
+									<span class:list={["block h-1.5 w-1.5 rounded-full", m.accent.replace("text-", "bg-").replace("/90", "")]}></span>
+									<span>{m.key}</span>
+									<span class="text-slate-500">·</span>
+									<span class="text-slate-500">{toolsByLane[m.key].length}</span>
+								</a>
+							))
+						}
+					</nav>
+
+					<div class="mt-10 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+						<a
+							href={urlMcpMarketing}
+							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Connect production agents</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href={urlStandard}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Read the standard
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §01..§05 — Per-lane catalogs
+		     ============================================================= -->
+		{
+			laneMeta.map((m, laneIdx) => (
+				<section
+					id={`lane-${m.key.toLowerCase()}`}
+					class:list={[
+						"relative scroll-mt-24 border-b border-white/[0.06] sm:scroll-mt-28",
+						laneIdx % 2 === 0 ? "bg-[#06080f]" : "",
+					]}
+				>
+					<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+						<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+							<span
+								class:list={["font-mono-cta text-[10px] uppercase tracking-[0.28em]", m.accent.replace("/90", "/70")]}
+							>
+								§ {String(laneIdx + 1).padStart(2, "0")}
+							</span>
+							<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">
+								{m.key}
+							</span>
+						</aside>
+
+						<div class="col-span-12 sm:col-span-10">
+							<div class="grid grid-cols-12 gap-6">
+								<div class="col-span-12 sm:col-span-2">
+									<p class:list={["font-display text-[5rem] font-extralight leading-[0.85] tracking-tight sm:text-[6.5rem]", m.accent]}>
+										{m.numeral}
+									</p>
+								</div>
+								<div class="col-span-12 sm:col-span-10">
+									<h2 class="font-display text-balance text-[clamp(1.9rem,4.2vw,3.2rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+										{m.key}
+									</h2>
+									<p class="mt-3 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{m.tagline}</p>
+									<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-300">{m.plain}</p>
+								</div>
+							</div>
+
+							<ul class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+								{
+									toolsByLane[m.key].map((tool, i) => (
+										<li
+											class:list={[
+												"group flex flex-col p-6 transition duration-300 hover:bg-[#080c16] sm:p-7",
+												laneIdx % 2 === 0 ? "bg-[#06080f]" : "bg-surface-deep",
+											]}
+										>
+											<div class="flex items-baseline justify-between gap-3">
+												<code class="font-mono-cta break-all text-[15px] font-semibold text-white">{tool.tool}</code>
+												<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+													{String(i + 1).padStart(2, "0")}
+												</span>
+											</div>
+											<div class="mt-3 flex flex-wrap gap-1.5">
+												{tool.badges.map((b) => (
+													<span
+														class:list={[
+															"border bg-transparent px-2 py-0.5 font-mono-cta text-[10px] uppercase tracking-[0.22em]",
+															badgeClass[b],
+														]}
+													>
+														{b}
+													</span>
+												))}
+											</div>
+											<p class="mt-5 text-sm leading-relaxed text-slate-300">{tool.purpose}</p>
+											<div class:list={["mt-5 border-l pl-4", m.rule]}>
+												<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">When to call</p>
+												<p class:list={["mt-1.5 text-sm leading-relaxed", m.accent.replace("/90", "/85").replace("text-", "text-")]}>
+													{tool.when}
+												</p>
+											</div>
+											<div aria-hidden="true" class="mt-auto pt-6">
+												<div class:list={["h-px w-10 transition-all duration-500 group-hover:w-20", m.accent.replace("text-", "bg-").replace("/90", "/40")]}></div>
+											</div>
+										</li>
+									))
+								}
+							</ul>
+						</div>
+					</div>
+				</section>
+			))
+		}
+
+		<!-- =============================================================
+		     §06 — Authoritative note + colophon
+		     ============================================================= -->
+		<section class="relative bg-surface-deep">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.07),transparent_60%)]"></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 06</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Authoritative</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[20ch] text-balance text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.02] tracking-[-0.03em] text-white">
+						This page is a mirror. <span class="font-extralight italic text-slate-400">Your server is the truth.</span>
+					</h2>
+					<p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
+						The catalog above tracks the hosted AADM MCP's published surface. After you connect,{' '}
+						<code class="font-mono-cta text-emerald-200/85">tools/list</code> and{' '}
+						<code class="font-mono-cta text-emerald-200/85">inputSchema</code> on your running server are authoritative —
+						versions, parameter shapes, and new tools land there first.
+					</p>
+
+					<div class="mt-12 grid grid-cols-12 gap-6">
+						<div class="col-span-12 lg:col-span-7">
+							<div class="border border-white/10 bg-[#050810]">
+								<div class="flex items-center justify-between border-b border-white/[0.06] px-5 py-3">
+									<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Discover the running server</span>
+									<span class="flex gap-1" aria-hidden="true">
+										<span class="block h-1.5 w-1.5 rounded-full bg-emerald-400/70"></span>
+										<span class="block h-1.5 w-1.5 rounded-full bg-amber-400/70"></span>
+										<span class="block h-1.5 w-1.5 rounded-full bg-slate-500/70"></span>
+									</span>
+								</div>
+								<pre class="font-mono-cta overflow-x-auto p-5 text-xs leading-relaxed text-slate-300 sm:text-sm"><code>{`curl -X POST ${urlMcpRpcUrl} \\
+  -H "Accept: application/json, text/event-stream" \\
+  -H "Authorization: Bearer <your token>" \\
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'`}</code></pre>
+							</div>
+						</div>
+						<div class="col-span-12 lg:col-span-5">
+							<div class="border-l-2 border-emerald-300/40 pl-6">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">What you'll see</p>
+								<p class="mt-3 text-sm leading-relaxed text-slate-300">
+									A JSON array of tools with name, description, and inputSchema. The same tools listed here, plus any newer
+									additions your server may already expose.
+								</p>
+								<p class="mt-4 text-xs leading-relaxed text-slate-500">
+									Don't have a token? <a href={urlMcpMarketing} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Get access</a>.
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="mt-16 flex flex-col flex-wrap items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
+						<a
+							href={urlMcpMarketing}
+							class="group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Connect production agents</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href="/why-aadm"
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-7 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Why these tools, vs raw loops
+						</a>
+					</div>
+
+					<!-- Colophon -->
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Catalog</span> · {totalCount} tools
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Lanes</span> · <span class="text-emerald-300/80">{laneMeta.length}</span>
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Authoritative</span> · <span class="text-emerald-300/80">tools/list on your server</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>

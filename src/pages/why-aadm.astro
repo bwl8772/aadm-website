@@ -1,0 +1,852 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getSiteUrlConfig } from "../lib/site-urls";
+
+const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
+
+type Comparison = {
+	num: string;
+	scenario: string;
+	plain: string;
+	without: string;
+	with: string;
+	tool?: string;
+};
+
+const comparisons: Comparison[] = [
+	{
+		num: "01",
+		scenario: "A test fails sometimes, not always",
+		plain: "Flaky tests are how real bugs hide.",
+		without:
+			"The agent bumps the timeout, asserts the test, and calls it green. The flake ships. Customers find it.",
+		with: "The agent stops and gathers evidence before touching anything. Timeout edits are blocked until the real cause is named.",
+		tool: "debug_defect",
+	},
+	{
+		num: "02",
+		scenario: "“Refactor auth to use the new session API”",
+		plain: "Authorization is the thing you cannot get subtly wrong.",
+		without:
+			"The agent rewrites three files across the auth boundary. A control quietly relaxes. You find out at 2 a.m.",
+		with: "The agent loads the actual authorization rules from the standard, scopes the work, and writes acceptance criteria before the first edit.",
+		tool: "plan_delivery · fetch_auth",
+	},
+	{
+		num: "03",
+		scenario: "Quarterly compliance attestation",
+		plain: "“Trust me, CI is green” is not an audit.",
+		without:
+			"Someone screenshots a passing pipeline and writes a paragraph. Nobody can trace which control covers which boundary.",
+		with: "The agent runs a structured audit pass, attaches evidence to each crossing, and produces language an auditor will actually accept.",
+		tool: "audit_run · sentinel_closure",
+	},
+	{
+		num: "04",
+		scenario: "A vague bug report lands in the queue",
+		plain: "The loudest stack trace is rarely the real cause.",
+		without:
+			"The agent grabs the noisiest file and starts editing. Two days later you discover the defect was upstream.",
+		with: "The agent classifies ownership first and routes to the right area before any code changes — recon, then diagnose.",
+		tool: "classify_bug · debug_hint",
+	},
+	{
+		num: "05",
+		scenario: "A team using three different IDEs",
+		plain: "Same task, three different agent behaviours, three styles in review.",
+		without:
+			"Each engineer's prompts diverge. Quality depends on whoever was at the keyboard. Review gets noisy.",
+		with: "One hosted standard, one set of workflows. Every IDE — Cursor, Claude Code, Windsurf, anything that speaks MCP — loads the same lanes and gates.",
+	},
+	{
+		num: "06",
+		scenario: "Onboarding a new senior engineer",
+		plain: "“How we do things here” usually lives in Slack threads.",
+		without:
+			"They learn the team's bar from PR comments over six weeks. Until then, their work and the team's drift apart.",
+		with: "Their agent loads the same standard the team uses on day one. Their first PR matches the team's discipline.",
+	},
+];
+
+type Lane = {
+	num: string;
+	name: string;
+	tagline: string;
+	trigger: string;
+	plain: string;
+	tech: string;
+	tools: string[];
+	tone: "violet" | "blue" | "emerald";
+};
+
+const lanes: Lane[] = [
+	{
+		num: "I",
+		name: "Navigator",
+		tagline: "Building something new",
+		trigger: "Build this feature.",
+		plain:
+			"Turn a vague ask into a clear, ordered plan — with authorization, ownership, and acceptance criteria baked in before any code is written.",
+		tech: "UDALI-aware scope, AUTH catalog references, structured slice plan with acceptance criteria per slice.",
+		tools: ["plan_delivery", "map_feature", "fetch_auth", "slice_issues"],
+		tone: "violet",
+	},
+	{
+		num: "II",
+		name: "Investigator",
+		tagline: "Something is broken",
+		trigger: "This is broken.",
+		plain:
+			"Find what's actually wrong before changing anything. No speculative rewrites, no edits piled on top of guesses.",
+		tech: "Evidence-first Path A recon. Path B diagnosis gated until failure classification crosses the router threshold.",
+		tools: ["debug_defect", "classify_bug", "debug_hint", "fix_pack"],
+		tone: "blue",
+	},
+	{
+		num: "III",
+		name: "Sentinel",
+		tagline: "Proving it's aligned",
+		trigger: "Prove it's aligned.",
+		plain:
+			"Show — in language an auditor or compliance lead will accept — that the controls you say you have are actually in place.",
+		tech: "Audit programs scope seams. Evidence binds per crossing. Closure tiers come back in VERT/HORI language.",
+		tools: ["audit_run", "audit_outline", "sentinel_closure", "sentinel_stage_guide"],
+		tone: "emerald",
+	},
+];
+
+const laneToneClasses: Record<Lane["tone"], { numeral: string; rule: string; chip: string; accent: string; glow: string }> = {
+	violet: {
+		numeral: "text-violet-300/90",
+		rule: "border-violet-400/40",
+		chip: "border-violet-400/30 text-violet-200",
+		accent: "text-violet-200",
+		glow: "bg-violet-500/[0.07]",
+	},
+	blue: {
+		numeral: "text-sky-300/90",
+		rule: "border-sky-400/40",
+		chip: "border-sky-400/30 text-sky-200",
+		accent: "text-sky-200",
+		glow: "bg-sky-500/[0.07]",
+	},
+	emerald: {
+		numeral: "text-emerald-300/90",
+		rule: "border-emerald-400/40",
+		chip: "border-emerald-400/30 text-emerald-200",
+		accent: "text-emerald-200",
+		glow: "bg-emerald-500/[0.07]",
+	},
+};
+
+type Audience = {
+	num: string;
+	role: string;
+	headline: string;
+	body: string;
+};
+
+const audiences: Audience[] = [
+	{
+		num: "A",
+		role: "Engineering leaders",
+		headline: "Your bar for review becomes the agent's bar for output.",
+		body: "Discipline stops being per-engineer. Cursor, Claude Code, contractor laptops — every agent loads the same workflows, controls, and gates. Review feedback gets shorter because fewer things make it to the PR.",
+	},
+	{
+		num: "B",
+		role: "Platform & DevEx",
+		headline: "One hosted service. Wire it once.",
+		body: "Subscribers point any MCP-capable IDE at one Streamable HTTP endpoint. Versioned tools, deterministic routing, capability bumps on your schedule — no per-team prompt sprawl.",
+	},
+	{
+		num: "C",
+		role: "Security & compliance",
+		headline: "Attestation language an auditor will accept.",
+		body: "Audit programs, seam closure, and authorization references give your evidence a structure — without ever claiming the MCP itself “certifies” anything. Your apps and CI still prove enforcement.",
+	},
+];
+
+type Mechanic = {
+	num: string;
+	title: string;
+	body: string;
+	tech: string;
+};
+
+const mechanics: Mechanic[] = [
+	{
+		num: "01",
+		title: "The right kind of job is picked first",
+		body: "Build, debug, or attest — the agent classifies the question before touching anything. A defect doesn't accidentally get the “build me a feature” treatment.",
+		tech: "route_lane",
+	},
+	{
+		num: "02",
+		title: "Rules come from the source, not memory",
+		body: "The agent reads your authorization rules and boundary definitions directly from the open standard — instead of paraphrasing what it half-remembers.",
+		tech: "fetch_auth · fetch_seam",
+	},
+	{
+		num: "03",
+		title: "Gates stop premature edits",
+		body: "Evidence has to land before a fix can. Timeout bumps, scope creep, and multi-file refactors are blocked until the real problem is classified.",
+		tech: "debug_defect · Path A → Path B",
+	},
+	{
+		num: "04",
+		title: "Every session, every IDE, the same standard",
+		body: "Cursor, Claude Code, Windsurf — anything that speaks MCP loads identical workflows over one HTTP endpoint. Discipline is no longer per-engineer.",
+		tech: "Streamable HTTP · /mcp",
+	},
+];
+
+type FailureMode = {
+	num: string;
+	title: string;
+	body: string;
+};
+
+const failureModes: FailureMode[] = [
+	{
+		num: "01",
+		title: "Speculative rewrites",
+		body: "The agent edits before it understands. By the time you read the diff, the original bug is buried under unrelated “cleanup.”",
+	},
+	{
+		num: "02",
+		title: "Silent authorization drift",
+		body: "Who is allowed to do what quietly relaxes — because the agent had no reference to the rules it was supposed to keep.",
+	},
+	{
+		num: "03",
+		title: "No shared memory across the team",
+		body: "Three engineers, three IDEs, three styles of agent output. Review queues fill with contradictions.",
+	},
+];
+---
+
+<Layout
+	title="Why AADM — Governance for AI coding agents, not just another loop"
+	description="Raw agent loops ship the wrong thing fast. AADM MCP gives Claude Code, Cursor, and any MCP-capable IDE the open standard, typed tools, and gates that keep enterprise delivery aligned."
+	headerActiveNav="why"
+>
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+
+		<!-- =============================================================
+		     §00 — HERO
+		     Editorial poster. Manuscript italic interleaving. Blueprint
+		     grid. Diagonal accent. Hung marginalia. Outsized type.
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<!-- Blueprint dot grid -->
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"
+			></div>
+			<!-- Soft amber wash at top-right (warning / 'without' tonal hint) -->
+			<div
+				aria-hidden="true"
+				class="absolute right-0 top-0 -z-10 h-[40rem] w-[40rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-amber-500/[0.06] blur-3xl"
+			></div>
+			<!-- Diagonal hairline (Swiss accent) -->
+			<svg aria-hidden="true" class="pointer-events-none absolute left-1/2 top-12 -z-10 hidden h-[120%] w-[1px] -translate-x-[18rem] rotate-[18deg] sm:block">
+				<line x1="0" y1="0" x2="0" y2="100%" stroke="rgba(252,211,77,0.18)" stroke-dasharray="2 6" />
+			</svg>
+
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-24 pt-10 sm:px-8 sm:pb-32 sm:pt-16">
+				<!-- Left marginalia rail -->
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 00</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Why AADM / Manifesto</span>
+					<span class="hidden font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-600 sm:mt-auto sm:block">
+						Filed under<br />
+						<span class="text-slate-400">Agentic delivery</span>
+					</span>
+				</aside>
+
+				<!-- Headline column -->
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="text-amber-200/90">▸</span> An advisory for teams shipping enterprise software with AI assistance
+					</p>
+
+					<h1
+						class="font-display max-w-[18ch] text-balance text-[clamp(2.6rem,8.5vw,7rem)] font-black leading-[0.88] tracking-[-0.045em] text-white"
+					>
+						AI coding agents<br class="hidden sm:inline" />
+						<span class="font-extralight italic text-slate-400"> are powerful.</span><br />
+						They are also<br class="hidden sm:inline" />
+						<span class="relative inline-block">
+							<span class="relative z-10 text-amber-300">confidently wrong</span>
+							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-amber-300/30"></span>
+						</span>
+						<span class="font-extralight italic text-slate-400"> on enterprise code.</span>
+					</h1>
+
+					<!-- Body + margin note -->
+					<div class="mt-14 grid grid-cols-12 gap-6">
+						<div class="col-span-12 sm:col-span-4">
+							<div class="border-l border-amber-300/40 pl-5">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-amber-200/80">The thesis</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+									AADM is the missing layer between your agents and your code: an open standard your engineers read, plus a
+									hosted service your agents load every session.
+								</p>
+							</div>
+						</div>
+						<div class="col-span-12 sm:col-span-8">
+							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+								Every coding tool — Cursor, Claude Code, Windsurf, anything that speaks MCP — reasons the same way about your
+								<span class="text-white underline decoration-emerald-300/50 decoration-2 underline-offset-[6px]">authorization</span>,
+								your <span class="text-white underline decoration-emerald-300/50 decoration-2 underline-offset-[6px]">boundaries</span>,
+								and your <span class="text-white underline decoration-emerald-300/50 decoration-2 underline-offset-[6px]">bar for "done."</span>
+								The model doesn't need to be smarter. It needs a standard.
+							</p>
+						</div>
+					</div>
+
+					<!-- Dual TL;DR — deliberately staggered + overlapped feel -->
+					<div class="mt-16 grid grid-cols-12 gap-4 sm:gap-6">
+						<div class="col-span-12 lg:col-span-7">
+							<article class="group relative overflow-hidden border border-amber-300/25 bg-gradient-to-br from-amber-950/30 via-[#0b0e18] to-[#0b0e18] p-7 transition duration-300 sm:p-10 hover:border-amber-300/50">
+								<div
+									aria-hidden="true"
+									class="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-amber-300/[0.08] blur-3xl transition duration-500 group-hover:bg-amber-300/[0.14]"
+								></div>
+								<div class="flex items-center gap-3">
+									<span class="block h-2 w-2 rounded-full bg-amber-300"></span>
+									<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-amber-200/90">For leaders · one sentence</p>
+								</div>
+								<p class="font-display mt-5 text-balance text-[1.45rem] leading-[1.18] tracking-tight text-white sm:text-[1.85rem]">
+									AADM teaches your AI coding tools the same engineering discipline your senior reviewers expect — so the work that lands in main is closer to ship-ready,
+									<span class="font-extralight italic text-amber-200/90"> the first time.</span>
+								</p>
+							</article>
+						</div>
+						<div class="col-span-12 lg:col-span-5 lg:mt-16">
+							<article class="group relative border border-emerald-300/20 bg-[#070b13] p-7 transition duration-300 hover:border-emerald-300/40 sm:p-8">
+								<div class="flex items-center gap-3">
+									<span class="block h-2 w-2 rounded-full bg-emerald-300"></span>
+									<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-emerald-200/90">For engineers · one sentence</p>
+								</div>
+								<p class="mt-5 text-base leading-relaxed text-slate-200">
+									A hosted MCP exposes typed tools, doctrine, and gates over Streamable HTTP. Your agents call them every turn —
+									<span class="font-mono-cta text-[13px] text-emerald-200/90">route_lane</span>,
+									<span class="font-mono-cta text-[13px] text-emerald-200/90">fetch_auth</span>,
+									<span class="font-mono-cta text-[13px] text-emerald-200/90">debug_defect</span>.
+								</p>
+							</article>
+						</div>
+					</div>
+
+					<!-- CTAs — Swiss layout: primary white, ghost border, link with arrow -->
+					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+						<a
+							href="#compare"
+							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>See the side-by-side</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href={urlMcpMarketing}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Connect production agents
+						</a>
+						<a
+							href={urlStandard}
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+						>
+							<span>Read the open standard</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↗</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §01 — Diagnosis (failure modes of the unguided loop)
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(252,211,77,0.04),transparent_30%)]"
+			></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 01</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Diagnosis</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[20ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						The agent isn't dumb.<br />
+						<span class="font-extralight italic text-slate-400">It's missing</span> a standard.
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						Every team running unguided coding agents at enterprise scale hits the same three failure modes. They are not random.
+						They are structural.
+					</p>
+
+					<div class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+						{
+							failureModes.map((m, idx) => (
+								<article class="group relative isolate overflow-hidden bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-9">
+									<!-- Custom schematic SVG as background art -->
+									<svg
+										aria-hidden="true"
+										class="pointer-events-none absolute -right-6 -top-6 -z-10 text-amber-200/[0.08] transition duration-500 group-hover:text-amber-200/[0.18]"
+										width="180"
+										height="180"
+										viewBox="0 0 180 180"
+										fill="none"
+									>
+										{idx === 0 ? (
+											<>
+												<path d="M30 30h120v120H30z" stroke="currentColor" stroke-width="1" />
+												<path d="M30 70h120M30 110h120M70 30v120M110 30v120" stroke="currentColor" stroke-width="1" stroke-dasharray="3 5" />
+												<path d="M52 62l28 28M80 62l-28 28" stroke="currentColor" stroke-width="1.5" />
+											</>
+										) : null}
+										{idx === 1 ? (
+											<>
+												<rect x="50" y="80" width="80" height="60" rx="2" stroke="currentColor" stroke-width="1" />
+												<path d="M65 80V55a25 25 0 0150 0v10" stroke="currentColor" stroke-width="1" stroke-dasharray="3 5" />
+												<circle cx="90" cy="110" r="6" stroke="currentColor" stroke-width="1.5" />
+												<path d="M90 116v10" stroke="currentColor" stroke-width="1.5" />
+											</>
+										) : null}
+										{idx === 2 ? (
+											<>
+												<circle cx="90" cy="40" r="10" stroke="currentColor" stroke-width="1" />
+												<path d="M90 50v40m0 0l-40 50m40-50l40 50" stroke="currentColor" stroke-width="1" />
+												<circle cx="50" cy="140" r="8" stroke="currentColor" stroke-width="1" />
+												<circle cx="130" cy="140" r="8" stroke="currentColor" stroke-width="1" />
+												<path d="M58 140h64" stroke="currentColor" stroke-width="1" stroke-dasharray="3 5" />
+											</>
+										) : null}
+									</svg>
+
+									<div class="flex items-baseline gap-4">
+										<span class="font-display text-5xl font-extralight leading-none text-amber-200/80 sm:text-6xl">
+											{m.num}
+										</span>
+										<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/60">
+											Failure mode
+										</span>
+									</div>
+
+									<h3 class="font-display mt-6 text-balance text-[1.35rem] font-bold leading-[1.15] tracking-tight text-white sm:text-2xl">
+										{m.title}
+									</h3>
+									<p class="mt-4 text-[0.95rem] leading-relaxed text-slate-400">{m.body}</p>
+
+									<!-- Hairline reveal on hover -->
+									<div aria-hidden="true" class="mt-8 h-px w-12 bg-amber-300/40 transition-all duration-500 group-hover:w-24 group-hover:bg-amber-300/70"></div>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §02 — Side-by-side comparison (audit-report styling)
+		     ============================================================= -->
+		<section id="compare" class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[length:64px_64px] [mask-image:linear-gradient(to_bottom,black_30%,transparent)]"
+			></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 02</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Side by side</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Same situation.<br />
+						<span class="font-extralight italic text-slate-400">Two outcomes.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						Same agents, same code. The difference is which standard the agent loaded when it started thinking.
+					</p>
+
+					<!-- Column legend (desktop only) -->
+					<div class="mt-12 hidden grid-cols-12 gap-8 border-t border-white/10 pb-3 pt-5 text-[10px] font-mono-cta uppercase tracking-[0.25em] lg:grid">
+						<div class="col-span-3 text-slate-500">Scenario</div>
+						<div class="col-span-4 text-amber-200/80">▸ Without AADM</div>
+						<div class="col-span-5 text-emerald-200/80">▸ With AADM</div>
+					</div>
+
+					<div class="border-t border-white/10 lg:border-t-0">
+						{
+							comparisons.map((row) => (
+								<article class="group relative grid grid-cols-1 gap-6 border-b border-white/[0.08] py-9 transition duration-300 hover:bg-white/[0.015] lg:grid-cols-12 lg:gap-8 lg:py-10">
+									<!-- Scenario -->
+									<div class="lg:col-span-3">
+										<div class="flex items-baseline gap-3">
+											<span class="font-display text-3xl font-extralight leading-none text-white/90 sm:text-4xl">
+												{row.num}
+											</span>
+											<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500 transition group-hover:text-emerald-200/80">
+												Case file
+											</span>
+										</div>
+										<h3 class="font-display mt-4 text-[1.15rem] font-bold leading-[1.2] tracking-tight text-white sm:text-[1.25rem]">
+											{row.scenario}
+										</h3>
+										<p class="mt-2 text-sm italic leading-relaxed text-slate-500">{row.plain}</p>
+										{row.tool ? (
+											<p class="mt-5 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+												tool · <span class="text-emerald-200/80">{row.tool}</span>
+											</p>
+										) : null}
+									</div>
+
+									<!-- Without -->
+									<div class="relative lg:col-span-4">
+										<div class="absolute -left-3 top-0 h-full w-px bg-amber-300/30 lg:left-[-1px]"></div>
+										<p class="font-mono-cta pl-4 text-[10px] uppercase tracking-[0.22em] text-amber-200/80 lg:hidden">
+											Without AADM
+										</p>
+										<p class="mt-2 pl-4 text-[0.95rem] leading-relaxed text-slate-400 lg:mt-0">
+											{row.without}
+										</p>
+									</div>
+
+									<!-- With -->
+									<div class="relative lg:col-span-5">
+										<div class="absolute -left-3 top-0 h-full w-px bg-emerald-300/40 lg:left-[-1px]"></div>
+										<p class="font-mono-cta pl-4 text-[10px] uppercase tracking-[0.22em] text-emerald-200/90 lg:hidden">
+											With AADM
+										</p>
+										<p class="mt-2 pl-4 text-[0.95rem] leading-relaxed text-slate-100 lg:mt-0">
+											{row.with}
+										</p>
+									</div>
+
+									<!-- Hover chevron (desktop) -->
+									<div aria-hidden="true" class="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-2 opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100 lg:block">
+										<svg width="20" height="14" viewBox="0 0 20 14" fill="none" class="text-emerald-300/80">
+											<path d="M1 7h17M13 1l5 6-5 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" />
+										</svg>
+									</div>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §03 — Three lanes
+		     Editorial blocks with HUGE hanging Roman numerals
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-violet-200/70">§ 03</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Three lanes</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[20ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Three jobs.<br />
+						Three lanes.<br />
+						<span class="font-extralight italic text-slate-400">One answer each.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						Every coding task is one of three things: building something new, fixing something broken, or proving something is
+						aligned. AADM gives each one its own workflow — so the agent picks the right one, not whichever instinct fires first.
+					</p>
+
+					<div class="mt-16 space-y-px bg-white/[0.08]">
+						{
+							lanes.map((lane) => {
+								const t = laneToneClasses[lane.tone];
+								return (
+									<article class="group relative overflow-hidden bg-surface-deep transition duration-300 hover:bg-[#080c16]">
+										<!-- Faint glow per lane -->
+										<div aria-hidden="true" class:list={["pointer-events-none absolute -left-24 -top-24 -z-0 h-72 w-72 rounded-full blur-3xl transition duration-500 opacity-50 group-hover:opacity-100", t.glow]}></div>
+
+										<div class="relative grid grid-cols-12 gap-6 px-1 py-12 sm:px-2 sm:py-14">
+											<!-- Hanging numeral -->
+											<div class="col-span-12 sm:col-span-2">
+												<p class:list={["font-display text-[5rem] font-extralight leading-[0.85] tracking-tight sm:text-[6.5rem]", t.numeral]}>
+													{lane.num}
+												</p>
+												<div class:list={["mt-3 inline-flex items-center gap-2 border px-3 py-1.5 font-mono-cta text-[10px] uppercase tracking-[0.22em]", t.chip]}>
+													<span class:list={["block h-1.5 w-1.5 rounded-full", t.numeral.replace("text-", "bg-").replace("/90", "")]}></span>
+													{lane.name}
+												</div>
+											</div>
+
+											<!-- Trigger + plain -->
+											<div class="col-span-12 sm:col-span-6">
+												<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{lane.tagline}</p>
+												<p class="font-display mt-4 text-balance text-[1.55rem] font-bold leading-[1.1] tracking-tight text-white sm:text-[2rem]">
+													<span class:list={["mr-1", t.numeral]}>“</span>
+													{lane.trigger}
+													<span class:list={["ml-0.5", t.numeral]}>”</span>
+												</p>
+												<p class="mt-6 text-[0.98rem] leading-[1.65] text-slate-300">{lane.plain}</p>
+											</div>
+
+											<!-- Tech + tools -->
+											<div class="col-span-12 sm:col-span-4">
+												<div class:list={["border-l pl-5", t.rule]}>
+													<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">For engineers</p>
+													<p class:list={["mt-2 text-sm leading-relaxed", t.accent]}>{lane.tech}</p>
+												</div>
+												<div class="mt-6">
+													<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Tools the agent calls</p>
+													<div class="mt-3 flex flex-wrap gap-1.5">
+														{lane.tools.map((tname) => (
+															<code class:list={["font-mono-cta border px-2.5 py-0.5 text-[11px] transition", t.chip]}>
+																{tname}
+															</code>
+														))}
+													</div>
+												</div>
+											</div>
+										</div>
+									</article>
+								);
+							})
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §04 — Mechanics (4-up grid, big mono numerals)
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(110,231,183,0.04)_1px,transparent_1px)] bg-[length:36px_36px] [mask-image:radial-gradient(ellipse_at_center,black_55%,transparent_85%)]"
+			></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 04</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Mechanics</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						What actually changes <span class="font-extralight italic text-slate-400">in the loop.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						Four small differences on every turn that a raw agent loop never makes. Together they are the gap between “the model
+						shipped it” and “the team shipped it.”
+					</p>
+
+					<ol class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
+						{
+							mechanics.map((m) => (
+								<li class="group relative bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-10">
+									<div class="flex items-baseline gap-5">
+										<span class="font-display text-5xl font-extralight leading-none tracking-tight text-emerald-200/80 transition duration-300 group-hover:text-emerald-300 sm:text-6xl">
+											{m.num}
+										</span>
+										<div class="flex-1">
+											<h3 class="font-display text-balance text-[1.25rem] font-bold leading-[1.18] tracking-tight text-white sm:text-[1.4rem]">
+												{m.title}
+											</h3>
+										</div>
+									</div>
+									<p class="mt-5 text-[0.95rem] leading-relaxed text-slate-300">{m.body}</p>
+									<div class="mt-7 flex items-center gap-3 border-t border-white/[0.06] pt-4">
+										<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">runs</span>
+										<span class="font-mono-cta text-[11px] text-emerald-200/90">{m.tech}</span>
+									</div>
+								</li>
+							))
+						}
+					</ol>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §05 — Boundary statement (editorial pull-quote)
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 05</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Boundary</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<div class="grid grid-cols-12 gap-8">
+						<div class="col-span-12 lg:col-span-7">
+							<!-- Large editorial mark -->
+							<svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true" class="text-amber-300/85">
+								<circle cx="28" cy="28" r="26" stroke="currentColor" stroke-width="1.2" />
+								<path d="M28 14v18M28 38v2" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" />
+							</svg>
+							<p class="font-display mt-8 text-balance text-[clamp(1.5rem,3.6vw,2.6rem)] font-bold leading-[1.1] tracking-tight text-white">
+								AADM is governance
+								<span class="text-amber-300"> context</span>,
+								<span class="font-extralight italic text-slate-400"> not enforcement.</span>
+							</p>
+							<p class="mt-7 text-[0.98rem] leading-[1.7] text-slate-300">
+								The hosted service ships versioned workflows, doctrine, and tools your agents load every turn. It does
+								<span class="font-semibold text-white">not</span> run your business logic, scan your repository, or replace
+								your CI.
+							</p>
+							<p class="mt-4 text-[0.98rem] leading-[1.7] text-slate-400">
+								Your production authorization, gateways, tests, and CI stay authoritative. AADM makes sure your agents
+								understand them the same way your senior engineers do.
+							</p>
+						</div>
+						<div class="col-span-12 lg:col-span-5">
+							<div class="border-l-2 border-amber-300/40 pl-6">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-amber-200/85">It deliberately does not</p>
+								<ul class="mt-6 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+									{
+										[
+											"Run your business logic or mutate your database.",
+											"Issue compliance certificates or legal verdicts.",
+											"Replace code review, CI, or server-side authorization.",
+											"Scan your repo and hand out pass / fail verdicts.",
+										].map((item, idx) => (
+											<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-4">
+												<span class="font-mono-cta text-[11px] text-amber-300/80">
+													{String(idx + 1).padStart(2, "0")}
+												</span>
+												<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">{item}</span>
+											</li>
+										))
+									}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §06 — Audiences (3-up with letter labels)
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 06</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Audience</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Built for teams where<br />
+						<span class="font-extralight italic text-slate-400">“the model did it”</span> isn't an answer.
+					</h2>
+
+					<div class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+						{
+							audiences.map((a) => (
+								<article class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
+									<div class="flex items-baseline gap-4">
+										<span class="font-display text-[3.5rem] font-extralight leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
+											{a.num}
+										</span>
+										<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{a.role}</p>
+									</div>
+									<h3 class="font-display mt-7 text-balance text-[1.15rem] font-bold leading-[1.25] tracking-tight text-white sm:text-[1.25rem]">
+										{a.headline}
+									</h3>
+									<p class="mt-4 text-sm leading-relaxed text-slate-400">{a.body}</p>
+									<div aria-hidden="true" class="mt-7 h-px w-10 bg-emerald-300/40 transition-all duration-500 group-hover:w-20 group-hover:bg-emerald-300/70"></div>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §07 — Final CTA (HUGE editorial)
+		     ============================================================= -->
+		<section class="relative bg-surface-deep">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(252,211,77,0.07),transparent_60%)]"
+			></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:px-8 sm:py-40">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 07</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Start here</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="text-amber-200/90">▸</span> The directive
+					</p>
+					<h2 class="font-display mt-6 max-w-[16ch] text-balance text-[clamp(2.5rem,7vw,6.5rem)] font-black leading-[0.9] tracking-[-0.04em] text-white">
+						Stop shipping<br />
+						the <span class="font-extralight italic text-slate-400">wrong thing</span><br />
+						<span class="relative inline-block">
+							<span class="relative z-10 text-amber-300">faster.</span>
+							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.08em] -z-0 h-[0.2em] bg-amber-300/30"></span>
+						</span>
+					</h2>
+					<p class="mt-10 max-w-xl text-base leading-relaxed text-slate-300">
+						The standard is free to read and lives in public. When your agents need versioned context they can load on every
+						turn, connect the hosted MCP.
+					</p>
+
+					<div class="mt-12 flex flex-col flex-wrap items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
+						<a
+							href={urlMcpMarketing}
+							class="group inline-flex items-center gap-3 bg-white px-8 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Connect production agents</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href={urlStandard}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-8 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Read &amp; adopt the standard
+						</a>
+						<a
+							href="/mcp#mcp-tools-heading"
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+						>
+							<span>Browse the tools catalog</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↗</span>
+						</a>
+					</div>
+
+					<!-- Colophon -->
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Advisory</span> · Why AADM v1
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">For</span> · Senior engineering &amp; platform teams
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Status</span> · <span class="text-emerald-300/80">Open standard, hosted MCP</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>

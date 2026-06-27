@@ -28,6 +28,15 @@ const claudeMcpFullConfigSnippet = `{
     }
   }
 }`;
+
+const capabilities = [
+	{ letter: "A", name: "Navigator-style delivery", body: "Pull plan_delivery, doctrine slices, and AUTH cites while shaping a feature across layers.", tools: "plan_delivery" },
+	{ letter: "B", name: "Investigator defects", body: "Use debug_defect for gated recon and classification. Append evidence across turns without rewriting the brief.", tools: "debug_defect" },
+	{ letter: "C", name: "Sentinel assurance", body: "Run audit_run / audit_outline for seam language. Bind horizontal boundaries while Claude traces files locally.", tools: "audit_run · audit_outline" },
+	{ letter: "D", name: "AUTH literacy", body: "fetch_auth returns the real markdown for AUTH-XX so reviews cite governance text — not memory.", tools: "fetch_auth" },
+	{ letter: "E", name: "Orchestrator hooks", body: "route_lane, orchestrator_anchor, and standard_brief give deterministic branching for long sessions.", tools: "route_lane · orchestrator_anchor" },
+	{ letter: "F", name: "Proof stays local", body: "MCP never replaces CI. Claude runs tests you invoke; pass/fail remains authoritative in your pipeline.", tools: "your CI" },
+];
 ---
 
 <Layout
@@ -35,195 +44,235 @@ const claudeMcpFullConfigSnippet = `{
 	description="Connect Claude Desktop and Claude Code CLI to the hosted AADM MCP: subscriber token, HTTP transport, Navigator / Investigator / Sentinel workflows, and illustrative deep-dive transcripts."
 	headerActiveNav={null}
 >
-	<main id="main">
-		<!-- Hero -->
-		<section class="mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 sm:pb-16 sm:pt-24">
-			<p class="mb-4 inline-flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-400">
-				<span class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-orange-300/95">
-					AADM + Claude Code
-				</span>
-				<span class="rounded-full border border-border-subtle bg-surface-card/60 px-3 py-1 text-accent-violet">
-					MCP · Streamable HTTP
-				</span>
-			</p>
-			<h1 class="font-display max-w-4xl text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
-				Standard in the cloud.
-				<span class="bg-gradient-to-r from-orange-300 via-amber-200 to-accent-violet bg-clip-text text-transparent">
-					Claude Code in your repo.
-				</span>
-			</h1>
-			<p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
-				Point Claude Desktop or Claude Code at the hosted AADM MCP the same way you wire any HTTP MCP: subscriber token,
-				stable tools for briefs and doctrine, and your codebase still owns proof—tests, CI, and traces.
-			</p>
-			<p class="mt-4 max-w-2xl text-sm text-slate-500">
-				<strong class="text-slate-400">Step 0:</strong>{' '}
-				<code class="font-mono-cta text-xs text-slate-300">npx aadm-init-repo --full</code> —{' '}
-				<a href="/governance" class="font-semibold text-accent-violet underline hover:text-accent-blue"
-					>init guide</a
-				>
-			</p>
-			<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-				<a
-					href="#connect-claude"
-					class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-600 via-orange-600 to-violet-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-orange-950/30 transition hover:brightness-110"
-				>
-					Connection steps & copy-paste
-				</a>
-				<a
-					href={urlMcpMarketing}
-					class="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface-card px-6 py-3.5 text-base font-semibold text-white shadow-sm transition hover:border-slate-500/40 hover:bg-surface-mid"
-				>
-					MCP overview & pricing
-				</a>
-				<a
-					href={urlStandard}
-					class="inline-flex items-center justify-center rounded-xl border border-dashed border-slate-600 px-6 py-3.5 text-base font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white"
-				>
-					Read the standard
-				</a>
-			</div>
-		</section>
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
 
-		<!-- Connect (below fold) -->
-		<section
-			id="connect-claude"
-			class="scroll-mt-24 border-y border-border-subtle bg-surface-mid/45 py-14 sm:scroll-mt-28 sm:py-16"
-			aria-labelledby="connect-claude-heading"
-		>
-			<div class="mx-auto max-w-6xl px-4 sm:px-6">
-				<h2 id="connect-claude-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
-					Connect AADM MCP to Claude
-				</h2>
-				<p class="mt-3 max-w-3xl text-slate-400">
-					One subscriber token, one MCP endpoint. Paste an <code class="font-mono-cta text-slate-500">aadm_…</code> dashboard token
-					or <code class="font-mono-cta text-slate-500">Bearer ak_…</code> account API key from your AADM dashboard. Do not commit real secrets.
-				</p>
+		<!-- =============================================================
+		     §00 — Hero
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
+			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-amber-500/[0.07] blur-3xl"></div>
+			<div aria-hidden="true" class="absolute left-0 top-32 -z-10 h-[36rem] w-[36rem] -translate-x-1/3 rounded-full bg-violet-500/[0.06] blur-3xl"></div>
 
-				<div class="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-12">
-					<div>
-						<h3 class="text-xs font-bold uppercase tracking-wider text-orange-300/90">Steps</h3>
-						<ol class="mt-4 list-decimal space-y-3 pl-5 text-sm text-slate-300">
-							<li>
-								<Show when="signed-out">
-									<span>
-										<a
-											href={signUpUrl}
-											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
-										>
-											Create an AADM account
-										</a>
-										{' '}
-										or{' '}
-										<a
-											href={signInUrl}
-											class="inline font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-4 hover:text-accent-blue"
-										>
-											sign in
-										</a>
-										, subscribe, then copy your OAuth client ID from{' '}
-										<a href={memberMcpOAuthSignInUrl} class="text-accent-violet underline hover:text-accent-blue">
-											Member area → MCP OAuth
-										</a>
-										{' '}
-										(or create an <code class="font-mono-cta text-xs">ak_…</code> key in{' '}
-										<a href={memberSignInUrl} class="text-accent-violet underline hover:text-accent-blue">
-											Member area → API keys
-										</a>).
-									</span>
-								</Show>
-								<Show when="signed-in">
-									<span>
-										Create an <code class="font-mono-cta text-xs">ak_…</code> API key in{' '}
-										<a href={memberAreaUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-											Member area → API keys
-										</a>
-										. For Claude OAuth, copy <strong class="text-slate-300">your client ID</strong> from{' '}
-										<a href={memberMcpOAuthUrl} class="font-semibold text-accent-violet underline hover:text-accent-blue">
-											Member area → MCP OAuth
-										</a>.
-									</span>
-								</Show>
-							</li>
-							<li>
-								Merge the JSON below into your Claude config’s <code class="font-mono-cta text-slate-400">mcpServers</code>{' '}
-								object (see paths for Desktop vs Claude Code).
-							</li>
-							<li>
-								Use the raw token in <code class="font-mono-cta text-slate-400">Authorization</code>, or{' '}
-								<code class="font-mono-cta text-slate-400">Bearer ak_…</code> if your build expects that prefix.
-							</li>
-							<li>
-								Fully quit and reopen <strong class="text-slate-200">Claude Desktop</strong>, or start a{' '}
-								<strong class="text-slate-200">new Claude Code</strong> session in the terminal after saving—hosts do not
-								always hot-reload MCP definitions.
-							</li>
-							<li>
-								In chat, ask Claude to use AADM tools (e.g. <code class="font-mono-cta text-slate-400">standard_brief</code>,{' '}
-								<code class="font-mono-cta text-slate-400">debug_defect</code>,{' '}
-								<code class="font-mono-cta text-slate-400">fetch_auth</code>). Confirm{' '}
-								<code class="font-mono-cta text-slate-400">tools/list</code> shows <code class="font-mono-cta text-slate-400">aadm</code>.
-							</li>
-						</ol>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 00</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">AADM + Claude Code</span>
+				</aside>
 
-						<div class="mt-8 rounded-2xl border border-border-subtle bg-surface-card/70 p-5">
-							<h4 class="text-xs font-bold uppercase tracking-wide text-slate-500">Where to paste</h4>
-							<dl class="mt-3 space-y-4 text-sm text-slate-400">
-								<div>
-									<dt class="font-semibold text-orange-200/90">Claude Desktop</dt>
-									<dd class="mt-1 font-mono-cta text-xs text-slate-500">
-										macOS: ~/Library/Application Support/Claude/claude_desktop_config.json
-									</dd>
-									<dd class="mt-1 font-mono-cta text-xs text-slate-500">
-										Windows: %APPDATA%\Claude\claude_desktop_config.json
-									</dd>
-									<dd class="mt-1 font-mono-cta text-xs text-slate-500">
-										Linux: ~/.config/Claude/claude_desktop_config.json
-									</dd>
-								</div>
-								<div>
-									<dt class="font-semibold text-orange-200/90">Claude Code (CLI / IDE extension)</dt>
-									<dd class="mt-1">
-										User scope: <code class="font-mono-cta text-slate-500">~/.claude.json</code> — merge{' '}
-										<code class="font-mono-cta text-slate-500">mcpServers</code>. Optional project file:{' '}
-										<code class="font-mono-cta text-slate-500">.mcp.json</code> in the repo root for teams that version a
-										shared template (still keep secrets out of git).
-									</dd>
-								</div>
-							</dl>
-							<p class="mt-4 text-xs leading-relaxed text-slate-500">
-								Anthropic’s filenames and reload rules can change by release—double-check current Claude docs if something
-								does not register. You can also try <code class="font-mono-cta text-slate-600">claude mcp --help</code> on recent
-								CLI builds for add/import flows.
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta mb-8 flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="inline-flex items-center gap-2 border border-amber-300/30 px-2.5 py-1 text-amber-200/90">
+							<span class="block h-1 w-1 rounded-full bg-amber-300"></span> AADM + Claude
+						</span>
+						<span class="inline-flex items-center gap-2 border border-violet-300/30 px-2.5 py-1 text-violet-200/90">
+							<span class="block h-1 w-1 rounded-full bg-violet-300"></span> MCP · Streamable HTTP
+						</span>
+					</p>
+
+					<h1 class="font-display max-w-[20ch] text-balance text-[clamp(2.3rem,7.5vw,6.2rem)] font-black leading-[0.9] tracking-[-0.04em] text-white">
+						Standard in <span class="font-extralight italic text-slate-400">the cloud.</span><br />
+						Claude Code in <span class="relative inline-block">
+							<span class="relative z-10 text-amber-300">your repo.</span>
+							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-amber-300/30"></span>
+						</span>
+					</h1>
+
+					<div class="mt-12 grid grid-cols-12 gap-6">
+						<div class="col-span-12 sm:col-span-4">
+							<div class="border-l border-amber-300/40 pl-5">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-amber-200/80">The wire</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+									Point Claude Desktop or Claude Code at the hosted MCP the same way you wire any HTTP MCP. Subscriber token,
+									stable tools, your codebase still owns proof.
+								</p>
+							</div>
+						</div>
+						<div class="col-span-12 sm:col-span-8">
+							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+								Briefs and doctrine come from MCP. <span class="text-white">Tests, CI, and traces</span> stay in your repo. The
+								result · Claude runs Navigator, Investigator, and Sentinel workflows with the same discipline a senior reviewer
+								would demand.
 							</p>
 						</div>
 					</div>
 
-					<div class="min-w-0">
-						<div class="flex flex-wrap items-center justify-between gap-3">
-							<p class="text-xs font-medium uppercase tracking-wide text-slate-500">
-								<code class="font-mono-cta normal-case text-slate-400">mcpServers.aadm</code> — copy ready
-							</p>
-							<button
-								type="button"
-								id="claude-connect-copy-btn"
-								class="inline-flex items-center justify-center rounded-lg border border-orange-500/45 bg-orange-700/90 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-orange-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0d14]"
-							>
-								Copy JSON
-							</button>
+					<p class="mt-10 font-mono-cta text-[11px] uppercase tracking-[0.18em] text-slate-500">
+						<span class="text-emerald-200/85">▸ Step 0</span> · <code class="font-mono-cta text-emerald-200/95">npx aadm-init-repo --full</code> ·
+						<a href="/governance" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-[6px] hover:decoration-emerald-300">init guide</a>
+					</p>
+
+					<div class="mt-10 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+						<a
+							href="#connect-claude"
+							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Connection steps & copy-paste</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href={urlMcpMarketing}
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							MCP overview & pricing
+						</a>
+						<a
+							href={urlStandard}
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+						>
+							<span>Read the standard</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↗</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §01 — Connect (steps + JSON + where to paste)
+		     ============================================================= -->
+		<section
+			id="connect-claude"
+			class="relative scroll-mt-24 border-b border-white/[0.06] bg-[#06080f] sm:scroll-mt-28"
+			aria-labelledby="connect-claude-heading"
+		>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 01</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Connect Claude</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 id="connect-claude-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Connect AADM MCP <span class="font-extralight italic text-slate-400">to Claude.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						One subscriber token, one MCP endpoint. Paste an <code class="font-mono-cta text-slate-300">aadm_…</code> dashboard token
+						or <code class="font-mono-cta text-slate-300">Bearer ak_…</code> account API key from your AADM dashboard. Never commit
+						real secrets.
+					</p>
+
+					<div class="mt-12 grid grid-cols-12 gap-8">
+						<!-- Steps -->
+						<div class="col-span-12 lg:col-span-6">
+							<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/85">Steps</p>
+							<ol class="mt-6 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+								<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-5">
+									<span class="font-mono-cta text-[11px] text-amber-300/80">01</span>
+									<span class="text-sm leading-relaxed text-slate-300">
+										<Show when="signed-out">
+											<span>
+												<a href={signUpUrl} class="font-semibold text-amber-300 underline decoration-amber-400/40 underline-offset-4 hover:decoration-amber-300">Create an AADM account</a>
+												{' '}or{' '}
+												<a href={signInUrl} class="font-semibold text-amber-300 underline decoration-amber-400/40 underline-offset-4 hover:decoration-amber-300">sign in</a>,
+												subscribe, then copy your OAuth client ID from{' '}
+												<a href={memberMcpOAuthSignInUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → MCP OAuth</a>{' '}
+												(or create an <code class="font-mono-cta text-xs text-slate-300">ak_…</code> key in{' '}
+												<a href={memberSignInUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → API keys</a>).
+											</span>
+										</Show>
+										<Show when="signed-in">
+											<span>
+												Create an <code class="font-mono-cta text-xs text-slate-300">ak_…</code> API key in{' '}
+												<a href={memberAreaUrl} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → API keys</a>.
+												For Claude OAuth, copy <span class="text-white">your client ID</span> from{' '}
+												<a href={memberMcpOAuthUrl} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → MCP OAuth</a>.
+											</span>
+										</Show>
+									</span>
+								</li>
+								<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-5">
+									<span class="font-mono-cta text-[11px] text-amber-300/80">02</span>
+									<span class="text-sm leading-relaxed text-slate-300">
+										Merge the JSON below into your Claude config's <code class="font-mono-cta text-xs text-amber-200/85">mcpServers</code> object (see paths for Desktop vs Claude Code).
+									</span>
+								</li>
+								<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-5">
+									<span class="font-mono-cta text-[11px] text-amber-300/80">03</span>
+									<span class="text-sm leading-relaxed text-slate-300">
+										Use the raw token in <code class="font-mono-cta text-xs text-amber-200/85">Authorization</code>, or{' '}
+										<code class="font-mono-cta text-xs text-amber-200/85">Bearer ak_…</code> if your build expects that prefix.
+									</span>
+								</li>
+								<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-5">
+									<span class="font-mono-cta text-[11px] text-amber-300/80">04</span>
+									<span class="text-sm leading-relaxed text-slate-300">
+										Fully quit and reopen <span class="text-white">Claude Desktop</span>, or start a{' '}
+										<span class="text-white">new Claude Code session</span> in the terminal after saving — hosts do not always
+										hot-reload MCP definitions.
+									</span>
+								</li>
+								<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-5">
+									<span class="font-mono-cta text-[11px] text-amber-300/80">05</span>
+									<span class="text-sm leading-relaxed text-slate-300">
+										In chat, ask Claude to use AADM tools — <code class="font-mono-cta text-xs text-emerald-200/85">standard_brief</code>,
+										<code class="font-mono-cta text-xs text-emerald-200/85"> debug_defect</code>,
+										<code class="font-mono-cta text-xs text-emerald-200/85"> fetch_auth</code>. Confirm{' '}
+										<code class="font-mono-cta text-xs text-amber-200/85">tools/list</code> shows{' '}
+										<code class="font-mono-cta text-xs text-amber-200/85">aadm</code>.
+									</span>
+								</li>
+							</ol>
+
+							<!-- Where to paste -->
+							<div class="mt-10 border border-white/10 bg-[#070b13] p-6">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/85">Where to paste</p>
+								<dl class="mt-5 space-y-5 text-sm text-slate-400">
+									<div>
+										<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-300/80">Claude Desktop</dt>
+										<dd class="mt-2 font-mono-cta text-[11px] text-slate-500">macOS · ~/Library/Application Support/Claude/claude_desktop_config.json</dd>
+										<dd class="mt-1 font-mono-cta text-[11px] text-slate-500">Windows · %APPDATA%\Claude\claude_desktop_config.json</dd>
+										<dd class="mt-1 font-mono-cta text-[11px] text-slate-500">Linux · ~/.config/Claude/claude_desktop_config.json</dd>
+									</div>
+									<div>
+										<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-300/80">Claude Code (CLI / IDE)</dt>
+										<dd class="mt-2 text-[13px] leading-relaxed text-slate-400">
+											User scope · <code class="font-mono-cta text-slate-300">~/.claude.json</code> — merge{' '}
+											<code class="font-mono-cta text-slate-300">mcpServers</code>. Optional project file ·{' '}
+											<code class="font-mono-cta text-slate-300">.mcp.json</code> in the repo root for teams that version a shared
+											template (keep secrets out of git).
+										</dd>
+									</div>
+								</dl>
+								<p class="mt-5 text-xs leading-relaxed text-slate-500">
+									Anthropic's filenames and reload rules can change by release — double-check current Claude docs if something
+									doesn't register. Try <code class="font-mono-cta text-slate-400">claude mcp --help</code> on recent CLI builds.
+								</p>
+							</div>
 						</div>
-						<pre
-							class="mt-3 overflow-x-auto rounded-2xl border border-border-subtle bg-[#0a0d14] p-4 font-mono-cta text-xs leading-relaxed text-slate-300 shadow-inner sm:text-sm"
-							id="claude-connect-config-pre"
-							role="region"
-							aria-label="Example Claude MCP configuration JSON"
-						><code id="claude-connect-config-code">{claudeMcpFullConfigSnippet}</code></pre>
-						<p class="mt-3 text-xs text-slate-500">
-							<code class="font-mono-cta text-slate-400">url</code> must be{' '}
-							<code class="font-mono-cta text-accent-violet">{claudeMcpConfigUrl}</code> (include{' '}
-							<code class="font-mono-cta text-slate-400">/mcp</code>). Service discovery:{' '}
-							<code class="font-mono-cta text-slate-400">{discoveryUrl || 'https://mcp.aadm.io/'}</code>
-						</p>
+
+						<!-- JSON -->
+						<div class="col-span-12 lg:col-span-6">
+							<div class="border border-white/10 bg-[#050810]">
+								<div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] px-5 py-3">
+									<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+										<code class="text-amber-200/85">mcpServers.aadm</code> · copy ready
+									</span>
+									<button
+										type="button"
+										id="claude-connect-copy-btn"
+										class="font-mono-cta border border-white/20 bg-transparent px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] text-white transition hover:border-white/40 hover:bg-white/[0.04]"
+									>
+										Copy JSON
+									</button>
+								</div>
+								<pre
+									class="font-mono-cta overflow-x-auto p-5 text-xs leading-relaxed text-slate-300 sm:text-sm"
+									id="claude-connect-config-pre"
+									role="region"
+									aria-label="Example Claude MCP configuration JSON"
+								><code id="claude-connect-config-code">{claudeMcpFullConfigSnippet}</code></pre>
+							</div>
+							<p class="mt-4 text-xs text-slate-500">
+								<code class="font-mono-cta text-slate-300">url</code> must be{' '}
+								<code class="font-mono-cta text-amber-300">{claudeMcpConfigUrl}</code> (include{' '}
+								<code class="font-mono-cta text-slate-300">/mcp</code>).
+								<br />
+								Service discovery · <code class="font-mono-cta text-slate-300">{discoveryUrl || "https://mcp.aadm.io/"}</code>
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -255,251 +304,301 @@ const claudeMcpFullConfigSnippet = `{
 			})();
 		</script>
 
-		<!-- Desktop vs terminal -->
-		<section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20" aria-labelledby="claude-modes-heading">
-			<h2 id="claude-modes-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
-				Claude Desktop vs Claude Code in the terminal
-			</h2>
-			<p class="mt-4 max-w-3xl text-slate-400">
-				Both can attach to the same HTTP MCP. The difference is where your files and shell session live—not what AADM
-				ships over the wire.
-			</p>
-			<div class="mt-10 grid gap-6 lg:grid-cols-2">
-				<article class="rounded-2xl border border-border-subtle bg-surface-card/85 p-6 shadow-xl shadow-black/20">
-					<h3 class="font-display text-lg font-bold text-orange-200">Claude Desktop</h3>
-					<p class="mt-3 text-sm leading-relaxed text-slate-400">
-						GUI app, broad integrations, good for docs-centric sessions and walking stakeholders through{' '}
-						<code class="font-mono-cta text-slate-500">standard_brief</code> outputs. Paste logs and HAR excerpts into chat;
-						pair with local repos manually when you need file paths.
+		<!-- =============================================================
+		     §02 — Desktop vs Terminal
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]" aria-labelledby="claude-modes-heading">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 02</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Desktop vs terminal</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 id="claude-modes-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						Desktop vs terminal. <span class="font-extralight italic text-slate-400">Same wire.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						Both attach to the same HTTP MCP. The difference is where your files and shell session live — not what AADM ships
+						over the wire.
 					</p>
-				</article>
-				<article class="rounded-2xl border border-border-subtle bg-surface-card/85 p-6 shadow-xl shadow-black/20">
-					<h3 class="font-display text-lg font-bold text-accent-violet">Claude Code (terminal)</h3>
-					<p class="mt-3 text-sm leading-relaxed text-slate-400">
-						Runs against a working tree: read, search, diff, test commands, and multi-step refactors in one thread.
-						Ideal for Investigator loops—MCP supplies gates and doctrine; the CLI supplies{' '}
-						<strong class="text-slate-300">evidence</strong> from your machine.
-					</p>
-				</article>
-			</div>
-		</section>
 
-		<!-- What Claude can do -->
-		<section class="border-y border-border-subtle bg-surface-mid/35 py-16 sm:py-20" aria-labelledby="claude-can-heading">
-			<div class="mx-auto max-w-6xl px-4 sm:px-6">
-				<h2 id="claude-can-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
-					What Claude Code can do with AADM MCP
-				</h2>
-				<p class="mt-4 max-w-3xl text-slate-400">
-					The MCP does not edit your repo. Claude Code does. Together they keep turns structured: orchestrator metadata,
-					AUTH text on demand, and troubleshooting rails that resist premature fixes.
-				</p>
-				<ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-					<li class="rounded-2xl border border-border-subtle bg-surface-card/75 p-5">
-						<h3 class="font-semibold text-accent-violet">Navigator-style delivery</h3>
-						<p class="mt-2 text-sm text-slate-400">
-							Pull <code class="font-mono-cta text-slate-500">plan_delivery</code>, doctrine slices, and AUTH cites while
-							shaping a feature across layers.
-						</p>
-					</li>
-					<li class="rounded-2xl border border-border-subtle bg-surface-card/75 p-5">
-						<h3 class="font-semibold text-accent-blue">Investigator defects</h3>
-						<p class="mt-2 text-sm text-slate-400">
-							Use <code class="font-mono-cta text-slate-500">debug_defect</code> for gated recon and classification; append
-							evidence across turns without rewriting the brief from scratch.
-						</p>
-					</li>
-					<li class="rounded-2xl border border-border-subtle bg-surface-card/75 p-5">
-						<h3 class="font-semibold text-violet-200">Sentinel assurance</h3>
-						<p class="mt-2 text-sm text-slate-400">
-							Run <code class="font-mono-cta text-slate-500">audit_run</code> / <code class="font-mono-cta text-slate-500">audit_outline</code>{' '}
-							for seam language; bind horizontal boundaries while Claude traces files locally.
-						</p>
-					</li>
-					<li class="rounded-2xl border border-border-subtle bg-surface-card/75 p-5">
-						<h3 class="font-semibold text-orange-200">AUTH literacy</h3>
-						<p class="mt-2 text-sm text-slate-400">
-							<code class="font-mono-cta text-slate-500">fetch_auth</code> returns the real markdown for{' '}
-							<code class="font-mono-cta text-slate-500">AUTH-XX</code> so reviews cite governance text—not memory.
-						</p>
-					</li>
-					<li class="rounded-2xl border border-border-subtle bg-surface-card/75 p-5">
-						<h3 class="font-semibold text-slate-200">Orchestrator hooks</h3>
-						<p class="mt-2 text-sm text-slate-400">
-							<code class="font-mono-cta text-slate-500">route_lane</code>,{' '}
-							<code class="font-mono-cta text-slate-500">orchestrator_anchor</code>, and{' '}
-							<code class="font-mono-cta text-slate-500">standard_brief</code> give deterministic branching for long sessions.
-						</p>
-					</li>
-					<li class="rounded-2xl border border-border-subtle bg-surface-card/75 p-5">
-						<h3 class="font-semibold text-emerald-300/90">Proof stays local</h3>
-						<p class="mt-2 text-sm text-slate-400">
-							MCP never replaces CI. Claude runs tests you invoke; pass/fail remains authoritative in your pipeline.
-						</p>
-					</li>
-				</ul>
-			</div>
-		</section>
-
-		<!-- Fictional deep dive -->
-		<section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20" aria-labelledby="claude-session-heading">
-			<h2 id="claude-session-heading" class="font-display text-2xl font-bold text-white sm:text-3xl">
-				Illustrative session: ~2h seam hunt (Claude Code + AADM MCP)
-			</h2>
-			<p class="mt-3 max-w-3xl text-slate-400">
-				Fictional transcript—timestamps show how MCP calls and local investigation interleave during a horizontal seam
-				bug (gateway ↔ worker ↔ idempotency). Not captured from a live recording.
-			</p>
-
-			<figure
-				class="mt-10 overflow-hidden rounded-xl border border-[#3a3530] bg-[#14120f] shadow-2xl shadow-black/45 ring-1 ring-orange-950/30"
-				aria-label="Fictional Claude Code terminal session with MCP tool calls"
-			>
-				<div class="flex items-center gap-3 border-b border-[#2d2926] bg-[#1c1917] px-3 py-2">
-					<div class="flex gap-1.5 pl-1" aria-hidden="true">
-						<span class="h-3 w-3 rounded-full bg-[#ff5f57]/90"></span>
-						<span class="h-3 w-3 rounded-full bg-[#febc2e]/90"></span>
-						<span class="h-3 w-3 rounded-full bg-[#28c840]/90"></span>
+					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
+						<article class="bg-surface-deep p-7 sm:p-9">
+							<div class="flex items-baseline gap-4">
+								<span class="font-display text-5xl font-extralight leading-none text-amber-200/85 sm:text-6xl">D</span>
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/85">Claude Desktop</p>
+							</div>
+							<p class="mt-7 text-[0.95rem] leading-relaxed text-slate-300">
+								GUI app, broad integrations, good for docs-centric sessions and walking stakeholders through{' '}
+								<code class="font-mono-cta text-amber-200/85 text-xs">standard_brief</code> outputs. Paste logs and HAR excerpts into
+								chat; pair with local repos manually when you need file paths.
+							</p>
+						</article>
+						<article class="bg-surface-deep p-7 sm:p-9">
+							<div class="flex items-baseline gap-4">
+								<span class="font-display text-5xl font-extralight leading-none text-violet-300/90 sm:text-6xl">T</span>
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-violet-200/85">Claude Code · terminal</p>
+							</div>
+							<p class="mt-7 text-[0.95rem] leading-relaxed text-slate-300">
+								Runs against a working tree · read, search, diff, test commands, and multi-step refactors in one thread.
+								Ideal for Investigator loops — MCP supplies gates and doctrine; the CLI supplies
+								<span class="text-white"> evidence</span> from your machine.
+							</p>
+						</article>
 					</div>
-					<span class="flex-1 text-center font-mono-cta text-[11px] text-slate-500">payments-worker · claude · zsh</span>
-					<span class="w-14 shrink-0"></span>
 				</div>
+			</div>
+		</section>
 
-				<div class="max-h-[min(720px,70vh)] overflow-y-auto px-4 py-4 font-mono-cta text-[12px] leading-relaxed text-slate-300">
-					<p class="text-orange-300/85">[09:14]</p>
-					<p class="mt-1 text-slate-500">
-						<span class="text-slate-400">you</span> — Duplicate charges after retries. Gateway logs show 202 + worker shows single consume.
-						Suspect seam between API idempotency key and queue dedupe. Wired AADM MCP—want Investigator framing + AUTH cites for
-						idempotency + jobs.
+		<!-- =============================================================
+		     §03 — Capabilities (6)
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]" aria-labelledby="claude-can-heading">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 03</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">What Claude can do</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 id="claude-can-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+						What Claude Code can do <span class="font-extralight italic text-slate-400">with AADM MCP.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						The MCP does not edit your repo. Claude Code does. Together they keep turns structured · orchestrator metadata, AUTH
+						text on demand, and troubleshooting rails that resist premature fixes.
 					</p>
 
-					<p class="mt-6 text-orange-300/85">[09:16]</p>
-					<p class="mt-1 text-slate-400">
-						<span class="text-violet-300">claude</span> — I’ll take a structured lane first, then we’ll anchor evidence before touching code.
+					<ul class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+						{
+							capabilities.map((c) => (
+								<li class="group flex flex-col bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16] sm:p-7">
+									<div class="flex items-baseline gap-4">
+										<span class="font-display text-[3rem] font-extralight leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
+											{c.letter}
+										</span>
+									</div>
+									<h3 class="font-display mt-6 text-balance text-lg font-bold leading-snug tracking-tight text-white">
+										{c.name}
+									</h3>
+									<p class="mt-3 text-sm leading-relaxed text-slate-400">{c.body}</p>
+									<div class="mt-auto pt-5">
+										<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+											runs · <span class="text-emerald-200/85">{c.tools}</span>
+										</p>
+									</div>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §04 — Illustrative session
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]" aria-labelledby="claude-session-heading">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 04</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Illustrative session</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 id="claude-session-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.05] tracking-[-0.025em] text-white">
+						~2h seam hunt <span class="font-extralight italic text-slate-400">(fictional).</span>
+					</h2>
+					<p class="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400">
+						Timestamps show how MCP calls and local investigation interleave during a horizontal seam bug · gateway ↔ worker ↔
+						idempotency. Not captured from a live recording.
 					</p>
-					<div class="mt-3 overflow-hidden rounded-lg border border-violet-500/35 bg-[#1a1625]">
-						<div class="flex flex-wrap items-center gap-2 border-b border-violet-500/25 bg-violet-950/35 px-3 py-1.5">
-							<span class="rounded bg-violet-600 px-1.5 py-0.5 text-[10px] font-bold text-white">MCP</span>
-							<code class="text-emerald-300">route_lane</code>
-							<span class="text-[10px] text-slate-500">intent: defect</span>
+
+					<figure
+						class="mt-10 overflow-hidden border border-[#3a3530] bg-[#14120f] shadow-2xl shadow-black/45 ring-1 ring-amber-950/30"
+						aria-label="Fictional Claude Code terminal session with MCP tool calls"
+					>
+						<div class="flex items-center gap-3 border-b border-[#2d2926] bg-[#1c1917] px-3 py-2">
+							<div class="flex gap-1.5 pl-1" aria-hidden="true">
+								<span class="h-3 w-3 rounded-full bg-[#ff5f57]/90"></span>
+								<span class="h-3 w-3 rounded-full bg-[#febc2e]/90"></span>
+								<span class="h-3 w-3 rounded-full bg-[#28c840]/90"></span>
+							</div>
+							<span class="flex-1 text-center font-mono-cta text-[11px] text-slate-500">payments-worker · claude · zsh</span>
+							<span class="w-14 shrink-0"></span>
 						</div>
-						<pre class="p-3 text-[11px] text-slate-500">{`→ routing_basis: EXPLICIT_WORKFLOW_INTENT
+
+						<div class="max-h-[min(720px,70vh)] overflow-y-auto px-4 py-4 font-mono-cta text-[12px] leading-relaxed text-slate-300">
+							<p class="text-amber-300/85">[09:14]</p>
+							<p class="mt-1 text-slate-500">
+								<span class="text-slate-400">you</span> — Duplicate charges after retries. Gateway logs show 202 + worker shows single
+								consume. Suspect seam between API idempotency key and queue dedupe. Wired AADM MCP — want Investigator framing +
+								AUTH cites for idempotency + jobs.
+							</p>
+
+							<p class="mt-6 text-amber-300/85">[09:16]</p>
+							<p class="mt-1 text-slate-400">
+								<span class="text-violet-300">claude</span> — I'll take a structured lane first, then we'll anchor evidence before
+								touching code.
+							</p>
+							<div class="mt-3 overflow-hidden border border-violet-500/30 bg-[#0e0a1a]">
+								<div class="flex flex-wrap items-center gap-2 border-b border-violet-500/20 bg-violet-950/35 px-3 py-1.5">
+									<span class="border border-violet-300/60 bg-transparent px-1.5 py-0.5 font-mono-cta text-[10px] uppercase tracking-wider text-violet-200">MCP</span>
+									<code class="text-emerald-300">route_lane</code>
+									<span class="text-[10px] text-slate-500">intent · defect</span>
+								</div>
+								<pre class="p-3 text-[11px] text-slate-500">{`→ routing_basis: EXPLICIT_WORKFLOW_INTENT
 → primary_tool: debug_defect
 → recommended_next_tools: [ "debug_defect", "fetch_auth", "standard_brief" ]`}</pre>
-					</div>
+							</div>
 
-					<p class="mt-6 text-orange-300/85">[09:21]</p>
-					<div class="mt-1 overflow-hidden rounded-lg border border-sky-500/25 bg-[#0f1724]">
-						<div class="flex flex-wrap items-center gap-2 border-b border-sky-500/20 bg-sky-950/30 px-3 py-1.5">
-							<span class="rounded bg-sky-700 px-1.5 py-0.5 text-[10px] font-bold text-white">MCP</span>
-							<code class="text-sky-300">fetch_auth</code>
-							<span class="text-[10px] text-slate-500">AUTH-25 · AUTH-28</span>
-						</div>
-						<p class="p-3 text-[11px] text-slate-500">
-							→ Loaded markdown for duplicate/idempotent handling themes (illustrative)—we’ll map claims to gateway vs worker
-							code paths next.
-						</p>
-					</div>
+							<p class="mt-6 text-amber-300/85">[09:21]</p>
+							<div class="mt-1 overflow-hidden border border-sky-500/25 bg-[#08111e]">
+								<div class="flex flex-wrap items-center gap-2 border-b border-sky-500/20 bg-sky-950/30 px-3 py-1.5">
+									<span class="border border-sky-300/60 bg-transparent px-1.5 py-0.5 font-mono-cta text-[10px] uppercase tracking-wider text-sky-200">MCP</span>
+									<code class="text-sky-300">fetch_auth</code>
+									<span class="text-[10px] text-slate-500">AUTH-25 · AUTH-28</span>
+								</div>
+								<p class="p-3 text-[11px] text-slate-500">
+									→ Loaded markdown for duplicate / idempotent handling themes (illustrative) — we'll map claims to gateway vs worker
+									code paths next.
+								</p>
+							</div>
 
-					<p class="mt-6 text-orange-300/85">[09:35]</p>
-					<div class="mt-1 overflow-hidden rounded-lg border border-amber-500/35 bg-[#1c1410]">
-						<div class="flex flex-wrap items-center gap-2 border-b border-amber-500/25 bg-amber-950/25 px-3 py-1.5">
-							<span class="rounded bg-amber-700 px-1.5 py-0.5 text-[10px] font-bold text-white">MCP</span>
-							<code class="text-amber-200">debug_defect</code>
-							<span class="text-[10px] text-slate-500">Path A · UNCLASSIFIED</span>
-						</div>
-						<pre class="p-3 text-[11px] text-slate-400">{`WHAT THIS MEANS · Single next action:
+							<p class="mt-6 text-amber-300/85">[09:35]</p>
+							<div class="mt-1 overflow-hidden border border-amber-500/35 bg-[#181109]">
+								<div class="flex flex-wrap items-center gap-2 border-b border-amber-500/25 bg-amber-950/25 px-3 py-1.5">
+									<span class="border border-amber-300/60 bg-transparent px-1.5 py-0.5 font-mono-cta text-[10px] uppercase tracking-wider text-amber-200">MCP</span>
+									<code class="text-amber-200">debug_defect</code>
+									<span class="text-[10px] text-slate-500">Path A · UNCLASSIFIED</span>
+								</div>
+								<pre class="p-3 text-[11px] text-slate-400">{`WHAT THIS MEANS · Single next action:
 Run one replay: POST /pay with same Idempotency-Key + body hash,
 capture gateway response headers AND worker dequeue span id.
 
 Forbidden right now: patch mapper + broaden retries in same turn.`}</pre>
-					</div>
-					<p class="mt-2 text-slate-500">
-						<span class="text-violet-300">claude</span> — Running curl replay against staging with your{' '}
-						<code class="text-slate-600">.env.staging</code> headers…
-					</p>
+							</div>
+							<p class="mt-2 text-slate-500">
+								<span class="text-violet-300">claude</span> — Running curl replay against staging with your{' '}
+								<code class="text-slate-600">.env.staging</code> headers…
+							</p>
 
-					<p class="mt-6 text-orange-300/85">[10:02]</p>
-					<p class="mt-1 text-slate-500">
-						<span class="text-slate-400">you</span> — Pasted HAR row + worker trace: dequeue twice same payload id, gateway still returned cached 202 body from first attempt.
-					</p>
-					<div class="mt-3 overflow-hidden rounded-lg border border-amber-500/35 bg-[#1c1410]">
-						<div class="flex flex-wrap items-center gap-2 border-b border-amber-500/25 bg-amber-950/25 px-3 py-1.5">
-							<span class="rounded bg-amber-700 px-1.5 py-0.5 text-[10px] font-bold text-white">MCP</span>
-							<code class="text-amber-200">debug_defect</code>
-							<span class="text-[10px] text-slate-500">append_evidence</span>
-						</div>
-						<p class="p-3 text-[11px] text-slate-500">
-							→ Still UNCLASSIFIED until we tie duplicate dequeue to idempotency scope (per-key vs per-route vs worker lease).
-						</p>
-					</div>
+							<p class="mt-6 text-amber-300/85">[10:02]</p>
+							<p class="mt-1 text-slate-500">
+								<span class="text-slate-400">you</span> — Pasted HAR row + worker trace · dequeue twice same payload id, gateway still
+								returned cached 202 body from first attempt.
+							</p>
+							<div class="mt-3 overflow-hidden border border-amber-500/35 bg-[#181109]">
+								<div class="flex flex-wrap items-center gap-2 border-b border-amber-500/25 bg-amber-950/25 px-3 py-1.5">
+									<span class="border border-amber-300/60 bg-transparent px-1.5 py-0.5 font-mono-cta text-[10px] uppercase tracking-wider text-amber-200">MCP</span>
+									<code class="text-amber-200">debug_defect</code>
+									<span class="text-[10px] text-slate-500">append_evidence</span>
+								</div>
+								<p class="p-3 text-[11px] text-slate-500">
+									→ Still UNCLASSIFIED until we tie duplicate dequeue to idempotency scope (per-key vs per-route vs worker lease).
+								</p>
+							</div>
 
-					<p class="mt-6 text-orange-300/85">[10:48]</p>
-					<p class="mt-2 text-slate-400">
-						<span class="text-violet-300">claude</span> — Grepped repo: idempotency middleware stores key in Redis with TTL; worker consumer builds dedupe key from message body only—omits tenant id when queue fan-out expands.
-					</p>
+							<p class="mt-6 text-amber-300/85">[10:48]</p>
+							<p class="mt-2 text-slate-400">
+								<span class="text-violet-300">claude</span> — Grepped repo · idempotency middleware stores key in Redis with TTL.
+								Worker consumer builds dedupe key from message body only — omits tenant id when queue fan-out expands.
+							</p>
 
-					<p class="mt-6 text-orange-300/85">[11:30]</p>
-					<div class="mt-1 overflow-hidden rounded-lg border border-emerald-500/30 bg-[#0f1a17]">
-						<div class="flex flex-wrap items-center gap-2 border-b border-emerald-500/20 bg-emerald-950/30 px-3 py-1.5">
-							<span class="rounded bg-emerald-700 px-1.5 py-0.5 text-[10px] font-bold text-white">MCP</span>
-							<code class="text-emerald-300">standard_brief</code>
-						</div>
-						<p class="p-3 text-[11px] text-slate-500">
-							→ Pulled <code class="text-slate-600">orchestrator_contract</code> reminder: don’t Navigator away a classified defect—stay Investigator until remediation pack is justified.
-						</p>
-					</div>
+							<p class="mt-6 text-amber-300/85">[11:30]</p>
+							<div class="mt-1 overflow-hidden border border-emerald-500/30 bg-[#0a1410]">
+								<div class="flex flex-wrap items-center gap-2 border-b border-emerald-500/20 bg-emerald-950/30 px-3 py-1.5">
+									<span class="border border-emerald-300/60 bg-transparent px-1.5 py-0.5 font-mono-cta text-[10px] uppercase tracking-wider text-emerald-200">MCP</span>
+									<code class="text-emerald-300">standard_brief</code>
+								</div>
+								<p class="p-3 text-[11px] text-slate-500">
+									→ Pulled <code class="text-slate-600">orchestrator_contract</code> reminder · don't Navigator away a classified
+									defect. Stay Investigator until remediation pack is justified.
+								</p>
+							</div>
 
-					<p class="mt-6 text-orange-300/85">[11:44]</p>
-					<div class="mt-1 overflow-hidden rounded-lg border border-amber-500/35 bg-[#1c1410]">
-						<div class="flex flex-wrap items-center gap-2 border-b border-amber-500/25 bg-amber-950/25 px-3 py-1.5">
-							<span class="rounded bg-amber-700 px-1.5 py-0.5 text-[10px] font-bold text-white">MCP</span>
-							<code class="text-amber-200">debug_defect</code>
-							<span class="text-[10px] text-slate-500">CLASSIFIED · Path B</span>
-						</div>
-						<pre class="p-3 text-[11px] text-slate-400">{`rootCauseClassificationStatus: CLASSIFIED
+							<p class="mt-6 text-amber-300/85">[11:44]</p>
+							<div class="mt-1 overflow-hidden border border-amber-500/35 bg-[#181109]">
+								<div class="flex flex-wrap items-center gap-2 border-b border-amber-500/25 bg-amber-950/25 px-3 py-1.5">
+									<span class="border border-amber-300/60 bg-transparent px-1.5 py-0.5 font-mono-cta text-[10px] uppercase tracking-wider text-amber-200">MCP</span>
+									<code class="text-amber-200">debug_defect</code>
+									<span class="text-[10px] text-slate-500">CLASSIFIED · Path B</span>
+								</div>
+								<pre class="p-3 text-[11px] text-slate-400">{`rootCauseClassificationStatus: CLASSIFIED
 horizontal seam: gateway cache layer ↔ worker dedupe key construction
 haltBeforeFix: satisfied for scoped patch proposal`}</pre>
-					</div>
+							</div>
 
-					<p class="mt-6 text-orange-300/85">[11:58]</p>
-					<p class="mt-2 text-slate-400">
-						<span class="text-violet-300">claude</span> — Proposing minimal change: include tenant + idempotency key in worker dedupe hash; add integration test matching gateway middleware contract. Running existing suite…
-					</p>
+							<p class="mt-6 text-amber-300/85">[11:58]</p>
+							<p class="mt-2 text-slate-400">
+								<span class="text-violet-300">claude</span> — Proposing minimal change · include tenant + idempotency key in worker
+								dedupe hash. Adding integration test matching gateway middleware contract. Running existing suite…
+							</p>
 
-					<p class="mt-6 text-orange-300/85">[12:06]</p>
-					<p class="mt-2 text-slate-500">
-						<span class="text-slate-400">you</span> — Green on payments-worker + gateway contract tests. Ship with guardrail note in changelog.
-					</p>
+							<p class="mt-6 text-amber-300/85">[12:06]</p>
+							<p class="mt-2 text-slate-500">
+								<span class="text-slate-400">you</span> — Green on payments-worker + gateway contract tests. Ship with guardrail note
+								in changelog.
+							</p>
 
-					<p class="mt-6 border-t border-[#2d2926] pt-4 text-[11px] text-slate-600">
-						Narrative compressed for the page; real threads mix more file reads, failing runs, and MCP JSON. Your hosted server’s{' '}
-						<code class="text-slate-500">tools/list</code> remains authoritative.
-					</p>
+							<p class="mt-6 border-t border-[#2d2926] pt-4 text-[11px] text-slate-600">
+								Narrative compressed for the page; real threads mix more file reads, failing runs, and MCP JSON. Your hosted server's
+								<code class="text-slate-500"> tools/list</code> remains authoritative.
+							</p>
+						</div>
+						<figcaption class="border-t border-[#2d2926] bg-[#1c1917] px-4 py-2 text-center font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+							Illustration only · not a recording of Claude Code or the AADM MCP service
+						</figcaption>
+					</figure>
 				</div>
-				<figcaption class="border-t border-[#2d2926] bg-[#1c1917] px-4 py-2 text-center text-[11px] text-slate-600">
-					Illustration only — not a recording of Claude Code or the AADM MCP service.
-				</figcaption>
-			</figure>
+			</div>
 		</section>
 
-		<!-- Cross links -->
-		<section class="border-t border-border-subtle bg-surface-mid/25 py-14 sm:py-16">
-			<div class="mx-auto max-w-6xl px-4 text-center sm:px-6">
-				<p class="font-display text-lg font-semibold text-white">Also useful</p>
-				<div class="mt-6 flex flex-wrap justify-center gap-4">
-					<a
-						href="/cursor"
-						class="inline-flex rounded-xl border border-border-subtle bg-surface-card px-5 py-3 text-sm font-semibold text-white transition hover:bg-surface-mid"
-					>
-						AADM + Cursor
-					</a>
-					<a
-						href={urlMcpMarketing}
-						class="inline-flex rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110"
-					>
-						Hosted MCP · access
-					</a>
+		<!-- =============================================================
+		     §05 — Cross links / final CTA
+		     ============================================================= -->
+		<section class="relative bg-surface-deep">
+			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(252,211,77,0.07),transparent_60%)]"></div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 05</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Also useful</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2 class="font-display max-w-[20ch] text-balance text-[clamp(2rem,5vw,4rem)] font-black leading-[0.95] tracking-[-0.03em] text-white">
+						Connect once. <span class="font-extralight italic text-slate-400">Wire everywhere.</span>
+					</h2>
+					<p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
+						AADM MCP works with every MCP-capable IDE. Set it up in Claude — then take the same config to Cursor, Windsurf,
+						and anything else that speaks the protocol.
+					</p>
+
+					<div class="mt-12 flex flex-col flex-wrap items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
+						<a
+							href={urlMcpMarketing}
+							class="group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Hosted MCP · access</span>
+							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+							</svg>
+						</a>
+						<a
+							href="/cursor"
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-7 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							AADM + Cursor →
+						</a>
+						<a
+							href="/why-aadm"
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+						>
+							<span>Why AADM, vs raw loops</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
+						</a>
+					</div>
 				</div>
 			</div>
 		</section>
