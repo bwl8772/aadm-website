@@ -82,7 +82,12 @@ const vignettes: Vignette[] = [
 		body: "Month-end API credits overshot finance expectations because the usage query treated cycle end as inclusive when the contract said exclusive — and one webhook path skipped balance checks. debug_defect and prism_frame kept the thread evidence-first; journey_attest mapped reconcile nodes. Ledger fixes landed without dashboard band-aids or “upgrade the database” detours.",
 		hoursLow: 24,
 		hoursHigh: 40,
-		tools: ["debug_defect", "prism_frame", "sentinel_closure", "journey_attest"],
+		tools: [
+			"debug_defect",
+			"prism_frame",
+			"sentinel_closure",
+			"journey_attest",
+		],
 		tone: "amber",
 	},
 	{
@@ -263,11 +268,34 @@ const vignettes: Vignette[] = [
 	},
 ];
 
-const toneClasses: Record<Vignette["tone"], { numeral: string; rule: string; chip: string; hour: string }> = {
-	violet: { numeral: "text-violet-300/90", rule: "border-violet-400/40", chip: "border-violet-400/30 text-violet-200", hour: "border-violet-300/30 bg-violet-950/30 text-violet-100" },
-	amber: { numeral: "text-amber-300/90", rule: "border-amber-300/40", chip: "border-amber-300/30 text-amber-200", hour: "border-amber-300/30 bg-amber-950/30 text-amber-100" },
-	sky: { numeral: "text-sky-300/90", rule: "border-sky-400/40", chip: "border-sky-400/30 text-sky-200", hour: "border-sky-300/30 bg-sky-950/30 text-sky-100" },
-	emerald: { numeral: "text-emerald-300/90", rule: "border-emerald-300/40", chip: "border-emerald-300/30 text-emerald-200", hour: "border-emerald-300/30 bg-emerald-950/30 text-emerald-100" },
+const toneClasses: Record<
+	Vignette["tone"],
+	{ numeral: string; rule: string; chip: string; hour: string }
+> = {
+	violet: {
+		numeral: "text-violet-300/90",
+		rule: "border-violet-400/40",
+		chip: "border-violet-400/30 text-violet-200",
+		hour: "border-violet-300/30 bg-violet-950/30 text-violet-100",
+	},
+	amber: {
+		numeral: "text-amber-300/90",
+		rule: "border-amber-300/40",
+		chip: "border-amber-300/30 text-amber-200",
+		hour: "border-amber-300/30 bg-amber-950/30 text-amber-100",
+	},
+	sky: {
+		numeral: "text-sky-300/90",
+		rule: "border-sky-400/40",
+		chip: "border-sky-400/30 text-sky-200",
+		hour: "border-sky-300/30 bg-sky-950/30 text-sky-100",
+	},
+	emerald: {
+		numeral: "text-emerald-300/90",
+		rule: "border-emerald-300/40",
+		chip: "border-emerald-300/30 text-emerald-200",
+		hour: "border-emerald-300/30 bg-emerald-950/30 text-emerald-100",
+	},
 };
 
 const totalLow = vignettes.reduce((s, v) => s + v.hoursLow, 0);
@@ -275,7 +303,8 @@ const totalHigh = vignettes.reduce((s, v) => s + v.hoursHigh, 0);
 
 const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 	const map = new Map<Industry, number>();
-	for (const v of vignettes) map.set(v.industry, (map.get(v.industry) ?? 0) + 1);
+	for (const v of vignettes)
+		map.set(v.industry, (map.get(v.industry) ?? 0) + 1);
 	return Array.from(map.entries())
 		.map(([industry, count]) => ({ industry, count }))
 		.sort((a, b) => b.count - a.count);

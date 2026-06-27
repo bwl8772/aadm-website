@@ -51,7 +51,10 @@ const {
 
 const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
+const canonicalUrl = new URL(
+	Astro.url.pathname,
+	Astro.site ?? Astro.url.origin,
+).toString();
 const ogImageUrl = ogImage.startsWith("http")
 	? ogImage
 	: new URL(ogImage, Astro.site ?? Astro.url.origin).toString();
