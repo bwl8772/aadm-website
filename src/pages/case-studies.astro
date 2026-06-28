@@ -1,5 +1,10 @@
 ---
+import CaseStudiesCatalogVisual from "../components/visuals/CaseStudiesCatalogVisual.astro";
 import Layout from "../layouts/Layout.astro";
+import {
+	gridVisualPlacements,
+	gridVisualSlotStyle,
+} from "../lib/grid-visual-placements";
 import { getSiteUrlConfig } from "../lib/site-urls";
 
 const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
@@ -301,6 +306,10 @@ const toneClasses: Record<
 const totalLow = vignettes.reduce((s, v) => s + v.hoursLow, 0);
 const totalHigh = vignettes.reduce((s, v) => s + v.hoursHigh, 0);
 
+const toneCounts = { violet: 0, amber: 0, sky: 0, emerald: 0 };
+for (const v of vignettes) toneCounts[v.tone]++;
+const vignetteVisuals = gridVisualPlacements(vignettes.length, 2);
+
 const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 	const map = new Map<Industry, number>();
 	for (const v of vignettes)
@@ -505,6 +514,23 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 								);
 							})
 						}
+						{vignetteVisuals.map((visual) => (
+							<li
+								class:list={[
+									"grid-visual-slot-cols-2 relative overflow-hidden bg-surface-deep transition duration-300 hover:bg-[#0a0e1a]",
+									visual.variant === "wide" ? "sm:col-span-2" : "",
+								]}
+								style={gridVisualSlotStyle(visual)}
+							>
+								<CaseStudiesCatalogVisual
+									vignetteCount={vignettes.length}
+									toneCounts={toneCounts}
+									hoursLowTotal={totalLow}
+									hoursHighTotal={totalHigh}
+									variant={visual.variant}
+								/>
+							</li>
+						))}
 					</ul>
 
 					<p class="mt-12 max-w-3xl text-sm leading-relaxed text-slate-500">

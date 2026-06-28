@@ -10,7 +10,7 @@ import MemberOAuthClientIdPage from "./MemberOAuthClientIdPage.astro";
 import MemberOAuthTabIcon from "./MemberOAuthTabIcon.astro";
 
 const memberPath = memberAreaPathFromEnv(import.meta.env);
-/** One AADM Clerk OAuth app — same Client ID for every member (CLERK_OAUTH_CLIENT_ID on Railway). */
+/** One shared AADM OAuth app — same Client ID for every member (server-configured). */
 const oauthClientId = primaryOAuthClientIdFromEnv(import.meta.env);
 const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
 ---
@@ -22,7 +22,7 @@ const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
 			<MemberOAuthTabIcon />
 			<MemberOAuthClientIdPage
 				title="Connectors OAuth"
-				lead="AADM uses <strong>one</strong> Clerk OAuth application for all members. This Client ID comes from <code>CLERK_OAUTH_CLIENT_ID</code> on the server — it is <strong>not</strong> personal or per-user. Paste it for <strong>Claude Code</strong>, <strong>claude.ai Connectors</strong>, and other OAuth MCP clients; leave Client Secret empty. For Cursor or curl, use an <code>ak_…</code> key from <strong>API keys</strong> instead."
+				lead="AADM uses <strong>one</strong> shared OAuth application for all members. This Client ID is configured on our servers — it is <strong>not</strong> personal or per-user. Paste it for <strong>Claude Code</strong>, <strong>claude.ai Connectors</strong>, and other OAuth MCP clients; leave Client Secret empty. For Cursor or curl, use an <code>ak_…</code> key from <strong>API keys</strong> instead."
 				clientId={oauthClientId}
 				mcpRpcUrl={urlMcpRpcUrl}
 			/>

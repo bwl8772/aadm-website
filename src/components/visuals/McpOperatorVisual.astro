@@ -1,0 +1,69 @@
+---
+type Props = {
+	variant?: "tall" | "wide";
+	mcpRpcUrl: string;
+};
+
+const { variant = "tall", mcpRpcUrl } = Astro.props;
+const host = mcpRpcUrl.replace(/\/mcp\/?$/, "").replace(/^https?:\/\//, "");
+---
+
+<div
+	class="group relative flex h-full min-h-[240px] flex-col overflow-hidden p-6 sm:p-7 lg:min-h-0"
+	aria-hidden="true"
+>
+	<div
+		class="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-emerald-400/10 opacity-60 blur-3xl transition duration-700 group-hover:opacity-100"
+	></div>
+
+	<div class="relative flex flex-1 flex-col">
+		<p class="font-mono-cta text-[10px] uppercase tracking-[0.24em] text-emerald-200/80">
+			Streamable HTTP
+		</p>
+
+		<div class="relative mt-4 flex flex-1 items-center justify-center">
+			<svg
+				viewBox="0 0 220 160"
+				class:list={["w-full max-w-[240px]", variant === "wide" ? "max-w-[320px]" : ""]}
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<rect x="12" y="56" width="56" height="32" rx="2" class="stroke-slate-400/40 fill-slate-400/8" stroke-width="1.2" />
+				<text x="40" y="76" text-anchor="middle" class="fill-slate-300/90 font-mono text-[7px]">client</text>
+
+				<line x1="68" y1="72" x2="88" y2="72" class="stroke-emerald-400/50" stroke-width="1" />
+				<polygon points="88,68 96,72 88,76" class="fill-emerald-400/60" />
+
+				<rect x="96" y="48" width="72" height="48" rx="2" class="stroke-emerald-400/50 fill-emerald-400/12" stroke-width="1.2" />
+				<text x="132" y="68" text-anchor="middle" class="fill-emerald-200/90 font-mono text-[7px]">POST /mcp</text>
+				<text x="132" y="82" text-anchor="middle" class="fill-emerald-200/70 font-mono text-[6px]">JSON-RPC</text>
+
+				<line x1="132" y1="96" x2="132" y2="112" class="stroke-emerald-400/35" stroke-width="1" stroke-dasharray="3 3" />
+				<rect x="108" y="112" width="48" height="20" rx="2" class="stroke-emerald-300/40 fill-emerald-400/8" stroke-width="1" />
+				<text x="132" y="125" text-anchor="middle" class="fill-emerald-200/80 font-mono text-[6px]">SSE stream</text>
+
+				<line x1="168" y1="72" x2="188" y2="72" class="stroke-amber-300/40" stroke-width="1" />
+				<polygon points="188,68 196,72 188,76" class="fill-amber-300/50" />
+				<rect x="188" y="56" width="24" height="32" rx="2" class="stroke-amber-300/40 fill-amber-300/10" stroke-width="1" />
+				<text x="200" y="76" text-anchor="middle" class="fill-amber-200/80 font-mono text-[6px]">406</text>
+				<text x="200" y="98" text-anchor="middle" class="fill-slate-600 font-mono text-[5px]">GET w/o</text>
+				<text x="200" y="106" text-anchor="middle" class="fill-slate-600 font-mono text-[5px]">Accept</text>
+
+				<rect x="12" y="16" width="96" height="22" rx="2" class="stroke-emerald-300/30 fill-white/[0.03]" stroke-width="1" />
+				<text x="60" y="30" text-anchor="middle" class="fill-emerald-200/70 font-mono text-[6px]">GET /health</text>
+
+				<rect x="116" y="16" width="92" height="22" rx="2" class="stroke-emerald-300/30 fill-white/[0.03]" stroke-width="1" />
+				<text x="162" y="30" text-anchor="middle" class="fill-emerald-200/70 font-mono text-[6px]">GET / discovery</text>
+
+				<text x="110" y="152" text-anchor="middle" class="fill-slate-500 font-mono text-[6px]">{host}</text>
+			</svg>
+		</div>
+
+		<div class="relative mt-auto border-t border-white/[0.06] pt-4">
+			<p class="font-display text-sm font-semibold tracking-tight text-white/90">One endpoint, two transports</p>
+			<p class="mt-1 font-mono-cta text-[10px] uppercase tracking-[0.18em] text-slate-500">
+				initialize · tools/list · resources/read
+			</p>
+		</div>
+	</div>
+</div>

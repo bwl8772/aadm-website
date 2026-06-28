@@ -14,7 +14,6 @@ type ActiveNav =
 	| null;
 
 interface Props {
-	urlStandard: string;
 	/** Public MCP marketing page (production: `https://aadm.io/mcp`). */
 	urlMcpMarketing: string;
 	/** When set, highlights the matching nav control. */
@@ -26,7 +25,6 @@ interface Props {
 const {
 	activeNav = null,
 	mcpNavHref: mcpNavHrefProp,
-	urlStandard,
 	urlMcpMarketing,
 } = Astro.props;
 
