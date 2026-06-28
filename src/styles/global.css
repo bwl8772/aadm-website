@@ -48,3 +48,17 @@ body {
 .font-mono-cta {
 	font-family: var(--font-mono);
 }
+
+@media (min-width: 640px) {
+	.grid-visual-slot-cols-2 {
+		grid-column: var(--gv-col) / span var(--gv-col-span);
+		grid-row: var(--gv-row) / span var(--gv-row-span);
+	}
+}
+
+@media (min-width: 1024px) {
+	.grid-visual-slot-cols-3 {
+		grid-column: var(--gv-col) / span var(--gv-col-span);
+		grid-row: var(--gv-row) / span var(--gv-row-span);
+	}
+}

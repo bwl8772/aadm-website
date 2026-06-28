@@ -1,8 +1,13 @@
 ---
 import { Show } from "@clerk/astro/components";
 import MemberMcpOAuthLink from "../components/MemberMcpOAuthLink.astro";
+import McpOperatorVisual from "../components/visuals/McpOperatorVisual.astro";
 import Layout from "../layouts/Layout.astro";
 import { getAccountPortalUrls } from "../lib/account-portal-urls";
+import {
+	gridVisualPlacements,
+	gridVisualSlotStyle,
+} from "../lib/grid-visual-placements";
 import { getSiteUrlConfig, hostedMcpOrigin } from "../lib/site-urls";
 
 const cfg = getSiteUrlConfig(import.meta.env);
@@ -29,6 +34,13 @@ const {
 /** Canonical Streamable HTTP JSON-RPC URL — always includes `/mcp` for production default. */
 const mcpRpcUrl = urlMcpRpcUrl;
 const mcpOrigin = hostedMcpOrigin(mcpRpcUrl);
+
+let operatorCardCount = 2;
+if (healthUrl) operatorCardCount++;
+if (discoveryUrl) operatorCardCount++;
+if (urlStandard.startsWith("http")) operatorCardCount++;
+if (urlMcpCustomerDocs) operatorCardCount++;
+const operatorVisuals = gridVisualPlacements(operatorCardCount, 3);
 
 const cursorMcpFullConfigSnippet = `{
   "mcpServers": {
@@ -516,7 +528,7 @@ const surfaces = [
 								<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-violet-200/85">OAuth</span>
 							</div>
 							<h3 class="font-display mt-6 text-[1.35rem] font-bold leading-snug tracking-tight text-white sm:text-[1.5rem]">
-								Clerk sign-in
+								Browser sign-in
 							</h3>
 							<p class="mt-3 text-sm leading-relaxed text-slate-400">
 								Claude Code, claude.ai Connectors — copy <span class="text-slate-300">your OAuth Client ID</span> from{' '}
@@ -564,7 +576,7 @@ const surfaces = [
 					<div class="mt-10 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-5">
 							<div class="border border-white/10 bg-[#070b13] p-6">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-sky-200/85">Clerk API key</p>
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-sky-200/85">Member API key</p>
 								<p class="mt-3 text-sm leading-relaxed text-slate-400">
 									Use <code class="font-mono-cta text-xs text-slate-300">Bearer</code> + full
 									<code class="font-mono-cta text-xs text-slate-300">ak_…</code> from
@@ -1267,6 +1279,17 @@ npx aadm-init-repo --full</code></pre>
 											</span>
 										</a>
 									) : null}
+									{operatorVisuals.map((visual) => (
+										<div
+											class:list={[
+												"grid-visual-slot-cols-3 relative overflow-hidden bg-[#06080f] transition duration-300 hover:bg-[#080c16]",
+												visual.variant === "wide" ? "sm:col-span-2 lg:col-span-2" : "",
+											]}
+											style={gridVisualSlotStyle(visual)}
+										>
+											<McpOperatorVisual variant={visual.variant} mcpRpcUrl={mcpRpcUrl} />
+										</div>
+									))}
 								</div>
 
 								<div class="mt-10 border border-white/10 bg-[#050810]">

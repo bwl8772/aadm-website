@@ -62,7 +62,7 @@ const ddQuestions = [
 	{
 		num: "02",
 		q: "Where does authentication happen?",
-		a: "Auth is brokered through Clerk. Subscribers receive either a Bearer API key (ak_…) or an OAuth client ID — both are managed in the member area. Tokens never need to leave your IDE; we don't see your IDE keystrokes.",
+		a: "Authentication is handled through our login area. Subscribers receive either a Bearer API key (ak_…) or an OAuth client ID — both are managed in the member area. Tokens never need to leave your IDE; we don't see your IDE keystrokes.",
 	},
 	{
 		num: "03",
@@ -90,7 +90,7 @@ const audiences = [
 	{
 		letter: "A",
 		role: "Procurement",
-		body: "Open standard text · Bearer-token or OAuth auth · no scanning of your repo · Clerk for identity · operational telemetry only. Brief security and skip the long RFP.",
+		body: "Open standard text · Bearer-token or OAuth auth · no scanning of your repo · managed authentication for identity · operational telemetry only. Brief security and skip the long RFP.",
 	},
 	{
 		letter: "B",
@@ -428,7 +428,7 @@ const rolloutStages = [
 							<span class="text-slate-500">For</span> · Procurement · Security · Platform
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-500">Identity</span> · <span class="text-emerald-300/80">Clerk</span>
+							<span class="text-slate-500">Identity</span> · <span class="text-emerald-300/80">AADM login</span>
 						</div>
 						<div class="col-span-12 sm:col-span-4">
 							<span class="text-slate-500">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / MCP</span>

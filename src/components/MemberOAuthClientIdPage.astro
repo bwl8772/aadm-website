@@ -6,16 +6,9 @@ interface Props {
 	lead: string;
 	clientId: string;
 	mcpRpcUrl?: string;
-	envVarHint?: string;
 }
 
-const {
-	title,
-	lead,
-	clientId,
-	mcpRpcUrl,
-	envVarHint = "CLERK_OAUTH_CLIENT_ID",
-} = Astro.props;
+const { title, lead, clientId, mcpRpcUrl } = Astro.props;
 const masked = maskMcpOAuthClientId(clientId);
 const copyId = `copy-oauth-${title.toLowerCase().replace(/\s+/g, "-")}`;
 ---
@@ -24,7 +17,7 @@ const copyId = `copy-oauth-${title.toLowerCase().replace(/\s+/g, "-")}`;
 	<h2 class="font-display text-lg font-bold text-white">{title}</h2>
 	<p class="mt-2 text-sm text-slate-300" set:html={lead} />
 	<p class="mt-2 text-xs text-slate-500">
-		Operator env: <code class="font-mono">{envVarHint}</code> — one OAuth app for all subscribers.
+		One shared OAuth application for all subscribers — not personal or per-user.
 	</p>
 
 	{
@@ -48,8 +41,8 @@ const copyId = `copy-oauth-${title.toLowerCase().replace(/\s+/g, "-")}`;
 		) : (
 			<div class="mt-4 rounded-lg border border-amber-500/40 bg-amber-950/40 p-4">
 				<p class="text-sm text-amber-100">
-					OAuth Client ID is not configured on this deploy. Set{" "}
-					<code class="font-mono text-xs">{envVarHint}</code> on Railway (same Clerk OAuth app as the MCP server).
+					OAuth Client ID is not configured on this deploy yet. It should match the OAuth application
+					used by the MCP server — contact us if this persists.
 				</p>
 			</div>
 		)

@@ -1,10 +1,10 @@
 # AGENTS.md
 
-## ⛔ Clerk auth — read `docs/CLERK-AUTH.md` first
+## ⛔ Authentication — read `docs/CLERK-AUTH.md` first
 
 | Rule | Detail |
 |------|--------|
-| **Clerk owns login** | **`accounts.aadm.io`** CNAME — sign-in/sign-up only |
+| **Login area** | **`accounts.aadm.io`** CNAME — sign-in/sign-up only |
 | **Member area** | **`aadm.io/member`** — protected, embedded `<UserProfile>`, MCP OAuth tab |
 | **aadm.io marketing** | Public `/mcp` — no credential values |
 | **CNAME** | Do not repoint `accounts.aadm.io` |

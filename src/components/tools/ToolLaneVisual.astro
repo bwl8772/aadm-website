@@ -1,0 +1,263 @@
+---
+type Lane =
+	| "Orchestration"
+	| "Navigator"
+	| "Investigator"
+	| "Sentinel"
+	| "Doctrine";
+
+type Props = {
+	lane: Lane;
+	variant?: "tall" | "wide";
+};
+
+const { lane, variant = "tall" } = Astro.props;
+
+const meta: Record<
+	Lane,
+	{
+		caption: string;
+		sub: string;
+		glow: string;
+		stroke: string;
+		fill: string;
+		label: string;
+	}
+> = {
+	Orchestration: {
+		caption: "Host branches first",
+		sub: "standard_brief → route_lane → task tool",
+		glow: "bg-amber-400/10",
+		stroke: "stroke-amber-300/50",
+		fill: "fill-amber-300/15",
+		label: "text-amber-200/80",
+	},
+	Navigator: {
+		caption: "Scope before code",
+		sub: "UDALI bands · AUTH · acceptance",
+		glow: "bg-violet-400/10",
+		stroke: "stroke-violet-400/50",
+		fill: "fill-violet-400/12",
+		label: "text-violet-200/80",
+	},
+	Investigator: {
+		caption: "Evidence gates fixes",
+		sub: "Path A recon · CLASSIFIED · Path B",
+		glow: "bg-sky-400/10",
+		stroke: "stroke-sky-400/50",
+		fill: "fill-sky-400/12",
+		label: "text-sky-200/80",
+	},
+	Sentinel: {
+		caption: "Seams get proof",
+		sub: "VERT depth · HORI crossings · closure",
+		glow: "bg-emerald-400/10",
+		stroke: "stroke-emerald-400/50",
+		fill: "fill-emerald-400/12",
+		label: "text-emerald-200/80",
+	},
+	Doctrine: {
+		caption: "Verbatim, not paraphrase",
+		sub: "AUTH · SEAM · role slices",
+		glow: "bg-slate-400/10",
+		stroke: "stroke-slate-300/40",
+		fill: "fill-slate-300/10",
+		label: "text-slate-200/75",
+	},
+};
+
+const m = meta[lane];
+---
+
+<div
+	class="group relative flex h-full min-h-[240px] flex-col overflow-hidden p-6 sm:p-7 lg:min-h-0"
+	aria-hidden="true"
+>
+	<div
+		class:list={[
+			"pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full blur-3xl transition duration-700 group-hover:opacity-100 opacity-60",
+			m.glow,
+		]}
+	></div>
+
+	<div class="relative flex flex-1 flex-col">
+		<p class:list={["font-mono-cta text-[10px] uppercase tracking-[0.24em]", m.label]}>
+			{lane}
+		</p>
+
+		<div class="relative mt-4 flex flex-1 items-center justify-center">
+			{
+				lane === "Orchestration" && (
+					<svg
+						viewBox="0 0 200 160"
+						class:list={["w-full max-w-[220px]", variant === "wide" ? "max-w-[280px]" : ""]}
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<rect x="78" y="8" width="44" height="24" rx="2" class:list={[m.stroke, m.fill]} stroke-width="1.2" />
+						<text x="100" y="24" text-anchor="middle" class="fill-amber-200/90 font-mono text-[8px]">brief</text>
+						<line x1="100" y1="32" x2="100" y2="48" class={m.stroke} stroke-width="1" />
+						<line x1="100" y1="48" x2="36" y2="64" class={m.stroke} stroke-width="1" />
+						<line x1="100" y1="48" x2="100" y2="64" class={m.stroke} stroke-width="1" />
+						<line x1="100" y1="48" x2="164" y2="64" class={m.stroke} stroke-width="1" />
+						<rect x="12" y="64" width="48" height="28" rx="2" class:list={[m.stroke, "fill-violet-400/10 stroke-violet-400/40"]} stroke-width="1" />
+						<text x="36" y="82" text-anchor="middle" class="fill-violet-200/80 font-mono text-[7px]">delivery</text>
+						<rect x="76" y="64" width="48" height="28" rx="2" class:list={[m.stroke, "fill-sky-400/10 stroke-sky-400/40"]} stroke-width="1" />
+						<text x="100" y="82" text-anchor="middle" class="fill-sky-200/80 font-mono text-[7px]">defect</text>
+						<rect x="140" y="64" width="48" height="28" rx="2" class:list={[m.stroke, "fill-emerald-400/10 stroke-emerald-400/40"]} stroke-width="1" />
+						<text x="164" y="82" text-anchor="middle" class="fill-emerald-200/80 font-mono text-[7px]">assure</text>
+						<line x1="36" y1="92" x2="36" y2="108" class="stroke-violet-400/30" stroke-width="1" stroke-dasharray="3 3" />
+						<line x1="100" y1="92" x2="100" y2="108" class="stroke-sky-400/30" stroke-width="1" stroke-dasharray="3 3" />
+						<line x1="164" y1="92" x2="164" y2="108" class="stroke-emerald-400/30" stroke-width="1" stroke-dasharray="3 3" />
+						<rect x="8" y="108" width="56" height="22" rx="2" class="stroke-white/15 fill-white/[0.03]" stroke-width="1" />
+						<rect x="72" y="108" width="56" height="22" rx="2" class="stroke-white/15 fill-white/[0.03]" stroke-width="1" />
+						<rect x="136" y="108" width="56" height="22" rx="2" class="stroke-white/15 fill-white/[0.03]" stroke-width="1" />
+						<text x="36" y="122" text-anchor="middle" class="fill-slate-500 font-mono text-[6px]">task</text>
+						<text x="100" y="122" text-anchor="middle" class="fill-slate-500 font-mono text-[6px]">task</text>
+						<text x="164" y="122" text-anchor="middle" class="fill-slate-500 font-mono text-[6px]">task</text>
+					</svg>
+				)
+			}
+
+			{
+				lane === "Navigator" && (
+					<svg
+						viewBox="0 0 200 180"
+						class:list={["w-full max-w-[220px]", variant === "wide" ? "max-w-[300px]" : ""]}
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						{[
+							{ y: 12, w: 120, label: "L17–22 integrator", tone: "violet" },
+							{ y: 38, w: 136, label: "L13 logic", tone: "violet" },
+							{ y: 64, w: 148, label: "L07 DTO", tone: "violet" },
+							{ y: 90, w: 160, label: "L03 adapter", tone: "violet" },
+							{ y: 116, w: 172, label: "L01 entity", tone: "violet" },
+						].map((band, i) => (
+							<g>
+								<rect
+									x={(200 - band.w) / 2}
+									y={band.y}
+									width={band.w}
+									height="20"
+									rx="2"
+									class:list={[m.stroke, m.fill]}
+									stroke-width="1"
+									opacity={1 - i * 0.12}
+								/>
+								<text
+									x="100"
+									y={band.y + 13}
+									text-anchor="middle"
+									class="fill-violet-100/70 font-mono text-[7px]"
+								>
+									{band.label}
+								</text>
+							</g>
+						))}
+						<line x1="178" y1="12" x2="178" y2="136" class="stroke-violet-300/30" stroke-width="1" />
+						<rect x="182" y="48" width="14" height="14" rx="1" class="stroke-amber-300/50 fill-amber-300/15" stroke-width="1" />
+						<text x="189" y="58" text-anchor="middle" class="fill-amber-200/90 font-mono text-[6px]">A</text>
+						<path d="M 24 150 L 100 142 L 176 150" class={m.stroke} stroke-width="1" />
+						<text x="100" y="168" text-anchor="middle" class="fill-slate-400 font-mono text-[7px]">acceptance criteria</text>
+					</svg>
+				)
+			}
+
+			{
+				lane === "Investigator" && (
+					<svg
+						viewBox="0 0 200 160"
+						class:list={["w-full max-w-[220px]", variant === "wide" ? "max-w-[320px]" : ""]}
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<rect x="16" y="20" width="56" height="32" rx="2" class:list={[m.stroke, m.fill]} stroke-width="1.2" />
+						<text x="44" y="40" text-anchor="middle" class="fill-sky-200/90 font-mono text-[8px]">symptom</text>
+						<line x1="72" y1="36" x2="88" y2="36" class={m.stroke} stroke-width="1" />
+						<polygon points="88,32 96,36 88,40" class="fill-sky-300/60" />
+						<rect x="96" y="20" width="56" height="32" rx="2" class:list={[m.stroke, m.fill]} stroke-width="1.2" />
+						<text x="124" y="40" text-anchor="middle" class="fill-sky-200/90 font-mono text-[8px]">Path A</text>
+						<line x1="124" y1="52" x2="124" y2="68" class={m.stroke} stroke-width="1" />
+						<rect x="88" y="68" width="72" height="28" rx="2" class="stroke-amber-300/50 fill-amber-300/10" stroke-width="1.2" />
+						<text x="124" y="86" text-anchor="middle" class="fill-amber-200/90 font-mono text-[7px]">gate · proof</text>
+						<line x1="124" y1="96" x2="124" y2="112" class={m.stroke} stroke-width="1" />
+						<polygon points="116,112 124,120 132,112" class="fill-sky-300/40" />
+						<rect x="88" y="120" width="72" height="28" rx="2" class:list={[m.stroke, "fill-sky-400/20"]} stroke-width="1.2" />
+						<text x="124" y="138" text-anchor="middle" class="fill-sky-100/90 font-mono text-[8px]">Path B · fix</text>
+						<line x1="44" y1="52" x2="44" y2="120" class="stroke-sky-400/20" stroke-width="1" stroke-dasharray="4 4" />
+						<text x="28" y="88" text-anchor="middle" transform="rotate(-90 28 88)" class="fill-slate-600 font-mono text-[6px]">recon</text>
+					</svg>
+				)
+			}
+
+			{
+				lane === "Sentinel" && (
+					<svg
+						viewBox="0 0 200 160"
+						class:list={["w-full max-w-[220px]", variant === "wide" ? "max-w-[320px]" : ""]}
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						{Array.from({ length: 4 }).map((_, row) =>
+							Array.from({ length: 5 }).map((__, col) => (
+								<rect
+									x={20 + col * 32}
+									y={16 + row * 32}
+									width="26"
+									height="26"
+									rx="2"
+									class:list={[
+										row === 1 && col === 2
+											? "stroke-emerald-300/70 fill-emerald-400/25"
+											: (row + col) % 3 === 0
+												? "stroke-emerald-400/35 fill-emerald-400/8"
+												: "stroke-white/10 fill-white/[0.02]",
+									]}
+									stroke-width="1"
+								/>
+							)),
+						)}
+						<text x="100" y="152" text-anchor="middle" class="fill-emerald-200/70 font-mono text-[7px]">
+							VERT · HORI · closure tier
+						</text>
+						<circle cx="116" cy="64" r="4" class="fill-emerald-300/80" />
+						<line x1="116" y1="68" x2="116" y2="88" class="stroke-emerald-300/50" stroke-width="1" />
+						<line x1="116" y1="88" x2="84" y2="88" class="stroke-emerald-300/50" stroke-width="1" />
+						<line x1="116" y1="88" x2="148" y2="88" class="stroke-emerald-300/50" stroke-width="1" />
+					</svg>
+				)
+			}
+
+			{
+				lane === "Doctrine" && (
+					<svg
+						viewBox="0 0 200 160"
+						class:list={["w-full max-w-[220px]", variant === "wide" ? "max-w-[280px]" : ""]}
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<rect x="48" y="16" width="104" height="120" rx="3" class="stroke-white/15 fill-white/[0.03]" stroke-width="1.2" />
+						<line x1="64" y1="36" x2="136" y2="36" class="stroke-slate-400/30" stroke-width="1" />
+						<line x1="64" y1="52" x2="120" y2="52" class="stroke-slate-400/20" stroke-width="1" />
+						<line x1="64" y1="64" x2="128" y2="64" class="stroke-slate-400/20" stroke-width="1" />
+						<rect x="64" y="78" width="36" height="14" rx="1" class="stroke-slate-300/40 fill-slate-300/10" stroke-width="1" />
+						<text x="82" y="88" text-anchor="middle" class="fill-slate-200/80 font-mono text-[7px]">AUTH</text>
+						<rect x="106" y="78" width="36" height="14" rx="1" class="stroke-slate-300/40 fill-slate-300/10" stroke-width="1" />
+						<text x="124" y="88" text-anchor="middle" class="fill-slate-200/80 font-mono text-[7px]">SEAM</text>
+						<rect x="64" y="98" width="78" height="14" rx="1" class="stroke-slate-300/30 fill-slate-300/8" stroke-width="1" />
+						<text x="103" y="108" text-anchor="middle" class="fill-slate-300/70 font-mono text-[7px]">role_guide</text>
+						<path d="M 48 28 Q 32 80 48 136" class="stroke-slate-400/25" stroke-width="8" fill="none" />
+						<path d="M 152 28 Q 168 80 152 136" class="stroke-slate-400/25" stroke-width="8" fill="none" />
+						<text x="100" y="152" text-anchor="middle" class="fill-slate-400 font-mono text-[7px]">resources/read · verbatim</text>
+					</svg>
+				)
+			}
+		</div>
+
+		<div class="relative mt-auto border-t border-white/[0.06] pt-4">
+			<p class="font-display text-sm font-semibold tracking-tight text-white/90">{m.caption}</p>
+			<p class="mt-1 font-mono-cta text-[10px] uppercase tracking-[0.18em] text-slate-500">{m.sub}</p>
+		</div>
+	</div>
+</div>
