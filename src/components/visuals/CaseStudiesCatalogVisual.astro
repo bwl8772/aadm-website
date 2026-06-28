@@ -14,14 +14,47 @@ type Props = {
 	variant?: "tall" | "wide";
 };
 
-const { vignetteCount, toneCounts, hoursLowTotal, hoursHighTotal, variant = "wide" } =
-	Astro.props;
+const {
+	vignetteCount,
+	toneCounts,
+	hoursLowTotal,
+	hoursHighTotal,
+	variant = "wide",
+} = Astro.props;
 
 const lanes = [
-	{ key: "violet", label: "Delivery", count: toneCounts.violet, stroke: "stroke-violet-400/50", fill: "fill-violet-400/15", text: "fill-violet-200/80" },
-	{ key: "amber", label: "Defect", count: toneCounts.amber, stroke: "stroke-amber-300/50", fill: "fill-amber-300/12", text: "fill-amber-200/80" },
-	{ key: "sky", label: "Triage", count: toneCounts.sky, stroke: "stroke-sky-400/50", fill: "fill-sky-400/12", text: "fill-sky-200/80" },
-	{ key: "emerald", label: "Assurance", count: toneCounts.emerald, stroke: "stroke-emerald-400/50", fill: "fill-emerald-400/12", text: "fill-emerald-200/80" },
+	{
+		key: "violet",
+		label: "Delivery",
+		count: toneCounts.violet,
+		stroke: "stroke-violet-400/50",
+		fill: "fill-violet-400/15",
+		text: "fill-violet-200/80",
+	},
+	{
+		key: "amber",
+		label: "Defect",
+		count: toneCounts.amber,
+		stroke: "stroke-amber-300/50",
+		fill: "fill-amber-300/12",
+		text: "fill-amber-200/80",
+	},
+	{
+		key: "sky",
+		label: "Triage",
+		count: toneCounts.sky,
+		stroke: "stroke-sky-400/50",
+		fill: "fill-sky-400/12",
+		text: "fill-sky-200/80",
+	},
+	{
+		key: "emerald",
+		label: "Assurance",
+		count: toneCounts.emerald,
+		stroke: "stroke-emerald-400/50",
+		fill: "fill-emerald-400/12",
+		text: "fill-emerald-200/80",
+	},
 ] as const;
 ---
 
