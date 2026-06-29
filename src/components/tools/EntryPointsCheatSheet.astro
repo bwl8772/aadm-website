@@ -1,0 +1,415 @@
+---
+type FlowStep = {
+	n: string;
+	label: string;
+	tools: string[];
+	note: string;
+	accent: string;
+	border: string;
+};
+
+type CheatRow = {
+	goal: string;
+	tool: string;
+	toolHref: string;
+	lane: string;
+	laneClass: string;
+};
+
+type PersonaMap = {
+	youSay: string;
+	lane: string;
+	persona: string;
+	entry: string;
+	entryHref: string;
+	accent: string;
+};
+
+const flowSteps: FlowStep[] = [
+	{
+		n: "1",
+		label: "Symptom unclear?",
+		tools: ["prism_frame", "route_lane"],
+		note: "Contradictory UI vs server · not sure which lane owns it",
+		accent: "text-amber-200/90",
+		border: "border-amber-300/40",
+	},
+	{
+		n: "2",
+		label: "Lane obvious?",
+		tools: ["route_lane"],
+		note: "Then the lane primary tool — delivery · defect · assurance",
+		accent: "text-emerald-200/90",
+		border: "border-emerald-300/40",
+	},
+	{
+		n: "3",
+		label: "Long thread?",
+		tools: ["orchestrator_anchor"],
+		note: "Re-anchor after compaction — don't replay the full brief",
+		accent: "text-slate-200/90",
+		border: "border-slate-300/40",
+	},
+	{
+		n: "4",
+		label: "Which tool next?",
+		tools: ["standard_brief", "suggest_aadm_tools"],
+		note: "Routing snapshot only — avoid response_scope: full unless you need the catalog",
+		accent: "text-violet-200/90",
+		border: "border-violet-300/40",
+	},
+];
+
+const personaMap: PersonaMap[] = [
+	{
+		youSay: "Investigate",
+		lane: "defect",
+		persona: "Investigator",
+		entry: "debug_defect",
+		entryHref: "#debug_defect",
+		accent: "text-sky-300/90",
+	},
+	{
+		youSay: "Navigate",
+		lane: "delivery",
+		persona: "Navigator",
+		entry: "map_feature",
+		entryHref: "#map_feature",
+		accent: "text-violet-300/90",
+	},
+	{
+		youSay: "Prism",
+		lane: "pre-lane",
+		persona: "Fact frame",
+		entry: "prism_frame",
+		entryHref: "#entry-points",
+		accent: "text-amber-300/90",
+	},
+	{
+		youSay: "Assure",
+		lane: "assurance",
+		persona: "Sentinel",
+		entry: "assurance_run",
+		entryHref: "#sentinel_closure",
+		accent: "text-emerald-300/90",
+	},
+];
+
+const cheatRows: CheatRow[] = [
+	{
+		goal: "Fix a bug / 404 / wrong behavior",
+		tool: "debug_defect",
+		toolHref: "#debug_defect",
+		lane: "Investigator",
+		laneClass: "border-sky-400/40 text-sky-200",
+	},
+	{
+		goal: "Registry ↔ client ↔ server wiring drift",
+		tool: "cross_surface_check",
+		toolHref: "#entry-points",
+		lane: "Navigator",
+		laneClass: "border-violet-400/40 text-violet-200",
+	},
+	{
+		goal: "Design or implement a feature",
+		tool: "map_feature · plan_delivery",
+		toolHref: "#map_feature",
+		lane: "Navigator",
+		laneClass: "border-violet-400/40 text-violet-200",
+	},
+	{
+		goal: "Fix UX on one screen / tab",
+		tool: "ux_surface_pass",
+		toolHref: "#entry-points",
+		lane: "Navigator",
+		laneClass: "border-violet-400/40 text-violet-200",
+	},
+	{
+		goal: "Audit / prove before ship",
+		tool: "assurance_run · sentinel_closure",
+		toolHref: "#sentinel_closure",
+		lane: "Sentinel",
+		laneClass: "border-emerald-400/40 text-emerald-200",
+	},
+	{
+		goal: "Contradictory or muddy symptom",
+		tool: "prism_frame",
+		toolHref: "#entry-points",
+		lane: "Pre-lane",
+		laneClass: "border-amber-300/40 text-amber-200",
+	},
+	{
+		goal: "Lost in a long thread",
+		tool: "orchestrator_anchor",
+		toolHref: "#orchestrator_anchor",
+		lane: "Orchestration",
+		laneClass: "border-amber-300/40 text-amber-200",
+	},
+	{
+		goal: "Know lane · need playbook",
+		tool: "route_lane",
+		toolHref: "#route_lane",
+		lane: "Orchestration",
+		laneClass: "border-amber-300/40 text-amber-200",
+	},
+	{
+		goal: "Framework jargon in the bug",
+		tool: "vocabulary_crosswalk",
+		toolHref: "#entry-points",
+		lane: "Orchestration",
+		laneClass: "border-amber-300/40 text-amber-200",
+	},
+];
+---
+
+<section
+	id="entry-points"
+	class="entry-points-section relative scroll-mt-24 border-b border-white/[0.06] bg-[#050810] sm:scroll-mt-28"
+>
+	<div
+		aria-hidden="true"
+		class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(125deg,rgba(251,191,36,0.04)_0%,transparent_42%,rgba(110,231,183,0.05)_100%)]"
+	></div>
+	<div
+		aria-hidden="true"
+		class="pointer-events-none absolute left-0 top-1/2 -z-10 h-px w-full bg-gradient-to-r from-transparent via-white/[0.06] to-transparent"
+	></div>
+
+	<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+		<aside
+			class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+		>
+			<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70"
+				>§ EP</span
+			>
+			<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500"
+				>Start here</span
+			>
+		</aside>
+
+		<div class="col-span-12 sm:col-span-10">
+			<p class="font-mono-cta mb-6 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+				<span class="text-amber-200/90">▸</span> Entry points · what to call first
+			</p>
+
+			<h2
+				class="font-display max-w-[22ch] text-balance text-[clamp(1.9rem,4.5vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+			>
+				Pick the lane. <span class="font-extralight italic text-slate-400">Call one tool.</span>
+			</h2>
+			<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-300">
+				AADM frames and routes — it does not scan your repo. These are the first MCP tools to invoke;
+				pass/fail stays with your tests and CI.
+			</p>
+
+			<!-- Persona map -->
+			<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+				{
+					personaMap.map((p, i) => (
+						<div
+							class="entry-points-card bg-[#050810] p-6 sm:p-7"
+							style={`animation-delay: ${i * 70}ms`}
+						>
+							<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+								You say · {p.youSay}
+							</p>
+							<p class:list={["mt-3 font-display text-lg font-bold tracking-tight", p.accent]}>
+								{p.persona}
+							</p>
+							<p class="mt-1 font-mono-cta text-[10px] uppercase tracking-[0.18em] text-slate-600">
+								{p.lane}
+							</p>
+							<div class="mt-5 border-t border-white/[0.06] pt-4">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.2em] text-slate-500">
+									First call
+								</p>
+								<a
+									href={p.entryHref}
+									class:list={[
+										"mt-2 inline-block font-mono-cta text-sm font-semibold transition hover:underline underline-offset-4 decoration-white/30",
+										p.accent,
+									]}
+								>
+									{p.entry}
+								</a>
+							</div>
+						</div>
+					))
+				}
+			</div>
+
+			<!-- Default flow -->
+			<div class="mt-16">
+				<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+					Default flow
+				</p>
+				<ol class="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
+					{
+						flowSteps.map((step, i) => (
+							<li
+								class:list={[
+									"entry-points-card relative border bg-[#06080f] p-5 sm:p-6",
+									step.border,
+								]}
+								style={`animation-delay: ${120 + i * 80}ms`}
+							>
+								<div class="flex items-start gap-4">
+									<span
+										class:list={[
+											"font-display flex h-9 w-9 shrink-0 items-center justify-center border text-lg font-extralight",
+											step.border,
+											step.accent,
+										]}
+									>
+										{step.n}
+									</span>
+									<div class="min-w-0 flex-1">
+										<p class="font-display text-base font-semibold text-white">{step.label}</p>
+										<p class="mt-2 flex flex-wrap gap-2">
+											{step.tools.map((t) => (
+												<code class="font-mono-cta rounded-none border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] text-emerald-200/90">
+													{t}
+												</code>
+											))}
+										</p>
+										<p class="mt-3 text-sm leading-relaxed text-slate-400">{step.note}</p>
+									</div>
+								</div>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+
+			<!-- Quick cheat sheet table -->
+			<div class="mt-16">
+				<div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+					<div>
+						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/80">
+							Quick cheat sheet
+						</p>
+						<p class="mt-2 text-sm text-slate-400">
+							You're trying to… → open with this tool first.
+						</p>
+					</div>
+					<p class="font-mono-cta text-[10px] uppercase tracking-[0.18em] text-slate-600">
+						CallMcpTool · server user-aadm
+					</p>
+				</div>
+
+				<div class="mt-6 overflow-x-auto border border-white/[0.08]">
+					<table class="w-full min-w-[640px] border-collapse text-left text-sm">
+						<thead>
+							<tr class="border-b border-white/[0.08] bg-white/[0.02]">
+								<th
+									scope="col"
+									class="font-mono-cta px-4 py-3 text-[10px] font-normal uppercase tracking-[0.22em] text-slate-500 sm:px-6"
+								>
+									You're trying to…
+								</th>
+								<th
+									scope="col"
+									class="font-mono-cta px-4 py-3 text-[10px] font-normal uppercase tracking-[0.22em] text-slate-500 sm:px-6"
+								>
+									Open with
+								</th>
+								<th
+									scope="col"
+									class="font-mono-cta hidden px-4 py-3 text-[10px] font-normal uppercase tracking-[0.22em] text-slate-500 sm:table-cell sm:px-6"
+								>
+									Lane
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								cheatRows.map((row, i) => (
+									<tr
+										class:list={[
+											"entry-points-row border-b border-white/[0.05] transition hover:bg-white/[0.02]",
+											i % 2 === 0 ? "bg-[#050810]" : "bg-[#06080f]",
+										]}
+									>
+										<td class="px-4 py-4 text-slate-300 sm:px-6">{row.goal}</td>
+										<td class="px-4 py-4 sm:px-6">
+											<a
+												href={row.toolHref}
+												class="font-mono-cta text-[13px] font-semibold text-emerald-200/95 transition hover:text-emerald-100"
+											>
+												{row.tool}
+											</a>
+										</td>
+										<td class="hidden px-4 py-4 sm:table-cell sm:px-6">
+											<span
+												class:list={[
+													"inline-block border bg-transparent px-2 py-0.5 font-mono-cta text-[10px] uppercase tracking-[0.18em]",
+													row.laneClass,
+												]}
+											>
+												{row.lane}
+											</span>
+										</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- TL;DR strip -->
+			<div
+				class="entry-points-card mt-14 border border-emerald-300/25 bg-gradient-to-br from-emerald-500/[0.06] to-transparent p-6 sm:p-8"
+			>
+				<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">
+					TL;DR · four entry points + one pre-step
+				</p>
+				<ul class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+					<li class="flex gap-3 text-sm text-slate-300">
+						<span class="font-mono-cta text-amber-300/90">01</span>
+						<span><strong class="text-white/90">Muddy fact</strong> → <code class="font-mono-cta text-amber-200/90">prism_frame</code></span>
+					</li>
+					<li class="flex gap-3 text-sm text-slate-300">
+						<span class="font-mono-cta text-sky-300/90">02</span>
+						<span><strong class="text-white/90">Bug</strong> → <code class="font-mono-cta text-sky-200/90">debug_defect</code></span>
+					</li>
+					<li class="flex gap-3 text-sm text-slate-300">
+						<span class="font-mono-cta text-violet-300/90">03</span>
+						<span><strong class="text-white/90">Feature</strong> → <code class="font-mono-cta text-violet-200/90">map_feature</code> or <code class="font-mono-cta text-violet-200/90">plan_delivery</code></span>
+					</li>
+					<li class="flex gap-3 text-sm text-slate-300">
+						<span class="font-mono-cta text-emerald-300/90">04</span>
+						<span><strong class="text-white/90">Prove before ship</strong> → <code class="font-mono-cta text-emerald-200/90">assurance_run</code></span>
+					</li>
+					<li class="flex gap-3 text-sm text-slate-300 sm:col-span-2 lg:col-span-2">
+						<span class="font-mono-cta text-amber-300/90">+</span>
+						<span>Lane known · need playbook → <code class="font-mono-cta text-amber-200/90">route_lane</code> (+ optional <code class="font-mono-cta text-slate-400">stack</code> when you know mutation / projection / guidance)</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.entry-points-card {
+		animation: entry-rise 0.55s ease both;
+	}
+
+	@keyframes entry-rise {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.entry-points-card {
+			animation: none;
+		}
+	}
+</style>
