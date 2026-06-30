@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import { marketingOriginFromEnv } from "../lib/clerk-portal-urls";
 import { getSiteUrlConfig } from "../lib/site-urls";
 
 type HeaderNav =
@@ -51,13 +52,13 @@ const {
 
 const { urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 
-const canonicalUrl = new URL(
-	Astro.url.pathname,
-	Astro.site ?? Astro.url.origin,
-).toString();
+/** Deployed marketing origin — never use Astro.url.origin (Railway SSR sees localhost:8080). */
+const siteOrigin = marketingOriginFromEnv(import.meta.env);
+
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 const ogImageUrl = ogImage.startsWith("http")
 	? ogImage
-	: new URL(ogImage, Astro.site ?? Astro.url.origin).toString();
+	: new URL(ogImage, siteOrigin).toString();
 
 const resolvedOgTitle = ogTitle ?? title;
 const resolvedOgDescription = ogDescription ?? description;

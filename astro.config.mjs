@@ -72,6 +72,7 @@ const proxyUrl =
 	configuredProxyUrl || (isSatellite ? "https://clerk.aadm.io" : "");
 
 export default defineConfig({
+	site: marketingOriginFromEnv(),
 	output: "server",
 	adapter: node({ mode: "standalone" }),
 	integrations: [
