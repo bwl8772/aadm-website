@@ -1,7 +1,7 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"$id": "https://mcp.aadm.io/schemas/aadm-config.v1.schema.json",
-	"title": "AADM Config v1.0",
+	"title": "AADM Config v1.x",
 	"description": "Shared governance configuration for agentic coders (Claude Code, Cursor, GitHub Actions, custom agents). Single source of truth for AADM enforcement context.",
 	"type": "object",
 	"required": ["version", "metadata", "aadm_server", "repo_governance"],
@@ -13,7 +13,7 @@
 		},
 		"version": {
 			"type": "string",
-			"enum": ["1.0"],
+			"enum": ["1.0", "1.1"],
 			"description": "Config schema version; breaking changes increment major version"
 		},
 		"metadata": { "$ref": "#/definitions/metadata" },
@@ -23,7 +23,9 @@
 		"attestation": { "$ref": "#/definitions/attestation" },
 		"tool_routing": { "$ref": "#/definitions/tool_routing" },
 		"tool_specific": { "$ref": "#/definitions/tool_specific" },
-		"discovery": { "$ref": "#/definitions/discovery" }
+		"discovery": { "$ref": "#/definitions/discovery" },
+		"assurance_extensions": { "$ref": "#/definitions/assurance_extensions" },
+		"stack_profile": { "$ref": "#/definitions/stack_profile" }
 	},
 	"definitions": {
 		"auth_id": {
@@ -477,6 +479,188 @@
 					}
 				}
 			}
+		},
+		"assurance_extensions": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"attested_contracts": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": ["name"],
+						"properties": {
+							"id": { "type": "string" },
+							"name": { "type": "string" },
+							"producer_surface": { "type": "string" },
+							"producer_layer_hint": { "type": "string" },
+							"consumer_surfaces": {
+								"type": "array",
+								"items": { "type": "string" }
+							},
+							"sensitivity": { "type": "string" }
+						}
+					}
+				},
+				"invalidation_matrices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": ["mutation_id", "consumer_keys"],
+						"properties": {
+							"mutation_id": { "type": "string" },
+							"consumer_keys": {
+								"type": "array",
+								"items": { "type": "string" }
+							}
+						}
+					}
+				},
+				"cross_surface_bindings": {
+					"type": "array",
+					"items": { "type": "object" }
+				},
+				"audit_program_bindings": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": ["program_id", "stage_bindings"],
+						"properties": {
+							"program_id": { "type": "string" },
+							"stage_bindings": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"additionalProperties": false,
+									"required": ["stage_id", "proof_artifact_ids"],
+									"properties": {
+										"stage_id": { "type": "string" },
+										"proof_artifact_ids": {
+											"type": "array",
+											"items": { "type": "string" }
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"prevent_regression_bindings": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "object",
+						"additionalProperties": { "type": "string" }
+					}
+				},
+				"extension_checks": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"enabled": {
+							"type": "array",
+							"items": { "type": "string" }
+						},
+						"severity_overrides": {
+							"type": "object",
+							"additionalProperties": { "type": "string" }
+						}
+					}
+				},
+				"prompt_bindings": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "object",
+						"additionalProperties": false,
+						"properties": {
+							"host_doc_ref": { "type": "string" },
+							"section_hint": { "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"stack_profile": {
+			"type": "object",
+			"additionalProperties": false,
+			"description": "Proven tech-stack identity for MCP tool calls. Hosts forward the compact slice (validate_config → stack_profile_forward) — never paste the full config every turn. Marker dependencies only (≤32), not a full lockfile dump. Stack is never guessed from free text.",
+			"properties": {
+				"description": {
+					"type": "string",
+					"maxLength": 200
+				},
+				"framework_hint": {
+					"type": "string",
+					"pattern": "^[a-z0-9-]+$",
+					"maxLength": 64,
+					"description": "Crosswalk slug (nextjs, nestjs, lua-roblox, unity, …)"
+				},
+				"stack_manifest": {
+					"type": "object",
+					"additionalProperties": false,
+					"required": ["dependencies"],
+					"properties": {
+						"dependencies": {
+							"type": "array",
+							"minItems": 1,
+							"maxItems": 32,
+							"items": { "type": "string", "minLength": 1, "maxLength": 128 },
+							"description": "Host-extracted marker package/crate/gem names only"
+						}
+					}
+				},
+				"host_platform": {
+					"type": "string",
+					"enum": [
+						"web",
+						"mobile_native",
+						"mobile_cross",
+						"web_ssr",
+						"desktop",
+						"other"
+					]
+				},
+				"test_stack": {
+					"type": "string",
+					"enum": [
+						"vitest-rtl",
+						"jest-rtl",
+						"vue-test-utils",
+						"svelte-testing-library",
+						"angular-testbed",
+						"testing-library-generic",
+						"cypress-ct",
+						"playwright-ct",
+						"none",
+						"other"
+					]
+				},
+				"language": {
+					"type": "string",
+					"enum": [
+						"ts_js",
+						"python",
+						"go",
+						"rust",
+						"java_kotlin",
+						"csharp",
+						"swift",
+						"ruby",
+						"php",
+						"lua",
+						"other"
+					]
+				}
+			},
+			"anyOf": [
+				{ "required": ["framework_hint"] },
+				{ "required": ["stack_manifest"] },
+				{ "required": ["host_platform"] },
+				{ "required": ["test_stack"] },
+				{ "required": ["language"] }
+			]
 		}
 	}
 }
