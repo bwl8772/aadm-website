@@ -1,13 +1,14 @@
 ---
 import { UserProfile } from "@clerk/astro/components";
 import {
+	MEMBER_API_KEYS_SEGMENT,
 	MEMBER_AREA_PATH,
-	MEMBER_BEARER_SEGMENT,
 	MEMBER_MCP_OAUTH_SEGMENT,
 	memberAreaPathFromEnv,
 } from "../lib/member-area";
 import { primaryOAuthClientIdFromEnv } from "../lib/member-oauth-client-ids";
 import { getSiteUrlConfig, maskMcpOAuthClientId } from "../lib/site-urls";
+import MemberConnectionHelp from "./MemberConnectionHelp.astro";
 
 const memberPath = memberAreaPathFromEnv(import.meta.env);
 const oauthClientId = primaryOAuthClientIdFromEnv(import.meta.env);
@@ -15,12 +16,9 @@ const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
 const maskedClientId = maskMcpOAuthClientId(oauthClientId);
 
 const pathname = Astro.url.pathname.replace(/\/+$/, "") || MEMBER_AREA_PATH;
-const onBearer = pathname.endsWith(`/${MEMBER_BEARER_SEGMENT}`);
+const onApiKeys = pathname.endsWith(`/${MEMBER_API_KEYS_SEGMENT}`);
 const onOauth = pathname.endsWith(`/${MEMBER_MCP_OAUTH_SEGMENT}`);
-/** Custom credential panels — do NOT use UserProfile.Page mount (Clerk Astro leaves blank panes). */
-const showCustomPanel = onBearer || onOauth;
 
-const bearerHref = `${memberPath}/${MEMBER_BEARER_SEGMENT}`;
 const oauthHref = `${memberPath}/${MEMBER_MCP_OAUTH_SEGMENT}`;
 
 const cursorBearerJson = `{
@@ -47,163 +45,146 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 <div
 	class:list={[
 		"clerk-member-profile rounded-2xl border border-border-subtle bg-surface-card/40 p-2 sm:p-4",
-		showCustomPanel && "clerk-member-profile--custom-panel",
+		onOauth && "clerk-member-profile--oauth-panel",
 	]}
+	data-member-cred-root
+	data-api-keys-seg={MEMBER_API_KEYS_SEGMENT}
+	data-oauth-seg={MEMBER_MCP_OAUTH_SEGMENT}
 >
-	{
-		onBearer && (
-			<section
-				class="member-cred-panel mb-4 rounded-xl border border-slate-200 bg-white p-5 text-slate-900 sm:p-6"
-				aria-labelledby="bearer-heading"
-			>
-				<h2 id="bearer-heading" class="font-display text-lg font-bold text-slate-900">
-					Bearer token
-				</h2>
-				<p class="mt-2 text-sm leading-relaxed text-slate-600">
-					Best for <strong class="font-semibold text-slate-900">Cursor</strong>,{" "}
-					<strong class="font-semibold text-slate-900">Windsurf</strong>, and{" "}
-					<strong class="font-semibold text-slate-900">curl</strong>. Create a personal{" "}
-					<code class="rounded bg-slate-100 px-1 font-mono text-violet-800">ak_…</code> key under{" "}
-					<strong class="font-semibold text-slate-900">API keys</strong>, then paste it as a Bearer
-					token — not an OAuth Client ID.
-				</p>
-				<ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-600">
-					<li>
-						Open <strong class="font-semibold text-slate-900">API keys</strong> in the left nav and
-						create a key. Copy the full <code class="font-mono text-violet-800">ak_…</code> value
-						once (Clerk shows it only at creation).
-					</li>
-					<li>
-						In Cursor, edit <code class="font-mono text-slate-800">~/.cursor/mcp.json</code> (or
-						project <code class="font-mono text-slate-800">.cursor/mcp.json</code>) with the JSON
-						below — replace <code class="font-mono text-violet-800">ak_…</code> with your key.
-					</li>
-					<li>Reload MCP in Cursor, then call a tool (for example tools list).</li>
-				</ol>
+	{/*
+	  Always mount both panels; JS toggles visibility so Clerk path routing
+	  (pushState) still shows the right copy without a full reload.
+	*/}
+	<section
+		class="member-cred-panel mb-4 rounded-xl border border-slate-200 bg-white p-5 text-slate-900 sm:p-6"
+		aria-labelledby="api-keys-guide-heading"
+		data-cred-panel={MEMBER_API_KEYS_SEGMENT}
+		hidden={!onApiKeys}
+	>
+		<h2 id="api-keys-guide-heading" class="font-display text-lg font-bold text-slate-900">
+			Use your API key as a Bearer token
+		</h2>
+		<p class="mt-2 text-sm leading-relaxed text-slate-600">
+			Best for <strong class="font-semibold text-slate-900">Cursor</strong>,{" "}
+			<strong class="font-semibold text-slate-900">Windsurf</strong>, and{" "}
+			<strong class="font-semibold text-slate-900">curl</strong>. Create a personal{" "}
+			<code class="rounded bg-slate-100 px-1 font-mono text-violet-800">ak_…</code> key below, then
+			paste it as a Bearer token — not an OAuth Client ID.
+		</p>
+		<ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-600">
+			<li>
+				Create a key in the Clerk section below. Copy the full{" "}
+				<code class="font-mono text-violet-800">ak_…</code> value once (shown only at creation).
+			</li>
+			<li>
+				In Cursor, edit <code class="font-mono text-slate-800">~/.cursor/mcp.json</code> (or project{" "}
+				<code class="font-mono text-slate-800">.cursor/mcp.json</code>) with the JSON below — replace{" "}
+				<code class="font-mono text-violet-800">ak_…</code> with your key.
+			</li>
+			<li>Reload MCP in Cursor, then call a tool (for example tools list).</li>
+		</ol>
 
-				<div class="mt-5">
-					<div class="flex flex-wrap items-center justify-between gap-2">
-						<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
-							Cursor · mcp.json
-						</p>
-						<button
-							type="button"
-							class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
-							data-copy-text={cursorBearerJson}
-							onclick={copyOnClick}
-						>
-							Copy JSON
-						</button>
-					</div>
-					<pre class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{cursorBearerJson}</code></pre>
+		<div class="mt-5">
+			<div class="flex flex-wrap items-center justify-between gap-2">
+				<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+					Cursor · mcp.json
+				</p>
+				<button
+					type="button"
+					class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
+					data-copy-text={cursorBearerJson}
+					onclick={copyOnClick}
+				>
+					Copy JSON
+				</button>
+			</div>
+			<pre class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{cursorBearerJson}</code></pre>
+		</div>
+
+		<div class="mt-5">
+			<div class="flex flex-wrap items-center justify-between gap-2">
+				<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+					Header · curl
+				</p>
+				<button
+					type="button"
+					class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
+					data-copy-text={curlBearerSnippet}
+					onclick={copyOnClick}
+				>
+					Copy curl
+				</button>
+			</div>
+			<pre class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{curlBearerSnippet}</code></pre>
+		</div>
+
+		<p class="mt-4 text-xs text-slate-500">
+			Header form: <code class="font-mono text-violet-800">Authorization: Bearer ak_…</code>. Claude Code /
+			claude.ai should use <strong class="font-semibold text-slate-700">Connectors OAuth</strong> instead.
+		</p>
+
+		<MemberConnectionHelp idPrefix="api-keys" />
+	</section>
+
+	<section
+		class="member-cred-panel mb-4 rounded-xl border border-slate-200 bg-white p-5 text-slate-900 sm:p-6"
+		aria-labelledby="oauth-heading"
+		data-cred-panel={MEMBER_MCP_OAUTH_SEGMENT}
+		hidden={!onOauth}
+	>
+		<h2 id="oauth-heading" class="font-display text-lg font-bold text-slate-900">
+			Connectors OAuth
+		</h2>
+		<p class="mt-2 text-sm leading-relaxed text-slate-600">
+			For <strong class="font-semibold text-slate-900">Claude Code</strong> and{" "}
+			<strong class="font-semibold text-slate-900">claude.ai Connectors</strong> only. Copy the Client ID
+			below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret blank.
+		</p>
+		{
+			oauthClientId ? (
+				<div class="mt-4 flex flex-wrap items-center gap-3">
+					<code
+						class="min-w-0 flex-1 break-all rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-sm text-slate-800"
+						title="Full Client ID is copied when you use Copy"
+					>
+						{maskedClientId}
+					</code>
+					<button
+						type="button"
+						class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-500"
+						data-copy-text={oauthClientId}
+						onclick={copyOnClick}
+					>
+						Copy client ID
+					</button>
 				</div>
-
-				<div class="mt-5">
-					<div class="flex flex-wrap items-center justify-between gap-2">
-						<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
-							Header · curl
-						</p>
-						<button
-							type="button"
-							class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
-							data-copy-text={curlBearerSnippet}
-							onclick={copyOnClick}
-						>
-							Copy curl
-						</button>
-					</div>
-					<pre class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{curlBearerSnippet}</code></pre>
+			) : (
+				<div class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4">
+					<p class="text-sm text-amber-950">OAuth Client ID is not available yet. Contact us if this persists.</p>
 				</div>
-
+			)
+		}
+		{
+			urlMcpRpcUrl ? (
 				<p class="mt-4 text-xs text-slate-500">
-					Header form: <code class="font-mono text-violet-800">Authorization: Bearer ak_…</code>. Claude
-					Code / claude.ai should use <strong class="font-semibold text-slate-700">Connectors OAuth</strong>{" "}
-					instead.
+					MCP server URL to paste alongside the Client ID:{" "}
+					<code class="font-mono text-xs text-violet-700">{urlMcpRpcUrl}</code>
 				</p>
-			</section>
-		)
-	}
+			) : null
+		}
+		<p class="mt-4 text-xs text-slate-500">
+			Using Cursor or curl? Open <strong class="font-semibold text-slate-700">API keys</strong>, create an{" "}
+			<code class="font-mono text-violet-800">ak_…</code> key, and use it as a Bearer token.
+		</p>
 
-	{
-		onOauth && (
-			<section
-				class="member-cred-panel mb-4 rounded-xl border border-slate-200 bg-white p-5 text-slate-900 sm:p-6"
-				aria-labelledby="oauth-heading"
-			>
-				<h2 id="oauth-heading" class="font-display text-lg font-bold text-slate-900">
-					Connectors OAuth
-				</h2>
-				<p class="mt-2 text-sm leading-relaxed text-slate-600">
-					For <strong class="font-semibold text-slate-900">Claude Code</strong> and{" "}
-					<strong class="font-semibold text-slate-900">claude.ai Connectors</strong> only. Copy the Client
-					ID below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret blank.
-				</p>
-				{
-					oauthClientId ? (
-						<div class="mt-4 flex flex-wrap items-center gap-3">
-							<code
-								class="min-w-0 flex-1 break-all rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-sm text-slate-800"
-								title="Full Client ID is copied when you use Copy"
-							>
-								{maskedClientId}
-							</code>
-							<button
-								type="button"
-								class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-500"
-								data-copy-text={oauthClientId}
-								onclick={copyOnClick}
-							>
-								Copy client ID
-							</button>
-						</div>
-					) : (
-						<div class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4">
-							<p class="text-sm text-amber-950">
-								OAuth Client ID is not available yet. Contact us if this persists.
-							</p>
-						</div>
-					)
-				}
-				{
-					urlMcpRpcUrl ? (
-						<p class="mt-4 text-xs text-slate-500">
-							MCP server URL to paste alongside the Client ID:{" "}
-							<code class="font-mono text-xs text-violet-700">{urlMcpRpcUrl}</code>
-						</p>
-					) : null
-				}
-				<p class="mt-4 text-xs text-slate-500">
-					Using Cursor or curl? Open <strong class="font-semibold text-slate-700">Bearer token</strong>,
-					then create an <code class="font-mono text-violet-800">ak_…</code> key under{" "}
-					<strong class="font-semibold text-slate-700">API keys</strong>.
-				</p>
-			</section>
-		)
-	}
+		<MemberConnectionHelp idPrefix="oauth" />
+	</section>
 
 	{/*
-	  Use Link (not Page) for Bearer / OAuth so Astro renders the panels above.
-	  Clerk UserProfile.Page custom mounts often leave an empty scroll box.
+	  Four tabs: API keys, Connectors OAuth, Profile, Security.
+	  OAuth uses Link (not Page) — Clerk Astro custom Page mounts leave a blank pane.
 	*/}
 	<UserProfile path={memberPath} routing="path">
-		<UserProfile.Link label="Bearer token" url={bearerHref}>
-			<svg
-				slot="label-icon"
-				xmlns="http://www.w3.org/2000/svg"
-				width="16"
-				height="16"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				aria-hidden="true"
-			>
-				<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
-				<path d="m9 12 2 2 4-4"></path>
-			</svg>
-		</UserProfile.Link>
 		<UserProfile.Page label="apiKeys" />
 		<UserProfile.Link label="Connectors OAuth" url={oauthHref}>
 			<svg
@@ -228,6 +209,38 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 	</UserProfile>
 </div>
 
+<script>
+	function syncMemberCredPanels() {
+		const root = document.querySelector("[data-member-cred-root]");
+		if (!(root instanceof HTMLElement)) return;
+		const keysSeg = root.dataset.apiKeysSeg || "api-keys";
+		const oauthSeg = root.dataset.oauthSeg || "mcp-oauth";
+		const path = location.pathname.replace(/\/+$/, "") || "/";
+		const onKeys = path.endsWith(`/${keysSeg}`);
+		const onOauth = path.endsWith(`/${oauthSeg}`);
+		for (const el of root.querySelectorAll("[data-cred-panel]")) {
+			if (!(el instanceof HTMLElement)) continue;
+			const show =
+				(el.dataset.credPanel === keysSeg && onKeys) ||
+				(el.dataset.credPanel === oauthSeg && onOauth);
+			el.hidden = !show;
+		}
+		root.classList.toggle("clerk-member-profile--oauth-panel", onOauth);
+	}
+
+	syncMemberCredPanels();
+	window.addEventListener("popstate", syncMemberCredPanels);
+	const wrapHistory = (fn) =>
+		function (...args) {
+			const ret = fn.apply(this, args);
+			queueMicrotask(syncMemberCredPanels);
+			return ret;
+		};
+	history.pushState = wrapHistory(history.pushState.bind(history));
+	history.replaceState = wrapHistory(history.replaceState.bind(history));
+	document.addEventListener("click", () => queueMicrotask(syncMemberCredPanels));
+</script>
+
 <style>
 	.clerk-member-profile :global(.cl-rootBox) {
 		width: 100%;
@@ -249,10 +262,10 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 		max-height: 1rem;
 	}
 
-	/* Hide Clerk's empty content pane when we render the credential panel ourselves. */
-	.clerk-member-profile--custom-panel :global(.cl-scrollBox),
-	.clerk-member-profile--custom-panel :global(.cl-pageScrollBox),
-	.clerk-member-profile--custom-panel :global(.cl-profilePageContent) {
+	/* Hide Clerk's empty content pane when Connectors OAuth is the active Link. */
+	.clerk-member-profile--oauth-panel :global(.cl-scrollBox),
+	.clerk-member-profile--oauth-panel :global(.cl-pageScrollBox),
+	.clerk-member-profile--oauth-panel :global(.cl-profilePageContent) {
 		display: none;
 	}
 

@@ -6,7 +6,10 @@ export const MEMBER_AREA_PATH = "/member";
 /** Connectors OAuth tab (shared CLERK_OAUTH_CLIENT_ID) — aadm.io/member/mcp-oauth */
 export const MEMBER_MCP_OAUTH_SEGMENT = "mcp-oauth";
 
-/** Bearer setup tab (directions + mcp.json) — aadm.io/member/bearer */
+/** Clerk UserProfile API keys route — aadm.io/member/api-keys (bearer how-to + key UI) */
+export const MEMBER_API_KEYS_SEGMENT = "api-keys";
+
+/** Legacy Bearer tab URL — redirects to api-keys */
 export const MEMBER_BEARER_SEGMENT = "bearer";
 
 function marketingOrigin(env: ImportMetaEnv): string {

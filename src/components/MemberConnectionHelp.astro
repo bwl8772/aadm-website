@@ -1,0 +1,93 @@
+---
+/**
+ * Mini helpdesk blurbs under member credential panels.
+ * Links to on-site connection guides (+ OpenAI Codex MCP docs).
+ */
+interface Props {
+	/** Unique prefix so both mounted panels don't clash on heading ids. */
+	idPrefix: string;
+}
+
+const { idPrefix } = Astro.props;
+
+const guides = [
+	{
+		name: "Cursor",
+		href: "/cursor",
+		steps: [
+			"Create an API key on this page (or open API keys if you are on Connectors OAuth).",
+			"Paste the Bearer config into ~/.cursor/mcp.json (or project .cursor/mcp.json).",
+			"Reload MCP in Cursor, then call an AADM tool to confirm.",
+		],
+	},
+	{
+		name: "Claude",
+		href: "/claude-code#connect-claude",
+		steps: [
+			"Prefer Connectors OAuth for Claude Code / claude.ai — copy the Client ID from that tab.",
+			"Paste the MCP server URL and Client ID when Claude asks; leave Client Secret blank.",
+			"Fully quit Claude Desktop or start a new Claude Code session, then try standard_brief.",
+		],
+	},
+	{
+		name: "OpenAI Codex",
+		href: "/ides#universal",
+		docsHref: "https://developers.openai.com/codex/mcp",
+		steps: [
+			"Create an ak_… API key here and store it in an env var (never paste the raw key into shared configs).",
+			"Add a Streamable HTTP MCP server in ~/.codex/config.toml with the AADM URL and bearer_token_env_var.",
+			"Restart Codex (CLI / IDE / ChatGPT desktop) and verify tools load.",
+		],
+	},
+] as const;
+---
+
+<div class="mt-6 border-t border-slate-200 pt-6">
+	<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Connection help</p>
+	<p class="mt-1 text-sm text-slate-600">
+		Short steps for each host. Full guides open in a new tab when you need screenshots and copy-paste detail.
+	</p>
+
+	<div class="mt-5 space-y-5">
+		{
+			guides.map((guide) => (
+				<article aria-labelledby={`${idPrefix}-${guide.name.toLowerCase().replace(/\s+/g, "-")}-heading`}>
+					<h3
+						id={`${idPrefix}-${guide.name.toLowerCase().replace(/\s+/g, "-")}-heading`}
+						class="font-display text-base font-bold text-slate-900"
+					>
+						Connecting to {guide.name}
+					</h3>
+					<ol class="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-slate-600">
+						{guide.steps.map((step) => (
+							<li>{step}</li>
+						))}
+					</ol>
+					<p class="mt-2 text-sm">
+						<a
+							href={guide.href}
+							class="font-semibold text-violet-700 underline decoration-violet-300 underline-offset-2 hover:text-violet-900"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							AADM · {guide.name} setup guide
+						</a>
+						{"docsHref" in guide && guide.docsHref ? (
+							<>
+								<span class="text-slate-400"> · </span>
+								<a
+									href={guide.docsHref}
+									class="font-semibold text-violet-700 underline decoration-violet-300 underline-offset-2 hover:text-violet-900"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									OpenAI Codex MCP docs
+								</a>
+							</>
+						) : null}
+					</p>
+				</article>
+			))
+		}
+	</div>
+</div>
