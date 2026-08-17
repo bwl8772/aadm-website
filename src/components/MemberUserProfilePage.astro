@@ -48,17 +48,15 @@ const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)ret
 			<div class="clerk-oauth-panel max-w-xl text-slate-900">
 				<h2 class="font-display text-lg font-bold text-slate-900">Connectors OAuth</h2>
 				<p class="mt-2 text-sm leading-relaxed text-slate-600">
-					AADM uses <strong class="font-semibold text-slate-900">one</strong> shared OAuth
-					application for all members. This Client ID is configured on our servers — it is{" "}
-					<strong class="font-semibold text-slate-900">not</strong> personal or per-user. Paste it
-					for <strong class="font-semibold text-slate-900">Claude Code</strong>,{" "}
-					<strong class="font-semibold text-slate-900">claude.ai Connectors</strong>, and other OAuth
-					MCP clients; leave Client Secret empty. For Cursor or curl, use an{" "}
-					<code class="rounded bg-slate-100 px-1 font-mono text-violet-800">ak_…</code> key from{" "}
-					<strong class="font-semibold text-slate-900">API keys</strong> instead.
-				</p>
-				<p class="mt-2 text-xs text-slate-500">
-					One shared OAuth application for all subscribers — not personal or per-user.
+					Use this Client ID when you connect AADM in{" "}
+					<strong class="font-semibold text-slate-900">Claude Code</strong> or{" "}
+					<strong class="font-semibold text-slate-900">claude.ai Connectors</strong>. Leave the Client
+					Secret blank. Prefer{" "}
+					<strong class="font-semibold text-slate-900">Cursor</strong> or{" "}
+					<strong class="font-semibold text-slate-900">curl</strong>? Create an{" "}
+					<code class="rounded bg-slate-100 px-1 font-mono text-violet-800">ak_…</code> key under{" "}
+					<strong class="font-semibold text-slate-900">API keys</strong> instead — you don't need OAuth
+					there.
 				</p>
 				{
 					oauthClientId ? (
