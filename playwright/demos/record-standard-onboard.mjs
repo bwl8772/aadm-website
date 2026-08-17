@@ -5,10 +5,10 @@
  * Run: node playwright/demos/record-standard-onboard.mjs
  * Env: BASE_URL (default https://aadm.io), DEMO_SIGNUP_*, DEMO_SIGNIN_PASSWORD (optional)
  */
-import { chromium } from "playwright";
-import { mkdirSync, existsSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
 import { spawnSync } from "node:child_process";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { chromium } from "playwright";
 
 const BASE = (process.env.BASE_URL || "https://aadm.io").replace(/\/$/, "");
 const PAUSE = Number(process.env.DEMO_SHORT_PAUSE_MS || 450);
@@ -76,12 +76,18 @@ async function main() {
 
 		// 3-udali — prefer personas URL (prod may still open /standards)
 		log("3-udali-github", "Open UDALI on GitHub.");
-		const udaliLink = page.locator("#sections a").filter({ hasText: "Open on GitHub" }).nth(1);
+		const udaliLink = page
+			.locator("#sections a")
+			.filter({ hasText: "Open on GitHub" })
+			.nth(1);
 		const [popup] = await Promise.all([
-			page.context().waitForEvent("page", { timeout: 8000 }).catch(() => null),
+			page
+				.context()
+				.waitForEvent("page", { timeout: 8000 })
+				.catch(() => null),
 			udaliLink.click({ timeout: 5000 }).catch(() => null),
 		]);
-		let gh = popup || page;
+		const gh = popup || page;
 		if (popup) await popup.waitForLoadState("domcontentloaded");
 		if (!gh.url().includes("udali-personas")) {
 			await gh.goto(PERSONAS, { waitUntil: "domcontentloaded" });
@@ -119,10 +125,18 @@ async function main() {
 		// 6-create-account — speak to viewer: your name / your email
 		log("6-create-account", "Enter your name. Enter your email.");
 		await page.waitForTimeout(1000);
-		const first = page.locator('input[name="firstName"], input[autocomplete="given-name"]').first();
-		const last = page.locator('input[name="lastName"], input[autocomplete="family-name"]').first();
-		const emailInput = page.locator('input[name="emailAddress"], input[type="email"]').first();
-		const passInput = page.locator('input[name="password"], input[type="password"]').first();
+		const first = page
+			.locator('input[name="firstName"], input[autocomplete="given-name"]')
+			.first();
+		const last = page
+			.locator('input[name="lastName"], input[autocomplete="family-name"]')
+			.first();
+		const emailInput = page
+			.locator('input[name="emailAddress"], input[type="email"]')
+			.first();
+		const passInput = page
+			.locator('input[name="password"], input[type="password"]')
+			.first();
 
 		if (await first.isVisible().catch(() => false)) {
 			await first.click();
@@ -145,7 +159,10 @@ async function main() {
 			await passInput.fill(password);
 			await pause(page);
 		} else {
-			log("6-create-account", "Hold on sign-up — your password field (no password in env).");
+			log(
+				"6-create-account",
+				"Hold on sign-up — your password field (no password in env).",
+			);
 			if (await passInput.isVisible().catch(() => false)) {
 				await passInput.click();
 				await pause(page, 600);
@@ -165,17 +182,24 @@ async function main() {
 				waitUntil: "domcontentloaded",
 			});
 			await pause(page, 600);
-			const signEmail = page.locator('input[name="identifier"], input[type="email"]').first();
+			const signEmail = page
+				.locator('input[name="identifier"], input[type="email"]')
+				.first();
 			if (password && (await signEmail.isVisible().catch(() => false))) {
 				await signEmail.fill(email);
 				await pause(page);
-				const cont = page.getByRole("button", { name: /Continue|Sign in/i }).first();
+				const cont = page
+					.getByRole("button", { name: /Continue|Sign in/i })
+					.first();
 				if (await cont.isVisible().catch(() => false)) await cont.click();
 				await pause(page, 800);
 				const sp = page.locator('input[type="password"]').first();
 				if (await sp.isVisible().catch(() => false)) {
 					await sp.fill(password);
-					await page.getByRole("button", { name: /Continue|Sign in/i }).first().click();
+					await page
+						.getByRole("button", { name: /Continue|Sign in/i })
+						.first()
+						.click();
 					await pause(page, 1200);
 				}
 			}
@@ -193,7 +217,9 @@ async function main() {
 		});
 		await pause(page, 700);
 
-		const oauthNav = page.getByText("Connectors OAuth", { exact: false }).first();
+		const oauthNav = page
+			.getByText("Connectors OAuth", { exact: false })
+			.first();
 		if (await oauthNav.isVisible().catch(() => false)) {
 			await oauthNav.click({ timeout: 3000 }).catch(() => {});
 			await pause(page);
@@ -207,7 +233,11 @@ async function main() {
 				"Copy client ID visible — NOT clicking (forbid).",
 			);
 		}
-		await page.getByRole("heading", { name: /Connectors OAuth/i }).first().scrollIntoViewIfNeeded().catch(() => {});
+		await page
+			.getByRole("heading", { name: /Connectors OAuth/i })
+			.first()
+			.scrollIntoViewIfNeeded()
+			.catch(() => {});
 		await pause(page, 900);
 		const help = page.locator("#oauth-help-claude");
 		if (await help.isVisible().catch(() => false)) {
@@ -269,7 +299,9 @@ async function main() {
 		if (ff.status === 0 && existsSync(mp4)) {
 			console.log(`Wrote ${mp4}`);
 		} else {
-			console.log(`Wrote ${webmPath} (ffmpeg mp4 skipped: ${ff.stderr?.slice(0, 200) || "n/a"})`);
+			console.log(
+				`Wrote ${webmPath} (ffmpeg mp4 skipped: ${ff.stderr?.slice(0, 200) || "n/a"})`,
+			);
 		}
 	}
 	console.log(`Artifacts: ${outDir}`);

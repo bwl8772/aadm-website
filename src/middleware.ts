@@ -60,7 +60,11 @@ export const onRequest = clerkMiddleware((auth, context, next) => {
 	}
 
 	// Legacy fifth tab: /member/bearer → API keys (bearer how-to + Clerk key UI).
+	// Bare /member → API keys (Astro tabs; default panel).
 	const path = new URL(context.request.url).pathname.replace(/\/+$/, "") || "/";
+	if (path === MEMBER_AREA_PATH) {
+		return context.redirect(`${MEMBER_AREA_PATH}/${MEMBER_API_KEYS_SEGMENT}`);
+	}
 	if (path === `${MEMBER_AREA_PATH}/${MEMBER_BEARER_SEGMENT}`) {
 		return context.redirect(`${MEMBER_AREA_PATH}/${MEMBER_API_KEYS_SEGMENT}`);
 	}

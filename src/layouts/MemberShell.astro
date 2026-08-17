@@ -15,11 +15,11 @@ const {
 ---
 
 <Layout title={title} description={description} headerActiveNav={null} footerVariant="default" showFooter={false}>
-	<main id="main" class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-		<div class="mb-6 flex flex-wrap items-start justify-between gap-4">
-			<div class="min-w-0 flex-1">
+	<main id="main" class="mx-auto w-full min-w-0 max-w-6xl px-3 py-6 sm:px-6 sm:py-10">
+		<div class="mb-6 flex flex-wrap items-start justify-between gap-3 sm:gap-4">
+			<div class="min-w-0 flex-1 basis-[12rem]">
 				<h1 class="font-display text-2xl font-bold text-white sm:text-3xl">Member area</h1>
-				<p class="mt-2 text-sm text-slate-400">
+				<p class="mt-2 text-sm leading-relaxed text-slate-400">
 					Two ways to connect AADM: a personal{" "}
 					<strong class="text-slate-300">bearer API key</strong> (Cursor, curl) or{" "}
 					<strong class="text-slate-300">Connectors OAuth</strong> (Claude Code / claude.ai). Sign-in
@@ -35,6 +35,8 @@ const {
 				</button>
 			</SignOutButton>
 		</div>
-		<slot />
+		<div class="min-w-0">
+			<slot />
+		</div>
 	</main>
 </Layout>

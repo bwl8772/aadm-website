@@ -15,8 +15,9 @@
     "typecheck": "astro check",
     "preview": "astro preview",
     "astro": "astro",
-    "test:clerk-smoke": "node scripts/clerk-nav-smoke.mjs",
-    "test:mobile-nav": "node scripts/mobile-nav-smoke.mjs"
+		"test:clerk-smoke": "node scripts/clerk-nav-smoke.mjs",
+		"test:member-tabs": "node scripts/member-tabs-smoke.mjs",
+		"test:mobile-nav": "node scripts/mobile-nav-smoke.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^10.0.6",
