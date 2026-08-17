@@ -5,27 +5,90 @@ import {
 	memberAreaPathFromEnv,
 } from "../lib/member-area";
 import { primaryOAuthClientIdFromEnv } from "../lib/member-oauth-client-ids";
-import { getSiteUrlConfig } from "../lib/site-urls";
-import MemberOAuthClientIdPage from "./MemberOAuthClientIdPage.astro";
-import MemberOAuthTabIcon from "./MemberOAuthTabIcon.astro";
+import { getSiteUrlConfig, maskMcpOAuthClientId } from "../lib/site-urls";
 
 const memberPath = memberAreaPathFromEnv(import.meta.env);
 /** One shared AADM OAuth app — same Client ID for every member (server-configured). */
 const oauthClientId = primaryOAuthClientIdFromEnv(import.meta.env);
 const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
+const maskedClientId = maskMcpOAuthClientId(oauthClientId);
+/** Inline — Clerk UserProfile custom pages do not run Astro `<script>` bundles. */
+const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)return;navigator.clipboard.writeText(id).then(()=>{const t=this.textContent;this.textContent='Copied';setTimeout(()=>{this.textContent=t},2000)}).catch(()=>{})`;
 ---
 
 <div class="clerk-member-profile rounded-2xl border border-border-subtle bg-surface-card/40 p-2 sm:p-4">
+	{/*
+	  Custom page children must be DIRECT under UserProfile.Page (Clerk Astro docs).
+	  Nested Astro components break slot="label-icon" forwarding → blank page body.
+	*/}
 	<UserProfile path={memberPath} routing="path">
 		<UserProfile.Page label="apiKeys" />
 		<UserProfile.Page label="Connectors OAuth" url={MEMBER_MCP_OAUTH_SEGMENT}>
-			<MemberOAuthTabIcon />
-			<MemberOAuthClientIdPage
-				title="Connectors OAuth"
-				lead="AADM uses <strong>one</strong> shared OAuth application for all members. This Client ID is configured on our servers — it is <strong>not</strong> personal or per-user. Paste it for <strong>Claude Code</strong>, <strong>claude.ai Connectors</strong>, and other OAuth MCP clients; leave Client Secret empty. For Cursor or curl, use an <code>ak_…</code> key from <strong>API keys</strong> instead."
-				clientId={oauthClientId}
-				mcpRpcUrl={urlMcpRpcUrl}
-			/>
+			<svg
+				slot="label-icon"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				aria-hidden="true"
+			>
+				<path
+					d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"
+				></path>
+			</svg>
+			{/* Light Clerk panel — dark text (not marketing dark-theme colors). */}
+			<div class="clerk-oauth-panel max-w-xl text-slate-900">
+				<h2 class="font-display text-lg font-bold text-slate-900">Connectors OAuth</h2>
+				<p class="mt-2 text-sm leading-relaxed text-slate-600">
+					AADM uses <strong class="font-semibold text-slate-900">one</strong> shared OAuth
+					application for all members. This Client ID is configured on our servers — it is{" "}
+					<strong class="font-semibold text-slate-900">not</strong> personal or per-user. Paste it
+					for <strong class="font-semibold text-slate-900">Claude Code</strong>,{" "}
+					<strong class="font-semibold text-slate-900">claude.ai Connectors</strong>, and other OAuth
+					MCP clients; leave Client Secret empty. For Cursor or curl, use an{" "}
+					<code class="rounded bg-slate-100 px-1 font-mono text-violet-800">ak_…</code> key from{" "}
+					<strong class="font-semibold text-slate-900">API keys</strong> instead.
+				</p>
+				<p class="mt-2 text-xs text-slate-500">
+					One shared OAuth application for all subscribers — not personal or per-user.
+				</p>
+				{
+					oauthClientId ? (
+						<div class="mt-4 flex flex-wrap items-center gap-3">
+							<code
+								class="min-w-0 flex-1 break-all rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-sm text-slate-800"
+								title="Full Client ID is copied when you use Copy"
+							>
+								{maskedClientId}
+							</code>
+							<button
+								type="button"
+								class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-500"
+								data-copy-oauth-id={oauthClientId}
+								onclick={copyOnClick}
+							>
+								Copy client ID
+							</button>
+						</div>
+					) : (
+						<div class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4">
+							<p class="text-sm text-amber-950">
+								OAuth Client ID is not configured on this deploy yet. It should match the OAuth
+								application used by the MCP server — contact us if this persists.
+							</p>
+						</div>
+					)
+				}
+				{
+					urlMcpRpcUrl ? (
+						<p class="mt-4 text-xs text-slate-500">
+							MCP server URL:{" "}
+							<code class="font-mono text-xs text-violet-700">{urlMcpRpcUrl}</code>
+						</p>
+					) : null
+				}
+			</div>
 		</UserProfile.Page>
 		<UserProfile.Page label="account" />
 		<UserProfile.Page label="security" />
