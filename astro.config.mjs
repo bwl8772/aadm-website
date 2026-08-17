@@ -68,8 +68,25 @@ const clerkDomain =
 
 const configuredProxyUrl =
 	trim(env.PUBLIC_CLERK_PROXY_URL) || trim(env.CLERK_PROXY_URL) || "";
+/** Path proxy only — bare origin (pathname `/`) breaks clerk-js sync (`//v1` → host `v1`). */
+function isBareOriginProxy(url) {
+	try {
+		const pathname = new URL(url).pathname;
+		return pathname === "/" || pathname === "";
+	} catch {
+		return false;
+	}
+}
 const proxyUrl =
-	configuredProxyUrl || (isSatellite ? "https://clerk.aadm.io" : "");
+	configuredProxyUrl && !isBareOriginProxy(configuredProxyUrl)
+		? configuredProxyUrl
+		: "";
+
+const absoluteMemberFallback = (pathOrUrl) => {
+	if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+	const path = pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`;
+	return `${marketingOrigin}${path}`;
+};
 
 export default defineConfig({
 	site: marketingOriginFromEnv(),
@@ -79,8 +96,12 @@ export default defineConfig({
 		clerk({
 			signInUrl,
 			signUpUrl,
-			signInFallbackRedirectUrl,
-			signUpFallbackRedirectUrl,
+			signInFallbackRedirectUrl: absoluteMemberFallback(
+				signInFallbackRedirectUrl,
+			),
+			signUpFallbackRedirectUrl: absoluteMemberFallback(
+				signUpFallbackRedirectUrl,
+			),
 			allowedRedirectOrigins,
 			...(authorizedParties.length > 0 ? { authorizedParties } : {}),
 			...(isSatellite ? { isSatellite: true } : {}),
