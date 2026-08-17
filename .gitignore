@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# Playwright Clerk session for demos (do not commit)
+playwright/demos/.auth/
+
 # macOS-specific files
 .DS_Store
 
