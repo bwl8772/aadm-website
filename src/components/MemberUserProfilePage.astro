@@ -1,6 +1,7 @@
 ---
 import { UserProfile } from "@clerk/astro/components";
 import {
+	MEMBER_BEARER_SEGMENT,
 	MEMBER_MCP_OAUTH_SEGMENT,
 	memberAreaPathFromEnv,
 } from "../lib/member-area";
@@ -8,26 +9,133 @@ import { primaryOAuthClientIdFromEnv } from "../lib/member-oauth-client-ids";
 import { getSiteUrlConfig, maskMcpOAuthClientId } from "../lib/site-urls";
 
 const memberPath = memberAreaPathFromEnv(import.meta.env);
-/** One shared AADM OAuth app — same Client ID for every member (server-configured). */
 const oauthClientId = primaryOAuthClientIdFromEnv(import.meta.env);
 const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
 const maskedClientId = maskMcpOAuthClientId(oauthClientId);
+
+const cursorBearerJson = `{
+  "mcpServers": {
+    "aadm": {
+      "type": "http",
+      "url": "${urlMcpRpcUrl}",
+      "headers": {
+        "Authorization": "Bearer ak_…"
+      }
+    }
+  }
+}`;
+
+const curlBearerSnippet = `curl -sS -X POST ${urlMcpRpcUrl} \\
+  -H "Authorization: Bearer ak_…" \\
+  -H "Content-Type: application/json" \\
+  -H "Accept: application/json, text/event-stream" \\
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'`;
+
 /** Inline — Clerk UserProfile custom pages do not run Astro `<script>` bundles. */
-const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)return;navigator.clipboard.writeText(id).then(()=>{const t=this.textContent;this.textContent='Copied';setTimeout(()=>{this.textContent=t},2000)}).catch(()=>{})`;
+const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;navigator.clipboard.writeText(id).then(()=>{const t=this.textContent;this.textContent='Copied';setTimeout(()=>{this.textContent=t},2000)}).catch(()=>{})`;
 ---
 
 <div class="clerk-member-profile rounded-2xl border border-border-subtle bg-surface-card/40 p-2 sm:p-4">
 	{/*
+	  Two connection methods in the sidenav:
+	  - Bearer token — how to use ak_… (JSON + curl); create the key under API keys
+	  - API keys — Clerk UI to create/revoke ak_… keys
+	  - Connectors OAuth — shared Client ID for Claude Code / claude.ai
 	  Custom page children must be DIRECT under UserProfile.Page (Clerk Astro docs).
-	  Nested Astro components break slot="label-icon" forwarding → blank page body.
 	*/}
 	<UserProfile path={memberPath} routing="path">
+		<UserProfile.Page label="Bearer token" url={MEMBER_BEARER_SEGMENT}>
+			<svg
+				slot="label-icon"
+				xmlns="http://www.w3.org/2000/svg"
+				width="16"
+				height="16"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+				<path d="m9 12 2 2 4-4"></path>
+			</svg>
+			<div class="clerk-oauth-panel max-w-xl text-slate-900">
+				<h2 class="font-display text-lg font-bold text-slate-900">Bearer token</h2>
+				<p class="mt-2 text-sm leading-relaxed text-slate-600">
+					Best for <strong class="font-semibold text-slate-900">Cursor</strong>,{" "}
+					<strong class="font-semibold text-slate-900">Windsurf</strong>, and{" "}
+					<strong class="font-semibold text-slate-900">curl</strong>. Create a personal{" "}
+					<code class="rounded bg-slate-100 px-1 font-mono text-violet-800">ak_…</code> key under{" "}
+					<strong class="font-semibold text-slate-900">API keys</strong>, then paste it as a Bearer
+					token — not an OAuth Client ID.
+				</p>
+				<ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-600">
+					<li>
+						Open <strong class="font-semibold text-slate-900">API keys</strong> in the left nav and
+						create a key. Copy the full <code class="font-mono text-violet-800">ak_…</code> value
+						once (Clerk shows it only at creation).
+					</li>
+					<li>
+						In Cursor, edit <code class="font-mono text-slate-800">~/.cursor/mcp.json</code> (or
+						project <code class="font-mono text-slate-800">.cursor/mcp.json</code>) with the JSON
+						below — replace <code class="font-mono text-violet-800">ak_…</code> with your key.
+					</li>
+					<li>Reload MCP in Cursor, then call a tool (for example tools list).</li>
+				</ol>
+
+				<div class="mt-5">
+					<div class="flex flex-wrap items-center justify-between gap-2">
+						<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+							Cursor · mcp.json
+						</p>
+						<button
+							type="button"
+							class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
+							data-copy-text={cursorBearerJson}
+							onclick={copyOnClick}
+						>
+							Copy JSON
+						</button>
+					</div>
+					<pre
+						class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"
+					><code>{cursorBearerJson}</code></pre>
+				</div>
+
+				<div class="mt-5">
+					<div class="flex flex-wrap items-center justify-between gap-2">
+						<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+							Header · curl
+						</p>
+						<button
+							type="button"
+							class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
+							data-copy-text={curlBearerSnippet}
+							onclick={copyOnClick}
+						>
+							Copy curl
+						</button>
+					</div>
+					<pre
+						class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"
+					><code>{curlBearerSnippet}</code></pre>
+				</div>
+
+				<p class="mt-4 text-xs text-slate-500">
+					Header form:{" "}
+					<code class="font-mono text-violet-800">Authorization: Bearer ak_…</code>
+					{" "}
+					(same key as in the JSON). Claude Code / claude.ai should use{" "}
+					<strong class="font-semibold text-slate-700">Connectors OAuth</strong> instead.
+				</p>
+			</div>
+		</UserProfile.Page>
+
 		<UserProfile.Page label="apiKeys" />
+
 		<UserProfile.Page label="Connectors OAuth" url={MEMBER_MCP_OAUTH_SEGMENT}>
-			{/*
-			  Sized icon required — unsized SVGs can fill the profile panel if Clerk
-			  mounts them into page content. Use a plug/link mark, not a padlock.
-			*/}
 			<svg
 				slot="label-icon"
 				xmlns="http://www.w3.org/2000/svg"
@@ -44,19 +152,13 @@ const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)ret
 				<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
 				<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
 			</svg>
-			{/* Light Clerk panel — dark text (not marketing dark-theme colors). */}
 			<div class="clerk-oauth-panel max-w-xl text-slate-900">
 				<h2 class="font-display text-lg font-bold text-slate-900">Connectors OAuth</h2>
 				<p class="mt-2 text-sm leading-relaxed text-slate-600">
-					Use this Client ID when you connect AADM in{" "}
-					<strong class="font-semibold text-slate-900">Claude Code</strong> or{" "}
-					<strong class="font-semibold text-slate-900">claude.ai Connectors</strong>. Leave the Client
-					Secret blank. Prefer{" "}
-					<strong class="font-semibold text-slate-900">Cursor</strong> or{" "}
-					<strong class="font-semibold text-slate-900">curl</strong>? Create an{" "}
-					<code class="rounded bg-slate-100 px-1 font-mono text-violet-800">ak_…</code> key under{" "}
-					<strong class="font-semibold text-slate-900">API keys</strong> instead — you don't need OAuth
-					there.
+					For <strong class="font-semibold text-slate-900">Claude Code</strong> and{" "}
+					<strong class="font-semibold text-slate-900">claude.ai Connectors</strong> only. Copy the
+					Client ID below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret
+					blank.
 				</p>
 				{
 					oauthClientId ? (
@@ -70,7 +172,7 @@ const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)ret
 							<button
 								type="button"
 								class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-500"
-								data-copy-oauth-id={oauthClientId}
+								data-copy-text={oauthClientId}
 								onclick={copyOnClick}
 							>
 								Copy client ID
@@ -79,8 +181,7 @@ const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)ret
 					) : (
 						<div class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4">
 							<p class="text-sm text-amber-950">
-								OAuth Client ID is not configured on this deploy yet. It should match the OAuth
-								application used by the MCP server — contact us if this persists.
+								OAuth Client ID is not available yet. Contact us if this persists.
 							</p>
 						</div>
 					)
@@ -88,13 +189,20 @@ const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)ret
 				{
 					urlMcpRpcUrl ? (
 						<p class="mt-4 text-xs text-slate-500">
-							MCP server URL:{" "}
+							MCP server URL to paste alongside the Client ID:{" "}
 							<code class="font-mono text-xs text-violet-700">{urlMcpRpcUrl}</code>
 						</p>
 					) : null
 				}
+				<p class="mt-4 text-xs text-slate-500">
+					Using Cursor or curl? Switch to{" "}
+					<strong class="font-semibold text-slate-700">Bearer token</strong> and create an{" "}
+					<code class="font-mono text-violet-800">ak_…</code> key under{" "}
+					<strong class="font-semibold text-slate-700">API keys</strong>.
+				</p>
 			</div>
 		</UserProfile.Page>
+
 		<UserProfile.Page label="account" />
 		<UserProfile.Page label="security" />
 	</UserProfile>
@@ -105,7 +213,6 @@ const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)ret
 		width: 100%;
 	}
 
-	/* Keep sidenav / leaked icons from expanding into the content pane. */
 	.clerk-member-profile :global(.cl-navbarButtonIcon svg),
 	.clerk-member-profile :global(.cl-navbarButton svg) {
 		width: 1rem;
@@ -124,7 +231,6 @@ const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)ret
 		max-height: 1rem;
 	}
 
-	/* Clerk empty-state illustrations — cap size if theme CSS stretches them. */
 	.clerk-member-profile :global(.cl-profileSectionContent svg),
 	.clerk-member-profile :global(.cl-emptyStateIcon svg),
 	.clerk-member-profile :global([class*="emptyState"] svg) {
