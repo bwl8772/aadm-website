@@ -34,8 +34,8 @@
 | Need | Where |
 |------|--------|
 | Sign in / sign up | `accounts.aadm.io` |
-| API key (`ak_…`) | `aadm.io/member/api-keys` → create key + Bearer/`mcp.json` how-to |
-| OAuth Client ID (all members) | `aadm.io/member/mcp-oauth` → **Connectors OAuth** — shared `CLERK_OAUTH_CLIENT_ID` |
+| API key (`ak_…`) | `aadm.io/member` → **API keys** (Clerk) + bearer snippets above the profile card |
+| OAuth Client ID (all members) | `aadm.io/member/mcp-oauth` → **Connectors OAuth** (`UserProfile.Page`, Clerk Astro custom page) |
 | MCP server URL | Public on `aadm.io/mcp` |
 
 ---
