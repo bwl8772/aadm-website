@@ -150,19 +150,22 @@ const mobileLinkClass =
 	class="site-header sticky top-0 z-40 border-b border-white/[0.08] bg-surface-deep/95 backdrop-blur-md pt-[env(safe-area-inset-top,0px)]"
 	data-site-header
 >
-	<div class="mx-auto flex min-h-14 max-w-7xl items-center gap-2 px-3 py-2 sm:h-16 sm:gap-3 sm:px-6 sm:py-0 lg:gap-4 lg:px-8">
+	<div class="mx-auto flex min-h-14 max-w-7xl items-center gap-3 px-3 py-2 sm:h-16 sm:gap-4 sm:px-6 sm:py-0 lg:px-8">
 		<a
 			href="/"
 			aria-label="AADM — home"
 			aria-current={activeNav === "home" ? "page" : undefined}
-			class="shrink-0 rounded font-display text-base font-bold tracking-tight text-white transition hover:text-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 sm:text-lg"
+			class="relative z-10 shrink-0 rounded font-display text-base font-bold tracking-tight text-white transition hover:text-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 sm:text-lg"
 		>
 			AADM
 		</a>
 
-		<!-- Desktop navigation -->
+		<!--
+		  Full chip row only from xl (1280px). Below that, hamburger — md/lg
+		  used to show every chip and they collided with the logo.
+		-->
 		<nav
-			class="hidden min-w-0 flex-1 flex-nowrap items-center justify-end gap-1.5 md:flex md:gap-2.5 lg:gap-3"
+			class="hidden min-w-0 flex-1 flex-nowrap items-center justify-end gap-2 xl:flex xl:gap-2.5"
 			aria-label="Primary"
 		>
 			{
@@ -205,8 +208,8 @@ const mobileLinkClass =
 			</Show>
 		</nav>
 
-		<!-- Mobile: primary CTA + menu -->
-		<div class="relative z-50 ml-auto flex items-center gap-2 md:hidden">
+		<!-- Compact: MCP chip + hamburger until xl -->
+		<div class="relative z-50 ml-auto flex items-center gap-2 xl:hidden">
 			<a
 				href={mcpNavHref}
 				aria-label="Hosted MCP — overview and access"
@@ -263,7 +266,7 @@ const mobileLinkClass =
 <!-- Mobile menu: sibling of header (ported to body on init — avoids sticky/fixed stacking traps) -->
 <div
 	id="site-mobile-menu"
-	class="site-mobile-menu fixed inset-0 z-[120] hidden touch-none md:hidden"
+	class="site-mobile-menu fixed inset-0 z-[120] hidden touch-none xl:hidden"
 	aria-hidden="true"
 	data-mobile-menu
 	inert
@@ -463,7 +466,7 @@ const mobileLinkClass =
 			}
 		});
 
-		window.matchMedia("(min-width: 768px)").addEventListener("change", function (event) {
+		window.matchMedia("(min-width: 1280px)").addEventListener("change", function (event) {
 			if (event.matches && isOpen) {
 				setOpen(false);
 			}
