@@ -24,18 +24,25 @@ const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)ret
 	<UserProfile path={memberPath} routing="path">
 		<UserProfile.Page label="apiKeys" />
 		<UserProfile.Page label="Connectors OAuth" url={MEMBER_MCP_OAUTH_SEGMENT}>
+			{/*
+			  Sized icon required — unsized SVGs can fill the profile panel if Clerk
+			  mounts them into page content. Use a plug/link mark, not a padlock.
+			*/}
 			<svg
 				slot="label-icon"
 				xmlns="http://www.w3.org/2000/svg"
+				width="16"
+				height="16"
 				viewBox="0 0 24 24"
 				fill="none"
 				stroke="currentColor"
 				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
 				aria-hidden="true"
 			>
-				<path
-					d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"
-				></path>
+				<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+				<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
 			</svg>
 			{/* Light Clerk panel — dark text (not marketing dark-theme colors). */}
 			<div class="clerk-oauth-panel max-w-xl text-slate-900">
@@ -98,5 +105,32 @@ const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)ret
 <style>
 	.clerk-member-profile :global(.cl-rootBox) {
 		width: 100%;
+	}
+
+	/* Keep sidenav / leaked icons from expanding into the content pane. */
+	.clerk-member-profile :global(.cl-navbarButtonIcon svg),
+	.clerk-member-profile :global(.cl-navbarButton svg) {
+		width: 1rem;
+		height: 1rem;
+		max-width: 1rem;
+		max-height: 1rem;
+		flex-shrink: 0;
+	}
+
+	.clerk-member-profile :global(.cl-profilePage > svg),
+	.clerk-member-profile :global(.cl-profilePage > div > svg:first-child),
+	.clerk-member-profile :global(svg[slot="label-icon"]) {
+		width: 1rem !important;
+		height: 1rem !important;
+		max-width: 1rem;
+		max-height: 1rem;
+	}
+
+	/* Clerk empty-state illustrations — cap size if theme CSS stretches them. */
+	.clerk-member-profile :global(.cl-profileSectionContent svg),
+	.clerk-member-profile :global(.cl-emptyStateIcon svg),
+	.clerk-member-profile :global([class*="emptyState"] svg) {
+		max-width: 4rem;
+		max-height: 4rem;
 	}
 </style>
