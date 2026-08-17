@@ -8,6 +8,7 @@
 | **Member area** | **`aadm.io/member`** — protected, embedded `<UserProfile>`, MCP OAuth tab |
 | **aadm.io marketing** | Public `/mcp` — no credential values |
 | **CNAME** | Do not repoint `accounts.aadm.io` |
+| **Satellite** | **Off** — `aadm.io` is the Clerk **primary** domain; Account Portal shares cookies |
 
 Auth links: `src/lib/clerk-portal-urls.ts` · Member page: `src/pages/member/[[...rest]].astro`
 
