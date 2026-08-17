@@ -6,6 +6,9 @@ export const MEMBER_AREA_PATH = "/member";
 /** Connectors OAuth tab (shared CLERK_OAUTH_CLIENT_ID) — aadm.io/member/mcp-oauth */
 export const MEMBER_MCP_OAUTH_SEGMENT = "mcp-oauth";
 
+/** Bearer setup tab (directions + mcp.json) — aadm.io/member/bearer */
+export const MEMBER_BEARER_SEGMENT = "bearer";
+
 function marketingOrigin(env: ImportMetaEnv): string {
 	const quickstart =
 		trim(env.PUBLIC_MCP_QUICKSTART_URL) || "https://aadm.io/mcp";

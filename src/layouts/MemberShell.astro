@@ -10,7 +10,7 @@ interface Props {
 
 const {
 	title = "Member area",
-	description = "Manage your AADM account, API keys, and MCP OAuth credentials.",
+	description = "Connect with a bearer API key (Cursor, curl) or Connectors OAuth (Claude).",
 } = Astro.props;
 ---
 
@@ -20,8 +20,10 @@ const {
 			<div class="min-w-0 flex-1">
 				<h1 class="font-display text-2xl font-bold text-white sm:text-3xl">Member area</h1>
 				<p class="mt-2 text-sm text-slate-400">
-					API keys, profile, and MCP OAuth setup. Sign-in uses our login area at{' '}
-					<strong class="text-slate-300">accounts.aadm.io</strong>.
+					Two ways to connect AADM: a personal{" "}
+					<strong class="text-slate-300">bearer API key</strong> (Cursor, curl) or{" "}
+					<strong class="text-slate-300">Connectors OAuth</strong> (Claude Code / claude.ai). Sign-in
+					is at <strong class="text-slate-300">accounts.aadm.io</strong>.
 				</p>
 			</div>
 			<SignOutButton redirectUrl={CLERK_ACCOUNTS_SIGN_IN} asChild>
