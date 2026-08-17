@@ -5,6 +5,11 @@ import {
 	isSatelliteHandshakePending,
 	redirectSatelliteFapiPath,
 } from "./lib/clerk-portal-urls";
+import {
+	MEMBER_API_KEYS_SEGMENT,
+	MEMBER_AREA_PATH,
+	MEMBER_BEARER_SEGMENT,
+} from "./lib/member-area";
 import { clerkPrivateRoutePatternsFromEnv } from "./lib/routes";
 
 /**
@@ -52,6 +57,12 @@ export const onRequest = clerkMiddleware((auth, context, next) => {
 			return next();
 		}
 		return redirectToSignIn();
+	}
+
+	// Legacy fifth tab: /member/bearer → API keys (bearer how-to + Clerk key UI).
+	const path = new URL(context.request.url).pathname.replace(/\/+$/, "") || "/";
+	if (path === `${MEMBER_AREA_PATH}/${MEMBER_BEARER_SEGMENT}`) {
+		return context.redirect(`${MEMBER_AREA_PATH}/${MEMBER_API_KEYS_SEGMENT}`);
 	}
 
 	return next();
