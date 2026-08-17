@@ -1,0 +1,67 @@
+# Local production-like container for aadm-website (Astro SSR).
+# Auth policy: docs/CLERK-AUTH.md — login is Clerk on accounts.aadm.io; this app is satellite.
+#
+# Usage:
+#   docker compose --env-file .env up --build
+#   open http://127.0.0.1:8080/health
+#   open http://127.0.0.1:8080/member   # expect redirect → accounts.aadm.io/sign-in
+#
+# Smoke against the container:
+#   BASE_URL=http://127.0.0.1:8080 npm run test:clerk-smoke
+#
+# For local satellite testing, include http://127.0.0.1:8080 in
+# PUBLIC_CLERK_AUTHORIZED_PARTIES (compose default adds it if unset).
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PUBLIC_STANDARD_REPO_URL: ${PUBLIC_STANDARD_REPO_URL:-}
+        PUBLIC_MCP_REPO_URL: ${PUBLIC_MCP_REPO_URL:-}
+        PUBLIC_MCP_QUICKSTART_URL: ${PUBLIC_MCP_QUICKSTART_URL:-http://127.0.0.1:8080/mcp}
+        PUBLIC_MCP_CUSTOMER_DOCS_URL: ${PUBLIC_MCP_CUSTOMER_DOCS_URL:-}
+        PUBLIC_CLERK_PUBLISHABLE_KEY: ${PUBLIC_CLERK_PUBLISHABLE_KEY:-}
+        PUBLIC_CLERK_AUTHORIZED_PARTIES: ${PUBLIC_CLERK_AUTHORIZED_PARTIES:-http://127.0.0.1:8080,http://localhost:8080,https://aadm.io,https://www.aadm.io}
+        PUBLIC_CLERK_SIGN_IN_URL: ${PUBLIC_CLERK_SIGN_IN_URL:-https://accounts.aadm.io/sign-in}
+        PUBLIC_CLERK_SIGN_UP_URL: ${PUBLIC_CLERK_SIGN_UP_URL:-https://accounts.aadm.io/sign-up}
+        PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: ${PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL:-/member}
+        PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: ${PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL:-/member}
+        PUBLIC_CLERK_IS_SATELLITE: ${PUBLIC_CLERK_IS_SATELLITE:-true}
+        PUBLIC_CLERK_DOMAIN: ${PUBLIC_CLERK_DOMAIN:-}
+        PUBLIC_CLERK_PROXY_URL: ${PUBLIC_CLERK_PROXY_URL:-}
+        PUBLIC_MEMBER_AREA_PATH: ${PUBLIC_MEMBER_AREA_PATH:-/member}
+    ports:
+      - "8080:8080"
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "8080"
+      NODE_ENV: production
+      CLERK_SECRET_KEY: ${CLERK_SECRET_KEY:-}
+      CLERK_OAUTH_CLIENT_ID: ${CLERK_OAUTH_CLIENT_ID:-}
+      PUBLIC_CLERK_PUBLISHABLE_KEY: ${PUBLIC_CLERK_PUBLISHABLE_KEY:-}
+      PUBLIC_CLERK_SIGN_IN_URL: ${PUBLIC_CLERK_SIGN_IN_URL:-https://accounts.aadm.io/sign-in}
+      PUBLIC_CLERK_SIGN_UP_URL: ${PUBLIC_CLERK_SIGN_UP_URL:-https://accounts.aadm.io/sign-up}
+      PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: ${PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL:-/member}
+      PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: ${PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL:-/member}
+      PUBLIC_CLERK_IS_SATELLITE: ${PUBLIC_CLERK_IS_SATELLITE:-true}
+      PUBLIC_CLERK_DOMAIN: ${PUBLIC_CLERK_DOMAIN:-}
+      PUBLIC_CLERK_PROXY_URL: ${PUBLIC_CLERK_PROXY_URL:-}
+      PUBLIC_CLERK_AUTHORIZED_PARTIES: ${PUBLIC_CLERK_AUTHORIZED_PARTIES:-http://127.0.0.1:8080,http://localhost:8080,https://aadm.io,https://www.aadm.io}
+      PUBLIC_MCP_QUICKSTART_URL: ${PUBLIC_MCP_QUICKSTART_URL:-http://127.0.0.1:8080/mcp}
+      PUBLIC_STANDARD_REPO_URL: ${PUBLIC_STANDARD_REPO_URL:-}
+      PUBLIC_MCP_REPO_URL: ${PUBLIC_MCP_REPO_URL:-}
+      PUBLIC_MEMBER_AREA_PATH: ${PUBLIC_MEMBER_AREA_PATH:-/member}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:8080/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 25s

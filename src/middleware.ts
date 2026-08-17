@@ -3,6 +3,7 @@ import { redirectAuthPathToAccounts } from "./lib/clerk-auth-policy";
 import {
 	getClerkIntegrationOptions,
 	isSatelliteHandshakePending,
+	redirectSatelliteFapiPath,
 } from "./lib/clerk-portal-urls";
 import { clerkPrivateRoutePatternsFromEnv } from "./lib/routes";
 
@@ -12,6 +13,8 @@ import { clerkPrivateRoutePatternsFromEnv } from "./lib/routes";
  * POLICY (docs/CLERK-AUTH.md): Sign-in on accounts.aadm.io; member UI on aadm.io/member.
  * Auth paths on aadm.io redirect to accounts.aadm.io — no embedded SignIn on marketing host.
  *
+ * Satellite: clerk-js sync hits `/v1/*` on aadm.io; we 302 to clerk.aadm.io FAPI.
+ *
  * @see https://clerk.com/docs/reference/astro/clerk-middleware
  */
 const isPrivateRoute = createRouteMatcher([
@@ -20,6 +23,14 @@ const isPrivateRoute = createRouteMatcher([
 const clerkOptions = getClerkIntegrationOptions(import.meta.env);
 
 export const onRequest = clerkMiddleware((auth, context, next) => {
+	const fapiRedirect = redirectSatelliteFapiPath(
+		context.request,
+		import.meta.env,
+	);
+	if (fapiRedirect) {
+		return fapiRedirect;
+	}
+
 	const authRedirect = redirectAuthPathToAccounts(
 		context.request,
 		import.meta.env,

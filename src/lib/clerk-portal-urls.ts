@@ -14,8 +14,16 @@ import { trim } from "./site-urls";
  */
 export const CLERK_ACCOUNTS_SIGN_IN = "https://accounts.aadm.io/sign-in";
 export const CLERK_ACCOUNTS_SIGN_UP = "https://accounts.aadm.io/sign-up";
-/** Clerk Frontend API CNAME for aadm.io satellite handshake — see docs/CLERK-AUTH.md */
-export const CLERK_SATELLITE_FAPI_PROXY_DEFAULT = "https://clerk.aadm.io";
+/**
+ * Clerk Frontend API CNAME (DNS) for aadm.io satellite — Dashboard "proxy URL" /
+ * FAPI host. Not the same as clerk-js `proxyUrl` (path-based app proxy).
+ * @see docs/CLERK-AUTH.md
+ */
+export const CLERK_SATELLITE_FAPI_ORIGIN_DEFAULT = "https://clerk.aadm.io";
+
+/** @deprecated Use CLERK_SATELLITE_FAPI_ORIGIN_DEFAULT */
+export const CLERK_SATELLITE_FAPI_PROXY_DEFAULT =
+	CLERK_SATELLITE_FAPI_ORIGIN_DEFAULT;
 
 export type ClerkPortalUrls = {
 	signInUrl: string;
@@ -44,13 +52,19 @@ export type ClerkIntegrationOptions = {
 	proxyUrl?: string;
 };
 
+function absoluteOrJoinOrigin(pathOrUrl: string, env: ImportMetaEnv): string {
+	if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+	const path = pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`;
+	return `${marketingOriginFromEnv(env)}${path}`;
+}
+
 function memberFallbackRedirectFromEnv(env: ImportMetaEnv): string {
 	const configured =
 		trim(env.PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL) ||
 		trim(env.PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL) ||
 		"";
-	if (configured) return configured;
-	return memberAreaPathFromEnv(env);
+	if (configured) return absoluteOrJoinOrigin(configured, env);
+	return memberAreaUrl(env);
 }
 
 function allowedRedirectOriginsFromEnv(env: ImportMetaEnv): string[] {
@@ -78,12 +92,65 @@ function proxyUrlFromEnv(env: ImportMetaEnv): string | undefined {
 	return url || undefined;
 }
 
-/** Satellite apps need FAPI proxy; default clerk.aadm.io when unset. */
+/**
+ * Origin-only URLs (`https://clerk.aadm.io`) must not be passed as clerk-js
+ * `proxyUrl`. clerk-js does `` `${pathname}/v1/client/sync` ``; pathname `/`
+ * becomes `//v1/client/sync` → browser host `v1` (broken satellite sync).
+ */
+export function isBareOriginClerkProxyUrl(url: string): boolean {
+	try {
+		const pathname = new URL(url).pathname;
+		return pathname === "/" || pathname === "";
+	} catch {
+		return false;
+	}
+}
+
+/**
+ * Path-based app proxy only (e.g. `https://aadm.io/__clerk`). Bare FAPI
+ * origins are ignored so satellite mode uses `domain` instead.
+ */
 export function effectiveClerkProxyUrl(env: ImportMetaEnv): string | undefined {
 	const configured = proxyUrlFromEnv(env);
-	if (configured) return configured;
-	if (isClerkSatelliteFromEnv(env)) return CLERK_SATELLITE_FAPI_PROXY_DEFAULT;
-	return undefined;
+	if (!configured) return undefined;
+	if (isBareOriginClerkProxyUrl(configured)) return undefined;
+	return configured;
+}
+
+/** FAPI origin for `/v1/*` redirects and DNS CNAME — never used as clerk-js proxyUrl when bare. */
+export function clerkFapiOriginFromEnv(env: ImportMetaEnv): string {
+	const configured = proxyUrlFromEnv(env);
+	if (configured) {
+		try {
+			return new URL(configured).origin;
+		} catch {
+			/* fall through */
+		}
+	}
+	return CLERK_SATELLITE_FAPI_ORIGIN_DEFAULT;
+}
+
+/**
+ * When satellite uses `domain` (not path proxy), clerk-js navigates to
+ * `https://aadm.io/v1/client/sync`. Forward those requests to the FAPI host.
+ */
+export function redirectSatelliteFapiPath(
+	request: Request,
+	env: ImportMetaEnv,
+): Response | null {
+	if (!isClerkSatelliteFromEnv(env)) return null;
+	if (effectiveClerkProxyUrl(env)) return null;
+	let url: URL;
+	try {
+		url = new URL(request.url);
+	} catch {
+		return null;
+	}
+	if (url.pathname !== "/v1" && !url.pathname.startsWith("/v1/")) {
+		return null;
+	}
+	const target = `${clerkFapiOriginFromEnv(env)}${url.pathname}${url.search}`;
+	return Response.redirect(target, 302);
 }
 
 /**
@@ -185,7 +252,8 @@ export function getClerkIntegrationOptions(
 		allowedRedirectOrigins,
 		...(authorizedParties.length > 0 ? { authorizedParties } : {}),
 		...(satellite ? { isSatellite: true } : {}),
-		// Clerk: on satellite, proxyUrl replaces domain — never set both.
+		// Clerk: path proxyUrl XOR domain — never both.
+		// Bare https://clerk.aadm.io is FAPI DNS, not path proxy (see effectiveClerkProxyUrl).
 		...(proxyUrl
 			? { proxyUrl }
 			: satellite

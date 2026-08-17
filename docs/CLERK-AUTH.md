@@ -49,14 +49,16 @@
 | `PUBLIC_CLERK_SIGN_UP_URL` | `https://accounts.aadm.io/sign-up` |
 | `PUBLIC_CLERK_AUTHORIZED_PARTIES` | `https://aadm.io`, `https://www.aadm.io` |
 | `PUBLIC_CLERK_IS_SATELLITE` | `true` (optional — auto-detected when sign-in host ≠ `aadm.io`) |
-| `PUBLIC_CLERK_PROXY_URL` | **`https://clerk.aadm.io`** (required for satellite handshake; code defaults to this) |
-| `PUBLIC_CLERK_DOMAIN` | Only if **not** using `PUBLIC_CLERK_PROXY_URL` (Clerk: never set both) |
+| `PUBLIC_CLERK_DOMAIN` | **`aadm.io`** (satellite app host — default when satellite and no path proxy) |
+| `PUBLIC_CLERK_PROXY_URL` | **Leave unset** for DNS FAPI. Only set for a **path** proxy (e.g. `https://aadm.io/__clerk`). **Do not** set to bare `https://clerk.aadm.io` — clerk-js builds `//v1/client/sync` → host `v1` |
 | `CLERK_OAUTH_CLIENT_ID` | Member MCP OAuth tab only (runtime `process.env` on Railway) |
 | Member area path | Fixed at `/member` — must match `src/pages/member/` |
 
 Credential sign-in links use `redirect_url=https://aadm.io/member` with `__clerk_synced=false` for satellite handshake.
 
-**Clerk Dashboard:** Account Portal on `accounts.aadm.io` · **Domains → Satellites → `aadm.io`** with proxy URL **`https://clerk.aadm.io`** · CNAME `clerk.aadm.io` → Clerk Frontend API (gray cloud) · API keys enabled · OAuth app for MCP.
+**Clerk Dashboard:** Account Portal on `accounts.aadm.io` · **Domains → Satellites → `aadm.io`** with FAPI / proxy URL **`https://clerk.aadm.io`** (Dashboard DNS verification — not the Astro `proxyUrl` option) · CNAME `clerk.aadm.io` → Clerk Frontend API (gray cloud) · API keys enabled · OAuth app for MCP.
+
+**Broken URL `https://v1/client/sync`:** caused by passing bare-origin `proxyUrl` into clerk-js. Fix: use `domain: aadm.io` + Astro middleware 302 of `/v1/*` → `https://clerk.aadm.io/v1/*`.
 
 ---
 
@@ -83,11 +85,11 @@ Sign-in on **accounts.aadm.io** and the app on **aadm.io** are different domains
 
 **Fix (all required):**
 
-1. **Clerk Dashboard → Domains → Satellites → `aadm.io`** — set proxy URL to **`https://clerk.aadm.io`** (status **Verified**)  
+1. **Clerk Dashboard → Domains → Satellites → `aadm.io`** — FAPI / proxy URL **`https://clerk.aadm.io`** (status **Verified**)  
 2. **DNS `clerk.aadm.io`** — CNAME → `frontend-api.clerk.services` (**gray cloud** / DNS-only)  
 3. **DNS `accounts.aadm.io`** — CNAME → `accounts.clerk.services` (**gray cloud**)  
-4. **Railway** — `PUBLIC_CLERK_IS_SATELLITE=true`, `PUBLIC_CLERK_PROXY_URL=https://clerk.aadm.io`, rebuild (do **not** set `PUBLIC_CLERK_DOMAIN` when proxy is set)  
-5. **Astro middleware** — `src/middleware.ts` sets `satelliteSyncPending` when `__clerk_synced=false` and renders **sync-only shell** (no UserProfile or OAuth values) until Clerk completes handshake. Without this guard, SSR middleware loops: accounts → `/member` → sign-in → accounts → …
+4. **Railway** — `PUBLIC_CLERK_IS_SATELLITE=true`, **`PUBLIC_CLERK_DOMAIN=aadm.io`**, **unset** `PUBLIC_CLERK_PROXY_URL` (or leave it as bare `https://clerk.aadm.io` only as a FAPI-origin hint — the app ignores bare origins for clerk-js `proxyUrl`) · rebuild  
+5. **Astro middleware** — 302 `/v1/*` → `https://clerk.aadm.io/v1/*` (satellite sync); sets `satelliteSyncPending` when `__clerk_synced=false` and renders **sync-only shell** until handshake completes. Without the sync guard, SSR loops: accounts → `/member` → sign-in → accounts → …
 
 **Cloudflare (your current DNS is correct):** `accounts` and `clerk` gray-clouded; `aadm.io` proxied to Railway is fine. Zone-level **Bot Fight** can still interfere — add a skip rule for `accounts.aadm.io` if challenges persist.
 
