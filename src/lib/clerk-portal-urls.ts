@@ -149,13 +149,35 @@ export function redirectSatelliteFapiPath(
 	if (url.pathname !== "/v1" && !url.pathname.startsWith("/v1/")) {
 		return null;
 	}
-	const target = `${clerkFapiOriginFromEnv(env)}${url.pathname}${url.search}`;
-	return Response.redirect(target, 302);
+	const target = new URL(
+		`${clerkFapiOriginFromEnv(env)}${url.pathname}${url.search}`,
+	);
+	// Account Portal / older clerk-js often omit this; FAPI 422s without it.
+	if (
+		target.pathname.endsWith("/client/sync") &&
+		!target.searchParams.has("link_domain")
+	) {
+		target.searchParams.set("link_domain", clerkDomainFromEnv(env));
+	}
+	return Response.redirect(target.toString(), 302);
+}
+
+/** Registrable domain (last two labels) — `accounts.aadm.io` and `aadm.io` → `aadm.io`. */
+export function registrableDomain(hostname: string): string {
+	const parts = hostname
+		.toLowerCase()
+		.replace(/\.$/, "")
+		.split(".")
+		.filter(Boolean);
+	if (parts.length <= 2) return parts.join(".");
+	return parts.slice(-2).join(".");
 }
 
 /**
- * aadm.io hosts the app; accounts.aadm.io is Clerk Account Portal (primary auth).
- * Without satellite mode + sync param, sign-in loops: accounts → /member → sign-in → …
+ * Satellite mode is only for **different** registrable domains (e.g. admin.other.com).
+ * `accounts.aadm.io` is Account Portal on primary `aadm.io` — same site, shared cookies.
+ * Do **not** enable satellite for that setup (Clerk Dashboard lists `aadm.io` as primary,
+ * not a satellite). Wrong satellite config causes `/v1/client/sync` without `link_domain`.
  */
 export function isClerkSatelliteFromEnv(env: ImportMetaEnv): boolean {
 	const explicit = trim(env.PUBLIC_CLERK_IS_SATELLITE);
@@ -166,7 +188,7 @@ export function isClerkSatelliteFromEnv(env: ImportMetaEnv): boolean {
 	try {
 		const signInHost = new URL(signIn).hostname;
 		const marketingHost = new URL(marketingOriginFromEnv(env)).hostname;
-		return signInHost !== marketingHost;
+		return registrableDomain(signInHost) !== registrableDomain(marketingHost);
 	} catch {
 		return false;
 	}

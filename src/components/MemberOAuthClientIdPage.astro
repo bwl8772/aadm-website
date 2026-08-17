@@ -10,12 +10,14 @@ interface Props {
 
 const { title, lead, clientId, mcpRpcUrl } = Astro.props;
 const masked = maskMcpOAuthClientId(clientId);
-const copyId = `copy-oauth-${title.toLowerCase().replace(/\s+/g, "-")}`;
+/** Inline handler — Clerk UserProfile custom pages may not run Astro `<script>` bundles. */
+const copyOnClick = `const id=this.getAttribute('data-copy-oauth-id');if(!id)return;navigator.clipboard.writeText(id).then(()=>{const t=this.textContent;this.textContent='Copied';setTimeout(()=>{this.textContent=t},2000)}).catch(()=>{})`;
 ---
 
-<div class="max-w-xl">
-	<h2 class="font-display text-lg font-bold text-white">{title}</h2>
-	<p class="mt-2 text-sm text-slate-300" set:html={lead} />
+{/* Clerk UserProfile custom pages render inside a light panel — use dark text. */}
+<div class="clerk-oauth-panel max-w-xl text-slate-900">
+	<h2 class="font-display text-lg font-bold text-slate-900">{title}</h2>
+	<p class="mt-2 text-sm leading-relaxed text-slate-600 [&_code]:rounded [&_code]:bg-slate-100 [&_code]:px-1 [&_code]:font-mono [&_code]:text-violet-800 [&_strong]:font-semibold [&_strong]:text-slate-900" set:html={lead} />
 	<p class="mt-2 text-xs text-slate-500">
 		One shared OAuth application for all subscribers — not personal or per-user.
 	</p>
@@ -24,7 +26,7 @@ const copyId = `copy-oauth-${title.toLowerCase().replace(/\s+/g, "-")}`;
 		clientId ? (
 			<div class="mt-4 flex flex-wrap items-center gap-3">
 				<code
-					class="min-w-0 flex-1 break-all rounded-lg border border-border-subtle bg-surface-deep px-3 py-2 font-mono text-sm text-slate-100"
+					class="min-w-0 flex-1 break-all rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-sm text-slate-800"
 					title="Full Client ID is copied when you use Copy"
 				>
 					{masked}
@@ -33,14 +35,14 @@ const copyId = `copy-oauth-${title.toLowerCase().replace(/\s+/g, "-")}`;
 					type="button"
 					class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-500"
 					data-copy-oauth-id={clientId}
-					data-copy-feedback={copyId}
+					onclick={copyOnClick}
 				>
 					Copy client ID
 				</button>
 			</div>
 		) : (
-			<div class="mt-4 rounded-lg border border-amber-500/40 bg-amber-950/40 p-4">
-				<p class="text-sm text-amber-100">
+			<div class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4">
+				<p class="text-sm text-amber-950">
 					OAuth Client ID is not configured on this deploy yet. It should match the OAuth application
 					used by the MCP server — contact us if this persists.
 				</p>
@@ -50,25 +52,10 @@ const copyId = `copy-oauth-${title.toLowerCase().replace(/\s+/g, "-")}`;
 
 	{
 		mcpRpcUrl ? (
-			<p class="mt-4 text-xs text-slate-400">
-				MCP server URL: <code class="font-mono text-xs text-violet-300">{mcpRpcUrl}</code>
+			<p class="mt-4 text-xs text-slate-500">
+				MCP server URL:{" "}
+				<code class="font-mono text-xs text-violet-700">{mcpRpcUrl}</code>
 			</p>
 		) : null
 	}
 </div>
-
-<script>
-	document.querySelectorAll("[data-copy-oauth-id]").forEach((btn) => {
-		btn.addEventListener("click", () => {
-			const id = btn.getAttribute("data-copy-oauth-id");
-			if (!id) return;
-			void navigator.clipboard.writeText(id).then(() => {
-				const label = btn.textContent;
-				btn.textContent = "Copied";
-				window.setTimeout(() => {
-					btn.textContent = label;
-				}, 2000);
-			});
-		});
-	});
-</script>

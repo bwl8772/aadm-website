@@ -42,14 +42,23 @@ const allowedRedirectOrigins =
 	authorizedParties.length > 0 ? authorizedParties : [marketingOrigin];
 
 const explicitSatellite = trim(env.PUBLIC_CLERK_IS_SATELLITE);
+function registrableDomain(hostname) {
+	const parts = hostname
+		.toLowerCase()
+		.replace(/\.$/, "")
+		.split(".")
+		.filter(Boolean);
+	if (parts.length <= 2) return parts.join(".");
+	return parts.slice(-2).join(".");
+}
 const isSatellite =
 	explicitSatellite !== ""
 		? explicitSatellite.toLowerCase() === "true" || explicitSatellite === "1"
 		: (() => {
 				try {
 					return (
-						new URL(signInUrl).hostname !==
-						new URL(marketingOriginFromEnv()).hostname
+						registrableDomain(new URL(signInUrl).hostname) !==
+						registrableDomain(new URL(marketingOriginFromEnv()).hostname)
 					);
 				} catch {
 					return false;
