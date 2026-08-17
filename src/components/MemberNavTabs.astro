@@ -1,7 +1,7 @@
 ---
 /**
  * Astro-owned member navigation — top tabs on every viewport.
- * Replaces Clerk UserProfile sidenav (which left a blank split pane).
+ * Colors inherit site surface tokens (see `src/styles/global.css`), not hardcoded light.
  */
 import {
 	MEMBER_API_KEYS_SEGMENT,
@@ -70,8 +70,8 @@ const tabs = [
 	.member-nav-tabs {
 		min-width: 0;
 		width: 100%;
-		border-bottom: 1px solid #e2e8f0;
-		background: #fff;
+		border-bottom: 1px solid var(--color-border-subtle);
+		background: transparent;
 	}
 
 	.member-nav-tabs__scroll {
@@ -96,23 +96,23 @@ const tabs = [
 		font-size: 0.875rem;
 		font-weight: 600;
 		line-height: 1.25;
-		color: #64748b;
+		color: rgb(148 163 184);
 		text-decoration: none;
 		white-space: nowrap;
 	}
 
 	.member-nav-tabs__tab:hover {
-		color: #0f172a;
-		background: #f8fafc;
+		color: rgb(241 245 249);
+		background: rgb(255 255 255 / 0.04);
 	}
 
 	.member-nav-tabs__tab--active {
-		color: #0f172a;
-		border-bottom-color: #7c3aed;
+		color: rgb(241 245 249);
+		border-bottom-color: var(--color-accent-violet);
 	}
 
 	.member-nav-tabs__tab:focus-visible {
-		outline: 2px solid #7c3aed;
+		outline: 2px solid var(--color-accent-violet);
 		outline-offset: 2px;
 	}
 </style>

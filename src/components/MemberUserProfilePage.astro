@@ -2,13 +2,14 @@
 /**
  * Member credentials — Astro owns tabs; Clerk is content-only.
  *
+ * Theme: inherits site surface tokens (`surface-card`, `border-subtle`, slate
+ * text on `surface-deep` body) — not a forced light panel. Clerk widgets use
+ * matching dark appearance variables.
+ *
  * Hard bans (blank-pane regressions):
  * - No UserProfile.Page custom content
  * - No UserProfile.Link for OAuth
  * - No innerHTML / portal / MutationObserver into .cl-pageScrollBox
- *
- * OAuth is pure Astro SSR. API keys use Clerk <APIKeys />. Profile/Security use
- * UserProfile with sidenav hidden via appearance.
  */
 import { APIKeys, UserProfile } from "@clerk/astro/components";
 import {
@@ -66,7 +67,7 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 ---
 
 <div
-	class="member-area-card min-w-0 max-w-full overflow-hidden rounded-2xl border border-border-subtle bg-white shadow-sm"
+	class="member-area-card min-w-0 max-w-full overflow-hidden rounded-2xl border border-border-subtle bg-surface-card/80 text-slate-200 shadow-sm"
 	data-member-area-root
 	data-member-panel={onOauth
 		? MEMBER_MCP_OAUTH_SEGMENT
@@ -82,34 +83,34 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 		{
 			onApiKeys && (
 				<section
-					class="member-cred-panel text-slate-900"
+					class="member-cred-panel"
 					aria-labelledby="api-keys-guide-heading"
 					data-cred-panel={MEMBER_API_KEYS_SEGMENT}
 				>
 					<h2
 						id="api-keys-guide-heading"
-						class="font-display text-lg font-bold text-slate-900"
+						class="font-display text-lg font-bold text-slate-100"
 					>
 						Use your API key as a Bearer token
 					</h2>
-					<p class="mt-2 text-sm leading-relaxed text-slate-600">
-						Best for <strong class="font-semibold text-slate-900">Cursor</strong>,{" "}
-						<strong class="font-semibold text-slate-900">Windsurf</strong>,{" "}
-						<strong class="font-semibold text-slate-900">Codex</strong>, and{" "}
-						<strong class="font-semibold text-slate-900">curl</strong>. Create a personal{" "}
-						<code class="rounded bg-slate-100 px-1 font-mono text-violet-800">ak_…</code> key
+					<p class="mt-2 text-sm leading-relaxed text-slate-400">
+						Best for <strong class="font-semibold text-slate-100">Cursor</strong>,{" "}
+						<strong class="font-semibold text-slate-100">Windsurf</strong>,{" "}
+						<strong class="font-semibold text-slate-100">Codex</strong>, and{" "}
+						<strong class="font-semibold text-slate-100">curl</strong>. Create a personal{" "}
+						<code class="rounded bg-white/5 px-1 font-mono text-accent-violet">ak_…</code> key
 						below, then paste it as a Bearer token — not an OAuth Client ID.
 					</p>
-					<ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-600">
+					<ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-400">
 						<li>
 							Create a key in the Clerk section below. Copy the full{" "}
-							<code class="font-mono text-violet-800">ak_…</code> value once (shown only at
+							<code class="font-mono text-accent-violet">ak_…</code> value once (shown only at
 							creation).
 						</li>
 						<li>
-							In Cursor, edit <code class="font-mono text-slate-800">~/.cursor/mcp.json</code> (or
-							project <code class="font-mono text-slate-800">.cursor/mcp.json</code>) with the JSON
-							below — replace <code class="font-mono text-violet-800">ak_…</code> with your key.
+							In Cursor, edit <code class="font-mono text-slate-300">~/.cursor/mcp.json</code> (or
+							project <code class="font-mono text-slate-300">.cursor/mcp.json</code>) with the JSON
+							below — replace <code class="font-mono text-accent-violet">ak_…</code> with your key.
 						</li>
 						<li>Reload MCP in Cursor, then call a tool (for example tools list).</li>
 					</ol>
@@ -121,14 +122,14 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 							</p>
 							<button
 								type="button"
-								class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
+								class="shrink-0 rounded-md border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/15"
 								data-copy-text={cursorBearerJson}
 								onclick={copyOnClick}
 							>
 								Copy JSON
 							</button>
 						</div>
-						<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{cursorBearerJson}</code></pre>
+						<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-border-subtle bg-surface-mid p-3 font-mono text-xs leading-relaxed text-slate-300"><code>{cursorBearerJson}</code></pre>
 					</div>
 
 					<div class="mt-5">
@@ -138,25 +139,25 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 							</p>
 							<button
 								type="button"
-								class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
+								class="shrink-0 rounded-md border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/15"
 								data-copy-text={curlBearerSnippet}
 								onclick={copyOnClick}
 							>
 								Copy curl
 							</button>
 						</div>
-						<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{curlBearerSnippet}</code></pre>
+						<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-border-subtle bg-surface-mid p-3 font-mono text-xs leading-relaxed text-slate-300"><code>{curlBearerSnippet}</code></pre>
 					</div>
 
 					<p class="mt-4 text-xs text-slate-500">
 						Header form:{" "}
-						<code class="font-mono text-violet-800">Authorization: Bearer ak_…</code>. Claude Code /
-						claude.ai should use <strong class="font-semibold text-slate-700">Connectors OAuth</strong>{" "}
-						instead.
+						<code class="font-mono text-accent-violet">Authorization: Bearer ak_…</code>. Claude Code
+						/ claude.ai should use{" "}
+						<strong class="font-semibold text-slate-300">Connectors OAuth</strong> instead.
 					</p>
 
 					<div
-						class="member-clerk-widget mt-6 min-w-0 rounded-xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4"
+						class="member-clerk-widget mt-6 min-w-0 rounded-xl border border-border-subtle bg-surface-mid/80 p-3 sm:p-4"
 						data-clerk-widget="api-keys"
 					>
 						<APIKeys appearance={clerkAppearance} />
@@ -170,30 +171,30 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 		{
 			onOauth && (
 				<section
-					class="member-cred-panel member-cred-panel--oauth max-w-xl text-slate-900"
+					class="member-cred-panel member-cred-panel--oauth max-w-xl"
 					aria-labelledby="oauth-heading"
 					data-cred-panel={MEMBER_MCP_OAUTH_SEGMENT}
 				>
-					<h2 id="oauth-heading" class="font-display text-lg font-bold text-slate-900">
+					<h2 id="oauth-heading" class="font-display text-lg font-bold text-slate-100">
 						Connectors OAuth
 					</h2>
-					<p class="mt-2 text-sm leading-relaxed text-slate-600">
-						For <strong class="font-semibold text-slate-900">Claude Code</strong> and{" "}
-						<strong class="font-semibold text-slate-900">claude.ai Connectors</strong> only. Copy the
+					<p class="mt-2 text-sm leading-relaxed text-slate-400">
+						For <strong class="font-semibold text-slate-100">Claude Code</strong> and{" "}
+						<strong class="font-semibold text-slate-100">claude.ai Connectors</strong> only. Copy the
 						Client ID below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret
 						blank.
 					</p>
 					{oauthClientId ? (
 						<div class="mt-4 flex flex-wrap items-center gap-3">
 							<code
-								class="min-w-0 flex-1 break-all rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-sm text-slate-800"
+								class="min-w-0 flex-1 break-all rounded-lg border border-border-subtle bg-surface-mid px-3 py-2 font-mono text-sm text-slate-200"
 								title="Full Client ID is copied when you use Copy"
 							>
 								{maskedClientId}
 							</code>
 							<button
 								type="button"
-								class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-500"
+								class="shrink-0 rounded-lg bg-accent-violet px-4 py-2 text-sm font-semibold text-surface-deep hover:bg-accent-violet/90"
 								data-copy-text={oauthClientId}
 								onclick={copyOnClick}
 							>
@@ -201,8 +202,8 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 							</button>
 						</div>
 					) : (
-						<div class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4">
-							<p class="text-sm text-amber-950">
+						<div class="mt-4 rounded-lg border border-amber-500/40 bg-amber-500/10 p-4">
+							<p class="text-sm text-amber-100">
 								OAuth Client ID is not available yet. Contact us if this persists.
 							</p>
 						</div>
@@ -210,13 +211,13 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 					{urlMcpRpcUrl ? (
 						<p class="mt-4 text-xs text-slate-500">
 							MCP server URL to paste alongside the Client ID:{" "}
-							<code class="break-all font-mono text-xs text-violet-700">{urlMcpRpcUrl}</code>
+							<code class="break-all font-mono text-xs text-accent-violet">{urlMcpRpcUrl}</code>
 						</p>
 					) : null}
 					<p class="mt-4 text-xs text-slate-500">
 						Using Cursor or curl? Open{" "}
-						<strong class="font-semibold text-slate-700">API keys</strong>, create an{" "}
-						<code class="font-mono text-violet-800">ak_…</code> key, and use it as a Bearer token.
+						<strong class="font-semibold text-slate-300">API keys</strong>, create an{" "}
+						<code class="font-mono text-accent-violet">ak_…</code> key, and use it as a Bearer token.
 					</p>
 
 					<MemberConnectionHelp idPrefix="oauth" />
@@ -227,7 +228,7 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 		{
 			onAccount && (
 				<section
-					class="member-clerk-widget min-w-0 text-slate-900"
+					class="member-clerk-widget min-w-0"
 					aria-labelledby="profile-heading"
 					data-cred-panel={MEMBER_ACCOUNT_SEGMENT}
 				>
@@ -248,7 +249,7 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 		{
 			onSecurity && (
 				<section
-					class="member-clerk-widget min-w-0 text-slate-900"
+					class="member-clerk-widget min-w-0"
 					aria-labelledby="security-heading"
 					data-cred-panel={MEMBER_SECURITY_SEGMENT}
 				>
@@ -269,6 +270,10 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 </div>
 
 <style>
+	.member-area-card {
+		color-scheme: dark;
+	}
+
 	.member-area-card :global(.cl-rootBox),
 	.member-area-card :global(.cl-cardBox) {
 		width: 100% !important;
