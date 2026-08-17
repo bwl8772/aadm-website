@@ -175,14 +175,14 @@ export const STANDARD_ONBOARD_SUCCESS_PATH_V1 = {
 					affordance: "Navigate back to aadm.io home",
 					locatorHint: "goto https://aadm.io/",
 					commit: true,
-					notes: `VO: “${STANDARD_ONBOARD_VIEWER_LINES.returnHome}”`,
+					notes: `VO: “${STANDARD_ONBOARD_VIEWER_LINES.returnHome}” Hold ~2s on home before Create account.`,
 				},
 				{
 					id: "create-account-nav-read",
 					verb: "Reading",
 					affordance: "Create account",
 					locatorHint: "a:has-text('Create account'), a:has-text('Get access')",
-					notes: `VO: “${STANDARD_ONBOARD_VIEWER_LINES.createAccount}” Signed-out required.`,
+					notes: `VO: “${STANDARD_ONBOARD_VIEWER_LINES.createAccount}” Signed-out required. Home→login land ~8s total (not completing login).`,
 				},
 				{
 					id: "create-account-nav-click",
@@ -212,7 +212,7 @@ export const STANDARD_ONBOARD_SUCCESS_PATH_V1 = {
 					verb: "Typing",
 					affordance: "Your name",
 					locatorHint: "Clerk sign-up name fields",
-					notes: `VO: “${STANDARD_ONBOARD_VIEWER_LINES.yourName}” Type demo values from DEMO_SIGNUP_*; never narrate secrets.`,
+					notes: `VO: “${STANDARD_ONBOARD_VIEWER_LINES.yourName}” Type on-camera “your” / “name” (or DEMO_SIGNUP_*); never narrate secrets.`,
 				},
 				{
 					id: "signup-email-type",
@@ -226,7 +226,7 @@ export const STANDARD_ONBOARD_SUCCESS_PATH_V1 = {
 					verb: "Typing",
 					affordance: "Your password",
 					locatorHint: "Clerk sign-up password",
-					notes: `VO: “${STANDARD_ONBOARD_VIEWER_LINES.yourPassword}” allowSecret; MUST NOT log. Soft-skip Typing if DEMO_SIGNUP_PASSWORD unset — still show the field.`,
+					notes: `VO: “${STANDARD_ONBOARD_VIEWER_LINES.yourPassword}” allowSecret; MUST NOT log. Use ≥12-char DEMO_SIGNUP_PASSWORD or fixture default (Clerk rejects short).`,
 				},
 				{
 					id: "signup-continue-read",

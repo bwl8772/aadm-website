@@ -132,7 +132,7 @@ One-shot capture: `node playwright/demos/record-standard-onboard.mjs`
 | `member-credentials` | [`adapters/member-credentials-success-path.v1.ts`](./adapters/member-credentials-success-path.v1.ts) | [`walk-specs/member-credentials.walk-spec.v1.ts`](./walk-specs/member-credentials.walk-spec.v1.ts) |
 | `basic` | [`adapters/basic-success-path.v1.ts`](./adapters/basic-success-path.v1.ts) | [`walk-specs/basic.walk-spec.v1.ts`](./walk-specs/basic.walk-spec.v1.ts) |
 
-**Signup fixture (env only):** [`adapters/demo-signup-fixture.v1.ts`](./adapters/demo-signup-fixture.v1.ts) — `DEMO_SIGNUP_FIRST_NAME` / `LAST_NAME` / `EMAIL` / `PASSWORD` / `OTP`. Defaults: Auto Composer · `auto.composer+clerk_test@aadm.io` · OTP `424242` when unset. **Never** commit passwords.
+**Signup fixture (env only):** [`adapters/demo-signup-fixture.v1.ts`](./adapters/demo-signup-fixture.v1.ts) — `DEMO_SIGNUP_FIRST_NAME` / `LAST_NAME` / `EMAIL` / `PASSWORD` / `OTP`. Defaults type **your** / **name** (VO: “your name”) · `your.email+clerk_test@aadm.io` · password default is Clerk-safe length (`YourPassword-demo-4242!` if env unset or &lt;12 chars) · OTP `424242` when unset. **Never** log passwords.
 
 Catalog: [`walk-specs/index.ts`](./walk-specs/index.ts). Prep standard: [`docs/DEMO_WALK_SPECIFICATION.md`](../../docs/DEMO_WALK_SPECIFICATION.md).
 
