@@ -6,13 +6,13 @@
 
 1. **Sign-in and sign-up are Clerk Account Portal** on **`https://accounts.aadm.io`** (DNS CNAME to Clerk). Do **not** remove or repoint the CNAME.
 
-2. **Member area (credentials UI) is on `aadm.io/member`** — protected route with embedded Clerk `<UserProfile>` + custom **MCP OAuth** tab. API keys and OAuth Client ID live here, not on public `/mcp`.
+2. **Member area (credentials UI) is on `aadm.io/member`** — protected route. **Astro owns the top tabs**; Clerk widgets supply API keys / profile / security content only. OAuth Client ID is **Astro SSR** (never a Clerk custom page). Credentials live here, not on public `/mcp`.
 
-3. **There is exactly one login flow:** **`https://accounts.aadm.io/sign-in`** and **`/sign-up`**. After auth, subscribers use **`https://aadm.io/member`**.
+3. **There is exactly one login flow:** **`https://accounts.aadm.io/sign-in`** and **`/sign-up`**. After auth, subscribers use **`https://aadm.io/member`** (redirects to `/member/api-keys`).
 
 4. **`https://aadm.io` marketing** — `/`, `/mcp`, `/health`, etc. Public setup copy only; no credential values on `/mcp`.
 
-5. Middleware redirects `/sign-in`, `/sign-up`, `/user`, `/account/*` on `aadm.io` → `accounts.aadm.io`. **`/member` is protected** on `aadm.io` (not redirected).
+5. Middleware redirects `/sign-in`, `/sign-up`, `/user`, `/account/*` on `aadm.io` → `accounts.aadm.io`. **`/member` is protected** on `aadm.io` (not redirected to Account Portal).
 
 6. **One Astro deploy** on Railway for `aadm.io`. No second app. **`accounts.aadm.io` is not served by Astro.**
 
@@ -23,7 +23,7 @@
 | Host | Who serves it | Purpose |
 |------|----------------|---------|
 | **`accounts.aadm.io`** | **Clerk** (CNAME — keep it) | Sign-in, sign-up only |
-| **`aadm.io/member`** | **Astro + embedded UserProfile** | API keys, profile, **MCP OAuth client ID** |
+| **`aadm.io/member`** | **Astro tabs + Clerk widgets** | API keys, Connectors OAuth (Astro), Profile, Security |
 | **`aadm.io`** | **Astro** | Marketing + MCP setup (no secrets) |
 | **`mcp.aadm.io`** | **aadm-mcp** | MCP JSON-RPC |
 
@@ -34,9 +34,20 @@
 | Need | Where |
 |------|--------|
 | Sign in / sign up | `accounts.aadm.io` |
-| API key (`ak_…`) | `aadm.io/member` → **API keys** (Clerk) + bearer snippets above the profile card |
-| OAuth Client ID (all members) | `aadm.io/member/mcp-oauth` → **Connectors OAuth** (`UserProfile.Page`, Clerk Astro custom page) |
+| API key (`ak_…`) | `aadm.io/member/api-keys` — Astro bearer guide + Clerk `<APIKeys />` |
+| OAuth Client ID (all members) | `aadm.io/member/mcp-oauth` — **Astro-only** panel (no `UserProfile.Page` / Link / portal) |
+| Profile / Security | `aadm.io/member/account` · `/member/security` — Clerk `<UserProfile>` with **sidenav hidden** |
 | MCP server URL | Public on `aadm.io/mcp` |
+
+### Member chrome architecture (do not regress)
+
+- **Astro** [`MemberNavTabs.astro`](../src/components/MemberNavTabs.astro) — horizontal top tabs on **all** viewports (scrollable on small screens).
+- **Clerk** mounts only as full-width content under the active tab (`MEMBER_CLERK_CONTENT_ONLY_APPEARANCE` hides Clerk navbar).
+- **Hard bans** (blank split-pane regressions):
+  - ❌ `UserProfile.Page` custom content
+  - ❌ `UserProfile.Link` for OAuth
+  - ❌ `innerHTML` / portal / `MutationObserver` into `.cl-pageScrollBox`
+  - ❌ Relying on Clerk’s left sidenav for member navigation
 
 ---
 
@@ -66,11 +77,14 @@ Credential sign-in links use `redirect_url=https://aadm.io/member` (no `__clerk_
 
 | File | Purpose |
 |------|---------|
-| `src/pages/member/index.astro` + `src/pages/member/[...rest].astro` | Embedded `<UserProfile>` + MCP OAuth tab (via `MemberPageGate`) |
+| `src/pages/member/index.astro` + `src/pages/member/[...rest].astro` | Member shell via `MemberPageGate` |
+| `src/components/MemberNavTabs.astro` | Top tablist (API keys · Connectors OAuth · Profile · Security) |
+| `src/components/MemberUserProfilePage.astro` | Route switch: Astro OAuth / `<APIKeys />` / navbar-hidden `<UserProfile>` |
+| `src/lib/member-clerk-appearance.ts` | Hide Clerk sidenav for content-only widgets |
 | `src/components/MemberSatelliteSyncPage.astro` | Sync-only shell during satellite handshake (no credentials) |
 | `src/lib/routes.ts` | `/member(.*)` protected |
 | `src/lib/clerk-portal-urls.ts` | Portal + member URLs |
-| `src/middleware.ts` | `clerkMiddleware` + auth path redirects |
+| `src/middleware.ts` | `clerkMiddleware` + `/member` → `/member/api-keys`, bearer → api-keys |
 | `src/components/SiteHeader.astro` | **Member** → `/member` |
 
 ---
@@ -96,11 +110,12 @@ If you still see a loop:
 - ❌ `<SignIn>` / `<SignUp>` on `aadm.io`  
 - ❌ OAuth client ID values on public `/mcp`  
 - ❌ Product links to `accounts.aadm.io/user` (use `/member`)  
+- ❌ Clerk `UserProfile.Page` / `Link` / portal hacks for Connectors OAuth  
 
 ---
 
 ## References
 
 - [Clerk UserProfile (Astro)](https://clerk.com/docs/astro/reference/components/user/user-profile)  
-- [Custom pages (Astro)](https://clerk.com/docs/astro/guides/customizing-clerk/adding-items/user-profile)  
+- [Custom pages (Astro)](https://clerk.com/docs/astro/guides/customizing-clerk/adding-items/user-profile) — **do not** use for AADM OAuth; Astro owns that panel  
 - [Account Portal overview](https://clerk.com/docs/guides/account-portal/overview)  

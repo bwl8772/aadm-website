@@ -12,6 +12,12 @@ export const MEMBER_API_KEYS_SEGMENT = "api-keys";
 /** Legacy Bearer tab URL — redirects to api-keys */
 export const MEMBER_BEARER_SEGMENT = "bearer";
 
+/** Profile tab — aadm.io/member/account (Clerk account UI, Astro tabs own chrome) */
+export const MEMBER_ACCOUNT_SEGMENT = "account";
+
+/** Security tab — aadm.io/member/security */
+export const MEMBER_SECURITY_SEGMENT = "security";
+
 function marketingOrigin(env: ImportMetaEnv): string {
 	const quickstart =
 		trim(env.PUBLIC_MCP_QUICKSTART_URL) || "https://aadm.io/mcp";

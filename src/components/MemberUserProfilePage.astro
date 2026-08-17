@@ -1,27 +1,46 @@
 ---
 /**
- * Member credentials — follow Clerk Astro custom pages docs exactly:
- * https://clerk.com/docs/astro/guides/customizing-clerk/adding-items/user-profile
+ * Member credentials — Astro owns tabs; Clerk is content-only.
  *
- * - Use UserProfile.Page for in-pane content (not Link).
- * - url is a path *segment* (e.g. mcp-oauth), not /member/mcp-oauth.
- * - Page children are mounted via innerHTML by @clerk/astro — keep markup inline;
- *   no portals, MutationObservers, or hiding Clerk's scroll box.
- * - Reorder built-ins with label="apiKeys" | "account" | "security".
+ * Hard bans (blank-pane regressions):
+ * - No UserProfile.Page custom content
+ * - No UserProfile.Link for OAuth
+ * - No innerHTML / portal / MutationObserver into .cl-pageScrollBox
+ *
+ * OAuth is pure Astro SSR. API keys use Clerk <APIKeys />. Profile/Security use
+ * UserProfile with sidenav hidden via appearance.
  */
-import { UserProfile } from "@clerk/astro/components";
+import { APIKeys, UserProfile } from "@clerk/astro/components";
 import {
+	MEMBER_ACCOUNT_SEGMENT,
+	MEMBER_API_KEYS_SEGMENT,
 	MEMBER_AREA_PATH,
 	MEMBER_MCP_OAUTH_SEGMENT,
+	MEMBER_SECURITY_SEGMENT,
 	memberAreaPathFromEnv,
 } from "../lib/member-area";
+import { MEMBER_CLERK_CONTENT_ONLY_APPEARANCE } from "../lib/member-clerk-appearance";
 import { primaryOAuthClientIdFromEnv } from "../lib/member-oauth-client-ids";
 import { getSiteUrlConfig, maskMcpOAuthClientId } from "../lib/site-urls";
+import MemberConnectionHelp from "./MemberConnectionHelp.astro";
+import MemberNavTabs from "./MemberNavTabs.astro";
 
 const memberPath = memberAreaPathFromEnv(import.meta.env);
 const oauthClientId = primaryOAuthClientIdFromEnv(import.meta.env);
 const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
 const maskedClientId = maskMcpOAuthClientId(oauthClientId);
+
+const pathname = Astro.url.pathname.replace(/\/+$/, "") || MEMBER_AREA_PATH;
+const onOauth = pathname.endsWith(`/${MEMBER_MCP_OAUTH_SEGMENT}`);
+const onAccount = pathname.endsWith(`/${MEMBER_ACCOUNT_SEGMENT}`);
+const onSecurity = pathname.endsWith(`/${MEMBER_SECURITY_SEGMENT}`);
+const onApiKeys =
+	!onOauth &&
+	!onAccount &&
+	!onSecurity &&
+	(pathname === memberPath ||
+		pathname.endsWith(`/${MEMBER_API_KEYS_SEGMENT}`) ||
+		pathname.endsWith("/api-keys"));
 
 const cursorBearerJson = `{
   "mcpServers": {
@@ -41,102 +60,130 @@ const curlBearerSnippet = `curl -sS -X POST ${urlMcpRpcUrl} \\
   -H "Accept: application/json, text/event-stream" \\
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'`;
 
-/** Survives Clerk Astro Page mount (el.innerHTML = content). */
 const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;navigator.clipboard.writeText(id).then(()=>{const t=this.textContent;this.textContent='Copied';setTimeout(()=>{this.textContent=t},2000)}).catch(()=>{})`;
+
+const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 ---
 
-<div class="clerk-member-profile rounded-2xl border border-border-subtle bg-surface-card/40 p-2 sm:p-4">
-	{/*
-	  Bearer how-to sits outside UserProfile so it never fights Clerk's tab mount.
-	  Create/revoke keys is the built-in apiKeys page in the left nav.
-	*/}
-	<section
-		class="mb-4 rounded-xl border border-slate-200 bg-white p-5 text-slate-900 sm:p-6"
-		aria-labelledby="bearer-how-to-heading"
-	>
-		<h2 id="bearer-how-to-heading" class="font-display text-lg font-bold text-slate-900">
-			Use an API key as a Bearer token
-		</h2>
-		<p class="mt-2 text-sm leading-relaxed text-slate-600">
-			For <strong class="font-semibold text-slate-900">Cursor</strong>,{" "}
-			<strong class="font-semibold text-slate-900">Windsurf</strong>,{" "}
-			<strong class="font-semibold text-slate-900">Codex</strong>, and{" "}
-			<strong class="font-semibold text-slate-900">curl</strong>: open{" "}
-			<strong class="font-semibold text-slate-900">API keys</strong> in the account nav, create an{" "}
-			<code class="rounded bg-slate-100 px-1 font-mono text-violet-800">ak_…</code> key, then paste it
-			as a Bearer token — not an OAuth Client ID.
-		</p>
-		<div class="mt-4">
-			<div class="flex flex-wrap items-center justify-between gap-2">
-				<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
-					Cursor · mcp.json
-				</p>
-				<button
-					type="button"
-					class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
-					data-copy-text={cursorBearerJson}
-					onclick={copyOnClick}
-				>
-					Copy JSON
-				</button>
-			</div>
-			<pre class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{cursorBearerJson}</code></pre>
-		</div>
-		<div class="mt-4">
-			<div class="flex flex-wrap items-center justify-between gap-2">
-				<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Header · curl</p>
-				<button
-					type="button"
-					class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
-					data-copy-text={curlBearerSnippet}
-					onclick={copyOnClick}
-				>
-					Copy curl
-				</button>
-			</div>
-			<pre class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{curlBearerSnippet}</code></pre>
-		</div>
-		<p class="mt-3 text-xs text-slate-500">
-			Claude Code / claude.ai: use <strong class="font-semibold text-slate-700">Connectors OAuth</strong>{" "}
-			in the account nav.
-		</p>
-	</section>
+<div
+	class="member-area-card min-w-0 max-w-full overflow-hidden rounded-2xl border border-border-subtle bg-white shadow-sm"
+	data-member-area-root
+	data-member-panel={onOauth
+		? MEMBER_MCP_OAUTH_SEGMENT
+		: onAccount
+			? MEMBER_ACCOUNT_SEGMENT
+			: onSecurity
+				? MEMBER_SECURITY_SEGMENT
+				: MEMBER_API_KEYS_SEGMENT}
+>
+	<MemberNavTabs />
 
-	{/*
-	  Clerk docs: only UserProfile.Page / UserProfile.Link as children.
-	  Content pages must be Page (with children), not Link.
-	  url = segment → /member/{url}. First nav item cannot be a Link.
-	*/}
-	<UserProfile path={memberPath || MEMBER_AREA_PATH} routing="path">
-		<UserProfile.Page label="apiKeys" />
+	<div class="member-area-panel min-w-0 p-4 sm:p-6">
+		{
+			onApiKeys && (
+				<section
+					class="member-cred-panel text-slate-900"
+					aria-labelledby="api-keys-guide-heading"
+					data-cred-panel={MEMBER_API_KEYS_SEGMENT}
+				>
+					<h2
+						id="api-keys-guide-heading"
+						class="font-display text-lg font-bold text-slate-900"
+					>
+						Use your API key as a Bearer token
+					</h2>
+					<p class="mt-2 text-sm leading-relaxed text-slate-600">
+						Best for <strong class="font-semibold text-slate-900">Cursor</strong>,{" "}
+						<strong class="font-semibold text-slate-900">Windsurf</strong>,{" "}
+						<strong class="font-semibold text-slate-900">Codex</strong>, and{" "}
+						<strong class="font-semibold text-slate-900">curl</strong>. Create a personal{" "}
+						<code class="rounded bg-slate-100 px-1 font-mono text-violet-800">ak_…</code> key
+						below, then paste it as a Bearer token — not an OAuth Client ID.
+					</p>
+					<ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-slate-600">
+						<li>
+							Create a key in the Clerk section below. Copy the full{" "}
+							<code class="font-mono text-violet-800">ak_…</code> value once (shown only at
+							creation).
+						</li>
+						<li>
+							In Cursor, edit <code class="font-mono text-slate-800">~/.cursor/mcp.json</code> (or
+							project <code class="font-mono text-slate-800">.cursor/mcp.json</code>) with the JSON
+							below — replace <code class="font-mono text-violet-800">ak_…</code> with your key.
+						</li>
+						<li>Reload MCP in Cursor, then call a tool (for example tools list).</li>
+					</ol>
 
-		<UserProfile.Page label="Connectors OAuth" url={MEMBER_MCP_OAUTH_SEGMENT}>
-			<svg
-				slot="label-icon"
-				xmlns="http://www.w3.org/2000/svg"
-				width="16"
-				height="16"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				aria-hidden="true"
-			>
-				<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-				<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-			</svg>
-			{/* Direct children — Clerk Astro mounts this HTML into the right pane. */}
-			<div class="member-oauth-page p-1 text-slate-900">
-				<h1 class="font-display text-lg font-bold text-slate-900">Connectors OAuth</h1>
-				<p class="mt-2 text-sm leading-relaxed text-slate-600">
-					For <strong class="font-semibold text-slate-900">Claude Code</strong> and{" "}
-					<strong class="font-semibold text-slate-900">claude.ai Connectors</strong> only. Copy the Client
-					ID below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret blank.
-				</p>
-				{
-					oauthClientId ? (
+					<div class="mt-5">
+						<div class="flex flex-wrap items-center justify-between gap-2">
+							<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+								Cursor · mcp.json
+							</p>
+							<button
+								type="button"
+								class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
+								data-copy-text={cursorBearerJson}
+								onclick={copyOnClick}
+							>
+								Copy JSON
+							</button>
+						</div>
+						<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{cursorBearerJson}</code></pre>
+					</div>
+
+					<div class="mt-5">
+						<div class="flex flex-wrap items-center justify-between gap-2">
+							<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+								Header · curl
+							</p>
+							<button
+								type="button"
+								class="shrink-0 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
+								data-copy-text={curlBearerSnippet}
+								onclick={copyOnClick}
+							>
+								Copy curl
+							</button>
+						</div>
+						<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{curlBearerSnippet}</code></pre>
+					</div>
+
+					<p class="mt-4 text-xs text-slate-500">
+						Header form:{" "}
+						<code class="font-mono text-violet-800">Authorization: Bearer ak_…</code>. Claude Code /
+						claude.ai should use <strong class="font-semibold text-slate-700">Connectors OAuth</strong>{" "}
+						instead.
+					</p>
+
+					<div
+						class="member-clerk-widget mt-6 min-w-0 rounded-xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4"
+						data-clerk-widget="api-keys"
+					>
+						<APIKeys appearance={clerkAppearance} />
+					</div>
+
+					<MemberConnectionHelp idPrefix="api-keys" />
+				</section>
+			)
+		}
+
+		{
+			onOauth && (
+				<section
+					class="member-cred-panel member-cred-panel--oauth max-w-xl text-slate-900"
+					aria-labelledby="oauth-heading"
+					data-cred-panel={MEMBER_MCP_OAUTH_SEGMENT}
+				>
+					<h2 id="oauth-heading" class="font-display text-lg font-bold text-slate-900">
+						Connectors OAuth
+					</h2>
+					<p class="mt-2 text-sm leading-relaxed text-slate-600">
+						For <strong class="font-semibold text-slate-900">Claude Code</strong> and{" "}
+						<strong class="font-semibold text-slate-900">claude.ai Connectors</strong> only. Copy the
+						Client ID below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret
+						blank.
+					</p>
+					{oauthClientId ? (
 						<div class="mt-4 flex flex-wrap items-center gap-3">
 							<code
 								class="min-w-0 flex-1 break-all rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-sm text-slate-800"
@@ -159,130 +206,86 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 								OAuth Client ID is not available yet. Contact us if this persists.
 							</p>
 						</div>
-					)
-				}
-				{
-					urlMcpRpcUrl ? (
+					)}
+					{urlMcpRpcUrl ? (
 						<p class="mt-4 text-xs text-slate-500">
-							MCP server URL:{" "}
-							<code class="font-mono text-xs text-violet-700">{urlMcpRpcUrl}</code>
+							MCP server URL to paste alongside the Client ID:{" "}
+							<code class="break-all font-mono text-xs text-violet-700">{urlMcpRpcUrl}</code>
 						</p>
-					) : null
-				}
-				<p class="mt-4 text-xs text-slate-500">
-					Using Cursor, Codex, or curl? Create an{" "}
-					<code class="font-mono text-violet-800">ak_…</code> key under{" "}
-					<strong class="font-semibold text-slate-700">API keys</strong> and use the Bearer snippets above.
-				</p>
-
-				<div class="mt-6 border-t border-slate-200 pt-6">
-					<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
-						Connection help
-					</p>
-					<p class="mt-1 text-sm text-slate-600">
-						Short steps per host. Full guides open in a new tab.
+					) : null}
+					<p class="mt-4 text-xs text-slate-500">
+						Using Cursor or curl? Open{" "}
+						<strong class="font-semibold text-slate-700">API keys</strong>, create an{" "}
+						<code class="font-mono text-violet-800">ak_…</code> key, and use it as a Bearer token.
 					</p>
 
-					<article class="mt-5" aria-labelledby="oauth-help-cursor">
-						<h2 id="oauth-help-cursor" class="font-display text-base font-bold text-slate-900">
-							Connecting to Cursor
-						</h2>
-						<ol class="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-slate-600">
-							<li>Create an API key under API keys in the left nav.</li>
-							<li>Paste the Bearer config into ~/.cursor/mcp.json (or project .cursor/mcp.json).</li>
-							<li>Reload MCP in Cursor, then call an AADM tool to confirm.</li>
-						</ol>
-						<p class="mt-2 text-sm">
-							<a
-								href="/cursor"
-								class="font-semibold text-violet-700 underline decoration-violet-300 underline-offset-2 hover:text-violet-900"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								AADM · Cursor setup guide
-							</a>
-						</p>
-					</article>
+					<MemberConnectionHelp idPrefix="oauth" />
+				</section>
+			)
+		}
 
-					<article class="mt-5" aria-labelledby="oauth-help-claude">
-						<h2 id="oauth-help-claude" class="font-display text-base font-bold text-slate-900">
-							Connecting to Claude
-						</h2>
-						<ol class="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-slate-600">
-							<li>Copy the Client ID on this page.</li>
-							<li>Paste the MCP server URL and Client ID when Claude asks; leave Client Secret blank.</li>
-							<li>Fully quit Claude Desktop or start a new Claude Code session, then try standard_brief.</li>
-						</ol>
-						<p class="mt-2 text-sm">
-							<a
-								href="/claude-code#connect-claude"
-								class="font-semibold text-violet-700 underline decoration-violet-300 underline-offset-2 hover:text-violet-900"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								AADM · Claude setup guide
-							</a>
-						</p>
-					</article>
+		{
+			onAccount && (
+				<section
+					class="member-clerk-widget min-w-0 text-slate-900"
+					aria-labelledby="profile-heading"
+					data-cred-panel={MEMBER_ACCOUNT_SEGMENT}
+				>
+					<h2 id="profile-heading" class="sr-only">
+						Profile
+					</h2>
+					<UserProfile
+						path={memberPath || MEMBER_AREA_PATH}
+						routing="path"
+						appearance={clerkAppearance}
+					>
+						<UserProfile.Page label="account" />
+					</UserProfile>
+				</section>
+			)
+		}
 
-					<article class="mt-5" aria-labelledby="oauth-help-codex">
-						<h2 id="oauth-help-codex" class="font-display text-base font-bold text-slate-900">
-							Connecting to OpenAI Codex
-						</h2>
-						<ol class="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-slate-600">
-							<li>Create an ak_… API key and store it in an env var.</li>
-							<li>
-								Add a Streamable HTTP MCP server in ~/.codex/config.toml with the AADM URL and
-								bearer_token_env_var.
-							</li>
-							<li>Restart Codex and verify tools load.</li>
-						</ol>
-						<p class="mt-2 text-sm">
-							<a
-								href="/ides#universal"
-								class="font-semibold text-violet-700 underline decoration-violet-300 underline-offset-2 hover:text-violet-900"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								AADM · OpenAI Codex setup guide
-							</a>
-							<span class="text-slate-400"> · </span>
-							<a
-								href="https://developers.openai.com/codex/mcp"
-								class="font-semibold text-violet-700 underline decoration-violet-300 underline-offset-2 hover:text-violet-900"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								OpenAI Codex MCP docs
-							</a>
-						</p>
-					</article>
-				</div>
-			</div>
-		</UserProfile.Page>
-
-		<UserProfile.Page label="account" />
-		<UserProfile.Page label="security" />
-	</UserProfile>
+		{
+			onSecurity && (
+				<section
+					class="member-clerk-widget min-w-0 text-slate-900"
+					aria-labelledby="security-heading"
+					data-cred-panel={MEMBER_SECURITY_SEGMENT}
+				>
+					<h2 id="security-heading" class="sr-only">
+						Security
+					</h2>
+					<UserProfile
+						path={memberPath || MEMBER_AREA_PATH}
+						routing="path"
+						appearance={clerkAppearance}
+					>
+						<UserProfile.Page label="security" />
+					</UserProfile>
+				</section>
+			)
+		}
+	</div>
 </div>
 
 <style>
-	.clerk-member-profile :global(.cl-rootBox) {
-		width: 100%;
+	.member-area-card :global(.cl-rootBox),
+	.member-area-card :global(.cl-cardBox) {
+		width: 100% !important;
+		max-width: 100%;
+		min-width: 0;
 	}
 
-	.clerk-member-profile :global(.cl-navbarButtonIcon svg),
-	.clerk-member-profile :global(.cl-navbarButton svg),
-	.clerk-member-profile :global(svg[slot="label-icon"]) {
-		width: 1rem !important;
-		height: 1rem !important;
-		max-width: 1rem;
-		max-height: 1rem;
-		flex-shrink: 0;
+	.member-area-card :global(.cl-navbar),
+	.member-area-card :global(.cl-navbarMobileMenuRow),
+	.member-area-card :global(.cl-navbarMobileMenuButton) {
+		display: none !important;
 	}
 
-	.clerk-member-profile :global(.member-oauth-page) {
-		max-width: 40rem;
-		color: #0f172a;
+	.member-area-card :global(.cl-profileSectionContent svg),
+	.member-area-card :global(.cl-emptyStateIcon svg),
+	.member-area-card :global([class*="emptyState"] svg) {
+		max-width: 4rem;
+		max-height: 4rem;
 	}
 </style>
