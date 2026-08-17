@@ -16,8 +16,13 @@ const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
 const maskedClientId = maskMcpOAuthClientId(oauthClientId);
 
 const pathname = Astro.url.pathname.replace(/\/+$/, "") || MEMBER_AREA_PATH;
-const onApiKeys = pathname.endsWith(`/${MEMBER_API_KEYS_SEGMENT}`);
 const onOauth = pathname.endsWith(`/${MEMBER_MCP_OAUTH_SEGMENT}`);
+/** Clerk path routing: first tab (apiKeys) is `/member` or `/member/api-keys`. */
+const onApiKeys =
+	!onOauth &&
+	(pathname === memberPath ||
+		pathname.endsWith(`/${MEMBER_API_KEYS_SEGMENT}`) ||
+		pathname.endsWith("/api-keys"));
 
 const oauthHref = `${memberPath}/${MEMBER_MCP_OAUTH_SEGMENT}`;
 
@@ -52,8 +57,8 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 	data-oauth-seg={MEMBER_MCP_OAUTH_SEGMENT}
 >
 	{/*
-	  Always mount both panels; JS toggles visibility so Clerk path routing
-	  (pushState) still shows the right copy without a full reload.
+	  API keys guide sits above Clerk's native key UI.
+	  OAuth panel is portaled into Clerk's .cl-pageScrollBox (right column).
 	*/}
 	<section
 		class="member-cred-panel mb-4 rounded-xl border border-slate-200 bg-white p-5 text-slate-900 sm:p-6"
@@ -126,59 +131,64 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 		<MemberConnectionHelp idPrefix="api-keys" />
 	</section>
 
-	<section
-		class="member-cred-panel mb-4 rounded-xl border border-slate-200 bg-white p-5 text-slate-900 sm:p-6"
-		aria-labelledby="oauth-heading"
-		data-cred-panel={MEMBER_MCP_OAUTH_SEGMENT}
-		hidden={!onOauth}
-	>
-		<h2 id="oauth-heading" class="font-display text-lg font-bold text-slate-900">
-			Connectors OAuth
-		</h2>
-		<p class="mt-2 text-sm leading-relaxed text-slate-600">
-			For <strong class="font-semibold text-slate-900">Claude Code</strong> and{" "}
-			<strong class="font-semibold text-slate-900">claude.ai Connectors</strong> only. Copy the Client ID
-			below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret blank.
-		</p>
-		{
-			oauthClientId ? (
-				<div class="mt-4 flex flex-wrap items-center gap-3">
-					<code
-						class="min-w-0 flex-1 break-all rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-sm text-slate-800"
-						title="Full Client ID is copied when you use Copy"
-					>
-						{maskedClientId}
-					</code>
-					<button
-						type="button"
-						class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-500"
-						data-copy-text={oauthClientId}
-						onclick={copyOnClick}
-					>
-						Copy client ID
-					</button>
-				</div>
-			) : (
-				<div class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4">
-					<p class="text-sm text-amber-950">OAuth Client ID is not available yet. Contact us if this persists.</p>
-				</div>
-			)
-		}
-		{
-			urlMcpRpcUrl ? (
-				<p class="mt-4 text-xs text-slate-500">
-					MCP server URL to paste alongside the Client ID:{" "}
-					<code class="font-mono text-xs text-violet-700">{urlMcpRpcUrl}</code>
-				</p>
-			) : null
-		}
-		<p class="mt-4 text-xs text-slate-500">
-			Using Cursor or curl? Open <strong class="font-semibold text-slate-700">API keys</strong>, create an{" "}
-			<code class="font-mono text-violet-800">ak_…</code> key, and use it as a Bearer token.
-		</p>
+	{/* Parking spot when OAuth is not the active tab (panel is moved into Clerk's right column when active). */}
+	<div data-oauth-home hidden>
+		<section
+			class="member-cred-panel member-cred-panel--oauth p-5 text-slate-900 sm:p-6"
+			aria-labelledby="oauth-heading"
+			data-cred-panel={MEMBER_MCP_OAUTH_SEGMENT}
+			hidden={!onOauth}
+		>
+			<h2 id="oauth-heading" class="font-display text-lg font-bold text-slate-900">
+				Connectors OAuth
+			</h2>
+			<p class="mt-2 text-sm leading-relaxed text-slate-600">
+				For <strong class="font-semibold text-slate-900">Claude Code</strong> and{" "}
+				<strong class="font-semibold text-slate-900">claude.ai Connectors</strong> only. Copy the Client ID
+				below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret blank.
+			</p>
+			{
+				oauthClientId ? (
+					<div class="mt-4 flex flex-wrap items-center gap-3">
+						<code
+							class="min-w-0 flex-1 break-all rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-sm text-slate-800"
+							title="Full Client ID is copied when you use Copy"
+						>
+							{maskedClientId}
+						</code>
+						<button
+							type="button"
+							class="shrink-0 rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-500"
+							data-copy-text={oauthClientId}
+							onclick={copyOnClick}
+						>
+							Copy client ID
+						</button>
+					</div>
+				) : (
+					<div class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4">
+						<p class="text-sm text-amber-950">
+							OAuth Client ID is not available yet. Contact us if this persists.
+						</p>
+					</div>
+				)
+			}
+			{
+				urlMcpRpcUrl ? (
+					<p class="mt-4 text-xs text-slate-500">
+						MCP server URL to paste alongside the Client ID:{" "}
+						<code class="font-mono text-xs text-violet-700">{urlMcpRpcUrl}</code>
+					</p>
+				) : null
+			}
+			<p class="mt-4 text-xs text-slate-500">
+				Using Cursor or curl? Open <strong class="font-semibold text-slate-700">API keys</strong>, create an{" "}
+				<code class="font-mono text-violet-800">ak_…</code> key, and use it as a Bearer token.
+			</p>
 
-		<MemberConnectionHelp idPrefix="oauth" />
-	</section>
+			<MemberConnectionHelp idPrefix="oauth" />
+		</section>
+	</div>
 
 	{/*
 	  Four tabs: API keys, Connectors OAuth, Profile, Security.
@@ -216,29 +226,69 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 		const keysSeg = root.dataset.apiKeysSeg || "api-keys";
 		const oauthSeg = root.dataset.oauthSeg || "mcp-oauth";
 		const path = location.pathname.replace(/\/+$/, "") || "/";
-		const onKeys = path.endsWith(`/${keysSeg}`);
 		const onOauth = path.endsWith(`/${oauthSeg}`);
-		for (const el of root.querySelectorAll("[data-cred-panel]")) {
-			if (!(el instanceof HTMLElement)) continue;
-			const show =
-				(el.dataset.credPanel === keysSeg && onKeys) ||
-				(el.dataset.credPanel === oauthSeg && onOauth);
-			el.hidden = !show;
+		const onAccountOrSecurity =
+			path.endsWith("/account") || path.endsWith("/security");
+		const onKeys =
+			!onOauth &&
+			!onAccountOrSecurity &&
+			(path === "/member" || path.endsWith(`/${keysSeg}`) || path.endsWith("/api-keys"));
+
+		const keysPanel = root.querySelector(`[data-cred-panel="${keysSeg}"]`);
+		if (keysPanel instanceof HTMLElement) {
+			keysPanel.hidden = !onKeys;
 		}
+
+		const oauthPanel = root.querySelector(`[data-cred-panel="${oauthSeg}"]`);
+		const oauthHome = root.querySelector("[data-oauth-home]");
+		const scrollBox =
+			root.querySelector(".cl-pageScrollBox") || root.querySelector(".cl-scrollBox");
+
+		if (oauthPanel instanceof HTMLElement && oauthHome instanceof HTMLElement) {
+			if (onOauth && scrollBox instanceof HTMLElement) {
+				// Fill Clerk's right column — do not stack above the card.
+				if (oauthPanel.parentElement !== scrollBox) {
+					scrollBox.replaceChildren(oauthPanel);
+				}
+				oauthPanel.hidden = false;
+				oauthHome.setAttribute("hidden", "");
+			} else {
+				if (oauthPanel.parentElement !== oauthHome) {
+					oauthHome.replaceChildren(oauthPanel);
+				}
+				oauthPanel.hidden = true;
+				oauthHome.setAttribute("hidden", "");
+			}
+		}
+
 		root.classList.toggle("clerk-member-profile--oauth-panel", onOauth);
 	}
 
+	function scheduleSync() {
+		queueMicrotask(syncMemberCredPanels);
+		requestAnimationFrame(syncMemberCredPanels);
+		setTimeout(syncMemberCredPanels, 50);
+		setTimeout(syncMemberCredPanels, 250);
+	}
+
 	syncMemberCredPanels();
-	window.addEventListener("popstate", syncMemberCredPanels);
+	scheduleSync();
+	window.addEventListener("popstate", scheduleSync);
 	const wrapHistory = (fn) =>
 		function (...args) {
 			const ret = fn.apply(this, args);
-			queueMicrotask(syncMemberCredPanels);
+			scheduleSync();
 			return ret;
 		};
 	history.pushState = wrapHistory(history.pushState.bind(history));
 	history.replaceState = wrapHistory(history.replaceState.bind(history));
-	document.addEventListener("click", () => queueMicrotask(syncMemberCredPanels));
+	document.addEventListener("click", scheduleSync);
+
+	const root = document.querySelector("[data-member-cred-root]");
+	if (root) {
+		const mo = new MutationObserver(scheduleSync);
+		mo.observe(root, { childList: true, subtree: true });
+	}
 </script>
 
 <style>
@@ -262,11 +312,18 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 		max-height: 1rem;
 	}
 
-	/* Hide Clerk's empty content pane when Connectors OAuth is the active Link. */
-	.clerk-member-profile--oauth-panel :global(.cl-scrollBox),
+	/* OAuth content lives inside Clerk's right scroll column. */
 	.clerk-member-profile--oauth-panel :global(.cl-pageScrollBox),
-	.clerk-member-profile--oauth-panel :global(.cl-profilePageContent) {
-		display: none;
+	.clerk-member-profile--oauth-panel :global(.cl-scrollBox) {
+		display: block !important;
+		background: #fff;
+		min-height: 16rem;
+	}
+
+	.clerk-member-profile :global(.member-cred-panel--oauth) {
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 40rem;
 	}
 
 	.clerk-member-profile :global(.cl-profileSectionContent svg),
