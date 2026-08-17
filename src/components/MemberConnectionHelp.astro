@@ -1,7 +1,7 @@
 ---
 /**
  * Mini helpdesk blurbs under member credential panels.
- * Links to on-site connection guides (+ OpenAI Codex MCP docs).
+ * Inherits member card / site surface colors (no forced light panel).
  */
 interface Props {
 	/** Unique prefix so both mounted panels don't clash on heading ids. */
@@ -42,9 +42,9 @@ const guides = [
 ] as const;
 ---
 
-<div class="mt-6 border-t border-slate-200 pt-6">
+<div class="mt-6 border-t border-border-subtle pt-6">
 	<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Connection help</p>
-	<p class="mt-1 text-sm text-slate-600">
+	<p class="mt-1 text-sm text-slate-400">
 		Short steps for each host. Full guides open in a new tab when you need screenshots and copy-paste detail.
 	</p>
 
@@ -54,11 +54,11 @@ const guides = [
 				<article aria-labelledby={`${idPrefix}-${guide.name.toLowerCase().replace(/\s+/g, "-")}-heading`}>
 					<h3
 						id={`${idPrefix}-${guide.name.toLowerCase().replace(/\s+/g, "-")}-heading`}
-						class="font-display text-base font-bold text-slate-900"
+						class="font-display text-base font-bold text-slate-100"
 					>
 						Connecting to {guide.name}
 					</h3>
-					<ol class="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-slate-600">
+					<ol class="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-slate-400">
 						{guide.steps.map((step) => (
 							<li>{step}</li>
 						))}
@@ -66,7 +66,7 @@ const guides = [
 					<p class="mt-2 text-sm">
 						<a
 							href={guide.href}
-							class="font-semibold text-violet-700 underline decoration-violet-300 underline-offset-2 hover:text-violet-900"
+							class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-white"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
@@ -74,10 +74,10 @@ const guides = [
 						</a>
 						{"docsHref" in guide && guide.docsHref ? (
 							<>
-								<span class="text-slate-400"> · </span>
+								<span class="text-slate-500"> · </span>
 								<a
 									href={guide.docsHref}
-									class="font-semibold text-violet-700 underline decoration-violet-300 underline-offset-2 hover:text-violet-900"
+									class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-white"
 									target="_blank"
 									rel="noopener noreferrer"
 								>
