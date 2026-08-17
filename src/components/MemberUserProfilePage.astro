@@ -1,6 +1,7 @@
 ---
 import { UserProfile } from "@clerk/astro/components";
 import {
+	MEMBER_AREA_PATH,
 	MEMBER_BEARER_SEGMENT,
 	MEMBER_MCP_OAUTH_SEGMENT,
 	memberAreaPathFromEnv,
@@ -12,6 +13,15 @@ const memberPath = memberAreaPathFromEnv(import.meta.env);
 const oauthClientId = primaryOAuthClientIdFromEnv(import.meta.env);
 const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
 const maskedClientId = maskMcpOAuthClientId(oauthClientId);
+
+const pathname = Astro.url.pathname.replace(/\/+$/, "") || MEMBER_AREA_PATH;
+const onBearer = pathname.endsWith(`/${MEMBER_BEARER_SEGMENT}`);
+const onOauth = pathname.endsWith(`/${MEMBER_MCP_OAUTH_SEGMENT}`);
+/** Custom credential panels — do NOT use UserProfile.Page mount (Clerk Astro leaves blank panes). */
+const showCustomPanel = onBearer || onOauth;
+
+const bearerHref = `${memberPath}/${MEMBER_BEARER_SEGMENT}`;
+const oauthHref = `${memberPath}/${MEMBER_MCP_OAUTH_SEGMENT}`;
 
 const cursorBearerJson = `{
   "mcpServers": {
@@ -31,38 +41,24 @@ const curlBearerSnippet = `curl -sS -X POST ${urlMcpRpcUrl} \\
   -H "Accept: application/json, text/event-stream" \\
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'`;
 
-/** Inline — Clerk UserProfile custom pages do not run Astro `<script>` bundles. */
 const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;navigator.clipboard.writeText(id).then(()=>{const t=this.textContent;this.textContent='Copied';setTimeout(()=>{this.textContent=t},2000)}).catch(()=>{})`;
 ---
 
-<div class="clerk-member-profile rounded-2xl border border-border-subtle bg-surface-card/40 p-2 sm:p-4">
-	{/*
-	  Two connection methods in the sidenav:
-	  - Bearer token — how to use ak_… (JSON + curl); create the key under API keys
-	  - API keys — Clerk UI to create/revoke ak_… keys
-	  - Connectors OAuth — shared Client ID for Claude Code / claude.ai
-	  Custom page children must be DIRECT under UserProfile.Page (Clerk Astro docs).
-	*/}
-	<UserProfile path={memberPath} routing="path">
-		<UserProfile.Page label="Bearer token" url={MEMBER_BEARER_SEGMENT}>
-			<svg
-				slot="label-icon"
-				xmlns="http://www.w3.org/2000/svg"
-				width="16"
-				height="16"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				aria-hidden="true"
+<div
+	class:list={[
+		"clerk-member-profile rounded-2xl border border-border-subtle bg-surface-card/40 p-2 sm:p-4",
+		showCustomPanel && "clerk-member-profile--custom-panel",
+	]}
+>
+	{
+		onBearer && (
+			<section
+				class="member-cred-panel mb-4 rounded-xl border border-slate-200 bg-white p-5 text-slate-900 sm:p-6"
+				aria-labelledby="bearer-heading"
 			>
-				<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
-				<path d="m9 12 2 2 4-4"></path>
-			</svg>
-			<div class="clerk-oauth-panel max-w-xl text-slate-900">
-				<h2 class="font-display text-lg font-bold text-slate-900">Bearer token</h2>
+				<h2 id="bearer-heading" class="font-display text-lg font-bold text-slate-900">
+					Bearer token
+				</h2>
 				<p class="mt-2 text-sm leading-relaxed text-slate-600">
 					Best for <strong class="font-semibold text-slate-900">Cursor</strong>,{" "}
 					<strong class="font-semibold text-slate-900">Windsurf</strong>, and{" "}
@@ -99,9 +95,7 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 							Copy JSON
 						</button>
 					</div>
-					<pre
-						class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"
-					><code>{cursorBearerJson}</code></pre>
+					<pre class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{cursorBearerJson}</code></pre>
 				</div>
 
 				<div class="mt-5">
@@ -118,47 +112,31 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 							Copy curl
 						</button>
 					</div>
-					<pre
-						class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"
-					><code>{curlBearerSnippet}</code></pre>
+					<pre class="mt-2 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs leading-relaxed text-slate-800"><code>{curlBearerSnippet}</code></pre>
 				</div>
 
 				<p class="mt-4 text-xs text-slate-500">
-					Header form:{" "}
-					<code class="font-mono text-violet-800">Authorization: Bearer ak_…</code>
-					{" "}
-					(same key as in the JSON). Claude Code / claude.ai should use{" "}
-					<strong class="font-semibold text-slate-700">Connectors OAuth</strong> instead.
+					Header form: <code class="font-mono text-violet-800">Authorization: Bearer ak_…</code>. Claude
+					Code / claude.ai should use <strong class="font-semibold text-slate-700">Connectors OAuth</strong>{" "}
+					instead.
 				</p>
-			</div>
-		</UserProfile.Page>
+			</section>
+		)
+	}
 
-		<UserProfile.Page label="apiKeys" />
-
-		<UserProfile.Page label="Connectors OAuth" url={MEMBER_MCP_OAUTH_SEGMENT}>
-			<svg
-				slot="label-icon"
-				xmlns="http://www.w3.org/2000/svg"
-				width="16"
-				height="16"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				aria-hidden="true"
+	{
+		onOauth && (
+			<section
+				class="member-cred-panel mb-4 rounded-xl border border-slate-200 bg-white p-5 text-slate-900 sm:p-6"
+				aria-labelledby="oauth-heading"
 			>
-				<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-				<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-			</svg>
-			<div class="clerk-oauth-panel max-w-xl text-slate-900">
-				<h2 class="font-display text-lg font-bold text-slate-900">Connectors OAuth</h2>
+				<h2 id="oauth-heading" class="font-display text-lg font-bold text-slate-900">
+					Connectors OAuth
+				</h2>
 				<p class="mt-2 text-sm leading-relaxed text-slate-600">
 					For <strong class="font-semibold text-slate-900">Claude Code</strong> and{" "}
-					<strong class="font-semibold text-slate-900">claude.ai Connectors</strong> only. Copy the
-					Client ID below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret
-					blank.
+					<strong class="font-semibold text-slate-900">claude.ai Connectors</strong> only. Copy the Client
+					ID below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret blank.
 				</p>
 				{
 					oauthClientId ? (
@@ -195,14 +173,56 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 					) : null
 				}
 				<p class="mt-4 text-xs text-slate-500">
-					Using Cursor or curl? Switch to{" "}
-					<strong class="font-semibold text-slate-700">Bearer token</strong> and create an{" "}
-					<code class="font-mono text-violet-800">ak_…</code> key under{" "}
+					Using Cursor or curl? Open <strong class="font-semibold text-slate-700">Bearer token</strong>,
+					then create an <code class="font-mono text-violet-800">ak_…</code> key under{" "}
 					<strong class="font-semibold text-slate-700">API keys</strong>.
 				</p>
-			</div>
-		</UserProfile.Page>
+			</section>
+		)
+	}
 
+	{/*
+	  Use Link (not Page) for Bearer / OAuth so Astro renders the panels above.
+	  Clerk UserProfile.Page custom mounts often leave an empty scroll box.
+	*/}
+	<UserProfile path={memberPath} routing="path">
+		<UserProfile.Link label="Bearer token" url={bearerHref}>
+			<svg
+				slot="label-icon"
+				xmlns="http://www.w3.org/2000/svg"
+				width="16"
+				height="16"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+				<path d="m9 12 2 2 4-4"></path>
+			</svg>
+		</UserProfile.Link>
+		<UserProfile.Page label="apiKeys" />
+		<UserProfile.Link label="Connectors OAuth" url={oauthHref}>
+			<svg
+				slot="label-icon"
+				xmlns="http://www.w3.org/2000/svg"
+				width="16"
+				height="16"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+				<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+			</svg>
+		</UserProfile.Link>
 		<UserProfile.Page label="account" />
 		<UserProfile.Page label="security" />
 	</UserProfile>
@@ -222,13 +242,18 @@ const copyOnClick = `const id=this.getAttribute('data-copy-text');if(!id)return;
 		flex-shrink: 0;
 	}
 
-	.clerk-member-profile :global(.cl-profilePage > svg),
-	.clerk-member-profile :global(.cl-profilePage > div > svg:first-child),
 	.clerk-member-profile :global(svg[slot="label-icon"]) {
 		width: 1rem !important;
 		height: 1rem !important;
 		max-width: 1rem;
 		max-height: 1rem;
+	}
+
+	/* Hide Clerk's empty content pane when we render the credential panel ourselves. */
+	.clerk-member-profile--custom-panel :global(.cl-scrollBox),
+	.clerk-member-profile--custom-panel :global(.cl-pageScrollBox),
+	.clerk-member-profile--custom-panel :global(.cl-profilePageContent) {
+		display: none;
 	}
 
 	.clerk-member-profile :global(.cl-profileSectionContent svg),
