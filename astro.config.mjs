@@ -105,11 +105,7 @@ export default defineConfig({
 			allowedRedirectOrigins,
 			...(authorizedParties.length > 0 ? { authorizedParties } : {}),
 			...(isSatellite ? { isSatellite: true } : {}),
-			...(proxyUrl
-				? { proxyUrl }
-				: isSatellite
-					? { domain: clerkDomain }
-					: {}),
+			...(proxyUrl ? { proxyUrl } : isSatellite ? { domain: clerkDomain } : {}),
 		}),
 	],
 	vite: {
