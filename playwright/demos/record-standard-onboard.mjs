@@ -4,6 +4,10 @@
  *
  * Run: node playwright/demos/record-standard-onboard.mjs
  * Env: BASE_URL (default https://aadm.io), DEMO_SIGNUP_*, DEMO_SIGNIN_PASSWORD (optional)
+ *      DEMO_HEADED=1 (or HEADED=1) — visible Chromium window
+ *      DEMO_SHORT_PAUSE_MS — station pause (default 450)
+ *      DEMO_RETURN_HOME_MS — hold on aadm.io after GitHub (default 2000)
+ *      DEMO_LAND_LOGIN_MS — home→login land budget, not full signup (default 8000)
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
@@ -12,17 +16,38 @@ import { chromium } from "playwright";
 
 const BASE = (process.env.BASE_URL || "https://aadm.io").replace(/\/$/, "");
 const PAUSE = Number(process.env.DEMO_SHORT_PAUSE_MS || 450);
+const HEADED =
+	process.env.DEMO_HEADED === "1" ||
+	process.env.HEADED === "1" ||
+	process.env.HEADFUL === "1";
+/** Hold on aadm.io home after leaving GitHub (before Create account). */
+const RETURN_HOME_HOLD_MS = Number(process.env.DEMO_RETURN_HOME_MS || 2000);
+/**
+ * Wall time from home-after-GitHub → signup/sign-in visible (not completing login).
+ * Includes RETURN_HOME_HOLD_MS; pads so the beat is not rushed.
+ */
+const LAND_LOGIN_BUDGET_MS = Number(process.env.DEMO_LAND_LOGIN_MS || 8000);
 const PERSONAS =
 	"https://github.com/bwl8772/aadm-standard/blob/main/docs/udali-personas.md";
 const LAYERS =
 	"https://github.com/bwl8772/aadm-standard/blob/main/docs/udali-22-layer-model.md";
 
-const firstName = process.env.DEMO_SIGNUP_FIRST_NAME?.trim() || "Auto";
-const lastName = process.env.DEMO_SIGNUP_LAST_NAME?.trim() || "Composer";
+const firstName = process.env.DEMO_SIGNUP_FIRST_NAME?.trim() || "your";
+const lastName = process.env.DEMO_SIGNUP_LAST_NAME?.trim() || "name";
+const fullName =
+	process.env.DEMO_SIGNUP_FULL_NAME?.trim() || `${firstName} ${lastName}`;
 const email =
-	process.env.DEMO_SIGNUP_EMAIL?.trim() ||
-	`auto.composer+clerk_test@example.com`;
-const password = process.env.DEMO_SIGNUP_PASSWORD?.trim() || "";
+	process.env.DEMO_SIGNUP_EMAIL?.trim() || "your.email+clerk_test@aadm.io";
+/** Clerk rejects short passwords — env must be ≥12 chars or we use the demo default. */
+const DEMO_PASSWORD_DEFAULT = "YourPassword-demo-4242!";
+const passwordFromEnv = process.env.DEMO_SIGNUP_PASSWORD?.trim() || "";
+const password =
+	passwordFromEnv.length >= 12 ? passwordFromEnv : DEMO_PASSWORD_DEFAULT;
+if (passwordFromEnv && passwordFromEnv.length < 12) {
+	console.warn(
+		`DEMO_SIGNUP_PASSWORD is ${passwordFromEnv.length} chars (too short for Clerk); using demo default length.`,
+	);
+}
 
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
 const outDir = join(
@@ -33,24 +58,52 @@ const outDir = join(
 );
 mkdirSync(outDir, { recursive: true });
 
+const walkT0 = Date.now();
 const timeline = [];
 function log(scene, msg) {
-	const row = { t: Date.now(), scene, msg };
+	const row = {
+		t: Date.now(),
+		elapsedMs: Date.now() - walkT0,
+		scene,
+		msg,
+	};
 	timeline.push(row);
-	console.log(`[${scene}] ${msg}`);
+	const sec = (row.elapsedMs / 1000).toFixed(1);
+	console.log(`[+${sec}s][${scene}] ${msg}`);
 }
 
 async function pause(page, ms = PAUSE) {
 	await page.waitForTimeout(ms);
 }
 
+async function stripBlankTargets(page) {
+	await page.evaluate(() => {
+		document.querySelectorAll("a[target=_blank]").forEach((a) => {
+			a.removeAttribute("target");
+		});
+	});
+}
+
 async function main() {
-	const browser = await chromium.launch({ headless: true });
+	console.log(
+		`standard-onboard · BASE=${BASE} · headed=${HEADED} · pause=${PAUSE}ms · out=${outDir}`,
+	);
+	const browser = await chromium.launch({
+		headless: !HEADED,
+		slowMo: HEADED ? 35 : 0,
+	});
 	const context = await browser.newContext({
 		viewport: { width: 1920, height: 1080 },
 		deviceScaleFactor: 1,
-		colorScheme: "light",
+		colorScheme: "dark",
 		recordVideo: { dir: outDir, size: { width: 1920, height: 1080 } },
+	});
+	// Keep GitHub / external links in the same tab for the lead tour.
+	await context.addInitScript(() => {
+		window.open = function (url) {
+			if (url) location.assign(String(url));
+			return window;
+		};
 	});
 	const page = await context.newPage();
 
@@ -74,40 +127,49 @@ async function main() {
 		await page.mouse.wheel(0, 280);
 		await pause(page);
 
-		// 3-udali — prefer personas URL (prod may still open /standards)
+		// 3-udali — SAME TAB (never open a second window)
 		log("3-udali-github", "Open UDALI on GitHub.");
-		const udaliLink = page
-			.locator("#sections a")
-			.filter({ hasText: "Open on GitHub" })
-			.nth(1);
-		const [popup] = await Promise.all([
-			page
-				.context()
-				.waitForEvent("page", { timeout: 8000 })
-				.catch(() => null),
-			udaliLink.click({ timeout: 5000 }).catch(() => null),
-		]);
-		const gh = popup || page;
-		if (popup) await popup.waitForLoadState("domcontentloaded");
-		if (!gh.url().includes("udali-personas")) {
-			await gh.goto(PERSONAS, { waitUntil: "domcontentloaded" });
+		await stripBlankTargets(page);
+		const githubLoopStart = Date.now();
+		const udaliLink = page.locator("#sections a[href*='udali-personas']").first();
+		if ((await udaliLink.count()) > 0) {
+			await udaliLink.click({ timeout: 8000 });
+		} else {
+			await page
+				.locator("#sections a")
+				.filter({ hasText: "Open on GitHub" })
+				.nth(1)
+				.click({ timeout: 8000 });
 		}
-		await pause(gh);
-		await gh.mouse.wheel(0, 400);
-		await pause(gh);
+		await page.waitForURL(/github\.com/, { timeout: 20000 });
+		if (!page.url().includes("udali-personas")) {
+			await page.goto(PERSONAS, { waitUntil: "domcontentloaded" });
+		}
+		await pause(page);
+		await page.mouse.wheel(0, 400);
+		await pause(page);
 
 		// 4-layers
 		log("4-layers-github", "Here are the UDALI layers — L1 through L22.");
-		await gh.goto(LAYERS, { waitUntil: "domcontentloaded" });
-		await pause(gh);
-		await gh.mouse.wheel(0, 350);
-		await pause(gh);
-		if (popup) await popup.close();
-
-		// 5-return
-		log("5-return-aadm", "Come back to aadm.io. Create your account.");
-		await page.goto(`${BASE}/`, { waitUntil: "domcontentloaded" });
+		await page.goto(LAYERS, { waitUntil: "domcontentloaded" });
 		await pause(page);
+		await page.mouse.wheel(0, 350);
+		await pause(page);
+		const githubLoopMs = Date.now() - githubLoopStart;
+		log(
+			"4-layers-github",
+			`GitHub loop (same tab) ${githubLoopMs}ms · tabs=${context.pages().length}`,
+		);
+
+		// 5-return — 2s hold on aadm.io, then pace to login land in ~8s total
+		log("5-return-aadm", "Come back to aadm.io. Create your account.");
+		const returnStart = Date.now();
+		await page.goto(`${BASE}/`, { waitUntil: "domcontentloaded" });
+		await pause(page, RETURN_HOME_HOLD_MS);
+		log(
+			"5-return-aadm",
+			`Held on aadm.io home ${RETURN_HOME_HOLD_MS}ms after GitHub.`,
+		);
 
 		const create = page.getByRole("link", { name: /Create account/i }).first();
 		const getAccess = page.locator("#get-access").first();
@@ -120,11 +182,19 @@ async function main() {
 				waitUntil: "domcontentloaded",
 			});
 		}
-		await pause(page, 800);
+		await page
+			.waitForURL(/accounts\.aadm\.io|sign-up|sign-in/, { timeout: 20000 })
+			.catch(() => {});
+		await page.waitForLoadState("domcontentloaded");
 
-		// 6-create-account — speak to viewer: your name / your email
-		log("6-create-account", "Enter your name. Enter your email.");
-		await page.waitForTimeout(1000);
+		// Pad so “landing on login” (not completing login) takes ~8s from return.
+		const landElapsed = Date.now() - returnStart;
+		const landPad = Math.max(0, LAND_LOGIN_BUDGET_MS - landElapsed);
+		if (landPad > 0) await pause(page, landPad);
+		log(
+			"6-create-account",
+			`Landed on login (${Date.now() - returnStart}ms budget target ${LAND_LOGIN_BUDGET_MS}ms). Enter your name. Enter your email.`,
+		);
 		const first = page
 			.locator('input[name="firstName"], input[autocomplete="given-name"]')
 			.first();
@@ -147,26 +217,31 @@ async function main() {
 			await last.click();
 			await last.fill(lastName);
 			await pause(page);
+		} else {
+			// Single name field (some Clerk Account Portal configs)
+			const nameOnly = page
+				.locator(
+					'input[name="name"], input[autocomplete="name"], input[name="username"]',
+				)
+				.first();
+			if (await nameOnly.isVisible().catch(() => false)) {
+				await nameOnly.click();
+				await nameOnly.fill(fullName);
+				await pause(page);
+			}
 		}
 		if (await emailInput.isVisible().catch(() => false)) {
 			await emailInput.click();
 			await emailInput.fill(email);
 			await pause(page, 700);
 		}
-		if (password && (await passInput.isVisible().catch(() => false))) {
+		if (await passInput.isVisible().catch(() => false)) {
 			log("6-create-account", "Choose your password. (value not logged)");
 			await passInput.click();
 			await passInput.fill(password);
 			await pause(page);
 		} else {
-			log(
-				"6-create-account",
-				"Hold on sign-up — your password field (no password in env).",
-			);
-			if (await passInput.isVisible().catch(() => false)) {
-				await passInput.click();
-				await pause(page, 600);
-			}
+			log("6-create-account", "Hold on sign-up — password field not visible.");
 		}
 		// Hold on signup page (key frame)
 		await pause(page, 1200);
@@ -185,7 +260,7 @@ async function main() {
 			const signEmail = page
 				.locator('input[name="identifier"], input[type="email"]')
 				.first();
-			if (password && (await signEmail.isVisible().catch(() => false))) {
+			if (await signEmail.isVisible().catch(() => false)) {
 				await signEmail.fill(email);
 				await pause(page);
 				const cont = page
@@ -258,7 +333,11 @@ async function main() {
 				ok: true,
 				tour: "standard-onboard",
 				captureIntent: "final",
+				headed: HEADED,
+				base: BASE,
+				totalMs: Date.now() - walkT0,
 				forbidClientIdClick: true,
+				sameTabGithub: true,
 				viewerLines: {
 					name: "your name",
 					email: "your email",
