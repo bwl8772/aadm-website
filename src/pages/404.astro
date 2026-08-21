@@ -52,7 +52,7 @@ const { urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
 						{
 							[
-								{ num: "A", title: "Why AADM", body: "If you're new and want the elevator pitch in 60 seconds.", href: "/why-aadm", tone: "amber" },
+								{ num: "A", title: "Agentic engineering", body: "If you're new here and want the discipline explained from first principles.", href: "/about", tone: "amber" },
 								{ num: "B", title: "Hosted MCP", body: "If you're here to connect an IDE or get a token.", href: urlMcpMarketing, tone: "emerald" },
 								{ num: "C", title: "Tools catalog", body: "If you're looking for a specific tool name like debug_defect or fetch_auth.", href: "/tools", tone: "violet" },
 							].map((d) => {
@@ -88,7 +88,7 @@ const { urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Or start here</p>
 						<p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300">
 							The homepage anchors the whole story · standard, hosted MCP, three lanes, mental model. From there everything is
-							one click away.
+							one click away — including <a href="/why-aadm" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Why AADM</a>.
 						</p>
 						<a
 							href="/"
