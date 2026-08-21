@@ -1,0 +1,173 @@
+---
+/**
+ * Four rungs from traditional engineering to agentic engineering. Each rung
+ * keeps everything below it — the discipline accumulates, it does not replace.
+ */
+
+type Tone = "slate" | "sky" | "violet" | "emerald";
+
+type Rung = {
+	num: string;
+	role: string;
+	adds: string;
+	body: string;
+	concerns: string[];
+	tone: Tone;
+};
+
+const toneStyles: Record<
+	Tone,
+	{ numeral: string; chip: string; rule: string; glow: string; box: string }
+> = {
+	slate: {
+		numeral: "text-slate-400",
+		chip: "border-slate-400/25 text-slate-300",
+		rule: "border-slate-400/30",
+		glow: "bg-slate-400/[0.05]",
+		box: "bg-surface-deep",
+	},
+	sky: {
+		numeral: "text-sky-300/90",
+		chip: "border-sky-400/25 text-sky-200",
+		rule: "border-sky-400/35",
+		glow: "bg-sky-500/[0.06]",
+		box: "bg-surface-deep",
+	},
+	violet: {
+		numeral: "text-violet-300/90",
+		chip: "border-violet-400/25 text-violet-200",
+		rule: "border-violet-400/35",
+		glow: "bg-violet-500/[0.06]",
+		box: "bg-surface-deep",
+	},
+	emerald: {
+		numeral: "text-emerald-300",
+		chip: "border-emerald-300/30 text-emerald-200",
+		rule: "border-emerald-300/50",
+		glow: "bg-emerald-500/[0.09]",
+		box: "bg-[#070d13]",
+	},
+};
+
+const rungs: Rung[] = [
+	{
+		num: "01",
+		role: "Traditional engineer",
+		adds: "Builds deterministic capability",
+		body: "Given the same input, the system does the same thing. Correctness is something you can reason about statically, and the failure modes are the ones you were trained on.",
+		concerns: ["CRUD", "APIs", "services", "data"],
+		tone: "slate",
+	},
+	{
+		num: "02",
+		role: "AI engineer",
+		adds: "Adds intelligence",
+		body: "The system now produces outputs you cannot fully predict from the code. Evaluation replaces some of what unit tests used to do, and “correct” becomes a distribution rather than a value.",
+		concerns: ["models", "RAG", "reasoning", "evaluation"],
+		tone: "sky",
+	},
+	{
+		num: "03",
+		role: "Agent engineer",
+		adds: "Adds goal-directed action",
+		body: "The system does not just answer — it acts. Now you own tool surfaces, loop termination, state between turns, and the blast radius of a wrong decision taken confidently.",
+		concerns: ["tools", "planning", "loops", "state", "recovery"],
+		tone: "violet",
+	},
+	{
+		num: "04",
+		role: "Agentic engineer",
+		adds: "Engineers the whole system",
+		body: "Architecture, agents, harness, authority, context, observability, evaluation, and human governance as one designed system — where humans, deterministic software, and reasoning machines each hold the part of the work they are actually good at.",
+		concerns: [
+			"architecture",
+			"agents",
+			"harness",
+			"AUTH",
+			"tools",
+			"context",
+			"observability",
+			"evaluation",
+			"human governance",
+		],
+		tone: "emerald",
+	},
+];
+---
+
+<ol class="space-y-px bg-white/[0.08]">
+	{
+		rungs.map((rung, idx) => {
+			const t = toneStyles[rung.tone];
+			const isLast = idx === rungs.length - 1;
+			return (
+				<li class:list={["group relative isolate overflow-hidden transition duration-300", t.box]}>
+					<div
+						aria-hidden="true"
+						class:list={[
+							"pointer-events-none absolute -left-24 -top-24 -z-10 h-64 w-64 rounded-full blur-3xl opacity-60 transition duration-500 group-hover:opacity-100",
+							t.glow,
+						]}
+					/>
+
+					<div class="grid grid-cols-12 gap-x-6 gap-y-5 p-7 sm:p-9">
+						<div class="col-span-12 sm:col-span-3">
+							<div class="flex items-baseline gap-4">
+								<span
+									class:list={[
+										"font-display text-[3rem] font-extralight leading-[0.8] tracking-tight sm:text-[3.75rem]",
+										t.numeral,
+									]}
+								>
+									{rung.num}
+								</span>
+								{isLast ? (
+									<span class="font-mono-cta border border-emerald-300/40 px-2 py-1 text-[9px] uppercase tracking-[0.2em] text-emerald-200">
+										You are here
+									</span>
+								) : null}
+							</div>
+							<h3
+								class:list={[
+									"font-display mt-5 text-balance text-[1.2rem] font-bold leading-[1.15] tracking-tight sm:text-[1.35rem]",
+									isLast ? "text-white" : "text-slate-100",
+								]}
+							>
+								{rung.role}
+							</h3>
+						</div>
+
+						<div class="col-span-12 sm:col-span-5">
+							<div class:list={["border-l pl-5", t.rule]}>
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+									<span aria-hidden="true">+</span> {rung.adds}
+								</p>
+								<p class="mt-4 text-[0.95rem] leading-[1.65] text-slate-300">{rung.body}</p>
+							</div>
+						</div>
+
+						<div class="col-span-12 sm:col-span-4">
+							<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+								What you now own
+							</p>
+							<div class="mt-4 flex flex-wrap gap-1.5">
+								{rung.concerns.map((concern) => (
+									<span class:list={["font-mono-cta border px-2.5 py-1 text-[11px]", t.chip]}>
+										{concern}
+									</span>
+								))}
+							</div>
+						</div>
+					</div>
+				</li>
+			);
+		})
+	}
+</ol>
+
+<p class="mt-8 max-w-3xl border-l border-emerald-300/40 pl-5 text-sm leading-relaxed text-slate-400">
+	Each rung keeps everything under it. An agentic engineer has not stopped being a traditional engineer — the
+	deterministic parts of the system are still where most of the correctness lives, and knowing which parts
+	<span class="text-slate-200"> should stay deterministic</span> is itself one of the judgments a model cannot make for
+	you.
+</p>

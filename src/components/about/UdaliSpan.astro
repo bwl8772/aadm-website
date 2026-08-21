@@ -1,0 +1,221 @@
+---
+/**
+ * UDALI L1–L22 as the agentic engineer sees it: every band, what lives there,
+ * and the judgment call an unguided agent tends to get wrong in that band.
+ *
+ * Layer membership follows the canonical map (`aadm://layers/udali-overview`).
+ */
+
+type Tone = "violet" | "sky" | "amber" | "emerald" | "slate";
+
+type Band = {
+	band: string;
+	layers: string;
+	zone: string;
+	members: string[];
+	judgment: string;
+	tone: Tone;
+};
+
+const toneStyles: Record<
+	Tone,
+	{ label: string; rule: string; bar: string; chip: string }
+> = {
+	violet: {
+		label: "text-violet-200",
+		rule: "border-violet-400/40",
+		bar: "bg-violet-400/60",
+		chip: "border-violet-400/25 text-violet-200/90",
+	},
+	sky: {
+		label: "text-sky-200",
+		rule: "border-sky-400/40",
+		bar: "bg-sky-400/60",
+		chip: "border-sky-400/25 text-sky-200/90",
+	},
+	amber: {
+		label: "text-amber-200",
+		rule: "border-amber-300/45",
+		bar: "bg-amber-300/70",
+		chip: "border-amber-300/30 text-amber-200/90",
+	},
+	emerald: {
+		label: "text-emerald-200",
+		rule: "border-emerald-300/40",
+		bar: "bg-emerald-300/60",
+		chip: "border-emerald-300/25 text-emerald-200/90",
+	},
+	slate: {
+		label: "text-slate-300",
+		rule: "border-slate-400/30",
+		bar: "bg-slate-400/50",
+		chip: "border-slate-400/25 text-slate-300",
+	},
+};
+
+const bands: Band[] = [
+	{
+		band: "Unifier",
+		layers: "L1–L3",
+		zone: "Interface",
+		members: ["L1 UI implementation", "L2 adapter", "L3 UI guards / routing"],
+		judgment:
+			"Protected from backend churn. These never change in response to a backend change — an agent that “tidies” them while fixing a service has already broken the rule.",
+		tone: "violet",
+	},
+	{
+		band: "Designer",
+		layers: "L4–L8",
+		zone: "Data shape",
+		members: [
+			"L4 database",
+			"L5 entity",
+			"L6 domain rules",
+			"L7 DTO",
+			"L8 mapper",
+		],
+		judgment:
+			"Validation belongs at L7, the boundary contract — not L6, the pure domain. This is the single most common misclassification, human or machine.",
+		tone: "sky",
+	},
+	{
+		band: "Adapter",
+		layers: "L9–L12",
+		zone: "Access + identity",
+		members: [
+			"L9 repository interface",
+			"L10 repository",
+			"L11 auth / authorization",
+			"L12 cache",
+		],
+		judgment:
+			"Permission checks live at L11. When they drift up into a controller, authorization becomes something you have to audit per route instead of per band.",
+		tone: "amber",
+	},
+	{
+		band: "Logician",
+		layers: "L13–L16",
+		zone: "Business orchestration",
+		members: [
+			"L13 service",
+			"L14 events",
+			"L15 AI services",
+			"L16 integrations",
+		],
+		judgment:
+			"Services own use-case shape. Your product's own runtime agents live at L15 — which is why this band is where the two loops meet.",
+		tone: "emerald",
+	},
+	{
+		band: "Integrator",
+		layers: "L17–L20",
+		zone: "Request + edge",
+		members: [
+			"L17 middleware",
+			"L18 controller",
+			"L19 routes",
+			"L20 gateway",
+		],
+		judgment:
+			"The edge is thin on purpose. Anything an agent adds here that is not transport, shaping, or dispatch is logic that escaped its band.",
+		tone: "violet",
+	},
+	{
+		band: "Integrator",
+		layers: "L21–L22",
+		zone: "Quality + release",
+		members: ["L21 QA / verification", "L22 system integration & release"],
+		judgment:
+			"Where evidence is produced rather than asserted. A green pipeline is an input to a release decision, not the decision itself.",
+		tone: "slate",
+	},
+];
+---
+
+<div class="grid grid-cols-12 gap-x-6 gap-y-8">
+	<!-- Spanning rail: the engineer is accountable across every band -->
+	<div class="col-span-12 lg:col-span-3">
+		<div class="lg:sticky lg:top-24">
+			<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">
+				The span
+			</p>
+			<h3 class="font-display mt-4 text-balance text-[1.4rem] font-bold leading-[1.15] tracking-tight text-white sm:text-[1.6rem]">
+				Accountable across all&nbsp;22.
+				<span class="font-extralight italic text-slate-400"> Resident in none.</span>
+			</h3>
+			<p class="mt-5 text-[0.95rem] leading-relaxed text-slate-400">
+				A staff engineer is usually deep in two or three bands. An agentic engineer has to hold the shape of all of
+				them at once, because the agent will happily cross every boundary in a single commit unless someone named
+				where the boundaries were.
+			</p>
+
+			<div
+				aria-hidden="true"
+				class="mt-8 hidden items-stretch gap-3 lg:flex"
+			>
+				<svg width="24" height="120" viewBox="0 0 24 120" fill="none" class="text-emerald-300/50">
+					<path
+						d="M22 2H12v56H2M12 58v60h10"
+						stroke="currentColor"
+						stroke-width="1.2"
+						stroke-linecap="square"
+					></path>
+				</svg>
+				<p class="font-mono-cta self-center text-[10px] uppercase leading-relaxed tracking-[0.2em] text-slate-500">
+					L1<br />↕<br />L22
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bands -->
+	<div class="col-span-12 lg:col-span-9">
+		<ol class="space-y-px bg-white/[0.08]">
+			{
+				bands.map((band) => {
+					const t = toneStyles[band.tone];
+					return (
+						<li class="group relative bg-surface-deep transition duration-300 hover:bg-[#080c16]">
+							<div class="grid grid-cols-12 gap-x-6 gap-y-4 py-7 pl-6 pr-6 sm:py-8 sm:pl-8">
+								<div
+									aria-hidden="true"
+									class:list={[
+										"absolute inset-y-0 left-0 w-[3px] transition-all duration-300 group-hover:w-[5px]",
+										t.bar,
+									]}
+								/>
+
+								<div class="col-span-12 sm:col-span-3">
+									<p class:list={["font-display text-[1.15rem] font-bold tracking-tight", t.label]}>
+										{band.band}
+									</p>
+									<p class="font-mono-cta mt-1.5 text-[11px] uppercase tracking-[0.22em] text-white/70">
+										{band.layers}
+									</p>
+									<p class="mt-2 text-xs italic text-slate-500">{band.zone}</p>
+								</div>
+
+								<div class="col-span-12 sm:col-span-4">
+									<ul class="space-y-1.5">
+										{band.members.map((member) => (
+											<li class="font-mono-cta text-[11px] leading-relaxed text-slate-400">{member}</li>
+										))}
+									</ul>
+								</div>
+
+								<div class="col-span-12 sm:col-span-5">
+									<div class:list={["border-l pl-5", t.rule]}>
+										<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+											The judgment call
+										</p>
+										<p class="mt-3 text-sm leading-relaxed text-slate-300">{band.judgment}</p>
+									</div>
+								</div>
+							</div>
+						</li>
+					);
+				})
+			}
+		</ol>
+	</div>
+</div>

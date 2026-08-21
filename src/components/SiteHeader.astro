@@ -5,6 +5,7 @@ import { CLERK_ACCOUNTS_SIGN_IN } from "../lib/clerk-portal-urls";
 
 type ActiveNav =
 	| "home"
+	| "about"
 	| "mcp"
 	| "why"
 	| "tools"
@@ -35,6 +36,7 @@ const ringActive = (color: string) =>
 	`ring-1 ring-${color}/60 ring-offset-2 ring-offset-surface-deep`;
 
 const standardChip = activeNav === "standard" ? ringActive("emerald-300") : "";
+const aboutChip = activeNav === "about" ? ringActive("emerald-300") : "";
 const whyChip = activeNav === "why" ? ringActive("amber-300") : "";
 const mcpChip = activeNav === "mcp" ? ringActive("emerald-300") : "";
 const toolsChip = activeNav === "tools" ? ringActive("emerald-300") : "";
@@ -68,6 +70,15 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
+	{
+		key: "about",
+		href: "/about",
+		label: "About",
+		ariaLabel: "About — agentic engineering, the discipline behind AADM",
+		chip: aboutChip,
+		className:
+			"border border-white/10 bg-transparent text-slate-300 hover:border-white/25 hover:bg-white/[0.04] hover:text-white",
+	},
 	{
 		key: "why",
 		href: "/why-aadm",
@@ -185,7 +196,7 @@ const mobileLinkClass =
 					href={signInUrl}
 					class:list={[baseChipClasses, "inline-flex items-center justify-center"]}
 				>
-					Sign in to AADM
+					Sign in
 				</a>
 				<a
 					href={signUpUrl}
