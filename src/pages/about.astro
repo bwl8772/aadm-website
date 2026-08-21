@@ -78,31 +78,36 @@ const directive: Directive[] = [
 	{
 		num: "01",
 		line: "Here is the outcome.",
-		supplied: "A scoped plan with acceptance criteria per slice, written before any edit.",
+		supplied:
+			"A scoped plan with acceptance criteria per slice, written before any edit.",
 		mechanism: "plan_delivery · slice_issues",
 	},
 	{
 		num: "02",
 		line: "Here is the architecture.",
-		supplied: "UDALI band placement — which of the 22 layers this work actually belongs in.",
+		supplied:
+			"UDALI band placement — which of the 22 layers this work actually belongs in.",
 		mechanism: "map_feature · architecture_lens",
 	},
 	{
 		num: "03",
 		line: "Here are the boundaries.",
-		supplied: "The numbered seam archetypes this change crosses, read from the standard.",
+		supplied:
+			"The numbered seam archetypes this change crosses, read from the standard.",
 		mechanism: "fetch_seam",
 	},
 	{
 		num: "04",
 		line: "Here is where AUTH belongs.",
-		supplied: "The numbered authorization controls that bind — verbatim, not paraphrased.",
+		supplied:
+			"The numbered authorization controls that bind — verbatim, not paraphrased.",
 		mechanism: "fetch_auth",
 	},
 	{
 		num: "05",
 		line: "Here are the tools you may use.",
-		supplied: "A typed, versioned tool surface. The agent cannot reach past it.",
+		supplied:
+			"A typed, versioned tool surface. The agent cannot reach past it.",
 		mechanism: "tools/list",
 	},
 	{
@@ -126,7 +131,8 @@ const directive: Directive[] = [
 	{
 		num: "09",
 		line: "Now execute.",
-		supplied: "The right workflow for the question asked — not whichever instinct fired first.",
+		supplied:
+			"The right workflow for the question asked — not whichever instinct fired first.",
 		mechanism: "route_lane",
 	},
 ];
@@ -143,43 +149,50 @@ const stackRows: StackRow[] = [
 	{
 		piece: "Agentic engineer",
 		question: "Who is accountable",
-		inAadm: "The role. A person, not a product — the one who answers for the result.",
+		inAadm:
+			"The role. A person, not a product — the one who answers for the result.",
 		tone: "white",
 	},
 	{
 		piece: "AADM",
 		question: "How work is governed",
-		inAadm: "Three lanes with stage gates: Navigator for delivery, Investigator for defects, Sentinel for assurance.",
+		inAadm:
+			"Three lanes with stage gates: Navigator for delivery, Investigator for defects, Sentinel for assurance.",
 		tone: "amber",
 	},
 	{
 		piece: "UDALI",
 		question: "Where responsibility belongs",
-		inAadm: "Twenty-two layers in five bands. The shared vocabulary for naming where a change lives.",
+		inAadm:
+			"Twenty-two layers in five bands. The shared vocabulary for naming where a change lives.",
 		tone: "emerald",
 	},
 	{
 		piece: "Harness",
 		question: "How agents are controlled",
-		inAadm: "Cursor, Claude Code, Windsurf — the execution environment that decides what the model can actually run.",
+		inAadm:
+			"Cursor, Claude Code, Windsurf — the execution environment that decides what the model can actually run.",
 		tone: "violet",
 	},
 	{
 		piece: "MCP",
 		question: "How governance context is provided",
-		inAadm: "One Streamable HTTP endpoint the harness loads every session, so every seat gets the same standard.",
+		inAadm:
+			"One Streamable HTTP endpoint the harness loads every session, so every seat gets the same standard.",
 		tone: "sky",
 	},
 	{
 		piece: "Agent",
 		question: "What reasons and acts",
-		inAadm: "The model in the loop. Fast, tireless, and entirely dependent on the frame you gave it.",
+		inAadm:
+			"The model in the loop. Fast, tireless, and entirely dependent on the frame you gave it.",
 		tone: "slate",
 	},
 	{
 		piece: "Tools",
 		question: "What the agent can do",
-		inAadm: "The typed surface. If it is not a tool, it is not an available action.",
+		inAadm:
+			"The typed surface. If it is not a tool, it is not an available action.",
 		tone: "slate",
 	},
 ];
