@@ -45,16 +45,18 @@ const enterpriseChip =
 	activeNav === "enterprise" ? ringActive("amber-300") : "";
 const storiesChip = activeNav === "stories" ? ringActive("emerald-300") : "";
 
-const ghostChipClasses =
-	"shrink-0 whitespace-nowrap rounded-none border border-white/15 bg-transparent px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.04] sm:px-3 sm:py-2 sm:text-sm md:px-4";
+/**
+ * Chip padding stays tight through xl and only opens up at 2xl — the full row
+ * (8 nav chips + 2 auth actions) has to clear 1280px without pushing the logo.
+ */
+const chipSizing = "sm:px-3 sm:py-2 sm:text-sm md:px-3 2xl:px-4";
 
-const secondaryGhostChipClasses =
-	"shrink-0 whitespace-nowrap rounded-none border border-white/10 bg-transparent px-2.5 py-1.5 text-xs font-medium text-slate-300 transition hover:border-white/25 hover:bg-white/[0.04] hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4";
+const ghostChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-white/15 bg-transparent px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.04] ${chipSizing}`;
 
-const baseChipClasses =
-	"shrink-0 whitespace-nowrap rounded-none border border-white/15 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.04] hover:text-white sm:px-3 sm:py-2 sm:text-sm md:px-4";
-const joinChipClasses =
-	"shrink-0 whitespace-nowrap rounded-none border border-emerald-300/30 bg-emerald-950/30 px-2.5 py-1.5 text-xs font-semibold text-emerald-100 transition hover:border-emerald-300/60 hover:bg-emerald-900/40 sm:px-3 sm:py-2 sm:text-sm md:px-4";
+const secondaryGhostChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-white/10 bg-transparent px-2.5 py-1.5 text-xs font-medium text-slate-300 transition hover:border-white/25 hover:bg-white/[0.04] hover:text-white ${chipSizing}`;
+
+const baseChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-white/15 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.04] hover:text-white ${chipSizing}`;
+const joinChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-emerald-300/30 bg-emerald-950/30 px-2.5 py-1.5 text-xs font-semibold text-emerald-100 transition hover:border-emerald-300/60 hover:bg-emerald-900/40 ${chipSizing}`;
 
 const { signInUrl, signUpUrl, memberAreaUrl } = getAccountPortalUrls(
 	import.meta.env,
@@ -144,14 +146,14 @@ const navItems: NavItem[] = [
 	},
 ];
 
+const filledChipClasses = `shrink-0 whitespace-nowrap rounded-none px-2.5 py-1.5 text-xs font-semibold transition ${chipSizing}`;
+
 const desktopChipClass = (item: NavItem) =>
-	item.key === "mcp"
-		? "shrink-0 whitespace-nowrap rounded-none px-2.5 py-1.5 text-xs font-semibold transition sm:px-3 sm:py-2 sm:text-sm md:px-4"
-		: item.key === "why"
-			? "shrink-0 whitespace-nowrap rounded-none px-2.5 py-1.5 text-xs font-semibold transition sm:px-3 sm:py-2 sm:text-sm md:px-4"
-			: item.key === "standard"
-				? ghostChipClasses
-				: secondaryGhostChipClasses;
+	item.key === "mcp" || item.key === "why"
+		? filledChipClasses
+		: item.key === "standard"
+			? ghostChipClasses
+			: secondaryGhostChipClasses;
 
 const mobileLinkClass =
 	"block min-h-[3rem] border-b border-white/[0.06] px-5 py-4 font-display text-base font-semibold tracking-tight text-white transition hover:bg-white/[0.04] focus:outline-none focus-visible:bg-white/[0.06] focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-inset";
