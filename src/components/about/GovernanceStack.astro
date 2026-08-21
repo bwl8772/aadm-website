@@ -1,0 +1,177 @@
+---
+/**
+ * How governance context reaches the coding agent: engineer → harness → MCP →
+ * (intent / authority / layers) → agent → application.
+ */
+
+type Tier = {
+	label: string;
+	sub: string;
+	tone: "white" | "slate" | "emerald" | "violet";
+};
+
+const tierStyles: Record<Tier["tone"], { box: string; label: string }> = {
+	white: {
+		box: "border-white/25 bg-white/[0.05]",
+		label: "text-white",
+	},
+	slate: {
+		box: "border-white/12 bg-white/[0.02]",
+		label: "text-slate-200",
+	},
+	emerald: {
+		box: "border-emerald-300/35 bg-emerald-950/25",
+		label: "text-emerald-100",
+	},
+	violet: {
+		box: "border-violet-400/30 bg-violet-950/20",
+		label: "text-violet-100",
+	},
+};
+
+const above: Tier[] = [
+	{
+		label: "Agentic engineer",
+		sub: "Names the outcome, the architecture, and the constraints",
+		tone: "white",
+	},
+	{
+		label: "AI coding harness",
+		sub: "Cursor · Claude Code · Windsurf · anything that speaks MCP",
+		tone: "slate",
+	},
+	{
+		label: "AADM MCP",
+		sub: "Streamable HTTP · versioned tools, doctrine, and gates",
+		tone: "emerald",
+	},
+];
+
+const below: Tier[] = [
+	{
+		label: "Coding agent",
+		sub: "Reasons and acts — inside the frame set above it",
+		tone: "violet",
+	},
+	{
+		label: "Your application",
+		sub: "Where AUTH is actually enforced and “done” is actually proven",
+		tone: "white",
+	},
+];
+
+const carried = [
+	{
+		term: "Intent",
+		maps: "Workflow",
+		body: "Which of the three lanes this task belongs to, and the stage gates that come with it.",
+		tone: "violet",
+	},
+	{
+		term: "AUTH",
+		maps: "Authority",
+		body: "Which numbered controls bind here — read from the standard, not paraphrased from memory.",
+		tone: "amber",
+	},
+	{
+		term: "UDALI",
+		maps: "Layers",
+		body: "Which of the 22 layers this work belongs in, and which ones it has no business touching.",
+		tone: "emerald",
+	},
+] as const;
+
+const carriedStyles = {
+	violet: "border-violet-400/30 text-violet-200",
+	amber: "border-amber-300/30 text-amber-200",
+	emerald: "border-emerald-300/30 text-emerald-200",
+} as const;
+---
+
+<div class="mx-auto max-w-3xl">
+	{
+		above.map((tier, idx) => {
+			const t = tierStyles[tier.tone];
+			return (
+				<div>
+					<div class:list={["border px-5 py-4 text-center sm:px-7 sm:py-5", t.box]}>
+						<p class:list={["font-display text-[1.05rem] font-bold tracking-tight sm:text-[1.15rem]", t.label]}>
+							{tier.label}
+						</p>
+						<p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-[0.8rem]">{tier.sub}</p>
+					</div>
+					<div aria-hidden="true" class="flex h-7 items-center justify-center">
+						<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-600">
+							<path d="M5 0v21M1 17l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square" />
+						</svg>
+					</div>
+					{idx === above.length - 1 ? (
+						<p class="font-mono-cta mb-3 text-center text-[10px] uppercase tracking-[0.24em] text-slate-500">
+							carries three things
+						</p>
+					) : null}
+				</div>
+			);
+		})
+	}
+
+	<!-- What the MCP carries -->
+	<div class="grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+		{
+			carried.map((item) => (
+				<div class="bg-[#070b13] p-5">
+					<div class="flex items-baseline justify-between gap-2">
+						<span
+							class:list={[
+								"font-mono-cta border px-2 py-1 text-[10px] uppercase tracking-[0.2em]",
+								carriedStyles[item.tone],
+							]}
+						>
+							{item.term}
+						</span>
+						<span class="font-mono-cta text-[10px] uppercase tracking-[0.2em] text-slate-500">
+							<span aria-hidden="true">→</span> {item.maps}
+						</span>
+					</div>
+					<p class="mt-4 text-xs leading-relaxed text-slate-400">{item.body}</p>
+				</div>
+			))
+		}
+	</div>
+
+	<div aria-hidden="true" class="flex h-7 items-center justify-center">
+		<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-600">
+			<path d="M5 0v21M1 17l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"></path>
+		</svg>
+	</div>
+
+	{
+		below.map((tier, idx) => {
+			const t = tierStyles[tier.tone];
+			return (
+				<div>
+					<div class:list={["border px-5 py-4 text-center sm:px-7 sm:py-5", t.box]}>
+						<p class:list={["font-display text-[1.05rem] font-bold tracking-tight sm:text-[1.15rem]", t.label]}>
+							{tier.label}
+						</p>
+						<p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-[0.8rem]">{tier.sub}</p>
+					</div>
+					{idx === below.length - 1 ? null : (
+						<div aria-hidden="true" class="flex h-7 items-center justify-center">
+							<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-600">
+								<path d="M5 0v21M1 17l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square" />
+							</svg>
+						</div>
+					)}
+				</div>
+			);
+		})
+	}
+</div>
+
+<p class="mx-auto mt-10 max-w-3xl border-l border-amber-300/40 pl-5 text-sm leading-relaxed text-slate-400">
+	Read the stack downward and it is a governance path. Read it upward and it is an accountability path: when the
+	application does the wrong thing, the answer is never
+	<span class="italic text-slate-300"> “the model did it.”</span> It is that somebody's frame was wrong, and that
+	somebody is at the top.
+</p>

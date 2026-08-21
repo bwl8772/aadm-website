@@ -1,0 +1,179 @@
+---
+/**
+ * Side-by-side delivery pipelines: how a requirement became software before
+ * agents, and how intent becomes a working system with them.
+ */
+
+type Actor = "input" | "human" | "agent" | "output";
+
+type Step = {
+	label: string;
+	actor: Actor;
+};
+
+type Pipeline = {
+	era: string;
+	title: string;
+	titleTail: string;
+	sub: string;
+	steps: Step[];
+	footnote: string;
+};
+
+const actorStyles: Record<
+	Actor,
+	{ box: string; tag: string; tagLabel: string; dot: string }
+> = {
+	input: {
+		box: "border-white/10 bg-white/[0.015]",
+		tag: "text-slate-500",
+		tagLabel: "In",
+		dot: "bg-slate-500",
+	},
+	human: {
+		box: "border-amber-300/25 bg-amber-950/[0.18]",
+		tag: "text-amber-200/85",
+		tagLabel: "Human",
+		dot: "bg-amber-300",
+	},
+	agent: {
+		box: "border-emerald-300/25 bg-emerald-950/[0.18]",
+		tag: "text-emerald-200/85",
+		tagLabel: "Agent",
+		dot: "bg-emerald-300",
+	},
+	output: {
+		box: "border-white/25 bg-white/[0.05]",
+		tag: "text-white/70",
+		tagLabel: "Out",
+		dot: "bg-white",
+	},
+};
+
+const pipelines: Pipeline[] = [
+	{
+		era: "The last twenty years",
+		title: "You were",
+		titleTail: "the pipeline.",
+		sub: "Every transformation between a requirement and shipped software passed through one person's head and one person's hands.",
+		steps: [
+			{ label: "Requirement", actor: "input" },
+			{ label: "Engineer reasons", actor: "human" },
+			{ label: "Engineer designs", actor: "human" },
+			{ label: "Engineer writes code", actor: "human" },
+			{ label: "Engineer tests", actor: "human" },
+			{ label: "Software", actor: "output" },
+		],
+		footnote:
+			"Judgment applied one line, one ticket, one pull request at a time. Throughput capped by the number of hours you have.",
+	},
+	{
+		era: "Agentic engineering",
+		title: "You define",
+		titleTail: "the pipeline.",
+		sub: "Machines perform the mechanical execution. You set the frame it executes inside, and you keep the decisions that are actually decisions.",
+		steps: [
+			{ label: "Intent", actor: "input" },
+			{ label: "Engineer defines architecture + constraints", actor: "human" },
+			{ label: "Agents plan / code / test / inspect", actor: "agent" },
+			{ label: "Engineer governs decisions", actor: "human" },
+			{ label: "Working system", actor: "output" },
+		],
+		footnote:
+			"Judgment encoded once, then re-applied by machines on every turn. Throughput capped by how well you specified the frame.",
+	},
+];
+---
+
+<div class="grid grid-cols-1 gap-px bg-white/[0.08] lg:grid-cols-2">
+	{
+		pipelines.map((pipeline, pipelineIdx) => (
+			<section
+				class:list={[
+					"relative isolate overflow-hidden p-7 sm:p-9",
+					pipelineIdx === 1 ? "bg-[#070b13]" : "bg-surface-deep",
+				]}
+			>
+				{pipelineIdx === 1 ? (
+					<div
+						aria-hidden="true"
+						class="pointer-events-none absolute -right-20 -top-20 -z-10 h-64 w-64 rounded-full bg-emerald-500/[0.07] blur-3xl"
+					/>
+				) : (
+					<div
+						aria-hidden="true"
+						class="pointer-events-none absolute -right-20 -top-20 -z-10 h-64 w-64 rounded-full bg-amber-500/[0.05] blur-3xl"
+					/>
+				)}
+
+				<p
+					class:list={[
+						"font-mono-cta text-[10px] uppercase tracking-[0.28em]",
+						pipelineIdx === 1 ? "text-emerald-200/85" : "text-amber-200/75",
+					]}
+				>
+					{pipeline.era}
+				</p>
+
+				<h3 class="font-display mt-4 text-balance text-[1.5rem] font-bold leading-[1.12] tracking-tight text-white sm:text-[1.8rem]">
+					{pipeline.title}{" "}
+					<span class="font-extralight italic text-slate-400">{pipeline.titleTail}</span>
+				</h3>
+
+				<p class="mt-4 max-w-md text-[0.95rem] leading-relaxed text-slate-400">{pipeline.sub}</p>
+
+				<ol class="mt-9">
+					{pipeline.steps.map((step, stepIdx) => {
+						const s = actorStyles[step.actor];
+						const isLast = stepIdx === pipeline.steps.length - 1;
+						return (
+							<li>
+								<div
+									class:list={[
+										"flex items-center gap-4 border px-4 py-3.5 transition duration-300 sm:px-5",
+										s.box,
+									]}
+								>
+									<span class:list={["block h-1.5 w-1.5 shrink-0 rounded-full", s.dot]} />
+									<span class="flex-1 text-pretty text-[0.95rem] font-medium leading-snug text-slate-100">
+										{step.label}
+									</span>
+									<span
+										class:list={[
+											"font-mono-cta shrink-0 text-[9px] uppercase tracking-[0.22em]",
+											s.tag,
+										]}
+									>
+										{s.tagLabel}
+									</span>
+								</div>
+
+								{isLast ? null : (
+									<div aria-hidden="true" class="flex h-6 items-center justify-center">
+										<svg width="10" height="24" viewBox="0 0 10 24" fill="none" class="text-slate-600">
+											<path
+												d="M5 0v17M1 13l4 4 4-4"
+												stroke="currentColor"
+												stroke-width="1.2"
+												stroke-linecap="square"
+											/>
+										</svg>
+									</div>
+								)}
+							</li>
+						);
+					})}
+				</ol>
+
+				<p
+					class:list={[
+						"mt-8 border-l pl-5 text-sm leading-relaxed text-slate-400",
+						pipelineIdx === 1 ? "border-emerald-300/40" : "border-amber-300/40",
+					]}
+				>
+					{pipeline.footnote}
+				</p>
+			</section>
+		))
+	}
+</div>

@@ -1,0 +1,173 @@
+---
+/**
+ * The two agent loops an agentic engineer owns: the development loop that
+ * builds the system, and the runtime loop that runs inside it.
+ */
+
+type Loop = {
+	eyebrow: string;
+	title: string;
+	steps: string[];
+	governedBy: string;
+	clock: string;
+	failure: string;
+	tone: "violet" | "sky";
+};
+
+const toneStyles: Record<
+	Loop["tone"],
+	{ label: string; box: string; rule: string; dot: string; glow: string }
+> = {
+	violet: {
+		label: "text-violet-200",
+		box: "border-violet-400/25 bg-violet-950/[0.16]",
+		rule: "border-violet-400/40",
+		dot: "bg-violet-300",
+		glow: "bg-violet-500/[0.07]",
+	},
+	sky: {
+		label: "text-sky-200",
+		box: "border-sky-400/25 bg-sky-950/[0.16]",
+		rule: "border-sky-400/40",
+		dot: "bg-sky-300",
+		glow: "bg-sky-500/[0.07]",
+	},
+};
+
+const loops: Loop[] = [
+	{
+		eyebrow: "Development loop",
+		title: "Builds the system",
+		steps: [
+			"Coding agent",
+			"AADM MCP",
+			"Governed change to your repository",
+		],
+		governedBy:
+			"Governed directly by AADM — lane routing, stage gates, AUTH references pulled from the standard, evidence bound per seam.",
+		clock: "Runs while you are watching.",
+		failure:
+			"Fails loudly and cheaply: a bad plan shows up in review, a premature fix is blocked at the gate.",
+		tone: "violet",
+	},
+	{
+		eyebrow: "Runtime loop",
+		title: "Uses the system",
+		steps: [
+			"Product agent",
+			"Runtime harness",
+			"Action taken on behalf of a real user",
+		],
+		governedBy:
+			"Governed by the architecture the development loop produced — AI services at L15, authorization at L11, verification at L21–L22.",
+		clock: "Runs when you are asleep.",
+		failure:
+			"Fails quietly and expensively: nobody reviews a production decision before a customer feels it.",
+		tone: "sky",
+	},
+];
+---
+
+<div>
+	<!-- Shared origin -->
+	<div class="mx-auto max-w-md">
+		<div class="border border-white/25 bg-white/[0.05] px-6 py-5 text-center">
+			<p class="font-display text-[1.1rem] font-bold tracking-tight text-white">Agentic engineer</p>
+			<p class="mt-1.5 text-xs leading-relaxed text-slate-400">Owns the design of both loops</p>
+		</div>
+	</div>
+
+	<!-- Fork -->
+	<div aria-hidden="true" class="flex justify-center">
+		<svg
+			width="320"
+			height="44"
+			viewBox="0 0 320 44"
+			fill="none"
+			preserveAspectRatio="xMidYMid meet"
+			class="h-11 w-full max-w-sm text-slate-600"
+		>
+			<path
+				d="M160 0v14M160 14H40v22M160 14h120v22"
+				stroke="currentColor"
+				stroke-width="1.2"
+				stroke-linecap="square"></path>
+			<path d="M36 32l4 4 4-4M276 32l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"
+			></path>
+		</svg>
+	</div>
+
+	<div class="grid grid-cols-1 gap-px bg-white/[0.08] lg:grid-cols-2">
+		{
+			loops.map((loop) => {
+				const t = toneStyles[loop.tone];
+				return (
+					<section class="group relative isolate overflow-hidden bg-surface-deep p-7 sm:p-9">
+						<div
+							aria-hidden="true"
+							class:list={[
+								"pointer-events-none absolute -right-20 -top-20 -z-10 h-60 w-60 rounded-full blur-3xl opacity-60 transition duration-500 group-hover:opacity-100",
+								t.glow,
+							]}
+						/>
+
+						<p class:list={["font-mono-cta text-[10px] uppercase tracking-[0.28em]", t.label]}>
+							{loop.eyebrow}
+						</p>
+						<h3 class="font-display mt-3 text-[1.35rem] font-bold leading-tight tracking-tight text-white sm:text-[1.5rem]">
+							{loop.title}
+						</h3>
+
+						<ol class="mt-7">
+							{loop.steps.map((step, stepIdx) => (
+								<li>
+									<div class:list={["flex items-center gap-4 border px-4 py-3.5", t.box]}>
+										<span class:list={["block h-1.5 w-1.5 shrink-0 rounded-full", t.dot]} />
+										<span class="text-pretty text-[0.95rem] font-medium leading-snug text-slate-100">
+											{step}
+										</span>
+									</div>
+									{stepIdx === loop.steps.length - 1 ? null : (
+										<div aria-hidden="true" class="flex h-5 items-center justify-center">
+											<svg width="10" height="20" viewBox="0 0 10 20" fill="none" class="text-slate-600">
+												<path
+													d="M5 0v13M1 9l4 4 4-4"
+													stroke="currentColor"
+													stroke-width="1.2"
+													stroke-linecap="square"
+												/>
+											</svg>
+										</div>
+									)}
+								</li>
+							))}
+						</ol>
+
+						<dl class:list={["mt-8 space-y-5 border-l pl-5", t.rule]}>
+							<div>
+								<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Governed by</dt>
+								<dd class="mt-2 text-sm leading-relaxed text-slate-300">{loop.governedBy}</dd>
+							</div>
+							<div>
+								<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Clock</dt>
+								<dd class="mt-2 text-sm font-medium leading-relaxed text-white">{loop.clock}</dd>
+							</div>
+							<div>
+								<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+									How it fails
+								</dt>
+								<dd class="mt-2 text-sm leading-relaxed text-slate-400">{loop.failure}</dd>
+							</div>
+						</dl>
+					</section>
+				);
+			})
+		}
+	</div>
+</div>
+
+<p class="mt-10 max-w-3xl border-l border-emerald-300/40 pl-5 text-sm leading-relaxed text-slate-400">
+	The two loops are not independent. The development loop decides what the runtime loop is allowed to do — which tools
+	exist, where authorization sits, what gets logged, what a bad decision can reach. Govern the first one badly and you
+	have shipped an ungovernable second one.
+</p>

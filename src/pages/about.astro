@@ -1,0 +1,1107 @@
+---
+import DualLoops from "../components/about/DualLoops.astro";
+import EngineerProgression from "../components/about/EngineerProgression.astro";
+import GovernanceStack from "../components/about/GovernanceStack.astro";
+import PipelineShift from "../components/about/PipelineShift.astro";
+import UdaliSpan from "../components/about/UdaliSpan.astro";
+import Layout from "../layouts/Layout.astro";
+import { getSiteUrlConfig } from "../lib/site-urls";
+
+const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
+
+/** What two decades of engineering bought you — and the matching agent failure. */
+type Judgment = {
+	num: string;
+	knows: string;
+	fails: string;
+	anchor?: string;
+};
+
+const judgments: Judgment[] = [
+	{
+		num: "01",
+		knows: "Where a boundary belongs",
+		fails:
+			"Puts the check wherever the call site happened to be. Validation lands in the domain layer because that file was already open.",
+		anchor: "L6 vs L7",
+	},
+	{
+		num: "02",
+		knows: "Why a shortcut becomes debt",
+		fails:
+			"Optimizes for the diff that passes today. It has no model of the maintenance cost it is transferring to someone else in eighteen months.",
+	},
+	{
+		num: "03",
+		knows: "When a schema is simply wrong",
+		fails:
+			"Adds a nullable column to make the failing test green, and the data model quietly stops describing the business.",
+		anchor: "L4–L8",
+	},
+	{
+		num: "04",
+		knows: "Where security has to live",
+		fails:
+			"Puts the permission check in the controller, so authorization becomes something you audit per route forever instead of per band once.",
+		anchor: "L11 vs L18",
+	},
+	{
+		num: "05",
+		knows: "Which abstraction survives scale",
+		fails:
+			"Extracts a helper on the second occurrence and calls it architecture. It cannot tell a real seam from a coincidence.",
+	},
+	{
+		num: "06",
+		knows: "How systems actually fail in production",
+		fails:
+			"Has never been paged. Retries, partial writes, clock skew, and thundering herds are not in the diff it is looking at.",
+	},
+	{
+		num: "07",
+		knows: "When something that works is still wrong",
+		fails:
+			"Cannot distinguish passing from correct. Green is the only signal it has, so green is the answer it optimizes toward.",
+		anchor: "L21–L22",
+	},
+];
+
+/** The brief a senior engineer needs to be able to hand a machine. */
+type Directive = {
+	num: string;
+	line: string;
+	supplied: string;
+	mechanism: string;
+};
+
+const directive: Directive[] = [
+	{
+		num: "01",
+		line: "Here is the outcome.",
+		supplied: "A scoped plan with acceptance criteria per slice, written before any edit.",
+		mechanism: "plan_delivery · slice_issues",
+	},
+	{
+		num: "02",
+		line: "Here is the architecture.",
+		supplied: "UDALI band placement — which of the 22 layers this work actually belongs in.",
+		mechanism: "map_feature · architecture_lens",
+	},
+	{
+		num: "03",
+		line: "Here are the boundaries.",
+		supplied: "The numbered seam archetypes this change crosses, read from the standard.",
+		mechanism: "fetch_seam",
+	},
+	{
+		num: "04",
+		line: "Here is where AUTH belongs.",
+		supplied: "The numbered authorization controls that bind — verbatim, not paraphrased.",
+		mechanism: "fetch_auth",
+	},
+	{
+		num: "05",
+		line: "Here are the tools you may use.",
+		supplied: "A typed, versioned tool surface. The agent cannot reach past it.",
+		mechanism: "tools/list",
+	},
+	{
+		num: "06",
+		line: "Here are the layers you may change.",
+		supplied: "Ownership patterns mapped to real paths in your repository.",
+		mechanism: ".aadm/config.json",
+	},
+	{
+		num: "07",
+		line: "Here is what you must not touch.",
+		supplied: "Stage gates that hold. Evidence lands before a fix does.",
+		mechanism: "debug_defect · Path A → Path B",
+	},
+	{
+		num: "08",
+		line: "Here is the evidence required.",
+		supplied: "Proof bound per crossing, in language an auditor will accept.",
+		mechanism: "audit_run · sentinel_closure",
+	},
+	{
+		num: "09",
+		line: "Now execute.",
+		supplied: "The right workflow for the question asked — not whichever instinct fired first.",
+		mechanism: "route_lane",
+	},
+];
+
+/** Separating the person from the system they operate. */
+type StackRow = {
+	piece: string;
+	question: string;
+	inAadm: string;
+	tone: "white" | "amber" | "emerald" | "violet" | "sky" | "slate";
+};
+
+const stackRows: StackRow[] = [
+	{
+		piece: "Agentic engineer",
+		question: "Who is accountable",
+		inAadm: "The role. A person, not a product — the one who answers for the result.",
+		tone: "white",
+	},
+	{
+		piece: "AADM",
+		question: "How work is governed",
+		inAadm: "Three lanes with stage gates: Navigator for delivery, Investigator for defects, Sentinel for assurance.",
+		tone: "amber",
+	},
+	{
+		piece: "UDALI",
+		question: "Where responsibility belongs",
+		inAadm: "Twenty-two layers in five bands. The shared vocabulary for naming where a change lives.",
+		tone: "emerald",
+	},
+	{
+		piece: "Harness",
+		question: "How agents are controlled",
+		inAadm: "Cursor, Claude Code, Windsurf — the execution environment that decides what the model can actually run.",
+		tone: "violet",
+	},
+	{
+		piece: "MCP",
+		question: "How governance context is provided",
+		inAadm: "One Streamable HTTP endpoint the harness loads every session, so every seat gets the same standard.",
+		tone: "sky",
+	},
+	{
+		piece: "Agent",
+		question: "What reasons and acts",
+		inAadm: "The model in the loop. Fast, tireless, and entirely dependent on the frame you gave it.",
+		tone: "slate",
+	},
+	{
+		piece: "Tools",
+		question: "What the agent can do",
+		inAadm: "The typed surface. If it is not a tool, it is not an available action.",
+		tone: "slate",
+	},
+];
+
+const stackTones: Record<StackRow["tone"], { label: string; bar: string }> = {
+	white: { label: "text-white", bar: "bg-white/70" },
+	amber: { label: "text-amber-200", bar: "bg-amber-300/70" },
+	emerald: { label: "text-emerald-200", bar: "bg-emerald-300/70" },
+	violet: { label: "text-violet-200", bar: "bg-violet-400/70" },
+	sky: { label: "text-sky-200", bar: "bg-sky-400/70" },
+	slate: { label: "text-slate-300", bar: "bg-slate-400/50" },
+};
+
+type NextStep = {
+	letter: string;
+	href: string;
+	label: string;
+	body: string;
+	external?: boolean;
+};
+
+const nextSteps: NextStep[] = [
+	{
+		letter: "A",
+		href: "/why-aadm",
+		label: "Why AADM",
+		body: "The same argument aimed at the failure modes: what an unguided loop does to a codebase, side by side with what a governed one does.",
+	},
+	{
+		letter: "B",
+		href: urlStandard,
+		label: "Read the standard",
+		body: "UDALI layers, the AUTH catalog, the SEAM catalog, and the workflow definitions. Public, free, and adoptable without buying anything.",
+		external: true,
+	},
+	{
+		letter: "C",
+		href: "/tools",
+		label: "The tool surface",
+		body: "Every typed tool an agent can call, grouped by lane. This is the concrete answer to “what may the agent do.”",
+	},
+	{
+		letter: "D",
+		href: "/ides",
+		label: "Wire a harness",
+		body: "One Streamable HTTP endpoint, every MCP-capable client. Cursor and Claude Code have their own walkthroughs.",
+	},
+	{
+		letter: "E",
+		href: "/governance",
+		label: "Encode ownership",
+		body: "Optional. Put UDALI paths and lane defaults in a versioned .aadm/config.json so the boundaries follow the repo, not the engineer.",
+	},
+	{
+		letter: "F",
+		href: "/enterprise",
+		label: "Make the case",
+		body: "Due-diligence answers, rollout stages, and the boundary language for security and procurement conversations.",
+	},
+];
+---
+
+<Layout
+	title="About — Agentic engineering, and where twenty years of judgment now pays"
+	description="Agentic engineering is designing systems where AI can reason and act toward an outcome while staying inside explicit architecture, authority, data, tool, and human-control boundaries. Written for engineers who already know how software should be built."
+	headerActiveNav="about"
+	ogType="article"
+>
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+
+		<!-- =============================================================
+		     §00 — HERO
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"
+			>
+			</div>
+			<div
+				aria-hidden="true"
+				class="absolute right-0 top-0 -z-10 h-[40rem] w-[40rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.07] blur-3xl"
+			>
+			</div>
+			<svg
+				aria-hidden="true"
+				class="pointer-events-none absolute left-1/2 top-12 -z-10 hidden h-[120%] w-[1px] -translate-x-[18rem] rotate-[18deg] sm:block"
+			>
+				<line x1="0" y1="0" x2="0" y2="100%" stroke="rgba(110,231,183,0.18)" stroke-dasharray="2 6"></line>
+			</svg>
+
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-24 pt-10 sm:px-8 sm:pb-32 sm:pt-16">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">About / The discipline</span>
+					<span class="hidden font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-600 sm:mt-auto sm:block">
+						<span class="text-slate-500">Written for</span><br />
+						<span class="text-slate-400">Engineers with scars</span>
+					</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="text-emerald-200/90">▸</span> A definition, for people who have shipped enough to be suspicious of new ones
+					</p>
+
+					<h1
+						class="font-display max-w-[17ch] text-balance text-[clamp(2.5rem,8vw,6.6rem)] font-black leading-[0.9] tracking-[-0.045em] text-white"
+					>
+						You didn't spend<br class="hidden sm:inline" />
+						twenty years
+						<span class="font-extralight italic text-slate-400"> learning to type.</span>
+					</h1>
+
+					<div class="mt-14 grid grid-cols-12 gap-6">
+						<div class="col-span-12 sm:col-span-4">
+							<div class="border-l border-emerald-300/40 pl-5">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-emerald-200/80">The claim</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+									Agentic engineering does not make your experience less valuable. It moves where that experience creates
+									leverage — from the code you personally write to the systems that write code on your behalf.
+								</p>
+							</div>
+						</div>
+						<div class="col-span-12 sm:col-span-8">
+							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+								You spent them learning where boundaries belong, which abstractions survive contact with scale, and how
+								systems fail at three in the morning. Those judgments used to be applied
+								<span class="text-white underline decoration-emerald-300/50 decoration-2 underline-offset-[6px]">
+									while writing the software</span
+								>. They can now be applied
+								<span class="text-white underline decoration-emerald-300/50 decoration-2 underline-offset-[6px]">
+									while governing machines that write it</span
+								>
+								<span class="font-extralight italic text-slate-400"> — which is a much larger surface.</span>
+							</p>
+						</div>
+					</div>
+
+					<!-- The one-sentence definition, stated up front -->
+					<div class="mt-16 grid grid-cols-12 gap-4 sm:gap-6">
+						<div class="col-span-12 lg:col-span-8">
+							<article
+								class="group relative overflow-hidden border border-emerald-300/25 bg-gradient-to-br from-emerald-950/25 via-[#0b0e18] to-[#0b0e18] p-7 transition duration-300 hover:border-emerald-300/50 sm:p-10"
+							>
+								<div
+									aria-hidden="true"
+									class="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-emerald-300/[0.08] blur-3xl transition duration-500 group-hover:bg-emerald-300/[0.14]"
+								>
+								</div>
+								<div class="flex items-center gap-3">
+									<span class="block h-2 w-2 rounded-full bg-emerald-300"></span>
+									<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-emerald-200/90">
+										Agentic engineer · the definition
+									</p>
+								</div>
+								<p
+									class="font-display mt-5 text-balance text-[1.35rem] leading-[1.22] tracking-tight text-white sm:text-[1.7rem]"
+								>
+									Designs, builds, governs, and validates systems in which AI can reason and act toward an outcome
+									<span class="font-extralight italic text-emerald-200/90">
+										while remaining inside explicit architecture, authority, data, tool, and human-control boundaries.</span
+									>
+								</p>
+								<p class="mt-6 text-sm leading-relaxed text-slate-400">
+									Note what the definition does not say. It does not say
+									<span class="italic text-slate-300">“someone who builds agents.”</span> That is a component. This is the
+									system the component runs inside.
+								</p>
+							</article>
+						</div>
+						<div class="col-span-12 lg:col-span-4 lg:mt-16">
+							<article class="border border-white/12 bg-[#070b13] p-7 sm:p-8">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-slate-500">Where AADM fits</p>
+								<p class="mt-5 text-sm leading-relaxed text-slate-300">
+									Agentic engineering is the discipline. <span class="text-white">AADM</span> is one operating model for
+									practising it — an open standard plus a hosted MCP that carries the standard to whatever tool you happen
+									to be using.
+								</p>
+								<p class="mt-4 text-sm leading-relaxed text-slate-400">
+									You can adopt the discipline without buying anything. The standard is public.
+								</p>
+							</article>
+						</div>
+					</div>
+
+					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+						<a
+							href="#the-shift"
+							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Start with the shift</span>
+							<svg
+								width="16"
+								height="10"
+								viewBox="0 0 16 10"
+								fill="none"
+								aria-hidden="true"
+								class="transition duration-300 group-hover:translate-x-1"
+							>
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"></path>
+							</svg>
+						</a>
+						<a
+							href="/why-aadm"
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							Why AADM, vs raw loops
+						</a>
+						<a
+							href={urlStandard}
+							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+						>
+							<span>Read the open standard</span>
+							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↗</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §01 — The shift (two pipelines)
+		     ============================================================= -->
+		<section id="the-shift" class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 01</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">The shift</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2
+						class="font-display max-w-[20ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+					>
+						The work didn't move.<br />
+						<span class="font-extralight italic text-slate-400">The leverage did.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						For twenty years, a senior engineer <span class="text-slate-200">was</span> the transformation from requirement
+						to running software. Every step in that chain ran through one person. AI can now perform much of the mechanical
+						execution — which changes the shape of the chain, not the need for someone who understands it.
+					</p>
+
+					<div class="mt-16">
+						<PipelineShift />
+					</div>
+
+					<div class="mt-12 grid grid-cols-12 gap-6">
+						<div class="col-span-12 lg:col-span-7">
+							<p class="text-pretty text-base leading-[1.7] text-slate-300">
+								Read the two together and the change is easy to state:
+								<span class="text-white">
+									the scarce skill moves from producing code to exercising engineering judgment over machines that can
+									produce code.
+								</span>
+								Production capacity stopped being the constraint. Knowing what should be produced, and what should never
+								be, became the constraint.
+							</p>
+						</div>
+						<div class="col-span-12 lg:col-span-5">
+							<div class="border-l-2 border-emerald-300/40 pl-6">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">
+									The economics, restated
+								</p>
+								<p class="mt-4 text-sm leading-relaxed text-slate-400">
+									Your value used to be <span class="italic text-slate-300">“I can build this complicated system.”</span>
+								</p>
+								<p class="mt-4 text-sm leading-relaxed text-slate-200">
+									It becomes <span class="text-white">
+										“I can architect a system that humans and AI agents can safely build, operate, diagnose, and evolve at
+										much greater speed.”
+									</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §02 — What twenty years bought
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 02</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">The inventory</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2
+						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+					>
+						What you know that<br />
+						<span class="font-extralight italic text-slate-400">the model doesn't.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						This is not a list of things AI will eventually learn. It is a list of judgments that require holding a system's
+						future in your head — and each one has a characteristic way an unguided agent gets it wrong.
+					</p>
+
+					<div class="mt-14 hidden grid-cols-12 gap-8 border-t border-white/10 pb-3 pt-5 font-mono-cta text-[10px] uppercase tracking-[0.25em] lg:grid">
+						<div class="col-span-5 text-slate-500">Your judgment</div>
+						<div class="col-span-7 text-amber-200/80">▸ The characteristic agent failure</div>
+					</div>
+
+					<ol class="border-t border-white/10 lg:border-t-0">
+						{
+							judgments.map((j) => (
+								<li class="group grid grid-cols-1 gap-4 border-b border-white/[0.08] py-8 transition duration-300 hover:bg-white/[0.015] lg:grid-cols-12 lg:gap-8">
+									<div class="lg:col-span-5">
+										<div class="flex items-baseline gap-4">
+											<span class="font-display text-3xl font-extralight leading-none text-white/80 sm:text-4xl">
+												{j.num}
+											</span>
+											<h3 class="font-display text-balance text-[1.1rem] font-bold leading-[1.2] tracking-tight text-white sm:text-[1.2rem]">
+												{j.knows}
+											</h3>
+										</div>
+										{j.anchor ? (
+											<p class="font-mono-cta mt-4 pl-[3.25rem] text-[10px] uppercase tracking-[0.22em] text-slate-600">
+												lands at · <span class="text-emerald-200/80">{j.anchor}</span>
+											</p>
+										) : null}
+									</div>
+									<div class="relative lg:col-span-7">
+										<div class="absolute -left-3 top-0 h-full w-px bg-amber-300/30 lg:left-[-1px]" />
+										<p class="font-mono-cta pl-4 text-[10px] uppercase tracking-[0.22em] text-amber-200/80 lg:hidden">
+											The agent failure
+										</p>
+										<p class="mt-2 pl-4 text-[0.95rem] leading-relaxed text-slate-300 lg:mt-0">{j.fails}</p>
+									</div>
+								</li>
+							))
+						}
+					</ol>
+
+					<p class="mt-12 max-w-3xl text-pretty text-base leading-[1.7] text-slate-300">
+						None of these are model-intelligence problems, which is why waiting for a better model does not solve them. They
+						are <span class="text-white">context problems</span>: the agent has no durable reference for where your
+						boundaries are, which controls bind, or what your team means by done. Give it that reference and most of the
+						column on the right stops happening.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §03 — Faster technical debt
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(252,211,77,0.04),transparent_30%)]"
+			>
+			</div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 03</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Without structure</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2
+						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+					>
+						An unguided agent is<br />
+						<span class="font-extralight italic text-slate-400">a very fast junior.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						Hand a capable model an ambiguous task with no architecture, no boundaries, and no gates, and you get exactly
+						what you would get from a bright graduate with root access and no supervision — except at machine speed.
+					</p>
+
+					<div class="mt-14 grid grid-cols-12 gap-8">
+						<div class="col-span-12 lg:col-span-7">
+							<div class="border border-white/10 bg-[#050810]">
+								<div class="flex items-center justify-between border-b border-white/[0.08] px-5 py-3">
+									<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+										Session · unguided loop
+									</span>
+									<span class="flex gap-1" aria-hidden="true">
+										<span class="block h-1.5 w-1.5 rounded-full bg-amber-400/70"></span>
+										<span class="block h-1.5 w-1.5 rounded-full bg-slate-500/70"></span>
+										<span class="block h-1.5 w-1.5 rounded-full bg-slate-500/70"></span>
+									</span>
+								</div>
+								<dl class="divide-y divide-white/[0.06]">
+									<div class="px-5 py-5 sm:px-7">
+										<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/70">Agent</dt>
+										<dd class="mt-2 text-[1.05rem] leading-relaxed text-slate-200">
+											“I can change 37 files in 45 seconds.”
+										</dd>
+									</div>
+									<div class="px-5 py-5 sm:px-7">
+										<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-white/70">Senior engineer</dt>
+										<dd class="mt-2 text-[1.05rem] leading-relaxed text-white">“Why did you change those files?”</dd>
+									</div>
+									<div class="px-5 py-5 sm:px-7">
+										<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/70">Agent</dt>
+										<dd class="mt-2 text-[1.05rem] leading-relaxed text-slate-200">“Because they appeared related.”</dd>
+									</div>
+								</dl>
+							</div>
+						</div>
+						<div class="col-span-12 lg:col-span-5">
+							<svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true" class="text-amber-300/85">
+								<circle cx="28" cy="28" r="26" stroke="currentColor" stroke-width="1.2"></circle>
+								<path d="M28 14v18M28 38v2" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"></path>
+							</svg>
+							<p
+								class="font-display mt-8 text-balance text-[clamp(1.4rem,3vw,2.1rem)] font-bold leading-[1.12] tracking-tight text-white"
+							>
+								That isn't leverage.
+								<span class="font-extralight italic text-amber-200/90"> That's faster technical debt.</span>
+							</p>
+							<p class="mt-6 text-[0.95rem] leading-[1.7] text-slate-400">
+								“They appeared related” is a perfectly honest answer. Proximity in a vector space is the only signal the
+								agent had, because nobody gave it a better one. The fix is not a stern prompt. It is a durable frame the
+								agent loads before it starts reasoning.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §04 — The directive
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 04</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">The brief</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2
+						class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+					>
+						The nine things you<br />
+						<span class="font-extralight italic text-slate-400">have to be able to say.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						This is the whole discipline compressed into a brief. If you can hand a machine all nine of these and have them
+						hold across sessions, engineers, and tools, you are doing agentic engineering. If you cannot, you are
+						prompting — and hoping.
+					</p>
+
+					<ol class="mt-16 border-t border-white/[0.08]">
+						{
+							directive.map((d) => (
+								<li class="group grid grid-cols-12 gap-x-6 gap-y-3 border-b border-white/[0.08] py-7 transition duration-300 hover:bg-white/[0.015]">
+									<div class="col-span-12 sm:col-span-1">
+										<span class="font-mono-cta text-[11px] text-emerald-200/70">{d.num}</span>
+									</div>
+									<div class="col-span-12 sm:col-span-4">
+										<p class="font-display text-balance text-[1.1rem] font-bold leading-[1.25] tracking-tight text-white sm:text-[1.2rem]">
+											{d.line}
+										</p>
+									</div>
+									<div class="col-span-12 sm:col-span-5">
+										<p class="text-[0.95rem] leading-relaxed text-slate-400">{d.supplied}</p>
+									</div>
+									<div class="col-span-12 sm:col-span-2">
+										<p class="font-mono-cta text-[11px] leading-relaxed text-emerald-200/85">{d.mechanism}</p>
+									</div>
+								</li>
+							))
+						}
+					</ol>
+
+					<div class="mt-10 grid grid-cols-12 gap-6">
+						<div class="col-span-12 lg:col-span-8">
+							<p class="text-pretty text-base leading-[1.7] text-slate-300">
+								The right-hand column is the part that is easy to underestimate. Any of these nine can be written into a
+								prompt once. The engineering problem is making them
+								<span class="text-white"> survive</span> — across a new session, a different engineer, a different IDE, and
+								the model release that quietly changed how your prompt is interpreted.
+							</p>
+						</div>
+						<div class="col-span-12 lg:col-span-4">
+							<a
+								href="/tools"
+								class="group block h-full border border-white/10 bg-[#070b13] p-6 transition duration-300 hover:border-emerald-300/40 hover:bg-[#080f16]"
+							>
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">See the surface</p>
+								<p class="mt-4 text-sm leading-relaxed text-slate-300">
+									Every tool named in that column, grouped by lane, with what it returns.
+								</p>
+								<span
+									class="font-mono-cta mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-white"
+								>
+									Tools catalog
+									<span aria-hidden="true" class="transition group-hover:translate-x-1">→</span>
+								</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §05 — The progression
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(110,231,183,0.04)_1px,transparent_1px)] bg-[length:36px_36px] [mask-image:radial-gradient(ellipse_at_center,black_55%,transparent_85%)]"
+			>
+			</div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-violet-200/70">§ 05</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">The progression</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2
+						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+					>
+						Four rungs.<br />
+						<span class="font-extralight italic text-slate-400">Each one keeps the last.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						These titles get used interchangeably in job postings, which is unhelpful, because they describe genuinely
+						different scopes of responsibility. The distinction that matters is what breaks when you get it wrong.
+					</p>
+
+					<div class="mt-16">
+						<EngineerProgression />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §06 — Separating the role from the system
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 06</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Seven pieces</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2
+						class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+					>
+						Separate the person<br />
+						<span class="font-extralight italic text-slate-400">from the system they operate.</span>
+					</h2>
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+						Most confusion in this space comes from collapsing seven distinct things into the word
+						<span class="italic text-slate-300">“AI.”</span> They answer different questions, they fail differently, and
+						they are owned by different people. Naming them separately is the first useful thing this vocabulary does.
+					</p>
+
+					<div class="mt-16 border-t border-white/[0.08]">
+						{
+							stackRows.map((row) => {
+								const t = stackTones[row.tone];
+								return (
+									<div class="group relative grid grid-cols-12 gap-x-6 gap-y-2 border-b border-white/[0.08] py-7 pl-5 transition duration-300 hover:bg-white/[0.015]">
+										<div
+											aria-hidden="true"
+											class:list={[
+												"absolute inset-y-0 left-0 w-[2px] transition-all duration-300 group-hover:w-[4px]",
+												t.bar,
+											]}
+										/>
+										<div class="col-span-12 sm:col-span-3">
+											<p class:list={["font-display text-[1.15rem] font-bold tracking-tight", t.label]}>
+												{row.piece}
+											</p>
+										</div>
+										<div class="col-span-12 sm:col-span-3">
+											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+												{row.question}
+											</p>
+										</div>
+										<div class="col-span-12 sm:col-span-6">
+											<p class="text-[0.95rem] leading-relaxed text-slate-300">{row.inAadm}</p>
+										</div>
+									</div>
+								);
+							})
+						}
+					</div>
+
+					<p class="mt-10 max-w-3xl text-pretty text-base leading-[1.7] text-slate-400">
+						Read the middle column top to bottom and you have a chain of custody for a decision: a person is accountable, a
+						model is governed, a vocabulary says where things belong, a harness constrains execution, an endpoint supplies
+						the context, an agent acts, and a tool list bounds what acting can mean.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §07 — Cross-layer (UDALI)
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-violet-200/70">§ 07</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Cross-layer</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2
+						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+					>
+						An agentic engineer is not<br />
+						<span class="font-extralight italic text-slate-400">“the AI person.”</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						There is a temptation to file this role next to the models — one band, one specialism, someone else's problem
+						the rest of the time. That misreads it. The whole point is that an agent's change can land in any of twenty-two
+						layers, so someone has to hold the shape of all of them. <span class="text-slate-200">UDALI</span> is the
+						vocabulary for doing that out loud.
+					</p>
+
+					<div class="mt-16">
+						<UdaliSpan />
+					</div>
+
+					<div class="mt-12 grid grid-cols-12 gap-6">
+						<div class="col-span-12 lg:col-span-8">
+							<p class="text-pretty text-base leading-[1.7] text-slate-300">
+								The value of a layer vocabulary is not taxonomy for its own sake. It is that
+								<span class="text-white">“this belongs at L11, not L18”</span> is a reviewable statement, and
+								<span class="italic text-slate-400"> “that feels like it's in the wrong place”</span> is not. Features move
+								through clean handoffs between bands instead of being dropped whole into one monolithic implementation
+								pass.
+							</p>
+						</div>
+						<div class="col-span-12 lg:col-span-4">
+							<a
+								href="/governance"
+								class="group block h-full border border-white/10 bg-surface-deep p-6 transition duration-300 hover:border-emerald-300/40 hover:bg-[#080f16]"
+							>
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Make it concrete</p>
+								<p class="mt-4 text-sm leading-relaxed text-slate-300">
+									Map these bands onto the real paths in your repository so ownership travels with the code.
+								</p>
+								<span
+									class="font-mono-cta mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-white"
+								>
+									Init your repo
+									<span aria-hidden="true" class="transition group-hover:translate-x-1">→</span>
+								</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §08 — The governance path
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 08</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">The path</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2
+						class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+					>
+						An operating system<br />
+						<span class="font-extralight italic text-slate-400">for architectural reasoning.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						Between you and the agent sits a harness, and between the harness and the standard sits an endpoint. That
+						middle span is the part teams usually improvise — a folder of prompt files, a rules doc somebody maintains, a
+						pinned Slack message. It is also the part that decides whether your discipline survives the next session.
+					</p>
+
+					<div class="mt-16">
+						<GovernanceStack />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §09 — Two loops
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-sky-200/70">§ 09</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Two loops</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<h2
+						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+					>
+						One engineer.<br />
+						<span class="font-extralight italic text-slate-400">Two agent loops.</span>
+					</h2>
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+						This is the distinction that most cleanly separates agentic engineering from prompt engineering. There is a loop
+						that builds your product and a loop that runs inside it, and the same person is responsible for the design of
+						both — even though only one of them is visible in a pull request.
+					</p>
+
+					<div class="mt-16">
+						<DualLoops />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §10 — Honest boundary
+		     ============================================================= -->
+		<section class="relative border-b border-white/[0.06]">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 10</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Boundary</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<div class="grid grid-cols-12 gap-8">
+						<div class="col-span-12 lg:col-span-7">
+							<p
+								class="font-display text-balance text-[clamp(1.5rem,3.6vw,2.6rem)] font-bold leading-[1.1] tracking-tight text-white"
+							>
+								This is not a pitch
+								<span class="font-extralight italic text-slate-400"> for AI.</span>
+							</p>
+							<p class="mt-8 text-[1rem] leading-[1.75] text-slate-300">
+								You do not need to be convinced that models are useful; you have already formed a view, probably an
+								evidence-based one. The argument here is narrower and it is about leverage. You spent twenty years learning
+								how software should be built. Agentic engineering is how that knowledge stops being applied one pull request
+								at a time and starts being
+								<span class="text-white"> encoded into architecture, constraints, tools, and harnesses</span> that let
+								machines execute repeatedly without abandoning engineering discipline.
+							</p>
+							<p class="mt-6 text-[0.98rem] leading-[1.7] text-slate-400">
+								AADM is one way to do that. It is a standard and a context service — deliberately not an enforcement
+								product. Being clear about that boundary is the only way the rest of it stays credible.
+							</p>
+						</div>
+						<div class="col-span-12 lg:col-span-5">
+							<div class="border-l-2 border-amber-300/40 pl-6">
+								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-amber-200/85">
+									What AADM deliberately does not do
+								</p>
+								<ul class="mt-6 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+									{
+										[
+											"Run your business logic or mutate your database.",
+											"Scan your repository and hand out pass / fail verdicts.",
+											"Issue compliance certificates or legal verdicts.",
+											"Replace code review, CI, or server-side authorization.",
+											"Make the engineering judgment for you.",
+										].map((item, idx) => (
+											<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-4">
+												<span class="font-mono-cta text-[11px] text-amber-300/80">
+													{String(idx + 1).padStart(2, "0")}
+												</span>
+												<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">
+													{item}
+												</span>
+											</li>
+										))
+									}
+								</ul>
+								<p class="mt-6 text-sm leading-relaxed text-slate-500">
+									Your production authorization, gateways, tests, and CI stay authoritative. The last line on that list is
+									not a limitation to be engineered away — it is the job description.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =============================================================
+		     §11 — Where to go next
+		     ============================================================= -->
+		<section class="relative bg-surface-deep">
+			<div
+				aria-hidden="true"
+				class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.08),transparent_60%)]"
+			>
+			</div>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:px-8 sm:py-40">
+				<aside
+					class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+				>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 11</span>
+					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Where next</span>
+				</aside>
+
+				<div class="col-span-12 sm:col-span-10">
+					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">
+						<span class="text-emerald-200/90">▸</span> Six directions
+					</p>
+					<h2
+						class="font-display mt-6 max-w-[15ch] text-balance text-[clamp(2.4rem,6.8vw,6rem)] font-black leading-[0.92] tracking-[-0.04em] text-white"
+					>
+						Encode the<br />
+						judgment
+						<span class="relative inline-block">
+							<span class="relative z-10 text-emerald-300">once.</span>
+							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.08em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
+						</span>
+					</h2>
+					<p class="mt-10 max-w-xl text-base leading-relaxed text-slate-300">
+						The standard is free to read and lives in public. The hosted MCP exists so the same text reaches every agent,
+						every session, without anyone maintaining a fork.
+					</p>
+
+					<div class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+						{
+							nextSteps.map((step) => (
+								<a
+									href={step.href}
+									class="group bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-8"
+								>
+									<div class="flex items-baseline gap-4">
+										<span class="font-display text-[3rem] font-extralight leading-[0.85] text-emerald-200/80 transition duration-300 group-hover:text-emerald-300">
+											{step.letter}
+										</span>
+										<h3 class="font-display text-[1.05rem] font-bold leading-tight tracking-tight text-white">
+											{step.label}
+											{step.external ? (
+												<span aria-hidden="true" class="ml-1 text-slate-500">
+													↗
+												</span>
+											) : null}
+										</h3>
+									</div>
+									<p class="mt-5 text-sm leading-relaxed text-slate-400">{step.body}</p>
+									<div
+										aria-hidden="true"
+										class="mt-7 h-px w-10 bg-emerald-300/40 transition-all duration-500 group-hover:w-20 group-hover:bg-emerald-300/70"
+									/>
+								</a>
+							))
+						}
+					</div>
+
+					<div class="mt-16 flex flex-col flex-wrap items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
+						<a
+							href={urlMcpMarketing}
+							class="group inline-flex items-center gap-3 bg-white px-8 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							<span>Connect production agents</span>
+							<svg
+								width="16"
+								height="10"
+								viewBox="0 0 16 10"
+								fill="none"
+								aria-hidden="true"
+								class="transition duration-300 group-hover:translate-x-1"
+							>
+								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"></path>
+							</svg>
+						</a>
+						<a
+							href="/case-studies"
+							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-8 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+						>
+							See it in a session
+						</a>
+					</div>
+
+					<!-- Colophon -->
+					<div
+						class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600"
+					>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Essay</span> · Agentic engineering v1
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">For</span> · Engineers with twenty years of judgment
+						</div>
+						<div class="col-span-12 sm:col-span-4">
+							<span class="text-slate-500">Layer map</span> ·
+							<span class="text-emerald-300/80">UDALI L1–L22</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
