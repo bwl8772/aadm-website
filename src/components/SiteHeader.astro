@@ -33,8 +33,12 @@ const {
 
 const mcpNavHref = mcpNavHrefProp ?? urlMcpMarketing;
 
-const ringActive = (color: string) =>
-	`ring-1 ring-${color}/60 ring-offset-2 ring-offset-surface-deep`;
+/**
+ * Active page = solid white chip. Literal classes only — Tailwind cannot see
+ * interpolated names, which is why the old `ring-${color}` state never rendered.
+ */
+const ringActive = (_color: string) =>
+	"!border-white !bg-white !text-slate-950 hover:!bg-white";
 
 const standardChip = activeNav === "standard" ? ringActive("emerald-300") : "";
 const aboutChip = activeNav === "about" ? ringActive("emerald-300") : "";
@@ -108,7 +112,7 @@ const navItems: NavItem[] = [
 		ariaLabel: "MCP marketing — overview and access (aadm.io/mcp)",
 		chip: mcpChip,
 		className:
-			"border border-transparent bg-white text-slate-950 shadow-sm hover:bg-emerald-200",
+			"border border-emerald-300/40 bg-emerald-950/20 text-emerald-100 hover:border-emerald-300/70 hover:bg-emerald-900/30",
 	},
 	{
 		key: "ides",
@@ -232,7 +236,7 @@ const mobileLinkClass =
 				aria-label="Hosted MCP — overview and access"
 				aria-current={activeNav === "mcp" ? "page" : undefined}
 				class:list={[
-					"inline-flex min-h-11 shrink-0 items-center rounded-none bg-white px-3 py-2 text-xs font-semibold text-slate-950 shadow-sm transition hover:bg-emerald-200",
+					"inline-flex min-h-11 shrink-0 items-center rounded-none border border-emerald-300/40 bg-emerald-950/20 px-3 py-2 text-xs font-semibold text-emerald-100 transition hover:bg-emerald-900/30",
 					mcpChip,
 				]}
 			>
