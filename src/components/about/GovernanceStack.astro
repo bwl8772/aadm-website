@@ -101,12 +101,12 @@ const carriedStyles = {
 						<p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-[0.8rem]">{tier.sub}</p>
 					</div>
 					<div aria-hidden="true" class="flex h-7 items-center justify-center">
-						<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-600">
+						<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-500">
 							<path d="M5 0v21M1 17l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square" />
 						</svg>
 					</div>
 					{idx === above.length - 1 ? (
-						<p class="font-mono-cta mb-3 text-center text-[10px] uppercase tracking-[0.24em] text-slate-500">
+						<p class="font-mono-cta mb-3 text-center text-[13px] normal-case tracking-[0.01em] text-slate-400">
 							carries three things
 						</p>
 					) : null}
@@ -123,13 +123,13 @@ const carriedStyles = {
 					<div class="flex items-baseline justify-between gap-2">
 						<span
 							class:list={[
-								"font-mono-cta border px-2 py-1 text-[10px] uppercase tracking-[0.2em]",
+								"font-mono-cta border px-2 py-1 text-[13px] normal-case tracking-[0.01em]",
 								carriedStyles[item.tone],
 							]}
 						>
 							{item.term}
 						</span>
-						<span class="font-mono-cta text-[10px] uppercase tracking-[0.2em] text-slate-500">
+						<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 							<span aria-hidden="true">→</span> {item.maps}
 						</span>
 					</div>
@@ -140,7 +140,7 @@ const carriedStyles = {
 	</div>
 
 	<div aria-hidden="true" class="flex h-7 items-center justify-center">
-		<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-600">
+		<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-500">
 			<path d="M5 0v21M1 17l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"></path>
 		</svg>
 	</div>
@@ -158,7 +158,7 @@ const carriedStyles = {
 					</div>
 					{idx === below.length - 1 ? null : (
 						<div aria-hidden="true" class="flex h-7 items-center justify-center">
-							<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-600">
+							<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-500">
 								<path d="M5 0v21M1 17l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square" />
 							</svg>
 						</div>

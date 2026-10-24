@@ -13,6 +13,7 @@ type ActiveNav =
 	| "enterprise"
 	| "standard"
 	| "stories"
+	| "member"
 	| null;
 
 interface Props {
@@ -44,6 +45,7 @@ const idesChip = activeNav === "ides" ? ringActive("emerald-300") : "";
 const enterpriseChip =
 	activeNav === "enterprise" ? ringActive("amber-300") : "";
 const storiesChip = activeNav === "stories" ? ringActive("emerald-300") : "";
+const memberChip = activeNav === "member" ? ringActive("emerald-300") : "";
 
 /**
  * Chip padding stays tight through xl and only opens up at 2xl — the full row
@@ -210,9 +212,11 @@ const mobileLinkClass =
 			<Show when="signed-in">
 				<a
 					href={memberAreaUrl}
+					aria-current={activeNav === "member" ? "page" : undefined}
 					class:list={[
 						baseChipClasses,
 						"inline-flex items-center justify-center border-emerald-300/30 bg-emerald-950/20 hover:bg-emerald-900/30",
+						memberChip,
 					]}
 					title="Member area — API keys, profile, MCP OAuth"
 				>
@@ -298,7 +302,7 @@ const mobileLinkClass =
 		<div
 			class="flex items-center justify-between border-b border-white/[0.08] px-5 pb-4 pt-[max(1rem,env(safe-area-inset-top,0px))]"
 		>
-			<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">
+			<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 				Navigation
 			</p>
 			<button
@@ -363,7 +367,11 @@ const mobileLinkClass =
 				<div class="flex flex-col gap-2">
 					<a
 						href={memberAreaUrl}
-						class="block min-h-11 rounded-none border border-emerald-300/30 bg-emerald-950/20 px-4 py-3 text-center text-sm font-semibold leading-none text-emerald-100 transition hover:bg-emerald-900/30"
+						aria-current={activeNav === "member" ? "page" : undefined}
+						class:list={[
+							"block min-h-11 rounded-none border border-emerald-300/30 bg-emerald-950/20 px-4 py-3 text-center text-sm font-semibold leading-none text-emerald-100 transition hover:bg-emerald-900/30",
+							activeNav === "member" ? "bg-emerald-900/40 text-emerald-100" : "",
+						]}
 						title="Member area — API keys, profile, MCP OAuth"
 						data-mobile-nav-link
 					>

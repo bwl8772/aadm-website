@@ -79,7 +79,7 @@ const loops: Loop[] = [
 		column whatever the container width.
 	-->
 	<div aria-hidden="true" class="flex h-11 justify-center lg:hidden">
-		<svg width="10" height="44" viewBox="0 0 10 44" fill="none" class="text-slate-600">
+		<svg width="10" height="44" viewBox="0 0 10 44" fill="none" class="text-slate-500">
 			<path d="M5 0v36M1 32l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"></path>
 		</svg>
 	</div>
@@ -110,7 +110,7 @@ const loops: Loop[] = [
 							]}
 						/>
 
-						<p class:list={["font-mono-cta text-[10px] uppercase tracking-[0.28em]", t.label]}>
+						<p class:list={["font-mono-cta text-[13px] normal-case tracking-[0.01em]", t.label]}>
 							{loop.eyebrow}
 						</p>
 						<h3 class="font-display mt-3 text-[1.35rem] font-bold leading-tight tracking-tight text-white sm:text-[1.5rem]">
@@ -128,7 +128,7 @@ const loops: Loop[] = [
 									</div>
 									{stepIdx === loop.steps.length - 1 ? null : (
 										<div aria-hidden="true" class="flex h-5 items-center justify-center">
-											<svg width="10" height="20" viewBox="0 0 10 20" fill="none" class="text-slate-600">
+											<svg width="10" height="20" viewBox="0 0 10 20" fill="none" class="text-slate-500">
 												<path
 													d="M5 0v13M1 9l4 4 4-4"
 													stroke="currentColor"
@@ -144,15 +144,15 @@ const loops: Loop[] = [
 
 						<dl class:list={["mt-8 space-y-5 border-l pl-5", t.rule]}>
 							<div>
-								<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Governed by</dt>
+								<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Governed by</dt>
 								<dd class="mt-2 text-sm leading-relaxed text-slate-300">{loop.governedBy}</dd>
 							</div>
 							<div>
-								<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Clock</dt>
+								<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Clock</dt>
 								<dd class="mt-2 text-sm font-medium leading-relaxed text-white">{loop.clock}</dd>
 							</div>
 							<div>
-								<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+								<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 									How it fails
 								</dt>
 								<dd class="mt-2 text-sm leading-relaxed text-slate-400">{loop.failure}</dd>

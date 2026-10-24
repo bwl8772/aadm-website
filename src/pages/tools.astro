@@ -327,28 +327,28 @@ const totalCount = tools.length;
 			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.06] blur-3xl"></div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 00</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Tools / catalog</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Tools / catalog</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-slate-400">
 						<span class="text-emerald-200/90">▸</span> {totalCount} typed tools · five lanes · all return structured JSON
 					</p>
 
-					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-black leading-[0.9] tracking-[-0.04em] text-white">
-						Every tool. <span class="font-extralight italic text-slate-400">Every contract.</span><br />
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
+						Every tool. <span class="font-light italic text-slate-400">Every contract.</span><br />
 						<span class="relative inline-block">
 							<span class="relative z-10 text-emerald-300">One catalog.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span>
 					</h1>
 
-					<div class="mt-12 grid grid-cols-12 gap-6">
+					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
 							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-emerald-200/80">Authoritative source</p>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">Authoritative source</p>
 								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
 									This page mirrors the hosted server's published surface. After you connect,{' '}
 									<code class="font-mono-cta text-emerald-200/85">tools/list</code> and{' '}
@@ -360,9 +360,9 @@ const totalCount = tools.length;
 							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
 								AADM exposes a small, deliberate set of tools. Each one is named so a human reviewer can read the call log and
 								understand what just happened. None of them edit your repo —
-								<span class="font-extralight italic text-slate-400"> your agent does that.</span>
+								<span class="font-light italic text-slate-400"> your agent does that.</span>
 							</p>
-							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-slate-500">
+							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-slate-400">
 								This catalog is the concrete answer to
 								<span class="italic text-slate-400"> “what may the agent do.”</span> For why bounding that surface is the
 								job rather than a constraint on it, see{' '}
@@ -376,10 +376,10 @@ const totalCount = tools.length;
 					</div>
 
 					<!-- Lane jump chips -->
-					<nav class="mt-12 flex flex-wrap items-center gap-2" aria-label="Tool lanes">
+					<nav class="mt-14 flex flex-wrap items-center gap-2" aria-label="Tool lanes">
 						<a
 							href="#entry-points"
-							class="group inline-flex items-center gap-2 border border-amber-300/50 bg-amber-300/[0.06] px-3 py-1.5 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-100 transition hover:bg-amber-300/[0.12]"
+							class="group inline-flex items-center gap-2 border border-amber-300/50 bg-amber-300/[0.06] px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-100 transition hover:bg-amber-300/[0.12]"
 						>
 							<span class="block h-1.5 w-1.5 rounded-full bg-amber-300/90"></span>
 							<span>Entry points</span>
@@ -390,14 +390,14 @@ const totalCount = tools.length;
 								<a
 									href={`#lane-${m.key.toLowerCase()}`}
 									class:list={[
-										"group inline-flex items-center gap-2 border bg-transparent px-3 py-1.5 font-mono-cta text-[10px] uppercase tracking-[0.22em] transition hover:bg-white/[0.04]",
+										"group inline-flex items-center gap-2 border bg-transparent px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em] transition hover:bg-white/[0.04]",
 										m.chip,
 									]}
 								>
 									<span class:list={["block h-1.5 w-1.5 rounded-full", m.accent.replace("text-", "bg-").replace("/90", "")]}></span>
 									<span>{m.key}</span>
-									<span class="text-slate-500">·</span>
-									<span class="text-slate-500">{toolsByLane[m.key].length}</span>
+									<span class="text-slate-400">·</span>
+									<span class="text-slate-400">{toolsByLane[m.key].length}</span>
 								</a>
 							))
 						}
@@ -438,14 +438,14 @@ const totalCount = tools.length;
 						laneIdx % 2 === 0 ? "bg-[#06080f]" : "",
 					]}
 				>
-					<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-						<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+						<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
 							<span
-								class:list={["font-mono-cta text-[10px] uppercase tracking-[0.28em]", m.accent.replace("/90", "/70")]}
+								class:list={["font-mono-cta text-[13px] normal-case tracking-[0.01em]", m.accent.replace("/90", "/70")]}
 							>
 								§ {String(laneIdx + 1).padStart(2, "0")}
 							</span>
-							<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">
+							<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 								{m.key}
 							</span>
 						</aside>
@@ -453,15 +453,15 @@ const totalCount = tools.length;
 						<div class="col-span-12 sm:col-span-10">
 							<div class="grid grid-cols-12 gap-6">
 								<div class="col-span-12 sm:col-span-2">
-									<p class:list={["font-display text-[5rem] font-extralight leading-[0.85] tracking-tight sm:text-[6.5rem]", m.accent]}>
+									<p class:list={["font-display text-[5rem] font-light leading-[0.85] tracking-tight sm:text-[6.5rem]", m.accent]}>
 										{m.numeral}
 									</p>
 								</div>
 								<div class="col-span-12 sm:col-span-10">
-									<h2 class="font-display text-balance text-[clamp(1.9rem,4.2vw,3.2rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+									<h2 class="font-display text-balance text-[clamp(1.9rem,4.2vw,3.2rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
 										{m.key}
 									</h2>
-									<p class="mt-3 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{m.tagline}</p>
+									<p class="mt-3 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{m.tagline}</p>
 									<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-300">{m.plain}</p>
 								</div>
 							</div>
@@ -486,7 +486,7 @@ const totalCount = tools.length;
 														<code class="font-mono-cta break-all text-[15px] font-semibold text-white">
 															<a href={`#${tool.tool}`} class="transition hover:text-emerald-200">{tool.tool}</a>
 														</code>
-														<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+														<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
 															{String(i + 1).padStart(2, "0")}
 														</span>
 													</div>
@@ -494,7 +494,7 @@ const totalCount = tools.length;
 														{tool.badges.map((b) => (
 															<span
 																class:list={[
-																	"border bg-transparent px-2 py-0.5 font-mono-cta text-[10px] uppercase tracking-[0.22em]",
+																	"border bg-transparent px-2 py-0.5 font-mono-cta text-[13px] normal-case tracking-[0.01em]",
 																	badgeClass[b],
 																]}
 															>
@@ -504,7 +504,7 @@ const totalCount = tools.length;
 													</div>
 													<p class="mt-5 text-sm leading-relaxed text-slate-300">{tool.purpose}</p>
 													<div class:list={["mt-5 border-l pl-4", m.rule]}>
-														<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">When to call</p>
+														<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">When to call</p>
 														<p class:list={["mt-1.5 text-sm leading-relaxed", m.accent.replace("/90", "/85").replace("text-", "text-")]}>
 															{tool.when}
 														</p>
@@ -541,15 +541,15 @@ const totalCount = tools.length;
 		     ============================================================= -->
 		<section class="relative bg-surface-deep">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.07),transparent_60%)]"></div>
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 06</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Authoritative</span>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 06</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Authoritative</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[20ch] text-balance text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.02] tracking-[-0.03em] text-white">
-						This page is a mirror. <span class="font-extralight italic text-slate-400">Your server is the truth.</span>
+					<h2 class="font-display max-w-[20ch] text-balance text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.02] tracking-[-0.01em] text-white">
+						This page is a mirror. <span class="font-light italic text-slate-400">Your server is the truth.</span>
 					</h2>
 					<p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
 						The catalog above tracks the hosted AADM MCP's published surface. After you connect,{' '}
@@ -558,11 +558,11 @@ const totalCount = tools.length;
 						versions, parameter shapes, and new tools land there first.
 					</p>
 
-					<div class="mt-12 grid grid-cols-12 gap-6">
+					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-7">
 							<div class="border border-white/10 bg-[#050810]">
 								<div class="flex items-center justify-between border-b border-white/[0.06] px-5 py-3">
-									<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Discover the running server</span>
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Discover the running server</span>
 									<span class="flex gap-1" aria-hidden="true">
 										<span class="block h-1.5 w-1.5 rounded-full bg-emerald-400/70"></span>
 										<span class="block h-1.5 w-1.5 rounded-full bg-amber-400/70"></span>
@@ -577,12 +577,12 @@ const totalCount = tools.length;
 						</div>
 						<div class="col-span-12 lg:col-span-5">
 							<div class="border-l-2 border-emerald-300/40 pl-6">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">What you'll see</p>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">What you'll see</p>
 								<p class="mt-3 text-sm leading-relaxed text-slate-300">
 									A JSON array of tools with name, description, and inputSchema. The same tools listed here, plus any newer
 									additions your server may already expose.
 								</p>
-								<p class="mt-4 text-xs leading-relaxed text-slate-500">
+								<p class="mt-4 text-xs leading-relaxed text-slate-400">
 									Don't have a token? <a href={urlMcpMarketing} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Get access</a>.
 								</p>
 							</div>
@@ -608,15 +608,15 @@ const totalCount = tools.length;
 					</div>
 
 					<!-- Colophon -->
-					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-500">Catalog</span> · {totalCount} tools
+							<span class="text-slate-400">Catalog</span> · {totalCount} tools
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-500">Lanes</span> · <span class="text-emerald-300/80">{laneMeta.length}</span>
+							<span class="text-slate-400">Lanes</span> · <span class="text-emerald-300/80">{laneMeta.length}</span>
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-500">Authoritative</span> · <span class="text-emerald-300/80">tools/list on your server</span>
+							<span class="text-slate-400">Authoritative</span> · <span class="text-emerald-300/80">tools/list on your server</span>
 						</div>
 					</div>
 				</div>
