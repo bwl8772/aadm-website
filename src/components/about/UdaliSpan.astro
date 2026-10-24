@@ -131,12 +131,12 @@ const bands: Band[] = [
 	<!-- Spanning rail: the engineer is accountable across every band -->
 	<div class="col-span-12 lg:col-span-3">
 		<div class="lg:sticky lg:top-24">
-			<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">
+			<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 				The span
 			</p>
 			<h3 class="font-display mt-4 text-balance text-[1.4rem] font-bold leading-[1.15] tracking-tight text-white sm:text-[1.6rem]">
 				Accountable across all&nbsp;22.
-				<span class="font-extralight italic text-slate-400"> Resident in none.</span>
+				<span class="font-light italic text-slate-400"> Resident in none.</span>
 			</h3>
 			<p class="mt-5 text-[0.95rem] leading-relaxed text-slate-400">
 				A staff engineer is usually deep in two or three bands. An agentic engineer has to hold the shape of all of
@@ -156,7 +156,7 @@ const bands: Band[] = [
 						stroke-linecap="square"
 					></path>
 				</svg>
-				<p class="font-mono-cta self-center text-[10px] uppercase leading-relaxed tracking-[0.2em] text-slate-500">
+				<p class="font-mono-cta self-center text-[13px] normal-case leading-relaxed tracking-[0.01em] text-slate-400">
 					L1<br />↕<br />L22
 				</p>
 			</div>
@@ -184,23 +184,23 @@ const bands: Band[] = [
 									<p class:list={["font-display text-[1.15rem] font-bold tracking-tight", t.label]}>
 										{band.band}
 									</p>
-									<p class="font-mono-cta mt-1.5 text-[11px] uppercase tracking-[0.22em] text-white/70">
+									<p class="font-mono-cta mt-1.5 text-sm normal-case tracking-[0.01em] text-white/70">
 										{band.layers}
 									</p>
-									<p class="mt-2 text-xs italic text-slate-500">{band.zone}</p>
+									<p class="mt-2 text-xs italic text-slate-400">{band.zone}</p>
 								</div>
 
 								<div class="col-span-12 sm:col-span-4">
 									<ul class="space-y-1.5">
 										{band.members.map((member) => (
-											<li class="font-mono-cta text-[11px] leading-relaxed text-slate-400">{member}</li>
+											<li class="font-mono-cta text-sm leading-relaxed text-slate-400">{member}</li>
 										))}
 									</ul>
 								</div>
 
 								<div class="col-span-12 sm:col-span-5">
 									<div class:list={["border-l pl-5", t.rule]}>
-										<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 											The judgment call
 										</p>
 										<p class="mt-3 text-sm leading-relaxed text-slate-300">{band.judgment}</p>

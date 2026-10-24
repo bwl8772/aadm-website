@@ -16,24 +16,24 @@ const { urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-amber-500/[0.06] blur-3xl"></div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-32 pt-16 sm:px-8 sm:pb-40 sm:pt-24">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 404</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Not found</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 404</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Not found</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-slate-400">
 						<span class="text-amber-200/90">▸</span> The agent looked everywhere · no evidence found
 					</p>
 
-					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.6rem,9vw,7rem)] font-black leading-[0.88] tracking-[-0.045em] text-white">
-						<span class="text-amber-300">404.</span> <span class="font-extralight italic text-slate-400">Page not here.</span>
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.6rem,9vw,7rem)] font-bold leading-[0.88] tracking-[-0.01em] text-white">
+						<span class="text-amber-300">404.</span> <span class="font-light italic text-slate-400">Page not here.</span>
 					</h1>
 
-					<div class="mt-12 grid grid-cols-12 gap-6">
+					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
 							<div class="border-l border-amber-300/40 pl-5">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-amber-200/80">What happened</p>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/80">What happened</p>
 								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
 									The URL didn't match a known page. Most likely · a typo, a stale link, or content that moved during the
 									redesign.
@@ -43,7 +43,7 @@ const { urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 						<div class="col-span-12 sm:col-span-8">
 							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
 								Path-A recon · classify before any agent rewrites the URL. Here are the destinations that almost certainly
-								<span class="font-extralight italic text-slate-400"> match what you wanted.</span>
+								<span class="font-light italic text-slate-400"> match what you wanted.</span>
 							</p>
 						</div>
 					</div>
@@ -66,7 +66,7 @@ const { urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 										class="group bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-8"
 									>
 										<div class="flex items-baseline gap-4">
-											<span class:list={["font-display text-[3.5rem] font-extralight leading-[0.85] transition duration-300 group-hover:opacity-100", tone]}>
+											<span class:list={["font-display text-[3.5rem] font-light leading-[0.85] transition duration-300 group-hover:opacity-100", tone]}>
 												{d.num}
 											</span>
 										</div>
@@ -74,8 +74,8 @@ const { urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 											{d.title}
 										</h3>
 										<p class="mt-3 text-sm leading-relaxed text-slate-400">{d.body}</p>
-										<div aria-hidden="true" class="mt-6 inline-flex items-center gap-2 text-slate-500 transition group-hover:text-white">
-											<span class="font-mono-cta text-[11px] uppercase tracking-[0.22em]">Go</span>
+										<div aria-hidden="true" class="mt-6 inline-flex items-center gap-2 text-slate-400 transition group-hover:text-white">
+											<span class="font-mono-cta text-sm normal-case tracking-[0.01em]">Go</span>
 											<span class="transition group-hover:translate-x-0.5">→</span>
 										</div>
 									</a>
@@ -85,7 +85,7 @@ const { urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
 					</div>
 
 					<div class="mt-14 border-l-2 border-emerald-300/40 pl-6">
-						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Or start here</p>
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Or start here</p>
 						<p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300">
 							The homepage anchors the whole story · standard, hosted MCP, three lanes, mental model. From there everything is
 							one click away — including <a href="/why-aadm" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Why AADM</a>.

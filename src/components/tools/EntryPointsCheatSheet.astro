@@ -175,27 +175,27 @@ const cheatRows: CheatRow[] = [
 		class="pointer-events-none absolute left-0 top-1/2 -z-10 h-px w-full bg-gradient-to-r from-transparent via-white/[0.06] to-transparent"
 	></div>
 
-	<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
+	<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 		<aside
-			class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+			class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
 		>
-			<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70"
+			<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70"
 				>§ EP</span
 			>
-			<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500"
+			<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400"
 				>Start here</span
 			>
 		</aside>
 
 		<div class="col-span-12 sm:col-span-10">
-			<p class="font-mono-cta mb-6 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+			<p class="font-mono-cta mb-6 text-[13px] normal-case tracking-[0.01em] text-slate-400">
 				<span class="text-amber-200/90">▸</span> Entry points · what to call first
 			</p>
 
 			<h2
-				class="font-display max-w-[22ch] text-balance text-[clamp(1.9rem,4.5vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white"
+				class="font-display max-w-[22ch] text-balance text-[clamp(1.9rem,4.5vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
 			>
-				Pick the lane. <span class="font-extralight italic text-slate-400">Call one tool.</span>
+				Pick the lane. <span class="font-light italic text-slate-400">Call one tool.</span>
 			</h2>
 			<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-300">
 				AADM frames and routes — it does not scan your repo. These are the first MCP tools to invoke;
@@ -210,17 +210,17 @@ const cheatRows: CheatRow[] = [
 							class="entry-points-card bg-[#050810] p-6 sm:p-7"
 							style={`animation-delay: ${i * 70}ms`}
 						>
-							<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+							<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 								You say · {p.youSay}
 							</p>
 							<p class:list={["mt-3 font-display text-lg font-bold tracking-tight", p.accent]}>
 								{p.persona}
 							</p>
-							<p class="mt-1 font-mono-cta text-[10px] uppercase tracking-[0.18em] text-slate-600">
+							<p class="mt-1 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
 								{p.lane}
 							</p>
 							<div class="mt-5 border-t border-white/[0.06] pt-4">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.2em] text-slate-500">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 									First call
 								</p>
 								<a
@@ -240,7 +240,7 @@ const cheatRows: CheatRow[] = [
 
 			<!-- Default flow -->
 			<div class="mt-16">
-				<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+				<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 					Default flow
 				</p>
 				<ol class="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -256,7 +256,7 @@ const cheatRows: CheatRow[] = [
 								<div class="flex items-start gap-4">
 									<span
 										class:list={[
-											"font-display flex h-9 w-9 shrink-0 items-center justify-center border text-lg font-extralight",
+											"font-display flex h-9 w-9 shrink-0 items-center justify-center border text-lg font-light",
 											step.border,
 											step.accent,
 										]}
@@ -267,7 +267,7 @@ const cheatRows: CheatRow[] = [
 										<p class="font-display text-base font-semibold text-white">{step.label}</p>
 										<p class="mt-2 flex flex-wrap gap-2">
 											{step.tools.map((t) => (
-												<code class="font-mono-cta rounded-none border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] text-emerald-200/90">
+												<code class="font-mono-cta rounded-none border border-white/10 bg-white/[0.03] px-2 py-0.5 text-sm text-emerald-200/90">
 													{t}
 												</code>
 											))}
@@ -285,14 +285,14 @@ const cheatRows: CheatRow[] = [
 			<div class="mt-16">
 				<div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
 					<div>
-						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/80">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">
 							Quick cheat sheet
 						</p>
 						<p class="mt-2 text-sm text-slate-400">
 							You're trying to… → open with this tool first.
 						</p>
 					</div>
-					<p class="font-mono-cta text-[10px] uppercase tracking-[0.18em] text-slate-600">
+					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
 						CallMcpTool · server user-aadm
 					</p>
 				</div>
@@ -303,19 +303,19 @@ const cheatRows: CheatRow[] = [
 							<tr class="border-b border-white/[0.08] bg-white/[0.02]">
 								<th
 									scope="col"
-									class="font-mono-cta px-4 py-3 text-[10px] font-normal uppercase tracking-[0.22em] text-slate-500 sm:px-6"
+									class="font-mono-cta px-4 py-3 text-[13px] font-normal normal-case tracking-[0.01em] text-slate-400 sm:px-6"
 								>
 									You're trying to…
 								</th>
 								<th
 									scope="col"
-									class="font-mono-cta px-4 py-3 text-[10px] font-normal uppercase tracking-[0.22em] text-slate-500 sm:px-6"
+									class="font-mono-cta px-4 py-3 text-[13px] font-normal normal-case tracking-[0.01em] text-slate-400 sm:px-6"
 								>
 									Open with
 								</th>
 								<th
 									scope="col"
-									class="font-mono-cta hidden px-4 py-3 text-[10px] font-normal uppercase tracking-[0.22em] text-slate-500 sm:table-cell sm:px-6"
+									class="font-mono-cta hidden px-4 py-3 text-[13px] font-normal normal-case tracking-[0.01em] text-slate-400 sm:table-cell sm:px-6"
 								>
 									Lane
 								</th>
@@ -342,7 +342,7 @@ const cheatRows: CheatRow[] = [
 										<td class="hidden px-4 py-4 sm:table-cell sm:px-6">
 											<span
 												class:list={[
-													"inline-block border bg-transparent px-2 py-0.5 font-mono-cta text-[10px] uppercase tracking-[0.18em]",
+													"inline-block border bg-transparent px-2 py-0.5 font-mono-cta text-[13px] normal-case tracking-[0.01em]",
 													row.laneClass,
 												]}
 											>
@@ -361,7 +361,7 @@ const cheatRows: CheatRow[] = [
 			<div
 				class="entry-points-card mt-14 border border-emerald-300/25 bg-gradient-to-br from-emerald-500/[0.06] to-transparent p-6 sm:p-8"
 			>
-				<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">
+				<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">
 					TL;DR · four entry points + one pre-step
 				</p>
 				<ul class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">

@@ -1,8 +1,25 @@
 @import "tailwindcss";
 
+/*
+ * AADM design system — readability standard (v2)
+ *
+ * Audience: engineers reading carefully, not skimming a terminal.
+ * Type
+ *   - Smallest text on the site is 13px (labels, meta). Nothing at 10–11px.
+ *   - Labels: sentence case, body sans, weight 500, near-normal tracking.
+ *     No all-caps, no wide letter-spacing, no monospace for labels.
+ *   - Monospace (`font-mono`) only for literal code: URLs, JSON, tokens, tool names.
+ *   - Body copy: slate-300/400 on dark; slate-500 is the floor (meta only).
+ *   - Headlines: IBM Plex Sans (legible, engineering tone); weights 300–700; line-height ≥ 1.05; tracking no tighter than -0.01em.
+ * Space
+ *   - Sections: py-28, sm:py-32. Major blocks inside a section: mt-14.
+ *   - Heading → body: mt-4..6. Cards: p-6 minimum.
+ *   - Prose measure: max-w-2xl / max-w-3xl (≈ 65–80 characters).
+ */
+
 @theme {
 	--font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-	--font-display: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-display: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
 	--font-mono: "JetBrains Mono", ui-monospace, monospace;
 
 	--color-surface-deep: #05040a;
@@ -16,6 +33,7 @@
 }
 
 html {
+	line-height: 1.6;
 	font-family: var(--font-sans);
 	scroll-behavior: smooth;
 	color-scheme: dark;
@@ -26,17 +44,17 @@ body {
 	background-image:
 		radial-gradient(
 			ellipse 100% 80% at 50% -30%,
-			rgba(124, 58, 237, 0.22),
+			rgba(124, 58, 237, 0.14),
 			transparent
 		),
 		radial-gradient(
 			ellipse 70% 50% at 100% 0%,
-			rgba(37, 99, 235, 0.18),
+			rgba(37, 99, 235, 0.1),
 			transparent
 		),
 		radial-gradient(
 			ellipse 60% 40% at 0% 60%,
-			rgba(139, 92, 246, 0.12),
+			rgba(139, 92, 246, 0.06),
 			transparent
 		);
 	background-attachment: fixed;
@@ -46,8 +64,13 @@ body {
 	font-family: var(--font-display);
 }
 
+/* Label / CTA face. Formerly JetBrains Mono; labels now use the body sans so
+   they read as guidance, not terminal output. Keep `font-mono` for real code
+   (URLs, JSON, tokens, tool names). */
 .font-mono-cta {
-	font-family: var(--font-mono);
+	font-family: var(--font-sans);
+	font-weight: 500;
+	letter-spacing: 0.01em;
 }
 
 @media (min-width: 640px) {

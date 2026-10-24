@@ -360,19 +360,19 @@ const surfaces = [
 			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.07] blur-3xl"></div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 00</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Hosted MCP</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Hosted MCP</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
+					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-slate-400">
 						<span class="text-emerald-200/90">▸</span> Subscriber service · Streamable HTTP
 					</p>
 
 					<h1
 						id="mcp-hero-heading"
-						class="scroll-mt-24 font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.6rem)] font-black leading-[0.9] tracking-[-0.04em] text-white sm:scroll-mt-28"
+						class="scroll-mt-24 font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white sm:scroll-mt-28"
 					>
 						Connect to the
 						<span class="relative inline-block">
@@ -381,10 +381,10 @@ const surfaces = [
 						</span>
 					</h1>
 
-					<div class="mt-12 grid grid-cols-12 gap-6">
+					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
 							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-emerald-200/80">Subscriber service</p>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">Subscriber service</p>
 								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
 									Authenticate with <span class="text-white">one</span> method, point your MCP host at the URL below, and reload.
 									The MCP does not scan your repo — your apps and CI still prove enforcement.
@@ -395,9 +395,9 @@ const surfaces = [
 							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
 								Subscribers point any MCP-capable harness at one Streamable HTTP endpoint — Cursor, Claude Code, Windsurf,
 								claude.ai Connectors. Versioned tools, deterministic routing,
-								<span class="font-extralight italic text-slate-400">no per-team prompt sprawl.</span>
+								<span class="font-light italic text-slate-400">no per-team prompt sprawl.</span>
 							</p>
-							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-slate-500">
+							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-slate-400">
 								This is the delivery mechanism, not the argument. For what it is delivering and why that matters, read{' '}
 								<a
 									href="/about"
@@ -408,7 +408,7 @@ const surfaces = [
 						</div>
 					</div>
 
-					<div class="mt-12 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<Show when="signed-out">
 							<a
 								id="get-access"
@@ -441,7 +441,7 @@ const surfaces = [
 						</Show>
 						<a
 							href="#two-ways"
-							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
 						>
 							<span>Connection steps</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↓</span>
@@ -456,13 +456,13 @@ const surfaces = [
 		     ============================================================= -->
 		<section class="relative border-b border-white/[0.06] bg-[#06080f]" aria-labelledby="mcp-endpoint-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-16 sm:px-8 sm:py-20">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 01</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Endpoint</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 01</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Endpoint</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="mcp-endpoint-heading" class="font-display text-[clamp(1.5rem,3.6vw,2.4rem)] font-black leading-[1.05] tracking-[-0.02em] text-white">
+					<h2 id="mcp-endpoint-heading" class="font-display text-[clamp(1.5rem,3.6vw,2.4rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
 						MCP server URL
 					</h2>
 					<p class="mt-3 max-w-3xl text-sm text-slate-400">
@@ -477,12 +477,12 @@ const surfaces = [
 							type="button"
 							id="mcp-url-copy-btn"
 							data-url={mcpRpcUrl}
-							class="font-mono-cta inline-flex items-center gap-2 border border-white/20 bg-transparent px-4 py-2.5 text-xs uppercase tracking-[0.18em] text-white transition hover:border-white/40 hover:bg-white/[0.04]"
+							class="font-mono-cta inline-flex items-center gap-2 border border-white/20 bg-transparent px-4 py-2.5 text-xs normal-case tracking-[0.01em] text-white transition hover:border-white/40 hover:bg-white/[0.04]"
 						>
 							Copy URL
 						</button>
 					</div>
-					<p class="mt-4 text-xs text-slate-500">
+					<p class="mt-4 text-xs text-slate-400">
 						Discovery · <a href={discoveryUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">{mcpOrigin}/</a>
 						· Health · <a href={healthUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">{mcpOrigin}/health</a>
 					</p>
@@ -494,27 +494,27 @@ const surfaces = [
 		     §02 — Two ways to connect
 		     ============================================================= -->
 		<section id="two-ways" class="relative scroll-mt-24 border-b border-white/[0.06] sm:scroll-mt-28" aria-labelledby="two-ways-heading">
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-28">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 02</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Two ways</span>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-28">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 02</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Two ways</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="two-ways-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+					<h2 id="two-ways-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
 						Two ways to connect.<br />
-						<span class="font-extralight italic text-slate-400">Pick one per client.</span>
+						<span class="font-light italic text-slate-400">Pick one per client.</span>
 					</h2>
 					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
 						Don't paste an <code class="font-mono-cta text-slate-300">aadm_</code> token <em>and</em> an OAuth Client ID
 						together — they're different auth paths.
 					</p>
 
-					<div class="mt-12 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
+					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
 						<a href="#connect-bearer" class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
 							<div class="flex items-baseline gap-4">
-								<span class="font-display text-5xl font-extralight leading-none text-sky-300/90 sm:text-6xl">1</span>
-								<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-sky-200/85">Bearer token</span>
+								<span class="font-display text-5xl font-light leading-none text-sky-300/90 sm:text-6xl">1</span>
+								<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/85">Bearer token</span>
 							</div>
 							<h3 class="font-display mt-6 text-[1.35rem] font-bold leading-snug tracking-tight text-white sm:text-[1.5rem]">
 								Standard header token
@@ -524,7 +524,7 @@ const surfaces = [
 								<span class="text-slate-300">Member area → API keys</span>.
 							</p>
 							<div aria-hidden="true" class="mt-7 flex items-center gap-2 text-sky-300/80">
-								<span class="font-mono-cta text-[11px] uppercase tracking-[0.22em]">Set up</span>
+								<span class="font-mono-cta text-sm normal-case tracking-[0.01em]">Set up</span>
 								<svg width="14" height="10" viewBox="0 0 14 10" fill="none" class="transition group-hover:translate-x-0.5">
 									<path d="M1 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" />
 								</svg>
@@ -532,19 +532,17 @@ const surfaces = [
 						</a>
 						<a href="#connect-oauth" class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
 							<div class="flex items-baseline gap-4">
-								<span class="font-display text-5xl font-extralight leading-none text-violet-300/90 sm:text-6xl">2</span>
-								<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-violet-200/85">OAuth</span>
+								<span class="font-display text-5xl font-light leading-none text-violet-300/90 sm:text-6xl">2</span>
+								<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">OAuth</span>
 							</div>
 							<h3 class="font-display mt-6 text-[1.35rem] font-bold leading-snug tracking-tight text-white sm:text-[1.5rem]">
 								Browser sign-in
 							</h3>
 							<p class="mt-3 text-sm leading-relaxed text-slate-400">
-								Claude Code, claude.ai Connectors — copy <span class="text-slate-300">your OAuth Client ID</span> from{' '}
-								<MemberMcpOAuthLink class="text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300" />
-								(sign in required).
+								Claude Code, claude.ai Connectors — copy <span class="text-slate-300">your OAuth Client ID</span> from <span class="text-slate-300">Member area → MCP OAuth</span> (sign in required).
 							</p>
 							<div aria-hidden="true" class="mt-7 flex items-center gap-2 text-violet-300/80">
-								<span class="font-mono-cta text-[11px] uppercase tracking-[0.22em]">Set up</span>
+								<span class="font-mono-cta text-sm normal-case tracking-[0.01em]">Set up</span>
 								<svg width="14" height="10" viewBox="0 0 14 10" fill="none" class="transition group-hover:translate-x-0.5">
 									<path d="M1 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" />
 								</svg>
@@ -563,14 +561,14 @@ const surfaces = [
 			class="relative scroll-mt-24 border-b border-white/[0.06] bg-[#06080f] sm:scroll-mt-28"
 			aria-labelledby="connect-bearer-heading"
 		>
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-sky-200/70">§ 03</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Method A · Bearer</span>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/70">§ 03</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Method A · Bearer</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="connect-bearer-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+					<h2 id="connect-bearer-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
 						Bearer / header token.
 					</h2>
 					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
@@ -584,7 +582,7 @@ const surfaces = [
 					<div class="mt-10 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-5">
 							<div class="border border-white/10 bg-[#070b13] p-6">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-sky-200/85">Member API key</p>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/85">Member API key</p>
 								<p class="mt-3 text-sm leading-relaxed text-slate-400">
 									Use <code class="font-mono-cta text-xs text-slate-300">Bearer</code> + full
 									<code class="font-mono-cta text-xs text-slate-300">ak_…</code> from
@@ -596,20 +594,20 @@ const surfaces = [
 						<div class="col-span-12 lg:col-span-7">
 							<div class="border border-white/10 bg-[#050810]">
 								<div class="flex items-center justify-between border-b border-white/[0.08] px-5 py-3">
-									<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 										Cursor · <code class="text-slate-300">~/.cursor/mcp.json</code>
 									</span>
 									<button
 										type="button"
 										id="mcp-connect-copy-btn"
-										class="font-mono-cta border border-white/20 bg-transparent px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] text-white transition hover:border-white/40 hover:bg-white/[0.04]"
+										class="font-mono-cta border border-white/20 bg-transparent px-3 py-1.5 text-[13px] normal-case tracking-[0.01em] text-white transition hover:border-white/40 hover:bg-white/[0.04]"
 									>
 										Copy JSON
 									</button>
 								</div>
 								<pre class="font-mono-cta overflow-x-auto p-5 text-xs leading-relaxed text-slate-300 sm:text-sm" id="mcp-connect-config-pre"><code id="mcp-connect-config-code">{cursorMcpFullConfigSnippet}</code></pre>
 							</div>
-							<p class="mt-3 text-xs text-slate-500">
+							<p class="mt-3 text-xs text-slate-400">
 								<code class="font-mono-cta text-slate-300">url</code> must be{' '}
 								<code class="font-mono-cta text-emerald-300">{mcpRpcUrl}</code>. For{' '}
 								<code class="font-mono-cta text-slate-300">ak_</code> account API keys, use Bearer form:
@@ -639,8 +637,8 @@ const surfaces = [
 							].map((s) => (
 								<li class="bg-[#06080f] p-6 sm:p-7">
 									<div class="flex items-baseline gap-3">
-										<span class="font-display text-3xl font-extralight leading-none text-sky-300/80 sm:text-4xl">{s.num}</span>
-										<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-sky-200/85">{s.label}</span>
+										<span class="font-display text-3xl font-light leading-none text-sky-300/80 sm:text-4xl">{s.num}</span>
+										<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/85">{s.label}</span>
 									</div>
 									<p class="mt-4 text-sm leading-relaxed text-slate-300">{s.body}</p>
 								</li>
@@ -659,20 +657,20 @@ const surfaces = [
 			class="relative scroll-mt-24 border-b border-white/[0.06] sm:scroll-mt-28"
 			aria-labelledby="connect-oauth-heading"
 		>
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-violet-200/70">§ 04</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Method B · OAuth</span>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 04</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Method B · OAuth</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="connect-oauth-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+					<h2 id="connect-oauth-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
 						OAuth.<br />
-						<span class="font-extralight italic text-slate-400">For Claude Code, claude.ai.</span>
+						<span class="font-light italic text-slate-400">For Claude Code, claude.ai.</span>
 					</h2>
 
 					<div class="mt-8 border-2 border-amber-300/40 bg-amber-950/[0.15] p-6">
-						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/90">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/90">
 							<span class="text-amber-300">⚠</span> Do not use an API key here
 						</p>
 						<p class="mt-3 text-sm leading-relaxed text-amber-100/95">
@@ -719,7 +717,7 @@ const surfaces = [
 								</a>
 							</Show>
 						</div>
-						<p class="mt-5 text-xs text-slate-500">
+						<p class="mt-5 text-xs text-slate-400">
 							MCP server URL · <code class="font-mono-cta text-violet-300/95">{mcpRpcUrl}</code>
 						</p>
 					</div>
@@ -728,7 +726,7 @@ const surfaces = [
 						<article class="bg-surface-deep p-7 sm:p-9">
 							<div class="flex items-center gap-3">
 								<span class="block h-2 w-2 rounded-full bg-violet-300"></span>
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-violet-200/85">Claude Code</p>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">Claude Code</p>
 							</div>
 							<ol class="mt-6 space-y-3 text-sm leading-relaxed text-slate-300">
 								{
@@ -740,7 +738,7 @@ const surfaces = [
 										<>Sign in with the <span class="text-white">same AADM account</span> when the OAuth consent screen appears.</>,
 									].map((item, idx) => (
 										<li class="grid grid-cols-[auto_1fr] items-baseline gap-3">
-											<span class="font-mono-cta text-[10px] text-violet-300/80">{String(idx + 1).padStart(2, "0")}</span>
+											<span class="font-mono-cta text-[13px] text-violet-300/80">{String(idx + 1).padStart(2, "0")}</span>
 											<span>{item}</span>
 										</li>
 									))
@@ -750,7 +748,7 @@ const surfaces = [
 						<article class="bg-surface-deep p-7 sm:p-9">
 							<div class="flex items-center gap-3">
 								<span class="block h-2 w-2 rounded-full bg-violet-300"></span>
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-violet-200/85">claude.ai Connectors</p>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">claude.ai Connectors</p>
 							</div>
 							<ol class="mt-6 space-y-3 text-sm leading-relaxed text-slate-300">
 								{
@@ -762,7 +760,7 @@ const surfaces = [
 										<>Leave Client Secret empty · click Connect and sign in with the same AADM account</>,
 									].map((item, idx) => (
 										<li class="grid grid-cols-[auto_1fr] items-baseline gap-3">
-											<span class="font-mono-cta text-[10px] text-violet-300/80">{String(idx + 1).padStart(2, "0")}</span>
+											<span class="font-mono-cta text-[13px] text-violet-300/80">{String(idx + 1).padStart(2, "0")}</span>
 											<span>{item}</span>
 										</li>
 									))
@@ -783,17 +781,17 @@ const surfaces = [
 			aria-labelledby="repo-config-heading"
 		>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-20 sm:px-8 sm:py-24">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 05</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Optional · Repo init</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 05</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Optional · Repo init</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/80">
+					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">
 						<span class="text-emerald-300">▸</span> Optional · not required to connect
 					</p>
-					<h2 id="repo-config-heading" class="font-display mt-5 text-[clamp(1.5rem,3.6vw,2.6rem)] font-black leading-[1.05] tracking-[-0.02em] text-white">
-						Repo governance config <span class="font-extralight italic text-slate-400">(aadm-init-repo)</span>
+					<h2 id="repo-config-heading" class="font-display mt-5 text-[clamp(1.5rem,3.6vw,2.6rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
+						Repo governance config <span class="font-light italic text-slate-400">(aadm-init-repo)</span>
 					</h2>
 					<p class="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400">
 						You <span class="text-white">do not</span> need this to connect the hosted MCP. Use it when you want
@@ -802,7 +800,7 @@ const surfaces = [
 					</p>
 					<pre class="font-mono-cta mt-7 max-w-xl overflow-x-auto border border-white/10 bg-[#050810] p-5 text-sm text-slate-300"><code>npx aadm-init-repo --minimal
 npx aadm-init-repo --full</code></pre>
-					<p class="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-mono-cta text-[11px] uppercase tracking-[0.18em] text-slate-500">
+					<p class="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-mono-cta text-sm normal-case tracking-[0.01em] text-slate-400">
 						<a href="/governance" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Customize on /governance</a>
 						<a href={aadmConfigSchemaUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300" target="_blank" rel="noopener noreferrer">Config JSON Schema</a>
 						<a href="https://www.npmjs.com/package/aadm-init-repo" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300" target="_blank" rel="noopener noreferrer">npm package</a>
@@ -839,15 +837,15 @@ npx aadm-init-repo --full</code></pre>
 		     §06 — Governed surfaces + outcomes
 		     ============================================================= -->
 		<section class="relative border-b border-white/[0.06]" aria-labelledby="mcp-cap-heading">
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 06</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">What you get</span>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 06</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">What you get</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="mcp-cap-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
-						One connection, <span class="font-extralight italic text-slate-400">governed surfaces.</span>
+					<h2 id="mcp-cap-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
+						One connection, <span class="font-light italic text-slate-400">governed surfaces.</span>
 					</h2>
 					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
 						Subscribers point hosts at the MCP endpoint and get deterministic access to the standard library — not a chatty
@@ -859,7 +857,7 @@ npx aadm-init-repo --full</code></pre>
 							surfaces.map((s) => (
 								<article class="group bg-surface-deep p-6 transition duration-300 hover:bg-[#0a0e1a] sm:p-7">
 									<div class="flex items-baseline gap-4">
-										<span class="font-display text-[3rem] font-extralight leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
+										<span class="font-display text-[3rem] font-light leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
 											{s.letter}
 										</span>
 									</div>
@@ -872,8 +870,8 @@ npx aadm-init-repo --full</code></pre>
 						}
 					</div>
 
-					<div class="mt-12 border-l-2 border-emerald-300/40 pl-6">
-						<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Citation namespaces</p>
+					<div class="mt-14 border-l-2 border-emerald-300/40 pl-6">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Citation namespaces</p>
 						<p class="mt-3 text-sm leading-relaxed text-slate-400">
 							Keep audit labels distinct ·
 							<span class="text-white"> AUTH</span> = must-enforce ·
@@ -882,7 +880,7 @@ npx aadm-init-repo --full</code></pre>
 							<span class="text-white"> VERT/HORI</span> = attestation depth and boundary kind (from
 							<code class="font-mono-cta text-emerald-200/85">sentinel_closure</code>).
 						</p>
-						<p class="mt-3 text-xs text-slate-500">
+						<p class="mt-3 text-xs text-slate-400">
 							Column-only traces miss dispatch-time ids. Use <span class="text-slate-300">SEAM-04 / SEAM-05</span> when aliases are
 							normalized in-process. Public policy ·{' '}
 							<a href="https://github.com/bwl8772/aadm-standard/blob/main/standards/seam-catalog.md" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
@@ -893,7 +891,7 @@ npx aadm-init-repo --full</code></pre>
 
 					<!-- Outcomes ribbon -->
 					<div class="mt-20">
-						<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/80">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">
 							<span class="text-emerald-300">▸</span> Outcomes your teams can drive
 						</p>
 						<ol class="mt-8 border-t border-white/[0.06]">
@@ -901,7 +899,7 @@ npx aadm-init-repo --full</code></pre>
 								outcomes.map((o) => (
 									<li class="group grid grid-cols-12 gap-6 border-b border-white/[0.08] py-7 transition duration-300 hover:bg-white/[0.015]">
 										<div class="col-span-12 sm:col-span-2">
-											<span class="font-display text-4xl font-extralight leading-none tracking-tight text-emerald-200/80 transition duration-300 group-hover:text-emerald-300 sm:text-5xl">
+											<span class="font-display text-4xl font-light leading-none tracking-tight text-emerald-200/80 transition duration-300 group-hover:text-emerald-300 sm:text-5xl">
 												{o.num}
 											</span>
 										</div>
@@ -924,15 +922,15 @@ npx aadm-init-repo --full</code></pre>
 		     §07 — Three workflows + mock conversations
 		     ============================================================= -->
 		<section class="relative border-b border-white/[0.06] bg-[#06080f]" aria-labelledby="mcp-workflows-heading">
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-violet-200/70">§ 07</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Three workflows</span>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 07</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Three workflows</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="mcp-workflows-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
-						Three equal lanes. <span class="font-extralight italic text-slate-400">Pick the question.</span>
+					<h2 id="mcp-workflows-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
+						Three equal lanes. <span class="font-light italic text-slate-400">Pick the question.</span>
 					</h2>
 					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
 						The MCP treats Navigator, Investigator, and Sentinel as peers. Pick the lane that matches the primary question —
@@ -946,16 +944,16 @@ npx aadm-init-repo --full</code></pre>
 								return (
 									<article class="grid grid-cols-12 gap-6 bg-[#06080f] px-1 py-10 sm:px-2 sm:py-12">
 										<div class="col-span-12 sm:col-span-2">
-											<p class:list={["font-display text-[4.5rem] font-extralight leading-[0.85] tracking-tight sm:text-[6rem]", t.numeral]}>
+											<p class:list={["font-display text-[4.5rem] font-light leading-[0.85] tracking-tight sm:text-[6rem]", t.numeral]}>
 												{lane.num}
 											</p>
-											<div class:list={["mt-3 inline-flex items-center gap-2 border px-3 py-1.5 font-mono-cta text-[10px] uppercase tracking-[0.22em]", t.chip]}>
+											<div class:list={["mt-3 inline-flex items-center gap-2 border px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em]", t.chip]}>
 												<span class:list={["block h-1.5 w-1.5 rounded-full", t.bullet]}></span>
 												{lane.name}
 											</div>
 										</div>
 										<div class="col-span-12 sm:col-span-10">
-											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{lane.line}</p>
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{lane.line}</p>
 											<p class="mt-4 max-w-3xl text-[0.98rem] leading-[1.65] text-slate-200">{lane.body}</p>
 										</div>
 									</article>
@@ -966,7 +964,7 @@ npx aadm-init-repo --full</code></pre>
 
 					<!-- Mocks -->
 					<div class="mt-20" id="mcp-mocks-heading">
-						<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/80">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">
 							<span class="text-emerald-300">▸</span> What it feels like to talk to the MCP
 						</p>
 						<p class="mt-4 max-w-3xl text-base leading-relaxed text-slate-400">
@@ -978,17 +976,17 @@ npx aadm-init-repo --full</code></pre>
 							<article class="border border-white/10 bg-[#050810]">
 								<div class="flex flex-wrap items-center gap-3 border-b border-white/[0.06] px-5 py-3">
 									<span class="block h-2 w-2 rounded-full bg-violet-400"></span>
-									<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-violet-200/85">
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">
 										Navigator · tools/call · standard_brief
 									</span>
 								</div>
-								<div class="grid grid-cols-1 divide-y divide-white/[0.06] font-mono-cta text-[11px] leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+								<div class="grid grid-cols-1 divide-y divide-white/[0.06] font-mono-cta text-sm leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-y-0">
 									<div class="space-y-3 p-5 text-slate-400">
 										<p>
 											<span class="text-violet-300">You</span> · Feature: OAuth-backed export for enterprise tenants. Need UDALI-shaped scope and AUTH touchpoints.
 										</p>
 										<p>
-											<span class="text-slate-500">Host</span> · <code class="bg-white/[0.04] px-1 text-slate-300">standard_brief</code> with issue text + repo hints.
+											<span class="text-slate-400">Host</span> · <code class="bg-white/[0.04] px-1 text-slate-300">standard_brief</code> with issue text + repo hints.
 										</p>
 									</div>
 									<div class="space-y-3 bg-black/20 p-5 text-slate-300">
@@ -997,7 +995,7 @@ npx aadm-init-repo --full</code></pre>
 											<code class="text-emerald-300/90">navigator_feature_delivery</code> stages,
 											<code class="text-emerald-300/90">orchestrator_contract</code>.
 										</p>
-										<p class="text-slate-500">
+										<p class="text-slate-400">
 											Follow-on catalog points to <code class="text-slate-400">fetch_auth</code>, doctrine slices,
 											<code class="text-slate-400">plan_delivery</code> — single next action per recon posture.
 										</p>
@@ -1009,25 +1007,25 @@ npx aadm-init-repo --full</code></pre>
 							<article class="border border-white/10 bg-[#050810]">
 								<div class="flex flex-wrap items-center gap-3 border-b border-white/[0.06] px-5 py-3">
 									<span class="block h-2 w-2 rounded-full bg-sky-400"></span>
-									<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-sky-200/85">
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/85">
 										Investigator · tools/call · debug_defect
 									</span>
 								</div>
-								<div class="grid grid-cols-1 divide-y divide-white/[0.06] font-mono-cta text-[11px] leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+								<div class="grid grid-cols-1 divide-y divide-white/[0.06] font-mono-cta text-sm leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-y-0">
 									<div class="space-y-3 p-5 text-slate-400">
 										<p>
 											<span class="text-sky-300">You</span> · Playwright times out on checkout; bumped timeout — still flaky.
 										</p>
 										<p>
-											<span class="text-slate-500">Host</span> · Second call with <code class="bg-white/[0.04] px-1 text-slate-300">append_evidence</code>: last HAR row + test name.
+											<span class="text-slate-400">Host</span> · Second call with <code class="bg-white/[0.04] px-1 text-slate-300">append_evidence</code>: last HAR row + test name.
 										</p>
 									</div>
 									<div class="space-y-3 bg-black/20 p-5 text-slate-300">
 										<p>
 											<span class="text-emerald-300">MCP</span> · <code class="text-amber-300/90">rootCauseClassificationStatus: UNCLASSIFIED</code>, Path A recon;
-											<code class="text-slate-500">testTimeoutInflationRuleActive</code> nudges proof before timeout edits.
+											<code class="text-slate-400">testTimeoutInflationRuleActive</code> nudges proof before timeout edits.
 										</p>
-										<p class="text-slate-500">
+										<p class="text-slate-400">
 											Single next action · capture missing network stub vs UI assertion — no multi-file refactor until
 											<code class="text-slate-400">CLASSIFIED</code>.
 										</p>
@@ -1039,17 +1037,17 @@ npx aadm-init-repo --full</code></pre>
 							<article class="border border-white/10 bg-[#050810]">
 								<div class="flex flex-wrap items-center gap-3 border-b border-white/[0.06] px-5 py-3">
 									<span class="block h-2 w-2 rounded-full bg-emerald-400"></span>
-									<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">
 										Sentinel · tools/call · sentinel_assurance
 									</span>
 								</div>
-								<div class="grid grid-cols-1 divide-y divide-white/[0.06] font-mono-cta text-[11px] leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+								<div class="grid grid-cols-1 divide-y divide-white/[0.06] font-mono-cta text-sm leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-y-0">
 									<div class="space-y-3 p-5 text-slate-400">
 										<p>
 											<span class="text-emerald-300">You</span> · Quarterly attest: MCP integration + L7 gateway + CI evidence for AUTH-12.
 										</p>
 										<p>
-											<span class="text-slate-500">Host</span> · Scope = MCP host + repo CI; bind
+											<span class="text-slate-400">Host</span> · Scope = MCP host + repo CI; bind
 											<code class="bg-white/[0.04] px-1 text-slate-300">agent_observability_expectations</code> per seam.
 										</p>
 									</div>
@@ -1059,7 +1057,7 @@ npx aadm-init-repo --full</code></pre>
 											<code class="text-emerald-300/90">sentinel_audit_exit_kind</code> framing; gaps hand off to Investigator
 											or Navigator per edge-case rules — not mixed in one thread.
 										</p>
-										<p class="text-slate-500">
+										<p class="text-slate-400">
 											Attestation dimensions reference AUTH resources and UDALI layers; hosts keep local evidence IDs.
 										</p>
 									</div>
@@ -1075,17 +1073,17 @@ npx aadm-init-repo --full</code></pre>
 		     §08 — Subscriber checkout
 		     ============================================================= -->
 		<section class="relative border-b border-white/[0.06]" aria-labelledby="mcp-included-heading">
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 08</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Subscriber checkout</span>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 08</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Subscriber checkout</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<div class="grid grid-cols-12 gap-8">
 						<div class="col-span-12 lg:col-span-7">
-							<h2 id="mcp-included-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.05] tracking-[-0.025em] text-white">
-								What paid access <span class="font-extralight italic text-slate-400">includes.</span>
+							<h2 id="mcp-included-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
+								What paid access <span class="font-light italic text-slate-400">includes.</span>
 							</h2>
 							<p class="mt-6 text-base leading-relaxed text-slate-400">
 								Subscribers run the hosted MCP service (Streamable HTTP) against your org's credentials. Tokens, rotation, and
@@ -1100,7 +1098,7 @@ npx aadm-init-repo --full</code></pre>
 										"Operational endpoints: GET /health, service discovery at GET /.",
 									].map((item, idx) => (
 										<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-3.5">
-											<span class="font-mono-cta text-[11px] text-emerald-300/80">{String(idx + 1).padStart(2, "0")}</span>
+											<span class="font-mono-cta text-sm text-emerald-300/80">{String(idx + 1).padStart(2, "0")}</span>
 											<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">{item}</span>
 										</li>
 									))
@@ -1109,7 +1107,7 @@ npx aadm-init-repo --full</code></pre>
 							<p class="mt-8">
 								<a
 									href={urlStandard}
-									class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-emerald-300 underline decoration-emerald-300/40 underline-offset-[6px] transition hover:decoration-emerald-300"
+									class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300 underline decoration-emerald-300/40 underline-offset-[6px] transition hover:decoration-emerald-300"
 								>
 									<span>Read the public standard first</span>
 									<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↗</span>
@@ -1118,7 +1116,7 @@ npx aadm-init-repo --full</code></pre>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
 							<div class="border border-emerald-300/30 bg-[#070b13] p-8">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Subscriber checkout</p>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Subscriber checkout</p>
 								<h3 class="font-display mt-4 text-3xl font-bold leading-snug text-white">Get access</h3>
 								<p class="mt-3 text-sm leading-relaxed text-slate-400">
 									Create an account at{' '}
@@ -1167,15 +1165,15 @@ npx aadm-init-repo --full</code></pre>
 		     §09 — Technical confidence (operators)
 		     ============================================================= -->
 		<section id="technical" class="relative border-b border-white/[0.06] bg-[#06080f]" aria-labelledby="mcp-tech-heading">
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 09</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Operators</span>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 09</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Operators</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="mcp-tech-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.05] tracking-[-0.025em] text-white">
-						Technical confidence <span class="font-extralight italic text-slate-400">for operators.</span>
+					<h2 id="mcp-tech-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
+						Technical confidence <span class="font-light italic text-slate-400">for operators.</span>
 					</h2>
 					<p class="mt-5 max-w-3xl text-sm leading-relaxed text-slate-400">
 						The MCP speaks over <span class="text-white">Streamable HTTP</span>:
@@ -1187,7 +1185,7 @@ npx aadm-init-repo --full</code></pre>
 					{
 						urlMcpEndpoint ? (
 							<>
-								<div class="mt-12 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+								<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
 									{healthUrl ? (
 										<a
 											href={healthUrl}
@@ -1195,12 +1193,12 @@ npx aadm-init-repo --full</code></pre>
 											rel="noopener noreferrer"
 											class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
 										>
-											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Liveness</p>
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Liveness</p>
 											<code class="font-mono-cta mt-3 block text-sm font-semibold text-white">GET /health</code>
 											<p class="mt-3 text-sm leading-relaxed text-slate-400">
 												JSON probe for deploy checks and uptime monitors — not the MCP session itself.
 											</p>
-											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-emerald-300">
+											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300">
 												Open endpoint <span aria-hidden="true">↗</span>
 											</span>
 										</a>
@@ -1212,13 +1210,13 @@ npx aadm-init-repo --full</code></pre>
 											rel="noopener noreferrer"
 											class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
 										>
-											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Discovery</p>
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Discovery</p>
 											<code class="font-mono-cta mt-3 block text-sm font-semibold text-white">GET /</code>
 											<p class="mt-3 text-sm leading-relaxed text-slate-400">
-												Service JSON on the MCP host (e.g. <span class="font-mono-cta text-slate-500">mcp_endpoint</span>)
+												Service JSON on the MCP host (e.g. <span class="font-mono-cta text-slate-400">mcp_endpoint</span>)
 												for wiring proxies and clients.
 											</p>
-											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-emerald-300">
+											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300">
 												Open discovery <span aria-hidden="true">↗</span>
 											</span>
 										</a>
@@ -1229,14 +1227,14 @@ npx aadm-init-repo --full</code></pre>
 										rel="noopener noreferrer"
 										class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
 									>
-										<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Streamable HTTP</p>
+										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Streamable HTTP</p>
 										<code class="font-mono-cta mt-3 block break-all text-sm font-semibold text-emerald-300">{mcpRpcUrl}</code>
 										<p class="mt-3 text-sm leading-relaxed text-slate-400">
-											JSON-RPC <code class="font-mono-cta text-slate-500">POST</code> target — include{' '}
-											<code class="font-mono-cta text-slate-500">/mcp</code> and{' '}
-											<code class="font-mono-cta text-slate-500">Accept: application/json, text/event-stream</code>.
+											JSON-RPC <code class="font-mono-cta text-slate-400">POST</code> target — include{' '}
+											<code class="font-mono-cta text-slate-400">/mcp</code> and{' '}
+											<code class="font-mono-cta text-slate-400">Accept: application/json, text/event-stream</code>.
 										</p>
-										<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-emerald-300">
+										<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300">
 											Open endpoint <span aria-hidden="true">↗</span>
 										</span>
 									</a>
@@ -1244,12 +1242,12 @@ npx aadm-init-repo --full</code></pre>
 										href="#connect-bearer"
 										class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
 									>
-										<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-violet-200/85">Integrations</p>
+										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">Integrations</p>
 										<span class="font-mono-cta mt-3 block text-sm font-semibold text-white">Connect guide</span>
 										<p class="mt-3 text-sm leading-relaxed text-slate-400">
 											Bearer token vs OAuth — copy-paste configs for Cursor and Claude.
 										</p>
-										<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-violet-300">
+										<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-violet-300">
 											Jump to setup <span aria-hidden="true">↓</span>
 										</span>
 									</a>
@@ -1260,12 +1258,12 @@ npx aadm-init-repo --full</code></pre>
 											rel="noopener noreferrer"
 											class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
 										>
-											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/85">Standard</p>
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/85">Standard</p>
 											<span class="font-display mt-3 block text-sm font-bold text-white">Public AADM narrative</span>
 											<p class="mt-3 text-sm leading-relaxed text-slate-400">
 												Free, versioned standard text — the MCP is governed context on top of this story.
 											</p>
-											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-amber-300">
+											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-amber-300">
 												Open standard <span aria-hidden="true">↗</span>
 											</span>
 										</a>
@@ -1277,12 +1275,12 @@ npx aadm-init-repo --full</code></pre>
 											rel="noopener noreferrer"
 											class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
 										>
-											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">Subscriber</p>
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Subscriber</p>
 											<span class="font-display mt-3 block text-sm font-bold text-white">Integration docs</span>
 											<p class="mt-3 text-sm leading-relaxed text-slate-400">
 												Portal or handbook material for org rollout — when this URL is configured at build time.
 											</p>
-											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-emerald-300">
+											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300">
 												Open docs <span aria-hidden="true">↗</span>
 											</span>
 										</a>
@@ -1302,7 +1300,7 @@ npx aadm-init-repo --full</code></pre>
 
 								<div class="mt-10 border border-white/10 bg-[#050810]">
 									<div class="flex items-center justify-between border-b border-white/[0.06] px-5 py-3">
-										<span class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Smoke · initialize</span>
+										<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Smoke · initialize</span>
 										<span class="flex gap-1" aria-hidden="true">
 											<span class="block h-1.5 w-1.5 rounded-full bg-emerald-400/70"></span>
 											<span class="block h-1.5 w-1.5 rounded-full bg-amber-400/70"></span>
@@ -1313,7 +1311,7 @@ npx aadm-init-repo --full</code></pre>
 								</div>
 							</>
 						) : (
-							<p class="mt-6 text-sm text-slate-500">
+							<p class="mt-6 text-sm text-slate-400">
 								Set <code class="font-mono-cta text-slate-300">PUBLIC_MCP_REPO_URL</code> at build time to render your MCP
 								endpoint and curl on this page.
 							</p>
@@ -1327,14 +1325,14 @@ npx aadm-init-repo --full</code></pre>
 		     §10 — Tools catalog
 		     ============================================================= -->
 		<section class="relative bg-surface-deep" aria-labelledby="mcp-tools-heading">
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 10</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Tools catalog</span>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 10</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Tools catalog</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="mcp-tools-heading" class="font-display text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
+					<h2 id="mcp-tools-heading" class="font-display text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
 						Typed tools & outcomes.
 					</h2>
 					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
@@ -1353,7 +1351,7 @@ npx aadm-init-repo --full</code></pre>
 										{row.badges.map((b) => (
 											<span
 												class:list={[
-													"border bg-transparent px-2 py-0.5 font-mono-cta text-[10px] uppercase tracking-[0.22em]",
+													"border bg-transparent px-2 py-0.5 font-mono-cta text-[13px] normal-case tracking-[0.01em]",
 													toolBadgeClass[b],
 												]}
 											>
@@ -1371,15 +1369,15 @@ npx aadm-init-repo --full</code></pre>
 					</ul>
 
 					<!-- Colophon -->
-					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-500">Service</span> · AADM MCP
+							<span class="text-slate-400">Service</span> · AADM MCP
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-500">Endpoint</span> · <span class="text-emerald-300/80">{mcpRpcUrl}</span>
+							<span class="text-slate-400">Endpoint</span> · <span class="text-emerald-300/80">{mcpRpcUrl}</span>
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-500">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / JSON-RPC</span>
+							<span class="text-slate-400">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / JSON-RPC</span>
 						</div>
 					</div>
 				</div>

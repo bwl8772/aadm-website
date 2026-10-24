@@ -115,14 +115,14 @@ const rungs: Rung[] = [
 							<div class="flex items-baseline gap-4">
 								<span
 									class:list={[
-										"font-display text-[3rem] font-extralight leading-[0.8] tracking-tight sm:text-[3.75rem]",
+										"font-display text-[3rem] font-light leading-[0.8] tracking-tight sm:text-[3.75rem]",
 										t.numeral,
 									]}
 								>
 									{rung.num}
 								</span>
 								{isLast ? (
-									<span class="font-mono-cta border border-emerald-300/40 px-2 py-1 text-[9px] uppercase tracking-[0.2em] text-emerald-200">
+									<span class="font-mono-cta border border-emerald-300/40 px-2 py-1 text-[9px] normal-case tracking-[0.01em] text-emerald-200">
 										You are here
 									</span>
 								) : null}
@@ -139,7 +139,7 @@ const rungs: Rung[] = [
 
 						<div class="col-span-12 sm:col-span-5">
 							<div class:list={["border-l pl-5", t.rule]}>
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 									<span aria-hidden="true">+</span> {rung.adds}
 								</p>
 								<p class="mt-4 text-[0.95rem] leading-[1.65] text-slate-300">{rung.body}</p>
@@ -147,12 +147,12 @@ const rungs: Rung[] = [
 						</div>
 
 						<div class="col-span-12 sm:col-span-4">
-							<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+							<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
 								What you now own
 							</p>
 							<div class="mt-4 flex flex-wrap gap-1.5">
 								{rung.concerns.map((concern) => (
-									<span class:list={["font-mono-cta border px-2.5 py-1 text-[11px]", t.chip]}>
+									<span class:list={["font-mono-cta border px-2.5 py-1 text-sm", t.chip]}>
 										{concern}
 									</span>
 								))}
