@@ -30,6 +30,17 @@ const memberPath = memberAreaPathFromEnv(import.meta.env);
 const oauthClientId = primaryOAuthClientIdFromEnv(import.meta.env);
 const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
 const maskedClientId = maskMcpOAuthClientId(oauthClientId);
+const cursorOAuthJson = `{
+  "mcpServers": {
+    "aadm": {
+      "url": "${urlMcpRpcUrl || "https://mcp.aadm.io/mcp"}",
+      "auth": {
+        "CLIENT_ID": "${oauthClientId || "<your client ID>"}",
+        "scopes": ["openid", "profile", "email", "offline_access"]
+      }
+    }
+  }
+}`;
 
 const pathname = Astro.url.pathname.replace(/\/+$/, "") || MEMBER_AREA_PATH;
 const onOauth = pathname.endsWith(`/${MEMBER_MCP_OAUTH_SEGMENT}`);
@@ -179,10 +190,10 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 						Connectors OAuth
 					</h2>
 					<p class="mt-2 text-sm leading-relaxed text-slate-400">
-						For <strong class="font-semibold text-slate-100">Claude Code</strong> and{" "}
-						<strong class="font-semibold text-slate-100">claude.ai Connectors</strong> only. Copy the
-						Client ID below and paste it when Claude asks for an OAuth Client ID. Leave Client Secret
-						blank.
+						For <strong class="font-semibold text-slate-100">Claude Code</strong>,{" "}
+						<strong class="font-semibold text-slate-100">claude.ai Connectors</strong>, and{" "}
+						<strong class="font-semibold text-slate-100">Cursor</strong>. Copy the Client ID below and paste
+						it when your client asks for an OAuth Client ID. Leave Client Secret blank.
 					</p>
 					{oauthClientId ? (
 						<div class="mt-4 flex flex-wrap items-center gap-3">
@@ -214,10 +225,26 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 							<code class="break-all font-mono text-xs text-accent-violet">{urlMcpRpcUrl}</code>
 						</p>
 					) : null}
+					<h3 class="mt-8 font-display text-base font-bold text-slate-100">Cursor</h3>
+					<p class="mt-2 text-sm leading-relaxed text-slate-400">
+						Paste this into <code class="font-mono text-slate-300">~/.cursor/mcp.json</code>, reload MCP, then
+						click <strong class="font-semibold text-slate-300">Connect</strong> and sign in. Setting{" "}
+						<code class="font-mono text-slate-300">CLIENT_ID</code> makes Cursor use this OAuth app directly.
+					</p>
+					<div class="mt-3 flex justify-end">
+						<button
+							type="button"
+							class="shrink-0 rounded-lg border border-white/15 px-3 py-1.5 text-sm font-semibold text-slate-200 hover:bg-white/5"
+							data-copy-text={cursorOAuthJson}
+							onclick={copyOnClick}
+						>
+							Copy JSON
+						</button>
+					</div>
+					<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-border-subtle bg-surface-mid p-3 font-mono text-xs leading-relaxed text-slate-300"><code>{cursorOAuthJson}</code></pre>
 					<p class="mt-4 text-xs text-slate-400">
-						Using Cursor or curl? Open{" "}
-						<strong class="font-semibold text-slate-300">API keys</strong>, create an{" "}
-						<code class="font-mono text-accent-violet">ak_…</code> key, and use it as a Bearer token.
+						Using curl? Open <strong class="font-semibold text-slate-300">API keys</strong> and use an{" "}
+						<code class="font-mono text-accent-violet">ak_…</code> key as a Bearer token.
 					</p>
 
 					<MemberConnectionHelp idPrefix="oauth" />
