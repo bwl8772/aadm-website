@@ -21,7 +21,8 @@ export const MEMBER_CREDENTIALS_SUCCESS_PATH_V1 = {
 			sceneId: "1-sign-in",
 			title: "Account Portal sign-in",
 			path: "account-portal",
-			intent: "Authenticate via Clerk Account Portal (accounts.aadm.io / portal URLs).",
+			intent:
+				"Authenticate via Clerk Account Portal (accounts.aadm.io / portal URLs).",
 			beats: [
 				{
 					id: "portal-email-read",
@@ -34,7 +35,8 @@ export const MEMBER_CREDENTIALS_SUCCESS_PATH_V1 = {
 					verb: "Typing",
 					affordance: "Email field",
 					locatorHint: "Clerk Account Portal email input",
-					notes: "Use disposable test user only. MUST NOT log the address in timeline if treated as PII policy requires.",
+					notes:
+						"Use disposable test user only. MUST NOT log the address in timeline if treated as PII policy requires.",
 				},
 				{
 					id: "portal-continue-click",
@@ -48,7 +50,8 @@ export const MEMBER_CREDENTIALS_SUCCESS_PATH_V1 = {
 					verb: "Typing",
 					affordance: "Password field",
 					locatorHint: "Clerk password input",
-					notes: "allowSecret for type only — MUST NOT appear in logs, timeline, or VO.",
+					notes:
+						"allowSecret for type only — MUST NOT appear in logs, timeline, or VO.",
 				},
 				{
 					id: "portal-submit",
@@ -63,7 +66,8 @@ export const MEMBER_CREDENTIALS_SUCCESS_PATH_V1 = {
 			sceneId: "2-member-shell",
 			title: "Member shell + Bearer how-to",
 			path: MEMBER_AREA_PATH,
-			intent: "Land on /member; Bearer how-to sits above UserProfile (not a left tab).",
+			intent:
+				"Land on /member; Bearer how-to sits above UserProfile (not a left tab).",
 			beats: [
 				{
 					id: "member-land",
@@ -82,7 +86,8 @@ export const MEMBER_CREDENTIALS_SUCCESS_PATH_V1 = {
 					verb: "Reading",
 					affordance: "Copy JSON (mcp.json placeholder)",
 					locatorHint: "button:has-text('Copy JSON')",
-					notes: "Snippet uses ak_… placeholder — do not paste a live key into VO.",
+					notes:
+						"Snippet uses ak_… placeholder — do not paste a live key into VO.",
 				},
 			],
 		},
@@ -90,7 +95,8 @@ export const MEMBER_CREDENTIALS_SUCCESS_PATH_V1 = {
 			sceneId: "3-api-keys",
 			title: "API keys",
 			path: `${MEMBER_AREA_PATH}/${MEMBER_API_KEYS_SEGMENT}`,
-			intent: "Open Clerk API keys surface — create/revoke UI visible; do not film raw ak_… values.",
+			intent:
+				"Open Clerk API keys surface — create/revoke UI visible; do not film raw ak_… values.",
 			beats: [
 				{
 					id: "api-keys-nav-read",
@@ -110,7 +116,8 @@ export const MEMBER_CREDENTIALS_SUCCESS_PATH_V1 = {
 					verb: "Reading",
 					affordance: "API keys pane",
 					locatorHint: "Clerk apiKeys page content",
-					notes: "Soft-skip create/revoke commits on public cuts; Reading is enough for shipping story.",
+					notes:
+						"Soft-skip create/revoke commits on public cuts; Reading is enough for shipping story.",
 				},
 			],
 		},
@@ -118,7 +125,8 @@ export const MEMBER_CREDENTIALS_SUCCESS_PATH_V1 = {
 			sceneId: "4-connectors-oauth",
 			title: "Connectors OAuth",
 			path: `${MEMBER_AREA_PATH}/${MEMBER_MCP_OAUTH_SEGMENT}`,
-			intent: "Show OAuth Client ID region + connection help (Claude / Cursor pointers).",
+			intent:
+				"Show OAuth Client ID region + connection help (Claude / Cursor pointers).",
 			beats: [
 				{
 					id: "oauth-nav-read",
@@ -186,7 +194,8 @@ export const MEMBER_CREDENTIALS_SUCCESS_PATH_V1 = {
 			sceneId: "6-security",
 			title: "Security",
 			path: MEMBER_AREA_PATH,
-			intent: "Open security — look only; MUST NOT change password or demote seed personas.",
+			intent:
+				"Open security — look only; MUST NOT change password or demote seed personas.",
 			beats: [
 				{
 					id: "security-nav-read",
