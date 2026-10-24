@@ -2,7 +2,6 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/astro/server";
 import { redirectAuthPathToAccounts } from "./lib/clerk-auth-policy";
 import {
 	getClerkIntegrationOptions,
-	isSatelliteHandshakePending,
 	redirectSatelliteFapiPath,
 } from "./lib/clerk-portal-urls";
 import {
@@ -48,15 +47,14 @@ export const onRequest = clerkMiddleware((auth, context, next) => {
 		return next();
 	}
 
-	const { isAuthenticated, redirectToSignIn } = auth();
+	const { isAuthenticated } = auth();
 	if (!isAuthenticated) {
-		// Satellite SSR: after Account Portal sign-in the session cookie is not on
-		// aadm.io yet. Allow a sync-only shell (no credentials) — never full member UI.
-		if (isSatelliteHandshakePending(context.request)) {
-			context.locals.satelliteSyncPending = true;
-			return next();
-		}
-		return redirectToSignIn();
+		// Do not 307 to accounts.aadm.io/sign-in?redirect_url=/member here.
+		// That URL is the bounce loop: portal sends the browser back to /member,
+		// SSR still has no session, and redirectToSignIn() fires again.
+		// Let MemberSatelliteSyncPage run clerk-js on this host (no credentials).
+		context.locals.satelliteSyncPending = true;
+		return next();
 	}
 
 	// Legacy fifth tab: /member/bearer → API keys (bearer how-to + Clerk key UI).

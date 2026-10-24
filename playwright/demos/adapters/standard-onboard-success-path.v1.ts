@@ -17,12 +17,9 @@
  */
 import type { DemoSuccessPathV1 } from "./demo-path-types.v1.ts";
 
-export const STANDARD_REPO_URL =
-	"https://github.com/bwl8772/aadm-standard";
-export const STANDARD_UDALI_PERSONAS_URL =
-	`${STANDARD_REPO_URL}/blob/main/docs/udali-personas.md`;
-export const STANDARD_UDALI_LAYERS_URL =
-	`${STANDARD_REPO_URL}/blob/main/docs/udali-22-layer-model.md`;
+export const STANDARD_REPO_URL = "https://github.com/bwl8772/aadm-standard";
+export const STANDARD_UDALI_PERSONAS_URL = `${STANDARD_REPO_URL}/blob/main/docs/udali-personas.md`;
+export const STANDARD_UDALI_LAYERS_URL = `${STANDARD_REPO_URL}/blob/main/docs/udali-22-layer-model.md`;
 
 /** Viewer-facing VO lines (speak to the person watching — not the operator’s name). */
 export const STANDARD_ONBOARD_VIEWER_LINES = {
@@ -68,14 +65,16 @@ export const STANDARD_ONBOARD_SUCCESS_PATH_V1 = {
 					id: "nav-open-standard-read",
 					verb: "Reading",
 					affordance: "Open standard (nav)",
-					locatorHint: "a[href='/standard'], a[aria-label*='Open AADM standard']",
+					locatorHint:
+						"a[href='/standard'], a[aria-label*='Open AADM standard']",
 					notes: `VO: “${STANDARD_ONBOARD_VIEWER_LINES.openStandard}”`,
 				},
 				{
 					id: "nav-open-standard-click",
 					verb: "Clicking",
 					affordance: "Open standard (nav)",
-					locatorHint: "a[href='/standard'], a[aria-label*='Open AADM standard']",
+					locatorHint:
+						"a[href='/standard'], a[aria-label*='Open AADM standard']",
 					commit: true,
 				},
 			],
@@ -149,8 +148,7 @@ export const STANDARD_ONBOARD_SUCCESS_PATH_V1 = {
 					id: "layers-nav-or-goto",
 					verb: "Clicking",
 					affordance: "udali-22-layer-model.md",
-					locatorHint:
-						"a[href*='udali-22-layer-model'], or goto layers URL",
+					locatorHint: "a[href*='udali-22-layer-model'], or goto layers URL",
 					commit: true,
 					notes: `VO: “${STANDARD_ONBOARD_VIEWER_LINES.layers}”`,
 				},
@@ -188,7 +186,8 @@ export const STANDARD_ONBOARD_SUCCESS_PATH_V1 = {
 					id: "create-account-nav-click",
 					verb: "Clicking",
 					affordance: "Create account / Get access",
-					locatorHint: "a:has-text('Create account'), #get-access, a:has-text('Get access')",
+					locatorHint:
+						"a:has-text('Create account'), #get-access, a:has-text('Get access')",
 					commit: true,
 				},
 			],
