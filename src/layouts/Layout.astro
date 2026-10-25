@@ -176,6 +176,8 @@ const resolvedOgDescription = ogDescription ?? description;
 							theme === "dark" ? "Switch to light theme" : "Switch to dark theme",
 						);
 					}
+					/* Member Clerk widgets inherit color-scheme + CSS vars; notify islands if needed */
+					root.dispatchEvent(new CustomEvent("aadm-theme-change", { detail: { theme } }));
 				}
 				document.addEventListener("click", function (event) {
 					const btn = event.target instanceof Element ? event.target.closest("[data-theme-toggle]") : null;

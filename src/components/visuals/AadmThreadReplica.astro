@@ -401,12 +401,12 @@ const toolIcon = {
 		the map and gave the meeting a shared agenda and stop rules, in fifteen minutes instead of the three weeks
 		a formal audit would take.
 	</p>
-	<div class="overflow-hidden rounded-xl border border-border bg-[#0b0d14] shadow-[0_40px_120px_-40px_rgba(16,185,129,0.25)]">
-		<div class="flex items-center gap-3 border-b border-white/[0.07] bg-[#0e1119] px-4 py-2.5">
+	<div class="overflow-hidden rounded-xl border border-border bg-card shadow-[0_40px_120px_-40px_rgba(16,185,129,0.25)]">
+		<div class="flex items-center gap-3 border-b border-border bg-muted px-4 py-2.5">
 			<span class="hidden gap-1.5 sm:flex" aria-hidden="true">
-				<span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
-				<span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
-				<span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+				<span class="h-2.5 w-2.5 rounded-full bg-foreground/15"></span>
+				<span class="h-2.5 w-2.5 rounded-full bg-foreground/15"></span>
+				<span class="h-2.5 w-2.5 rounded-full bg-foreground/15"></span>
 			</span>
 
 			<nav aria-label="Scenario" class="flex min-w-0 items-center gap-1">
@@ -414,7 +414,7 @@ const toolIcon = {
 					type="button"
 					data-scenario-prev
 					aria-label="Previous scenario"
-					class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-white/[0.07] hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-400/60"
+					class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-400/60"
 				>
 					<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5" /></svg>
 				</button>
@@ -426,7 +426,7 @@ const toolIcon = {
 					type="button"
 					data-scenario-next
 					aria-label="Next scenario"
-					class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-white/[0.07] hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-400/60"
+					class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-400/60"
 				>
 					<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5" /></svg>
 				</button>
@@ -448,7 +448,7 @@ const toolIcon = {
 							{scenario.steps.map((m) =>
 								m.kind === "user" ? (
 									<div data-step="user" class="aadm-step flex justify-end">
-										<p class="max-w-[85%] rounded-lg bg-white/[0.07] px-4 py-2.5 text-[14px] leading-relaxed text-text-primary">
+										<p class="max-w-[85%] rounded-lg bg-accent px-4 py-2.5 text-[14px] leading-relaxed text-text-primary">
 											<span class="text-[11.5px] font-semibold text-muted-foreground">You · agentic engineer</span><br />
 											<span data-type={m.text}>{m.text}</span>
 										</p>
@@ -494,11 +494,11 @@ const toolIcon = {
 						</div>
 					))}
 				</div>
-				<div class="pointer-events-none absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-[#0b0d14] to-transparent"></div>
+				<div class="pointer-events-none absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-card to-transparent"></div>
 			</div>
 
-			<div class="flex items-center gap-2 border-t border-white/[0.07] px-4 py-3">
-				<span data-composer class="flex-1 truncate rounded-md border border-border bg-white/[0.03] px-3 py-2 text-[13px] text-muted-foreground">Ask the agent…</span>
+			<div class="flex items-center gap-2 border-t border-border px-4 py-3">
+				<span data-composer class="flex-1 truncate rounded-md border border-border bg-muted px-3 py-2 text-[13px] text-muted-foreground">Ask the agent…</span>
 			</div>
 		</div>
 	</div>

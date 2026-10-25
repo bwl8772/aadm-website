@@ -282,7 +282,7 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 										<ul class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
 											{
 												group.items.map((item) => (
-													<li class="border border-border bg-[#080c16] p-5 transition duration-300 hover:border-border sm:p-6">
+													<li class="border border-border bg-muted p-5 transition duration-300 hover:border-border sm:p-6">
 														<p class="font-display text-base font-bold leading-snug tracking-tight text-foreground">{item.name}</p>
 														<p class="mt-2 text-sm leading-relaxed text-muted-foreground">{item.covers}</p>
 													</li>

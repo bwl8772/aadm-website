@@ -176,7 +176,7 @@ const toneClasses: Record<Section["tone"], { letter: string; rule: string }> = {
 							sections.map((s) => {
 								const t = toneClasses[s.tone];
 								return (
-									<li class="group flex flex-col bg-surface-mid p-6 transition duration-300 hover:bg-[#080c16] sm:p-7">
+									<li class="group flex flex-col bg-surface-mid p-6 transition duration-300 hover:bg-secondary sm:p-7">
 										<div class="flex items-baseline gap-4">
 											<span class:list={["font-display text-[3rem] font-light leading-[0.85] transition duration-300", t.letter, "group-hover:opacity-100"]}>
 												{s.letter}

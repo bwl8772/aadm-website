@@ -319,7 +319,7 @@ const failureModes: FailureMode[] = [
 					<!-- Dual TL;DR — deliberately staggered + overlapped feel -->
 					<div class="mt-16 grid grid-cols-12 gap-4 sm:gap-6">
 						<div class="col-span-12 lg:col-span-7">
-							<article class="group relative overflow-hidden border border-amber-300/25 bg-gradient-to-br from-amber-950/30 via-[#0b0e18] to-[#0b0e18] p-7 transition duration-300 sm:p-10 hover:border-amber-300/50">
+							<article class="group relative overflow-hidden border border-amber-300/25 bg-gradient-to-br from-amber-950/30 via-muted to-muted p-7 transition duration-300 sm:p-10 hover:border-amber-300/50">
 								<div
 									aria-hidden="true"
 									class="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-amber-300/[0.08] blur-3xl transition duration-500 group-hover:bg-amber-300/[0.14]"
@@ -335,7 +335,7 @@ const failureModes: FailureMode[] = [
 							</article>
 						</div>
 						<div class="col-span-12 lg:col-span-5 lg:mt-16">
-							<article class="group relative border border-emerald-300/20 bg-[#070b13] p-7 transition duration-300 hover:border-emerald-300/40 sm:p-8">
+							<article class="group relative border border-emerald-300/20 bg-muted p-7 transition duration-300 hover:border-emerald-300/40 sm:p-8">
 								<div class="flex items-center gap-3">
 									<span class="block h-2 w-2 rounded-full bg-emerald-300"></span>
 									<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/90">For engineers · one sentence</p>
@@ -600,7 +600,7 @@ const failureModes: FailureMode[] = [
 							lanes.map((lane) => {
 								const t = laneToneClasses[lane.tone];
 								return (
-									<article class="group relative overflow-hidden bg-surface-deep transition duration-300 hover:bg-[#080c16]">
+									<article class="group relative overflow-hidden bg-surface-deep transition duration-300 hover:bg-secondary">
 										<!-- Faint glow per lane -->
 										<div aria-hidden="true" class:list={["pointer-events-none absolute -left-24 -top-24 -z-0 h-72 w-72 rounded-full blur-3xl transition duration-500 opacity-50 group-hover:opacity-100", t.glow]}></div>
 
@@ -680,7 +680,7 @@ const failureModes: FailureMode[] = [
 					<ol class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
 						{
 							mechanics.map((m) => (
-								<li class="group relative bg-surface-mid p-7 transition duration-300 hover:bg-[#080c16] sm:p-10">
+								<li class="group relative bg-surface-mid p-7 transition duration-300 hover:bg-secondary sm:p-10">
 									<div class="flex items-baseline gap-5">
 										<span class="font-display text-5xl font-light leading-none tracking-tight text-emerald-200/80 transition duration-300 group-hover:text-emerald-300 sm:text-6xl">
 											{m.num}
@@ -783,7 +783,7 @@ const failureModes: FailureMode[] = [
 					<div class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
 						{
 							audiences.map((a) => (
-								<article class="group bg-surface-mid p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
+								<article class="group bg-surface-mid p-7 transition duration-300 hover:bg-secondary sm:p-9">
 									<div class="flex items-baseline gap-4">
 										<span class="font-display text-[3.5rem] font-light leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
 											{a.num}

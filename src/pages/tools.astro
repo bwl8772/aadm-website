@@ -387,7 +387,7 @@ const totalCount = tools.length;
 					<nav class="mt-14 flex flex-wrap items-center gap-2" aria-label="Tool lanes">
 						<a
 							href="#entry-points"
-							class="group inline-flex items-center gap-2 border border-amber-300/50 bg-amber-300/[0.06] px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-100 transition hover:bg-amber-300/[0.12]"
+							class="group inline-flex items-center gap-2 border border-brand-warn-border bg-brand-warn-bg px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn transition hover:border-brand-warn"
 						>
 							<span class="block h-1.5 w-1.5 rounded-full bg-amber-300/90"></span>
 							<span>Entry points</span>
@@ -495,7 +495,7 @@ const totalCount = tools.length;
 												<li
 													id={tool.tool}
 													class:list={[
-														"group flex scroll-mt-24 flex-col p-6 transition duration-300 hover:bg-[#080c16] sm:scroll-mt-28 sm:p-7",
+														"group flex scroll-mt-24 flex-col p-6 transition duration-300 hover:bg-secondary sm:scroll-mt-28 sm:p-7",
 														cellBg,
 													]}
 												>
@@ -543,7 +543,7 @@ const totalCount = tools.length;
 											{visuals.map((visual) => (
 												<li
 													class:list={[
-														"grid-visual-slot-cols-3 relative overflow-hidden transition duration-300 hover:bg-[#080c16]",
+														"grid-visual-slot-cols-3 relative overflow-hidden transition duration-300 hover:bg-secondary",
 														cellBg,
 														visual.variant === "wide" ? "sm:col-span-2 lg:col-span-2" : "",
 													]}

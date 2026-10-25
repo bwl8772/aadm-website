@@ -2,9 +2,9 @@
 /**
  * Member credentials — Astro owns tabs; Clerk is content-only.
  *
- * Theme: inherits site surface tokens (`surface-card`, `border-subtle`, slate
- * text on `surface-deep` body) — not a forced light panel. Clerk widgets use
- * matching dark appearance variables.
+ * Theme: inherits site light/dark semantic tokens (`surface-card`, `border`,
+ * `foreground`, etc.). Clerk widgets use `MEMBER_CLERK_CONTENT_ONLY_APPEARANCE`
+ * + `clerk-theme.css` (CSS vars) — not a forced light or dark panel.
  *
  * Hard bans (blank-pane regressions):
  * - No UserProfile.Page custom content
@@ -295,8 +295,8 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 								</button>
 							</div>
 						) : (
-							<div class="mt-3 rounded-lg border border-amber-500/40 bg-amber-500/10 p-4">
-								<p class="text-sm text-amber-100">
+							<div class="mt-3 rounded-lg border border-warning/40 bg-warning/10 p-4">
+								<p class="text-sm text-warning">
 									Client ID is not available yet. Contact us if this persists.
 								</p>
 							</div>

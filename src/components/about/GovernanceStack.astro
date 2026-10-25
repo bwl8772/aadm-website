@@ -21,7 +21,7 @@ const tierStyles: Record<Tier["tone"], { box: string; label: string }> = {
 	},
 	emerald: {
 		box: "border-emerald-300/35 bg-emerald-950/25",
-		label: "text-emerald-100",
+		label: "text-brand-mcp",
 	},
 	violet: {
 		box: "border-violet-400/30 bg-violet-950/20",
@@ -119,7 +119,7 @@ const carriedStyles = {
 	<div class="grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
 		{
 			carried.map((item) => (
-				<div class="bg-[#070b13] p-5">
+				<div class="bg-muted p-5">
 					<div class="flex items-baseline justify-between gap-2">
 						<span
 							class:list={[
