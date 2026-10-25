@@ -62,7 +62,7 @@
 | `PUBLIC_CLERK_IS_SATELLITE` | **`false`** for this site. `accounts.aadm.io` is Account Portal on **primary** `aadm.io` (same registrable domain — shared cookies). Only set `true` for a truly separate satellite hostname. |
 | `PUBLIC_CLERK_DOMAIN` | Only when satellite is actually enabled |
 | `PUBLIC_CLERK_PROXY_URL` | **Leave unset** unless using a path FAPI proxy. **Do not** set to bare `https://clerk.aadm.io` |
-| `CLERK_OAUTH_CLIENT_ID` | Member MCP OAuth tab only (runtime `process.env` on Railway) |
+| `CLERK_OAUTH_CLIENT_ID` | Member MCP OAuth tab only (runtime `process.env` on Railway). Set to the Clerk OAuth app id (e.g. `Stpa0NmMlVg9hU2L`), **not** `*` — `*` is the MCP server's value and shows nothing here. Members normally never need this id: clients identify themselves to Clerk via CIMD and the member just signs in. |
 | Member area path | Fixed at `/member` — must match `src/pages/member/` |
 
 Credential sign-in links use `redirect_url=https://aadm.io/member` (no `__clerk_synced` when satellite is off).

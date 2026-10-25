@@ -30,10 +30,22 @@ const memberPath = memberAreaPathFromEnv(import.meta.env);
 const oauthClientId = primaryOAuthClientIdFromEnv(import.meta.env);
 const { urlMcpRpcUrl } = getSiteUrlConfig(import.meta.env);
 const maskedClientId = maskMcpOAuthClientId(oauthClientId);
+const mcpUrl = urlMcpRpcUrl || "https://mcp.aadm.io/mcp";
+// Default path: URL only. The client identifies itself to Clerk (CIMD) and the
+// member signs in on Clerk's consent screen. No client ID to copy.
+const cursorUrlJson = `{
+  "mcpServers": {
+    "aadm": {
+      "url": "${mcpUrl}"
+    }
+  }
+}`;
+const claudeCodeCommand = `claude mcp add --transport http aadm ${mcpUrl}`;
+// Fallback for clients that cannot identify themselves and ask for a client ID.
 const cursorOAuthJson = `{
   "mcpServers": {
     "aadm": {
-      "url": "${urlMcpRpcUrl || "https://mcp.aadm.io/mcp"}",
+      "url": "${mcpUrl}",
       "auth": {
         "CLIENT_ID": "${oauthClientId || "<your client ID>"}",
         "scopes": ["openid", "profile", "email", "offline_access"]
@@ -187,61 +199,123 @@ const clerkAppearance = MEMBER_CLERK_CONTENT_ONLY_APPEARANCE;
 					data-cred-panel={MEMBER_MCP_OAUTH_SEGMENT}
 				>
 					<h2 id="oauth-heading" class="font-display text-lg font-bold text-slate-100">
-						Connectors OAuth
+						Connect with your AADM login
 					</h2>
 					<p class="mt-2 text-sm leading-relaxed text-slate-400">
-						For <strong class="font-semibold text-slate-100">Claude Code</strong>,{" "}
-						<strong class="font-semibold text-slate-100">claude.ai Connectors</strong>, and{" "}
-						<strong class="font-semibold text-slate-100">Cursor</strong>. Copy the Client ID below and paste
-						it when your client asks for an OAuth Client ID. Leave Client Secret blank.
+						Give your client this one URL. It will send you to AADM's sign-in page; sign in with the account
+						you use here and click <strong class="font-semibold text-slate-100">Allow</strong>. There is no client ID
+						or secret to copy.
 					</p>
-					{oauthClientId ? (
-						<div class="mt-4 flex flex-wrap items-center gap-3">
-							<code
-								class="min-w-0 flex-1 break-all rounded-lg border border-border-subtle bg-surface-mid px-3 py-2 font-mono text-sm text-slate-200"
-								title="Full Client ID is copied when you use Copy"
-							>
-								{maskedClientId}
-							</code>
-							<button
-								type="button"
-								class="shrink-0 rounded-lg bg-accent-violet px-4 py-2 text-sm font-semibold text-surface-deep hover:bg-accent-violet/90"
-								data-copy-text={oauthClientId}
-								onclick={copyOnClick}
-							>
-								Copy client ID
-							</button>
-						</div>
-					) : (
-						<div class="mt-4 rounded-lg border border-amber-500/40 bg-amber-500/10 p-4">
-							<p class="text-sm text-amber-100">
-								OAuth Client ID is not available yet. Contact us if this persists.
-							</p>
-						</div>
-					)}
-					{urlMcpRpcUrl ? (
-						<p class="mt-4 text-xs text-slate-400">
-							MCP server URL to paste alongside the Client ID:{" "}
-							<code class="break-all font-mono text-xs text-accent-violet">{urlMcpRpcUrl}</code>
-						</p>
-					) : null}
-					<h3 class="mt-8 font-display text-base font-bold text-slate-100">Cursor</h3>
-					<p class="mt-2 text-sm leading-relaxed text-slate-400">
-						Paste this into <code class="font-mono text-slate-300">~/.cursor/mcp.json</code>, reload MCP, then
-						click <strong class="font-semibold text-slate-300">Connect</strong> and sign in. Setting{" "}
-						<code class="font-mono text-slate-300">CLIENT_ID</code> makes Cursor use this OAuth app directly.
-					</p>
-					<div class="mt-3 flex justify-end">
+					<div class="mt-4 flex flex-wrap items-center gap-3">
+						<code class="min-w-0 flex-1 break-all rounded-lg border border-border-subtle bg-surface-mid px-3 py-2 font-mono text-sm text-slate-200">
+							{mcpUrl}
+						</code>
 						<button
 							type="button"
-							class="shrink-0 rounded-lg border border-white/15 px-3 py-1.5 text-sm font-semibold text-slate-200 hover:bg-white/5"
-							data-copy-text={cursorOAuthJson}
+							class="shrink-0 rounded-lg bg-accent-violet px-4 py-2 text-sm font-semibold text-surface-deep hover:bg-accent-violet/90"
+							data-copy-text={mcpUrl}
 							onclick={copyOnClick}
 						>
-							Copy JSON
+							Copy URL
 						</button>
 					</div>
-					<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-border-subtle bg-surface-mid p-3 font-mono text-xs leading-relaxed text-slate-300"><code>{cursorOAuthJson}</code></pre>
+
+					<h3 class="mt-8 font-display text-base font-bold text-slate-100">Where to paste it</h3>
+					<dl class="mt-3 space-y-4 text-sm leading-relaxed text-slate-400">
+						<div>
+							<dt class="font-semibold text-slate-100">Cursor</dt>
+							<dd class="mt-1">
+								Cursor Settings → <strong class="font-semibold text-slate-300">Tools &amp; MCP</strong> →{" "}
+								<strong class="font-semibold text-slate-300">New MCP Server</strong>, paste the JSON below, then click{" "}
+								<strong class="font-semibold text-slate-300">Needs login</strong>.
+							</dd>
+							<dd class="mt-2 flex justify-end">
+								<button
+									type="button"
+									class="shrink-0 rounded-lg border border-white/15 px-3 py-1.5 text-sm font-semibold text-slate-200 hover:bg-white/5"
+									data-copy-text={cursorUrlJson}
+									onclick={copyOnClick}
+								>
+									Copy JSON
+								</button>
+							</dd>
+							<dd>
+								<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-border-subtle bg-surface-mid p-3 font-mono text-xs leading-relaxed text-slate-300"><code>{cursorUrlJson}</code></pre>
+							</dd>
+						</div>
+						<div>
+							<dt class="font-semibold text-slate-100">Claude Code</dt>
+							<dd class="mt-1">
+								Run the command below, then type <code class="font-mono text-slate-300">/mcp</code> in Claude Code and
+								choose <strong class="font-semibold text-slate-300">Authenticate</strong>.
+							</dd>
+							<dd>
+								<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-border-subtle bg-surface-mid p-3 font-mono text-xs leading-relaxed text-slate-300"><code>{claudeCodeCommand}</code></pre>
+							</dd>
+						</div>
+						<div>
+							<dt class="font-semibold text-slate-100">claude.ai and Claude Desktop</dt>
+							<dd class="mt-1">
+								Settings → <strong class="font-semibold text-slate-300">Connectors</strong> →{" "}
+								<strong class="font-semibold text-slate-300">Add custom connector</strong>. Paste the URL, leave the
+								advanced OAuth fields blank, and click <strong class="font-semibold text-slate-300">Connect</strong>.
+							</dd>
+						</div>
+						<div>
+							<dt class="font-semibold text-slate-100">ChatGPT, Windsurf, and other MCP clients</dt>
+							<dd class="mt-1">
+								Add a remote MCP server with the URL and choose OAuth when asked. The sign-in page is the same.
+							</dd>
+						</div>
+					</dl>
+
+					<details class="mt-8 rounded-lg border border-border-subtle bg-surface-mid/40 p-4">
+						<summary class="cursor-pointer text-sm font-semibold text-slate-200">
+							My client asks for a Client ID
+						</summary>
+						<p class="mt-3 text-sm leading-relaxed text-slate-400">
+							Some older clients cannot identify themselves and ask for an OAuth Client ID. Use this one, shared by
+							all members. Leave Client Secret blank.
+						</p>
+						{oauthClientId ? (
+							<div class="mt-3 flex flex-wrap items-center gap-3">
+								<code
+									class="min-w-0 flex-1 break-all rounded-lg border border-border-subtle bg-surface-mid px-3 py-2 font-mono text-sm text-slate-200"
+									title="Full Client ID is copied when you use Copy"
+								>
+									{maskedClientId}
+								</code>
+								<button
+									type="button"
+									class="shrink-0 rounded-lg border border-white/15 px-3 py-1.5 text-sm font-semibold text-slate-200 hover:bg-white/5"
+									data-copy-text={oauthClientId}
+									onclick={copyOnClick}
+								>
+									Copy client ID
+								</button>
+							</div>
+						) : (
+							<div class="mt-3 rounded-lg border border-amber-500/40 bg-amber-500/10 p-4">
+								<p class="text-sm text-amber-100">
+									Client ID is not available yet. Contact us if this persists.
+								</p>
+							</div>
+						)}
+						<p class="mt-4 text-sm leading-relaxed text-slate-400">
+							Cursor with a fixed client ID, if the default JSON above does not connect:
+						</p>
+						<div class="mt-2 flex justify-end">
+							<button
+								type="button"
+								class="shrink-0 rounded-lg border border-white/15 px-3 py-1.5 text-sm font-semibold text-slate-200 hover:bg-white/5"
+								data-copy-text={cursorOAuthJson}
+								onclick={copyOnClick}
+							>
+								Copy JSON
+							</button>
+						</div>
+						<pre class="mt-2 max-w-full overflow-x-auto rounded-lg border border-border-subtle bg-surface-mid p-3 font-mono text-xs leading-relaxed text-slate-300"><code>{cursorOAuthJson}</code></pre>
+					</details>
 					<p class="mt-4 text-xs text-slate-400">
 						Using curl? Open <strong class="font-semibold text-slate-300">API keys</strong> and use an{" "}
 						<code class="font-mono text-accent-violet">ak_…</code> key as a Bearer token.

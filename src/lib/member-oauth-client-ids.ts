@@ -9,8 +9,9 @@ import { trim } from "./site-urls";
  * which Vite inlines at build time and would stay empty when only set at deploy runtime.
  *
  * The MCP server may list several comma-separated ids (the Clerk app id plus
- * Client ID Metadata Document URLs such as Cursor's). Members only ever see the
- * Clerk app id: the first entry that is not a URL.
+ * Client ID Metadata Document URLs such as Cursor's), or `*` to accept any client
+ * Clerk authorized. Members only ever see the Clerk app id: the first entry that
+ * is neither a URL nor `*`.
  */
 export function primaryOAuthClientIdFromEnv(_env?: ImportMetaEnv): string {
 	const proc = (
@@ -26,6 +27,6 @@ export function primaryOAuthClientIdFromEnv(_env?: ImportMetaEnv): string {
 		raw
 			.split(",")
 			.map((id) => id.trim())
-			.find((id) => id !== "" && !/^https?:\/\//i.test(id)) ?? ""
+			.find((id) => id !== "" && id !== "*" && !/^https?:\/\//i.test(id)) ?? ""
 	);
 }

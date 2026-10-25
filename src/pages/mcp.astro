@@ -433,7 +433,7 @@ const surfaces = [
 								href={memberMcpOAuthUrl}
 								class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 							>
-								<span>Your client ID</span>
+								<span>Connect your client</span>
 								<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
 									<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
 								</svg>
@@ -539,7 +539,7 @@ const surfaces = [
 								Browser sign-in
 							</h3>
 							<p class="mt-3 text-sm leading-relaxed text-slate-400">
-								Claude Code, claude.ai Connectors — copy <span class="text-slate-300">your OAuth Client ID</span> from <span class="text-slate-300">Member area → MCP OAuth</span> (sign in required).
+								Cursor, Claude Code, claude.ai, ChatGPT — paste the URL, sign in with your AADM account when the browser opens, click <span class="text-slate-300">Allow</span>. No client ID to copy.
 							</p>
 							<div aria-hidden="true" class="mt-7 flex items-center gap-2 text-violet-300/80">
 								<span class="font-mono-cta text-sm normal-case tracking-[0.01em]">Set up</span>
@@ -698,7 +698,7 @@ const surfaces = [
 				<div class="col-span-12 sm:col-span-10">
 					<h2 id="connect-oauth-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
 						OAuth.<br />
-						<span class="font-light italic text-slate-400">For Claude Code, claude.ai.</span>
+						<span class="font-light italic text-slate-400">Sign in once in the browser.</span>
 					</h2>
 
 					<div class="mt-8 border-2 border-amber-300/40 bg-amber-950/[0.15] p-6">
@@ -706,30 +706,25 @@ const surfaces = [
 							<span class="text-amber-300">⚠</span> Do not use an API key here
 						</p>
 						<p class="mt-3 text-sm leading-relaxed text-amber-100/95">
-							OAuth uses <span class="font-semibold text-amber-50">your client ID</span> from the{' '}
-							<MemberMcpOAuthLink
-								label="member area"
-								class="font-semibold text-amber-200 underline decoration-amber-300/50 underline-offset-4 hover:decoration-amber-200"
-							/>,
-							then browser sign-in at{' '}
-							<a href={signInUrl} class="font-semibold text-amber-200 underline decoration-amber-300/50 underline-offset-4 hover:decoration-amber-200">accounts.aadm.io</a>
-							when Claude prompts. Leave Client Secret empty.
+							Give your client only the server URL. It opens{' '}
+								<a href={signInUrl} class="font-semibold text-amber-200 underline decoration-amber-300/50 underline-offset-4 hover:decoration-amber-200">accounts.aadm.io</a>;
+								sign in with the <span class="font-semibold text-amber-50">same account you subscribed with</span> and click Allow.
+								Leave any Client ID and Client Secret fields empty.
 						</p>
 					</div>
 
 					<div class="mt-10 border border-violet-400/30 bg-[#070b13] p-7 sm:p-9" aria-labelledby="oauth-client-id-heading">
 						<h3 id="oauth-client-id-heading" class="font-display text-balance text-2xl font-bold leading-snug text-white">
-							Your OAuth Client ID
-						</h3>
+							One URL. Your AADM login does the rest.
+							</h3>
 						<p class="mt-3 text-sm leading-relaxed text-slate-400">
-							Credentials are not shown on this public page.{' '}
-							<a href={memberSignInUrl} class="font-semibold text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300">Sign in to AADM</a>{' '}
-							to open the{' '}
-							<MemberMcpOAuthLink
-								label="member area"
-								class="font-semibold text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300"
-							/>{' '}
-							and copy <span class="text-slate-300">your client ID</span>. Paste it when Claude Code or claude.ai asks for an OAuth Client ID.
+							Your client identifies itself to AADM's sign-in service, so there is no client ID to copy.
+								You need an active subscription on the account you sign in with. Per-client steps, and a fallback for clients
+								that still ask for a Client ID, are in the{' '}
+								<MemberMcpOAuthLink
+									label="member area"
+									class="font-semibold text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300"
+								/>.
 						</p>
 						<div class="mt-6 flex flex-wrap gap-3">
 							<Show when="signed-out">
@@ -737,7 +732,7 @@ const surfaces = [
 									href={memberMcpOAuthSignInUrl}
 									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
 								>
-									Sign in for your client ID
+									Sign in and connect a client
 								</a>
 							</Show>
 							<Show when="signed-in">
@@ -745,7 +740,7 @@ const surfaces = [
 									href={memberMcpOAuthUrl}
 									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
 								>
-									Open member area — your client ID
+									Open member area — connect a client
 								</a>
 							</Show>
 						</div>
@@ -763,11 +758,10 @@ const surfaces = [
 							<ol class="mt-6 space-y-3 text-sm leading-relaxed text-slate-300">
 								{
 									[
-										<>Add MCP server URL · <code class="font-mono-cta text-xs text-violet-300">{mcpRpcUrl}</code></>,
-										<>Choose <span class="text-white">OAuth</span> (not pasted API key).</>,
-										<>When Claude Code asks for OAuth Client ID, paste <span class="text-white">your client ID</span> from <MemberMcpOAuthLink class="text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300" />.</>,
-										<>Leave <span class="text-white">Client Secret</span> empty.</>,
-										<>Sign in with the <span class="text-white">same AADM account</span> when the OAuth consent screen appears.</>,
+										<>Run <code class="font-mono-cta text-xs text-violet-300">claude mcp add --transport http aadm {mcpRpcUrl}</code></>,
+											<>In Claude Code, type <code class="font-mono-cta text-xs text-violet-300">/mcp</code> and choose <span class="text-white">Authenticate</span> for aadm.</>,
+											<>Leave <span class="text-white">Client ID</span> and <span class="text-white">Client Secret</span> empty if asked.</>,
+											<>Sign in with the <span class="text-white">same AADM account</span> when the consent screen appears, then click Allow.</>,
 									].map((item, idx) => (
 										<li class="grid grid-cols-[auto_1fr] items-baseline gap-3">
 											<span class="font-mono-cta text-[13px] text-violet-300/80">{String(idx + 1).padStart(2, "0")}</span>
@@ -787,9 +781,9 @@ const surfaces = [
 									[
 										<><em>Settings → Connectors → Add custom connector</em></>,
 										<>Server URL · <code class="font-mono-cta text-xs text-violet-300">{mcpRpcUrl}</code></>,
-										<>Authentication · <span class="text-white">OAuth</span></>,
-										<><span class="text-white">Advanced</span> → paste <span class="text-white">your client ID</span> from <MemberMcpOAuthLink class="text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300" /></>,
-										<>Leave Client Secret empty · click Connect and sign in with the same AADM account</>,
+										<>Leave the <span class="text-white">Advanced</span> OAuth Client ID and Secret fields empty</>,
+											<>Click <span class="text-white">Connect</span> and sign in with the same AADM account</>,
+											<>Click <span class="text-white">Allow</span> on the consent screen · the connector turns active</>,
 									].map((item, idx) => (
 										<li class="grid grid-cols-[auto_1fr] items-baseline gap-3">
 											<span class="font-mono-cta text-[13px] text-violet-300/80">{String(idx + 1).padStart(2, "0")}</span>

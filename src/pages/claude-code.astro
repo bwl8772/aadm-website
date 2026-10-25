@@ -199,18 +199,18 @@ const capabilities = [
 												<a href={signUpUrl} class="font-semibold text-amber-300 underline decoration-amber-400/40 underline-offset-4 hover:decoration-amber-300">Create an AADM account</a>
 												{' '}or{' '}
 												<a href={signInUrl} class="font-semibold text-amber-300 underline decoration-amber-400/40 underline-offset-4 hover:decoration-amber-300">sign in</a>,
-												subscribe, then copy your OAuth client ID from{' '}
-												<a href={memberMcpOAuthSignInUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → MCP OAuth</a>{' '}
-												(or create an <code class="font-mono-cta text-xs text-slate-300">ak_…</code> key in{' '}
-												<a href={memberSignInUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → API keys</a>).
+												and subscribe. For OAuth you then only need the server URL (see{' '}
+													<a href={memberMcpOAuthSignInUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → Connectors OAuth</a>);
+													for a Bearer header, create an <code class="font-mono-cta text-xs text-slate-300">ak_…</code> key in{' '}
+													<a href={memberSignInUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → API keys</a>.
 											</span>
 										</Show>
 										<Show when="signed-in">
 											<span>
 												Create an <code class="font-mono-cta text-xs text-slate-300">ak_…</code> API key in{' '}
 												<a href={memberAreaUrl} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → API keys</a>.
-												For Claude OAuth, copy <span class="text-white">your client ID</span> from{' '}
-												<a href={memberMcpOAuthUrl} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → MCP OAuth</a>.
+												For Claude OAuth you only need the server URL; steps are in{' '}
+													<a href={memberMcpOAuthUrl} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area → Connectors OAuth</a>.
 											</span>
 										</Show>
 									</span>
