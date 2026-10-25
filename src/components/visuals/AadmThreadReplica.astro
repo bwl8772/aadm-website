@@ -9,6 +9,7 @@ type Step =
 	| { kind: "think"; label: string; ms: number }
 	| { kind: "agent"; text: string }
 	| { kind: "tool"; icon: "read" | "run" | "edit"; text: string }
+	| { kind: "divider"; label: string }
 	| {
 			kind: "aadm";
 			tool: string;
@@ -83,6 +84,161 @@ const steps: Step[] = [
 		kind: "agent",
 		text: "Shipped. Follow-up opened to verify the remaining EU rates.",
 	},
+
+	// Scenario 2 — a long-running integration suite with ~90 failures.
+	{ kind: "divider", label: "Later · integration-suite" },
+	{
+		kind: "user",
+		text: "Integration suite has been running 5h 14m. ~55 files with failures, 80–96 failing tests, 67 look like timeouts at 30s/60s/180s. Plus hard errors in llm-gateway and signal ingest. Where do I even start?",
+	},
+	{ kind: "think", label: "Thought for 3s", ms: 2200 },
+	{
+		kind: "agent",
+		text: "That much red is rarely one cause. Routing to AADM before I touch timeouts or tests.",
+	},
+	{
+		kind: "aadm",
+		tool: "triage_bug",
+		status: "Investigator · Triage",
+		lines: [
+			"Not one bug. Four clusters.",
+			"67 timeouts: the worker used 7 min of CPU in 5 h. Tests are waiting, not spinning.",
+			"Hard errors: llm-gateway (undefined adapter response), signal ingest (FK after row gone), unique index.",
+			"Whole-file wipeouts: l3-pack01, l3-pack02, stale-block-instance.409, lexi_topic_fill_all_3.",
+		],
+		chips: ["4 clusters", "Timeout rule active"],
+	},
+	{
+		kind: "tool",
+		icon: "read",
+		text: "Read ~/Desktop/f1-step3-integration.txt  L1–420",
+	},
+	{
+		kind: "tool",
+		icon: "run",
+		text: "Ran grep -l DrizzleQueryError  → 6 files, all SELECT … FOR UPDATE or forge_audit_log inserts",
+	},
+	{
+		kind: "agent",
+		text: "Timeouts cluster on L3, Edge and lock tests. The hard errors fail fast, in under 2 seconds.",
+	},
+	{
+		kind: "aadm",
+		tool: "debug_defect",
+		status: "Halt · No timeout inflation",
+		lines: [
+			"Forbidden right now: raising timeouts, re-running the full suite, touching 55 files.",
+			"Proof required for one timed-out test: last successful DB call and the exact wait that hung.",
+			"Single next action: run edge-asset-production-routes-approval-occ alone with query tracing.",
+		],
+		chips: ["L13 Logic", "AUTH-24", "1 test · traced"],
+	},
+	{
+		kind: "tool",
+		icon: "run",
+		text: "Ran vitest edge-asset-production-routes-approval-occ --trace  → 4 failed · waiting on SELECT … FOR UPDATE for 180s",
+	},
+	{
+		kind: "agent",
+		text: "Found it. Every timed-out test waits on a row lock held by a transaction another worker never commits. The suite isn't slow; it's deadlocked.",
+	},
+	{ kind: "user", text: "And the hard errors?" },
+	{ kind: "think", label: "Thought for 2s", ms: 1500 },
+	{
+		kind: "aadm",
+		tool: "classify_bug",
+		status: "Classified · 2 defects, 1 hygiene",
+		lines: [
+			"Lock leak in the test harness: one defect behind all 67 timeouts.",
+			"llm-gateway: embed adapter returns undefined on its error path. Second defect, separate change.",
+			"Unique-index and FK failures: fixtures run out of order. Test hygiene, not product bugs.",
+		],
+		chips: ["Classified", "Targeted rerun, not full CI"],
+	},
+	{
+		kind: "tool",
+		icon: "edit",
+		text: "Edited test/harness/db.ts  +3 lines  (release lock on teardown)",
+	},
+	{
+		kind: "tool",
+		icon: "run",
+		text: "Ran vitest --changed  ✓ 61 passed · 12 min, not 5 h",
+	},
+	{
+		kind: "agent",
+		text: "Harness fix released the locks: 61 timeouts gone in one targeted run. No timeout was raised. llm-gateway is next, as its own change.",
+	},
+
+	// Scenario 2, continued — the llm-gateway cluster, one cluster at a time.
+	{
+		kind: "agent",
+		text: "Starting with the llm-gateway cluster: it already has stack frames and fails in 2 seconds. I'll classify it with AADM, then fix and prove one cluster at a time.",
+	},
+	{
+		kind: "tool",
+		icon: "read",
+		text: "Read server/services/llm/llm-gateway.integration.test.ts  + provider-registry.ts",
+	},
+	{
+		kind: "agent",
+		text: "The stack points at overlay adapters returning undefined. Looks like isolate:false: a first-bound provider mock skips the overlay table, so complete, stream and embed all return undefined.",
+	},
+	{
+		kind: "aadm",
+		tool: "debug_defect",
+		status: "Hold · Not yet classified",
+		lines: [
+			"Plausible, not proven. Suite-order pollution and a standalone break look identical from here.",
+			"Single next action: run llm-gateway.integration.test.ts alone.",
+			"Forbidden right now: changing the registry before the isolated run.",
+		],
+		chips: ["UNCLASSIFIED", "1 file · isolated"],
+	},
+	{
+		kind: "tool",
+		icon: "run",
+		text: "Ran vitest run llm-gateway.integration.test.ts  (isolated)  → 1 failed | 7 passed · 6.39s",
+	},
+	{
+		kind: "agent",
+		text: "Isolated run: the four contract tests pass, so the suite failures are first-bind pollution. The one remaining fail is the embed-dimension boot check.",
+	},
+	{
+		kind: "aadm",
+		tool: "debug_defect",
+		status: "Classified · 2 fixes, 1 file each",
+		lines: [
+			"Root cause: isolate:false first-binds a leftover vendor mock that never consults the provider overlay.",
+			"Fix 1: the registry consults the overlay table before any first-bound adapter.",
+			"Fix 2: feed the real column dimension through the db mock so the boot check cannot skip.",
+		],
+		chips: ["Classified", "L13 Logic", "AUTH-24"],
+	},
+	{
+		kind: "tool",
+		icon: "edit",
+		text: "Edited provider-registry.ts  +9 lines  (overlay always wins)",
+	},
+	{
+		kind: "tool",
+		icon: "edit",
+		text: "Edited llm-gateway.integration.test.ts  +4 lines  (dim-check mock stamp)",
+	},
+	{
+		kind: "tool",
+		icon: "run",
+		text: "Ran vitest run llm-gateway.integration.test.ts  ✓ 8 passed · 5.38s",
+	},
+	{
+		kind: "tool",
+		icon: "run",
+		text: "Ran 4 neighbouring LLM specs  ✓ 6 · ✓ 7 · ✓ 6 · ✓ 1 passed",
+	},
+	{
+		kind: "agent",
+		text: "Cluster 2 is proven. Next is the unique-index cluster: reproduce it in isolation, then classify before changing anything.",
+	},
 ];
 
 const toolIcon = {
@@ -94,9 +250,11 @@ const toolIcon = {
 
 <figure class="aadm-replica relative mx-auto w-full max-w-3xl select-none" style="pointer-events:none">
 	<p class="sr-only">
-		Illustration of a live editor agent session. A developer reports a checkout error; the agent calls AADM, which holds the
-		fix until the failure is reproduced, classifies the root cause from evidence, requires one test, and marks the release
-		ready with one residual risk logged.
+		Illustration of a live editor agent session with two threads. First, a developer reports a checkout error; the agent calls
+		AADM, which holds the fix until the failure is reproduced, classifies the root cause from evidence, requires one test, and
+		marks the release ready with one residual risk logged. Second, a five-hour integration suite shows about ninety failures;
+		AADM sorts them into four clusters, forbids raising timeouts, requires a trace of one hung test, which reveals a lock leak
+		in the test harness, and a targeted rerun clears sixty-one timeouts. The agent then isolates the llm-gateway cluster, AADM holds until an isolated run separates suite-order pollution from a real break, two one-file fixes land, and the cluster is proven green.
 	</p>
 	<div aria-hidden="true" inert class="overflow-hidden rounded-xl border border-white/10 bg-[#0b0d14] shadow-[0_40px_120px_-40px_rgba(16,185,129,0.25)]">
 		<div class="flex items-center gap-3 border-b border-white/[0.07] bg-[#0e1119] px-4 py-2.5">
@@ -105,7 +263,7 @@ const toolIcon = {
 				<span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
 				<span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
 			</span>
-			<span class="text-[13px] text-slate-400">Agent · checkout-api</span>
+			<span class="text-[13px] text-slate-400">Agent · 2 threads</span>
 			<span class="ml-auto inline-flex items-center gap-1.5 text-[12px] text-rose-200">
 				<span class="aadm-live-dot h-1.5 w-1.5 rounded-full bg-rose-400"></span> Live session
 			</span>
@@ -132,6 +290,12 @@ const toolIcon = {
 					) : m.kind === "agent" ? (
 						<p data-step="agent" class="aadm-step max-w-[90%] text-[14px] leading-relaxed text-slate-300">
 							<span data-type={m.text}>{m.text}</span>
+						</p>
+					) : m.kind === "divider" ? (
+						<p data-step="divider" class="aadm-step flex items-center gap-3 pt-4 text-[12px] text-slate-500">
+							<span class="h-px flex-1 bg-white/10"></span>
+							<span>{m.label}</span>
+							<span class="h-px flex-1 bg-white/10"></span>
 						</p>
 					) : m.kind === "tool" ? (
 						<p data-step="tool" class="aadm-step flex items-center gap-2 font-mono text-[12.5px] text-slate-400">
@@ -217,7 +381,7 @@ const toolIcon = {
 					const typed = s.querySelector<HTMLElement>("[data-type]");
 					if (kind === "user" && typed) {
 						const text = typed.dataset.type ?? "";
-						await typeInto(composer, text, 28);
+						await typeInto(composer, text, 18);
 						await sleep(350);
 						composer.textContent = "Ask the agent…";
 						typed.textContent = text;
@@ -239,6 +403,11 @@ const toolIcon = {
 						s.classList.remove("aadm-hidden");
 						follow();
 						await sleep(700);
+					} else if (kind === "divider") {
+						await sleep(1800);
+						s.classList.remove("aadm-hidden");
+						follow();
+						await sleep(1200);
 					} else if (kind === "aadm") {
 						s.classList.remove("aadm-hidden");
 						s.classList.add("aadm-active");
