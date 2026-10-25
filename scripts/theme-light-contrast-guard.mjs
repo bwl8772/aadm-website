@@ -119,8 +119,8 @@ function findInText(text) {
 			[DECORATION_CLASS_RE, "decoration"],
 		]) {
 			re.lastIndex = 0;
-			let m;
-			while ((m = re.exec(line)) !== null) {
+			let m = re.exec(line);
+			while (m !== null) {
 				const prefix = m[1] || "";
 				const family = m[2];
 				const brand = brandFor(family, kind);
@@ -128,7 +128,9 @@ function findInText(text) {
 				if (kind === "text") suggestion = `${prefix}text-${brand}`;
 				else if (kind === "border") {
 					suggestion =
-						brand.includes("-border") || brand === "brand-violet" || brand === "brand-sky"
+						brand.includes("-border") ||
+						brand === "brand-violet" ||
+						brand === "brand-sky"
 							? brand.includes("-border")
 								? `${prefix}border-${brand}`
 								: `${prefix}border-${brand}/40`
@@ -141,6 +143,7 @@ function findInText(text) {
 					suggestion,
 					kind,
 				});
+				m = re.exec(line);
 			}
 		}
 	}
@@ -209,7 +212,9 @@ console.log(
 );
 console.log("");
 
-for (const [rel, rows] of [...byFile.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
+for (const [rel, rows] of [...byFile.entries()].sort((a, b) =>
+	a[0].localeCompare(b[0]),
+)) {
 	console.log(rel);
 	for (const r of rows.slice(0, 40)) {
 		console.log(`  ${r.line}:${r.col}  ${r.match}  →  ${r.suggestion}`);
@@ -219,7 +224,9 @@ for (const [rel, rows] of [...byFile.entries()].sort((a, b) => a[0].localeCompar
 }
 
 if (report.length === 0) {
-	console.log("OK — no pale Tailwind text/border/decoration accents left in src/.");
+	console.log(
+		"OK — no pale Tailwind text/border/decoration accents left in src/.",
+	);
 	process.exit(0);
 }
 
@@ -234,6 +241,8 @@ if (doFix && report.length > 0) {
 }
 
 if (!doFix) {
-	console.error("Re-run with --fix to rewrite, or replace with brand tokens by hand.");
+	console.error(
+		"Re-run with --fix to rewrite, or replace with brand tokens by hand.",
+	);
 	process.exit(1);
 }

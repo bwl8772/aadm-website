@@ -8,7 +8,7 @@
   /* Dark first, per the brief. Resolve before paint to avoid a flash:
      ?theme= query param (for deterministic screenshots) wins, then the
      saved preference, then dark. */
-  (function () {
+  (() => {
     var urlTheme = new URLSearchParams(location.search).get("theme");
     var saved = null;
     try { saved = localStorage.getItem("aadm-field-mock-theme"); } catch (e) {}
@@ -1111,11 +1111,9 @@
 </div>
 
 <script>
-  (function () {
-    function syncIcons() {}
-
-    document.querySelectorAll("[data-theme-toggle]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
+  (() => {
+    document.querySelectorAll("[data-theme-toggle]").forEach((btn) => {
+      btn.addEventListener("click", () => {
         var isDark = document.documentElement.classList.toggle("dark");
         btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
         try {
@@ -1128,8 +1126,8 @@
     var openers = document.querySelectorAll('[data-open-dialog="create-live"]');
     var closers = overlay ? overlay.querySelectorAll("[data-close-dialog]") : [];
 
-    openers.forEach(function (btn) {
-      btn.addEventListener("click", function () {
+    openers.forEach((btn) => {
+      btn.addEventListener("click", () => {
         overlay.setAttribute("data-open", "true");
         overlay.setAttribute("aria-hidden", "false");
         var input = overlay.querySelector("input");
@@ -1137,21 +1135,21 @@
       });
     });
 
-    closers.forEach(function (btn) {
-      btn.addEventListener("click", function () {
+    closers.forEach((btn) => {
+      btn.addEventListener("click", () => {
         overlay.setAttribute("data-open", "false");
         overlay.setAttribute("aria-hidden", "true");
       });
     });
 
     if (overlay) {
-      overlay.addEventListener("click", function (e) {
+      overlay.addEventListener("click", (e) => {
         if (e.target === overlay) {
           overlay.setAttribute("data-open", "false");
           overlay.setAttribute("aria-hidden", "true");
         }
       });
-      document.addEventListener("keydown", function (e) {
+      document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && overlay.getAttribute("data-open") === "true") {
           overlay.setAttribute("data-open", "false");
           overlay.setAttribute("aria-hidden", "true");
@@ -1159,8 +1157,8 @@
       });
     }
 
-    document.querySelectorAll("[data-dismiss-connect]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
+    document.querySelectorAll("[data-dismiss-connect]").forEach((btn) => {
+      btn.addEventListener("click", () => {
         var card = btn.closest("[data-connect-card]");
         if (card) card.remove();
       });

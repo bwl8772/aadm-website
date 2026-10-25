@@ -87,7 +87,12 @@
 }
 
 .member-area-card
-	:is(.cl-formButtonReset, .cl-button[data-variant="outline"], .cl-menuButton, .cl-profileSectionPrimaryButton) {
+	:is(
+		.cl-formButtonReset,
+		.cl-button[data-variant="outline"],
+		.cl-menuButton,
+		.cl-profileSectionPrimaryButton
+	) {
 	background-color: var(--muted) !important;
 	color: var(--foreground) !important;
 	border-color: var(--border) !important;
@@ -98,13 +103,18 @@
 	color: var(--accent-foreground) !important;
 }
 
-.member-area-card :is(.cl-alert, .cl-formFieldErrorText, .cl-formFieldWarningText) {
+.member-area-card
+	:is(.cl-alert, .cl-formFieldErrorText, .cl-formFieldWarningText) {
 	color: var(--destructive) !important;
 }
 
 .member-area-card :is(.cl-alert[data-color="warning"], .cl-alert__warning) {
 	color: var(--warning) !important;
-	background-color: color-mix(in srgb, var(--warning) 12%, transparent) !important;
+	background-color: color-mix(
+		in srgb,
+		var(--warning) 12%,
+		transparent
+	) !important;
 	border-color: color-mix(in srgb, var(--warning) 40%, transparent) !important;
 }
 
@@ -116,22 +126,30 @@
 	background-color: var(--border) !important;
 }
 
-.member-area-card :is(.cl-table, .cl-tableHead, .cl-tableBody, .cl-tableRow, .cl-tableCell) {
+.member-area-card
+	:is(.cl-table, .cl-tableHead, .cl-tableBody, .cl-tableRow, .cl-tableCell) {
 	background-color: transparent !important;
 	color: var(--foreground) !important;
 	border-color: var(--border) !important;
 }
 
-.member-area-card :is(.cl-navbarButton, .cl-menuItem, .cl-profileSectionItemButton) {
+.member-area-card
+	:is(.cl-navbarButton, .cl-menuItem, .cl-profileSectionItemButton) {
 	color: var(--foreground) !important;
 }
 
-.member-area-card :is(.cl-navbarButton[data-active="true"], .cl-menuItem[data-active="true"]) {
+.member-area-card
+	:is(.cl-navbarButton[data-active="true"], .cl-menuItem[data-active="true"]) {
 	background-color: var(--accent) !important;
 	color: var(--accent-foreground) !important;
 }
 
-.member-area-card :is(.cl-navbarButton:hover, .cl-menuItem:hover, .cl-profileSectionItemButton:hover) {
+.member-area-card
+	:is(
+		.cl-navbarButton:hover,
+		.cl-menuItem:hover,
+		.cl-profileSectionItemButton:hover
+	) {
 	background-color: var(--hover) !important;
 }
 

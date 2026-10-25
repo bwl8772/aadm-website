@@ -123,7 +123,9 @@ try {
 	const hasSyncCopy = await page.getByText("Syncing your session").count();
 	const signInHref =
 		(await page.locator("[data-sync-sign-in]").getAttribute("href")) ||
-		(await page.locator("[data-sign-in-url]").getAttribute("data-sign-in-url")) ||
+		(await page
+			.locator("[data-sign-in-url]")
+			.getAttribute("data-sign-in-url")) ||
 		"";
 	const credUi = await page
 		.locator(
@@ -155,9 +157,7 @@ try {
 		);
 	}
 	if (credUi > 0) {
-		throw new Error(
-			"unsigned /member must not expose API key / credential UI",
-		);
+		throw new Error("unsigned /member must not expose API key / credential UI");
 	}
 	if (!redirectEndsWithMember) {
 		throw new Error(

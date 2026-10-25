@@ -71,7 +71,9 @@ try {
 	const syncShell = await anonPage.locator("[data-sign-in-url]").count();
 	const signInHref =
 		(await anonPage.locator("[data-sync-sign-in]").getAttribute("href")) ||
-		(await anonPage.locator("[data-sign-in-url]").getAttribute("data-sign-in-url")) ||
+		(await anonPage
+			.locator("[data-sign-in-url]")
+			.getAttribute("data-sign-in-url")) ||
 		"";
 
 	log("Unsigned /field/main", {
