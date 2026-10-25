@@ -348,12 +348,62 @@ html:not(.dark) .focus-visible\:bg-white\/\[0\.06\]:focus-visible {
 	background-color: var(--hover);
 }
 
+html:not(.dark) .bg-black\/10,
+html:not(.dark) .bg-black\/20,
+html:not(.dark) .bg-black\/30,
+html:not(.dark) .bg-black\/40 {
+	background-color: var(--muted);
+}
+
 html:not(.dark) .bg-black\/70 {
 	background-color: var(--overlay);
 }
 
 html:not(.dark) .bg-white\/\[0\.08\] {
 	background-color: var(--border);
+}
+
+html:not(.dark) .divide-white\/\[0\.05\],
+html:not(.dark) .divide-white\/\[0\.06\],
+html:not(.dark) .divide-white\/\[0\.08\],
+html:not(.dark) .divide-white\/10 {
+	border-color: var(--border);
+}
+
+html:not(.dark) .decoration-slate-500,
+html:not(.dark) .decoration-slate-600,
+html:not(.dark) .decoration-slate-700 {
+	text-decoration-color: var(--border);
+}
+
+html:not(.dark) .hover\:decoration-white:hover {
+	text-decoration-color: var(--foreground);
+}
+
+html:not(.dark) .hover\:bg-emerald-200:hover {
+	background-color: var(--brand-mcp);
+	color: var(--brand-mcp-fg);
+}
+
+html:not(.dark) .hover\:bg-amber-200:hover {
+	background-color: var(--brand-warn);
+	color: var(--brand-warn-fg);
+}
+
+html:not(.dark) .text-slate-600,
+html:not(.dark) .text-slate-700 {
+	color: var(--text-muted);
+}
+
+html:not(.dark) .fill-slate-300\/90,
+html:not(.dark) .fill-slate-400\/8,
+html:not(.dark) .fill-slate-500,
+html:not(.dark) .fill-slate-600 {
+	fill: var(--text-muted);
+}
+
+html:not(.dark) .stroke-slate-400\/40 {
+	stroke: color-mix(in srgb, var(--text-muted) 40%, transparent);
 }
 
 /* Residual hex panels */

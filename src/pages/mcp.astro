@@ -228,7 +228,7 @@ const toolBadgeClass: Record<
 	Navigator: "border-brand-violet/40 text-brand-violet",
 	Investigator: "border-brand-sky/40 text-brand-sky",
 	Sentinel: "border-brand-mcp-border text-brand-mcp",
-	Doctrine: "border-slate-300/30 text-foreground",
+	Doctrine: "border-border text-foreground",
 };
 
 const outcomes: Array<{ num: string; title: string; body: string }> = [
@@ -300,9 +300,9 @@ const laneToneClasses: Record<
 > = {
 	violet: {
 		numeral: "text-brand-violet",
-		chip: "border-violet-400/30 text-brand-violet",
-		rule: "border-violet-400/40",
-		bullet: "bg-violet-300",
+		chip: "border-brand-violet/40 text-brand-violet",
+		rule: "border-brand-violet/40",
+		bullet: "bg-brand-violet",
 	},
 	blue: {
 		numeral: "text-brand-sky",
@@ -312,9 +312,9 @@ const laneToneClasses: Record<
 	},
 	emerald: {
 		numeral: "text-brand-mcp",
-		chip: "border-emerald-400/30 text-brand-mcp",
-		rule: "border-emerald-400/40",
-		bullet: "bg-emerald-300",
+		chip: "border-brand-mcp-border text-brand-mcp",
+		rule: "border-brand-mcp-border",
+		bullet: "bg-brand-mcp",
 	},
 };
 
@@ -401,7 +401,7 @@ const surfaces = [
 								This is the delivery mechanism, not the argument. For what it is delivering and why that matters, read{' '}
 								<a
 									href="/about"
-									class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
+									class="font-semibold text-text-secondary underline decoration-border underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 									>agentic engineering</a
 								>.
 							</p>
@@ -413,7 +413,7 @@ const surfaces = [
 							<a
 								id="get-access"
 								href={signUpUrl}
-								class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+								class="group inline-flex items-center gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg focus-visible:ring-2 focus-visible:ring-brand-mcp focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 							>
 								<span>Get access</span>
 								<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -422,7 +422,7 @@ const surfaces = [
 							</a>
 							<a
 								href={signInUrl}
-								class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+								class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 							>
 								Sign in to AADM
 							</a>
@@ -431,7 +431,7 @@ const surfaces = [
 							<a
 								id="get-access"
 								href={memberMcpOAuthUrl}
-								class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+								class="group inline-flex items-center gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg focus-visible:ring-2 focus-visible:ring-brand-mcp focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 							>
 								<span>Connect your client</span>
 								<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -441,7 +441,7 @@ const surfaces = [
 						</Show>
 						<a
 							href="#two-ways"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>Connection steps</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↓</span>
@@ -477,7 +477,7 @@ const surfaces = [
 							type="button"
 							id="mcp-url-copy-btn"
 							data-url={mcpRpcUrl}
-							class="font-mono-cta inline-flex items-center gap-2 border border-border bg-transparent px-4 py-2.5 text-xs normal-case tracking-[0.01em] text-foreground transition hover:border-white/40 hover:bg-accent"
+							class="font-mono-cta inline-flex items-center gap-2 border border-border bg-transparent px-4 py-2.5 text-xs normal-case tracking-[0.01em] text-foreground transition hover:border-foreground/25 hover:bg-accent"
 						>
 							Copy URL
 						</button>
@@ -600,7 +600,7 @@ const surfaces = [
 									<button
 										type="button"
 										id="mcp-connect-copy-btn"
-										class="font-mono-cta border border-border bg-transparent px-3 py-1.5 text-[13px] normal-case tracking-[0.01em] text-foreground transition hover:border-white/40 hover:bg-accent"
+										class="font-mono-cta border border-border bg-transparent px-3 py-1.5 text-[13px] normal-case tracking-[0.01em] text-foreground transition hover:border-foreground/25 hover:bg-accent"
 									>
 										Copy JSON
 									</button>
@@ -659,7 +659,7 @@ const surfaces = [
 							<Show when="signed-out">
 								<a
 									href={memberSignInUrl}
-									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+									class="inline-flex items-center gap-2 bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 								>
 									Sign in for your API key
 								</a>
@@ -667,7 +667,7 @@ const surfaces = [
 							<Show when="signed-in">
 								<a
 									href={memberAreaUrl}
-									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+									class="inline-flex items-center gap-2 bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 								>
 									Open member area — your API key
 								</a>
@@ -701,7 +701,7 @@ const surfaces = [
 						<span class="font-light italic text-muted-foreground">Sign in once in the browser.</span>
 					</h2>
 
-					<div class="mt-8 border-2 border-brand-warn-border bg-amber-950/[0.15] p-6">
+					<div class="mt-8 border-2 border-brand-warn-border bg-brand-warn-bg p-6">
 						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">
 							<span class="text-brand-warn">⚠</span> Do not use an API key here
 						</p>
@@ -713,7 +713,7 @@ const surfaces = [
 						</p>
 					</div>
 
-					<div class="mt-10 border border-violet-400/30 bg-muted p-7 sm:p-9" aria-labelledby="oauth-client-id-heading">
+					<div class="mt-10 border border-brand-violet/40 bg-muted p-7 sm:p-9" aria-labelledby="oauth-client-id-heading">
 						<h3 id="oauth-client-id-heading" class="font-display text-balance text-2xl font-bold leading-snug text-foreground">
 							One URL. Your AADM login does the rest.
 							</h3>
@@ -723,14 +723,14 @@ const surfaces = [
 								that still ask for a Client ID, are in the{' '}
 								<MemberMcpOAuthLink
 									label="member area"
-									class="font-semibold text-brand-violet underline decoration-violet-400/40 underline-offset-4 hover:decoration-brand-violet"
+									class="font-semibold text-brand-violet underline decoration-brand-violet/40 underline-offset-4 hover:decoration-brand-violet"
 								/>.
 						</p>
 						<div class="mt-6 flex flex-wrap gap-3">
 							<Show when="signed-out">
 								<a
 									href={memberMcpOAuthSignInUrl}
-									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+									class="inline-flex items-center gap-2 bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 								>
 									Sign in and connect a client
 								</a>
@@ -738,7 +738,7 @@ const surfaces = [
 							<Show when="signed-in">
 								<a
 									href={memberMcpOAuthUrl}
-									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+									class="inline-flex items-center gap-2 bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 								>
 									Open member area — connect a client
 								</a>
@@ -752,7 +752,7 @@ const surfaces = [
 					<div class="mt-10 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
 						<article class="bg-surface-deep p-7 sm:p-9">
 							<div class="flex items-center gap-3">
-								<span class="block h-2 w-2 rounded-full bg-violet-300"></span>
+								<span class="block h-2 w-2 rounded-full bg-brand-violet"></span>
 								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">Claude Code</p>
 							</div>
 							<ol class="mt-6 space-y-3 text-sm leading-relaxed text-text-secondary">
@@ -773,7 +773,7 @@ const surfaces = [
 						</article>
 						<article class="bg-surface-deep p-7 sm:p-9">
 							<div class="flex items-center gap-3">
-								<span class="block h-2 w-2 rounded-full bg-violet-300"></span>
+								<span class="block h-2 w-2 rounded-full bg-brand-violet"></span>
 								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">claude.ai Connectors</p>
 							</div>
 							<ol class="mt-6 space-y-3 text-sm leading-relaxed text-text-secondary">
@@ -1001,7 +1001,7 @@ npx aadm-init-repo --full</code></pre>
 							<!-- Navigator mock -->
 							<article class="border border-border bg-surface-mid">
 								<div class="flex flex-wrap items-center gap-3 border-b border-border px-5 py-3">
-									<span class="block h-2 w-2 rounded-full bg-violet-400"></span>
+									<span class="block h-2 w-2 rounded-full bg-brand-violet"></span>
 									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">
 										Navigator · tools/call · standard_brief
 									</span>
@@ -1015,7 +1015,7 @@ npx aadm-init-repo --full</code></pre>
 											<span class="text-muted-foreground">Host</span> · <code class="bg-accent px-1 text-text-secondary">standard_brief</code> with issue text + repo hints.
 										</p>
 									</div>
-									<div class="space-y-3 bg-black/20 p-5 text-text-secondary">
+									<div class="space-y-3 bg-muted p-5 text-text-secondary">
 										<p>
 											<span class="text-brand-mcp">MCP</span> · <code class="text-brand-mcp">capabilities_schema_version</code>,
 											<code class="text-brand-mcp">navigator_feature_delivery</code> stages,
@@ -1046,7 +1046,7 @@ npx aadm-init-repo --full</code></pre>
 											<span class="text-muted-foreground">Host</span> · Second call with <code class="bg-accent px-1 text-text-secondary">append_evidence</code>: last HAR row + test name.
 										</p>
 									</div>
-									<div class="space-y-3 bg-black/20 p-5 text-text-secondary">
+									<div class="space-y-3 bg-muted p-5 text-text-secondary">
 										<p>
 											<span class="text-brand-mcp">MCP</span> · <code class="text-brand-warn">rootCauseClassificationStatus: UNCLASSIFIED</code>, Path A recon;
 											<code class="text-muted-foreground">testTimeoutInflationRuleActive</code> nudges proof before timeout edits.
@@ -1062,7 +1062,7 @@ npx aadm-init-repo --full</code></pre>
 							<!-- Sentinel mock -->
 							<article class="border border-border bg-surface-mid">
 								<div class="flex flex-wrap items-center gap-3 border-b border-border px-5 py-3">
-									<span class="block h-2 w-2 rounded-full bg-emerald-400"></span>
+									<span class="block h-2 w-2 rounded-full bg-brand-mcp"></span>
 									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
 										Sentinel · tools/call · sentinel_assurance
 									</span>
@@ -1077,7 +1077,7 @@ npx aadm-init-repo --full</code></pre>
 											<code class="bg-accent px-1 text-text-secondary">agent_observability_expectations</code> per seam.
 										</p>
 									</div>
-									<div class="space-y-3 bg-black/20 p-5 text-text-secondary">
+									<div class="space-y-3 bg-muted p-5 text-text-secondary">
 										<p>
 											<span class="text-brand-mcp">MCP</span> · Audit program slice +
 											<code class="text-brand-mcp">sentinel_audit_exit_kind</code> framing; gaps hand off to Investigator
@@ -1154,7 +1154,7 @@ npx aadm-init-repo --full</code></pre>
 									<Show when="signed-out">
 										<a
 											href={signUpUrl}
-											class="group inline-flex items-center justify-between gap-3 bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+											class="group inline-flex items-center justify-between gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 										>
 											<span>Create AADM account</span>
 											<svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -1163,7 +1163,7 @@ npx aadm-init-repo --full</code></pre>
 										</a>
 										<a
 											href={signInUrl}
-											class="inline-flex items-center justify-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground transition hover:border-white/40 hover:bg-accent"
+											class="inline-flex items-center justify-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground transition hover:border-foreground/25 hover:bg-accent"
 										>
 											Already subscribed? Sign in
 										</a>
@@ -1171,7 +1171,7 @@ npx aadm-init-repo --full</code></pre>
 									<Show when="signed-in">
 										<a
 											href={memberAreaUrl}
-											class="group inline-flex items-center justify-between gap-3 bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+											class="group inline-flex items-center justify-between gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 										>
 											<span>Open member area — API keys</span>
 											<svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -1211,7 +1211,7 @@ npx aadm-init-repo --full</code></pre>
 					{
 						urlMcpEndpoint ? (
 							<>
-								<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+								<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] lg:grid-cols-3">
 									{healthUrl ? (
 										<a
 											href={healthUrl}
@@ -1315,7 +1315,7 @@ npx aadm-init-repo --full</code></pre>
 										<div
 											class:list={[
 												"grid-visual-slot-cols-3 relative overflow-hidden bg-surface-mid transition duration-300 hover:bg-secondary",
-												visual.variant === "wide" ? "sm:col-span-2 lg:col-span-2" : "",
+												visual.variant === "wide" ? "lg:col-span-2" : "",
 											]}
 											style={gridVisualSlotStyle(visual)}
 										>
@@ -1328,9 +1328,9 @@ npx aadm-init-repo --full</code></pre>
 									<div class="flex items-center justify-between border-b border-border px-5 py-3">
 										<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Smoke · initialize</span>
 										<span class="flex gap-1" aria-hidden="true">
-											<span class="block h-1.5 w-1.5 rounded-full bg-emerald-400/70"></span>
-											<span class="block h-1.5 w-1.5 rounded-full bg-amber-400/70"></span>
-											<span class="block h-1.5 w-1.5 rounded-full bg-slate-500/70"></span>
+											<span class="block h-1.5 w-1.5 rounded-full bg-brand-mcp/70"></span>
+											<span class="block h-1.5 w-1.5 rounded-full bg-brand-warn/70"></span>
+											<span class="block h-1.5 w-1.5 rounded-full bg-muted-foreground/70"></span>
 										</span>
 									</div>
 									<pre class="font-mono-cta overflow-x-auto p-5 text-xs leading-relaxed text-text-secondary sm:text-sm"><code>{curlInit}</code></pre>
@@ -1371,7 +1371,7 @@ npx aadm-init-repo --full</code></pre>
 						Wondering whether your framework or cloud is covered?{' '}
 						<a
 							href="/stacks"
-							class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
+							class="font-semibold text-text-secondary underline decoration-border underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 							>See compatible stacks</a
 						>.
 					</p>
@@ -1395,7 +1395,7 @@ npx aadm-init-repo --full</code></pre>
 									</div>
 									<p class="mt-4 text-sm leading-relaxed text-muted-foreground">{row.outcome}</p>
 									<div aria-hidden="true" class="mt-auto pt-5">
-										<div class="h-px w-8 bg-emerald-300/30 transition-all duration-500 group-hover:w-16 group-hover:bg-emerald-300/60"></div>
+										<div class="h-px w-8 bg-brand-mcp-border transition-all duration-500 group-hover:w-16 group-hover:bg-brand-mcp"></div>
 									</div>
 								</li>
 							))

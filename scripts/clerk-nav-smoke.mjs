@@ -179,7 +179,7 @@ try {
 		/clerk-user-profile/i.test(syncHtml) ||
 		/data-member-area-root/i.test(syncHtml) ||
 		/data-cred-panel=/i.test(syncHtml) ||
-		/#api-keys-guide-heading|#oauth-heading/i.test(syncHtml);
+		/id="(?:api-keys-guide-heading|oauth-heading)"/i.test(syncHtml);
 	log("/member?__clerk_synced=false (unsigned sync shell)", {
 		httpStatus: syncStatus,
 		hasSyncShell: /Syncing your session/i.test(syncHtml),

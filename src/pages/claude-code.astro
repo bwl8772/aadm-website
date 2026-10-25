@@ -130,14 +130,14 @@ const capabilities = [
 					<p class="mt-10 font-mono-cta text-sm normal-case tracking-[0.01em] text-muted-foreground">
 						<span class="text-brand-mcp">▸ Step 0</span> · <code class="font-mono-cta text-brand-mcp">npx aadm-init-repo --full</code> ·
 						<a href="/governance" class="text-brand-mcp underline decoration-brand-mcp underline-offset-[6px] hover:decoration-brand-mcp">init guide</a>
-						<span class="text-slate-700"> · </span>
-						<a href="/about" class="text-text-secondary underline decoration-slate-700 underline-offset-[6px] hover:text-foreground hover:decoration-slate-500">the discipline</a>
+						<span class="text-muted-foreground"> · </span>
+						<a href="/about" class="text-text-secondary underline decoration-border underline-offset-[6px] hover:text-foreground hover:decoration-muted-foreground">the discipline</a>
 					</p>
 
 					<div class="mt-10 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<a
 							href="#connect-claude"
-							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="group inline-flex items-center gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-warn hover:text-brand-warn-fg focus-visible:ring-2 focus-visible:ring-brand-warn focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<span>Connection steps & copy-paste</span>
 							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -146,13 +146,13 @@ const capabilities = [
 						</a>
 						<a
 							href={urlMcpMarketing}
-							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							MCP overview & pricing
 						</a>
 						<a
 							href={urlStandard}
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
 						>
 							<span>Read the standard</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↗</span>
@@ -285,7 +285,7 @@ const capabilities = [
 									<button
 										type="button"
 										id="claude-connect-copy-btn"
-										class="font-mono-cta border border-border bg-transparent px-3 py-1.5 text-[13px] normal-case tracking-[0.01em] text-foreground transition hover:border-white/40 hover:bg-accent"
+										class="font-mono-cta border border-border bg-transparent px-3 py-1.5 text-[13px] normal-case tracking-[0.01em] text-foreground transition hover:border-foreground/25 hover:bg-accent"
 									>
 										Copy JSON
 									</button>
@@ -610,7 +610,7 @@ haltBeforeFix: satisfied for scoped patch proposal`}</pre>
 					<div class="mt-14 flex flex-col flex-wrap items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
 						<a
 							href={urlMcpMarketing}
-							class="group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="group inline-flex items-center gap-3 bg-foreground px-7 py-4 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg focus-visible:ring-2 focus-visible:ring-brand-mcp focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<span>Hosted MCP · access</span>
 							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -619,13 +619,13 @@ haltBeforeFix: satisfied for scoped patch proposal`}</pre>
 						</a>
 						<a
 							href="/cursor"
-							class="inline-flex items-center gap-2 border border-border bg-transparent px-7 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-7 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							AADM + Cursor →
 						</a>
 						<a
 							href="/why-aadm"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
 						>
 							<span>Why AADM, vs raw loops</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>

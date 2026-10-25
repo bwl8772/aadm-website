@@ -764,7 +764,7 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 								rather than after.{' '}
 								<a
 									href="/about"
-									class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
+									class="font-semibold text-text-secondary underline decoration-border underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 									>Agentic engineering</a
 								>{' '}
 								is the general form of that move.
@@ -775,7 +775,7 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<a
 							href="#vignettes"
-							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="group inline-flex items-center gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-warn hover:text-brand-warn-fg focus-visible:ring-2 focus-visible:ring-brand-warn focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<span>Read the vignettes</span>
 							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -784,13 +784,13 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						</a>
 						<a
 							href={urlMcpMarketing}
-							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							Get access
 						</a>
 						<a
 							href="#honest-boundary"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
 						>
 							<span>The honest boundary</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↓</span>
@@ -1101,7 +1101,7 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<a
 							href={urlMcpMarketing}
-							class="group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200"
+							class="group inline-flex items-center gap-3 bg-foreground px-7 py-4 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg"
 						>
 							<span>See how the MCP works</span>
 							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -1110,13 +1110,13 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						</a>
 						<a
 							href={urlStandard}
-							class="inline-flex items-center gap-2 border border-border bg-transparent px-7 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-7 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent"
 						>
 							Read the standard
 						</a>
 						<a
 							href="/why-aadm"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>Why AADM, vs raw loops</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
