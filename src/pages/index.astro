@@ -150,8 +150,8 @@ const mentalToneClasses: Record<
 		rule: "border-emerald-300/40",
 	},
 	white: {
-		numeral: "text-white/90",
-		pill: "border-white/20 text-white",
+		numeral: "text-foreground/90",
+		pill: "border-border text-foreground",
 		rule: "border-white/30",
 	},
 };
@@ -229,12 +229,12 @@ const outcomes: Outcome[] = [
 	description="Open standard for governed software delivery with agents — read and adopt in public. Hosted MCP keeps your tooling versioned, online, and maintained."
 	headerActiveNav="home"
 >
-	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-text-primary">
 
 		<!-- =============================================================
 		     §00 — HERO
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<!-- Blueprint dot grid -->
 			<div
 				aria-hidden="true"
@@ -249,17 +249,17 @@ const outcomes: Outcome[] = [
 			</svg>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-24 pt-10 sm:px-8 sm:pb-32 sm:pt-16">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">AADM / Overview</span>
-					<span class="hidden font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500 sm:mt-auto sm:block">
-						<span class="text-slate-400">Filed under</span><br />
-						<span class="text-slate-400">Agent governance</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">AADM / Overview</span>
+					<span class="hidden font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground sm:mt-auto sm:block">
+						<span class="text-muted-foreground">Filed under</span><br />
+						<span class="text-muted-foreground">Agent governance</span>
 					</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-10 flex flex-wrap items-center gap-3 text-[13px] normal-case tracking-[0.01em] text-slate-400">
+					<p class="font-mono-cta mb-10 flex flex-wrap items-center gap-3 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 						<span class="inline-flex items-center gap-2 border border-emerald-300/30 px-2.5 py-1 text-emerald-200/90">
 							<span class="block h-1 w-1 rounded-full bg-emerald-300"></span> Open standard
 						</span>
@@ -269,9 +269,9 @@ const outcomes: Outcome[] = [
 					</p>
 
 					<h1
-						class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
-						The <span class="font-light italic text-slate-400">standard</span> your agents
+						The <span class="font-light italic text-muted-foreground">standard</span> your agents
 						<br class="hidden sm:inline" />
 						load on <span class="relative inline-block">
 							<span class="relative z-10 text-emerald-300">every turn.</span>
@@ -284,19 +284,19 @@ const outcomes: Outcome[] = [
 						<div class="col-span-12 sm:col-span-4">
 							<div class="border-l border-emerald-300/40 pl-5">
 								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">Two products · one story</p>
-								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
-									<span class="text-white">The standard</span> is a public document anyone can read, adopt, and improve.
-									<span class="text-white">The hosted MCP</span> is a subscription service that streams that standard to your
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
+									<span class="text-foreground">The standard</span> is a public document anyone can read, adopt, and improve.
+									<span class="text-foreground">The hosted MCP</span> is a subscription service that streams that standard to your
 									agents as versioned tools and resources.
 								</p>
 							</div>
 						</div>
 						<div class="col-span-12 sm:col-span-8">
-							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
-								Same vocabulary, three workflows: <span class="text-white">Navigator</span> for new features,
-								<span class="text-white">Investigator</span> for defects, <span class="text-white">Sentinel</span> for assurance —
+							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
+								Same vocabulary, three workflows: <span class="text-foreground">Navigator</span> for new features,
+								<span class="text-foreground">Investigator</span> for defects, <span class="text-foreground">Sentinel</span> for assurance —
 								loaded by whichever harness your engineers already use: Cursor, Claude Code, Windsurf, or anything that speaks
-								MCP. The MCP carries <span class="font-light italic text-slate-400">context and workflows.</span> It does
+								MCP. The MCP carries <span class="font-light italic text-muted-foreground">context and workflows.</span> It does
 								not replace your AUTH, gateways, tests, or CI.
 							</p>
 						</div>
@@ -315,24 +315,24 @@ const outcomes: Outcome[] = [
 						</a>
 						<a
 							href={urlStandard}
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
 							<span>Read the Standard</span>
 						</a>
 						<a
 							href="/why-aadm"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
 						>
 							<span>Why AADM, vs raw loops</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
 						</a>
 					</div>
 
-					<p class="mt-8 max-w-2xl text-sm leading-relaxed text-slate-400">
+					<p class="mt-8 max-w-2xl text-sm leading-relaxed text-muted-foreground">
 						New to the term? <a
 							href="/about"
-							class="font-semibold text-slate-300 underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
 							>Agentic engineering</a
 						> is the discipline this standard serves — written for engineers who already know how software should be built.
 					</p>
@@ -341,12 +341,12 @@ const outcomes: Outcome[] = [
 		</section>
 
 		<!-- AADM thread replica (decorative, non-interactive) -->
-		<section class="relative border-b border-white/[0.06] px-4 py-24 sm:px-8 sm:py-28">
+		<section class="relative border-b border-border px-4 py-24 sm:px-8 sm:py-28">
 			<div class="mx-auto max-w-3xl text-center">
-				<h2 class="font-display text-balance text-[clamp(1.6rem,3.4vw,2.4rem)] font-bold leading-[1.15] text-white">
+				<h2 class="font-display text-balance text-[clamp(1.6rem,3.4vw,2.4rem)] font-bold leading-[1.15] text-foreground">
 					What it looks like in your editor
 				</h2>
-				<p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-400">
+				<p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
 					Your agent works as usual. When the task needs governance, it calls AADM and follows what comes back.
 				</p>
 			</div>
@@ -358,18 +358,18 @@ const outcomes: Outcome[] = [
 		<!-- =============================================================
 		     §01 — Three lanes
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 01</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Three lanes</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Three lanes</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Three workflows. <span class="font-light italic text-slate-400">Equal weight.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Three workflows. <span class="font-light italic text-muted-foreground">Equal weight.</span>
 					</h2>
-					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
 						Every coding task is one of three things. AADM gives each its own lane — so the agent picks the right workflow for the
 						question being asked, not whichever instinct fires first.
 					</p>
@@ -379,7 +379,7 @@ const outcomes: Outcome[] = [
 							lanes.map((lane) => {
 								const t = laneToneClasses[lane.tone];
 								return (
-									<article class="group relative overflow-hidden bg-[#06080f] transition duration-300 hover:bg-[#080c16]">
+									<article class="group relative overflow-hidden bg-surface-mid transition duration-300 hover:bg-[#080c16]">
 										<div aria-hidden="true" class:list={["pointer-events-none absolute -left-24 -top-24 -z-0 h-72 w-72 rounded-full blur-3xl opacity-50 transition duration-500 group-hover:opacity-100", t.glow]}></div>
 										<div class="relative grid grid-cols-12 gap-6 px-1 py-12 sm:px-2 sm:py-14">
 											<div class="col-span-12 sm:col-span-2">
@@ -393,14 +393,14 @@ const outcomes: Outcome[] = [
 											</div>
 
 											<div class="col-span-12 sm:col-span-6">
-												<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{lane.tagline}</p>
-												<p class="mt-5 text-[0.98rem] leading-[1.65] text-slate-200">{lane.plain}</p>
+												<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{lane.tagline}</p>
+												<p class="mt-5 text-[0.98rem] leading-[1.65] text-foreground">{lane.plain}</p>
 											</div>
 
 											<div class="col-span-12 sm:col-span-4">
 												<div class:list={["border-l pl-5", t.rule]}>
-													<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">What you get</p>
-													<ul class="mt-4 space-y-3 text-sm leading-relaxed text-slate-300">
+													<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">What you get</p>
+													<ul class="mt-4 space-y-3 text-sm leading-relaxed text-text-secondary">
 														{lane.bullets.map((b) => (
 															<li class="grid grid-cols-[auto_1fr] items-start gap-3">
 																<span class:list={["mt-[0.5em] block h-1 w-1 rounded-full", t.bullet]}></span>
@@ -422,7 +422,7 @@ const outcomes: Outcome[] = [
 						<div class="col-span-12 lg:col-span-7">
 							<div class="border-l-2 border-amber-300/40 pl-6">
 								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/80">What it deliberately does not do</p>
-								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-border">
 									{
 										[
 											"Run business logic or mutate your database",
@@ -432,7 +432,7 @@ const outcomes: Outcome[] = [
 										].map((item, idx) => (
 											<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-3.5">
 												<span class="font-mono-cta text-sm text-amber-300/80">{String(idx + 1).padStart(2, "0")}</span>
-												<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">{item}</span>
+												<span class="text-sm leading-relaxed text-text-secondary transition group-hover:text-foreground">{item}</span>
 											</li>
 										))
 									}
@@ -440,13 +440,13 @@ const outcomes: Outcome[] = [
 							</div>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border border-white/10 bg-[#070b13] p-6 sm:p-7">
+							<div class="border border-border bg-[#070b13] p-6 sm:p-7">
 								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">When you'd use it</p>
-								<p class="mt-4 text-[0.95rem] leading-relaxed text-slate-300">
+								<p class="mt-4 text-[0.95rem] leading-relaxed text-text-secondary">
 									Connect the MCP in your IDE so the agent loads the same standard every session — UDALI placement, AUTH
 									references, build intent, troubleshooter discipline — instead of improvising from random doc snippets.
 								</p>
-								<p class="mt-3 text-sm leading-relaxed text-slate-400">
+								<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 									Any MCP-capable IDE works. Cursor and Claude Code are the most common; Windsurf, Cline, and others connect the
 									same way over Streamable HTTP.
 								</p>
@@ -460,22 +460,22 @@ const outcomes: Outcome[] = [
 		<!-- =============================================================
 		     §02 — Mental model (three tiers)
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div
 				aria-hidden="true"
 				class="absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[length:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_45%,transparent_80%)]"
 			></div>
 			<div id="how-it-works" class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 02</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Mental model</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Mental model</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Three pieces. <span class="font-light italic text-slate-400">Each does one job.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Three pieces. <span class="font-light italic text-muted-foreground">Each does one job.</span>
 					</h2>
-					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
 						A read-only standard-context server for AI coding tools: AADM definitions, UDALI/AUTH doctrine, prompts, and structured
 						tools so agents plan, route, and troubleshoot the AADM way — without running your product or enforcing security in
 						production.
@@ -486,7 +486,7 @@ const outcomes: Outcome[] = [
 							mentalModel.map((tier) => {
 								const t = mentalToneClasses[tier.tone];
 								return (
-									<article class="group bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-9">
+									<article class="group bg-surface-deep p-7 transition duration-300 hover:bg-surface-mid sm:p-9">
 										<div class="flex items-baseline gap-4">
 											<span class:list={["font-display text-5xl font-light leading-none tracking-tight sm:text-6xl", t.numeral]}>
 												{tier.num}
@@ -495,10 +495,10 @@ const outcomes: Outcome[] = [
 												{tier.label}
 											</span>
 										</div>
-										<h3 class="font-display mt-7 text-balance text-[1.35rem] font-bold leading-[1.15] tracking-tight text-white sm:text-[1.5rem]">
+										<h3 class="font-display mt-7 text-balance text-[1.35rem] font-bold leading-[1.15] tracking-tight text-foreground sm:text-[1.5rem]">
 											{tier.title}
 										</h3>
-										<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-400">{tier.body}</p>
+										<p class="mt-3 text-[0.95rem] leading-relaxed text-muted-foreground">{tier.body}</p>
 										<div aria-hidden="true" class:list={["mt-7 h-px w-12 transition-all duration-500 group-hover:w-24", t.numeral.replace("text-", "bg-").replace("/90", "/60")]}></div>
 									</article>
 								);
@@ -506,13 +506,13 @@ const outcomes: Outcome[] = [
 						}
 					</div>
 
-					<p class="mt-10 max-w-3xl text-sm leading-relaxed text-slate-400">
+					<p class="mt-10 max-w-3xl text-sm leading-relaxed text-muted-foreground">
 						The MCP does not replace your application. It does not scan your repo for pass/fail compliance. It gives agents
 						consistent framing and checklists — your apps and CI still prove enforcement. For the fuller picture of how these
 						pieces relate to the harness, the agent, and the person accountable for the result, see
 						<a
 							href="/about"
-							class="font-semibold text-slate-300 underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
 							>agentic engineering</a
 						>.
 					</p>
@@ -523,34 +523,34 @@ const outcomes: Outcome[] = [
 		<!-- =============================================================
 		     §03 — Surfaces (Resources / Prompts / Tools)
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 03</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">What the MCP exposes</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">What the MCP exposes</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Three surfaces <span class="font-light italic text-slate-400">your agents read.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Three surfaces <span class="font-light italic text-muted-foreground">your agents read.</span>
 					</h2>
 
 					<div class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
 						{
 							surfaces.map((s) => (
-								<article class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
+								<article class="group bg-surface-mid p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
 									<div class="flex items-baseline gap-4">
 										<span class="font-display text-[3.5rem] font-light leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
 											{s.letter}
 										</span>
 										<div>
-											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{s.tagline}</p>
-											<h3 class="font-display mt-1 text-xl font-bold leading-snug text-white sm:text-2xl">{s.name}</h3>
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{s.tagline}</p>
+											<h3 class="font-display mt-1 text-xl font-bold leading-snug text-foreground sm:text-2xl">{s.name}</h3>
 										</div>
 									</div>
-									<p class="mt-6 text-sm leading-relaxed text-slate-400">{s.body}</p>
-									<div class="mt-6 border-t border-white/[0.06] pt-4">
-										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Examples</p>
+									<p class="mt-6 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+									<div class="mt-6 border-t border-border pt-4">
+										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Examples</p>
 										<p class="font-mono-cta mt-1.5 text-sm leading-relaxed text-emerald-200/85">{s.examples}</p>
 									</div>
 								</article>
@@ -558,8 +558,8 @@ const outcomes: Outcome[] = [
 						}
 					</div>
 
-					<p class="mt-10 max-w-3xl text-sm leading-relaxed text-slate-400">
-						Transport is <span class="text-slate-300">HTTP Streamable MCP</span> at
+					<p class="mt-10 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+						Transport is <span class="text-text-secondary">HTTP Streamable MCP</span> at
 						<code class="font-mono-cta text-emerald-200/85">/mcp</code> (plus
 						<code class="font-mono-cta text-emerald-200/85">/health</code> for liveness). Connect from any MCP client with your org's
 						URL and auth.
@@ -571,32 +571,32 @@ const outcomes: Outcome[] = [
 		<!-- =============================================================
 		     §04 — What you can do (5 outcomes)
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 04</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Outcomes</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Outcomes</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						What engineers get out of it <span class="font-light italic text-slate-400">on a normal day.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						What engineers get out of it <span class="font-light italic text-muted-foreground">on a normal day.</span>
 					</h2>
 
-					<ol class="mt-16 border-t border-white/[0.06]">
+					<ol class="mt-16 border-t border-border">
 						{
 							outcomes.map((o) => (
-								<li class="group grid grid-cols-12 gap-6 border-b border-white/[0.08] py-8 transition duration-300 hover:bg-white/[0.015]">
+								<li class="group grid grid-cols-12 gap-6 border-b border-border py-8 transition duration-300 hover:bg-white/[0.015]">
 									<div class="col-span-12 sm:col-span-2">
 										<span class="font-display text-4xl font-light leading-none tracking-tight text-emerald-200/80 transition duration-300 group-hover:text-emerald-300 sm:text-5xl">
 											{o.num}
 										</span>
 									</div>
 									<div class="col-span-12 sm:col-span-10">
-										<h3 class="font-display text-balance text-[1.25rem] font-bold leading-[1.2] tracking-tight text-white sm:text-[1.4rem]">
+										<h3 class="font-display text-balance text-[1.25rem] font-bold leading-[1.2] tracking-tight text-foreground sm:text-[1.4rem]">
 											{o.title}
 										</h3>
-										<p class="mt-3 max-w-3xl text-[0.95rem] leading-relaxed text-slate-400">{o.body}</p>
+										<p class="mt-3 max-w-3xl text-[0.95rem] leading-relaxed text-muted-foreground">{o.body}</p>
 									</div>
 								</li>
 							))
@@ -609,24 +609,24 @@ const outcomes: Outcome[] = [
 		<!-- =============================================================
 		     §05 — Wire your stack (technical quickstart)
 		     ============================================================= -->
-		<section id="mcp-quickstart" class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section id="mcp-quickstart" class="relative border-b border-border bg-surface-mid">
 			<div
 				aria-hidden="true"
 				class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(110,231,183,0.04)_1px,transparent_1px)] bg-[length:36px_36px] [mask-image:radial-gradient(ellipse_at_top,black_45%,transparent_85%)]"
 			></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 05</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Wire your stack</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Wire your stack</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Quick MCP reference <span class="font-light italic text-slate-400">for engineers.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Quick MCP reference <span class="font-light italic text-muted-foreground">for engineers.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
-						The hosted service speaks <span class="text-white">Streamable HTTP</span>:
-						<code class="font-mono-cta bg-white/[0.04] px-1.5 py-0.5 text-emerald-200/90">POST</code> with
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
+						The hosted service speaks <span class="text-foreground">Streamable HTTP</span>:
+						<code class="font-mono-cta bg-accent px-1.5 py-0.5 text-emerald-200/90">POST</code> with
 						<code class="font-mono-cta text-emerald-200/85">Accept: application/json, text/event-stream</code>. A browser
 						<code class="font-mono-cta text-emerald-200/85">GET</code> to the MCP path without that header often returns
 						<span class="text-amber-200/90">406</span> — expected.
@@ -637,11 +637,11 @@ const outcomes: Outcome[] = [
 							<div class="mt-14 grid grid-cols-12 gap-6">
 								<!-- Endpoint card -->
 								<div class="col-span-12 lg:col-span-7">
-									<div class="border border-white/10 bg-[#070b13] p-7 sm:p-8">
+									<div class="border border-border bg-[#070b13] p-7 sm:p-8">
 										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">
 											MCP service · JSON-RPC
 										</p>
-										<p class="mt-2 text-xs italic text-slate-400">(not the marketing page)</p>
+										<p class="mt-2 text-xs italic text-muted-foreground">(not the marketing page)</p>
 										<p class="font-mono-cta mt-5 break-all text-base font-semibold text-emerald-200 sm:text-lg">
 											{urlMcpEndpoint}
 										</p>
@@ -655,7 +655,7 @@ const outcomes: Outcome[] = [
 											{healthUrl ? (
 												<a
 													href={healthUrl}
-													class="font-mono-cta inline-flex items-center gap-2 border border-white/20 bg-transparent px-4 py-2 text-xs normal-case tracking-[0.01em] text-slate-200 transition hover:border-white/40 hover:bg-white/[0.04]"
+													class="font-mono-cta inline-flex items-center gap-2 border border-border bg-transparent px-4 py-2 text-xs normal-case tracking-[0.01em] text-foreground transition hover:border-white/40 hover:bg-accent"
 												>
 													GET /health
 												</a>
@@ -663,7 +663,7 @@ const outcomes: Outcome[] = [
 											{discoveryUrl ? (
 												<a
 													href={discoveryUrl}
-													class="font-mono-cta inline-flex items-center gap-2 border border-white/20 bg-transparent px-4 py-2 text-xs normal-case tracking-[0.01em] text-slate-200 transition hover:border-white/40 hover:bg-white/[0.04]"
+													class="font-mono-cta inline-flex items-center gap-2 border border-border bg-transparent px-4 py-2 text-xs normal-case tracking-[0.01em] text-foreground transition hover:border-white/40 hover:bg-accent"
 												>
 													GET / discovery
 												</a>
@@ -673,46 +673,46 @@ const outcomes: Outcome[] = [
 								</div>
 								<!-- Curl card -->
 								<div class="col-span-12 lg:col-span-5">
-									<div class="border border-white/10 bg-[#050810] p-5">
-										<div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
-											<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Smoke · initialize</span>
+									<div class="border border-border bg-surface-mid p-5">
+										<div class="flex items-center justify-between border-b border-border pb-3">
+											<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Smoke · initialize</span>
 											<span class="flex gap-1">
 												<span class="block h-1.5 w-1.5 rounded-full bg-emerald-400/70"></span>
 												<span class="block h-1.5 w-1.5 rounded-full bg-amber-400/70"></span>
 												<span class="block h-1.5 w-1.5 rounded-full bg-slate-500/70"></span>
 											</span>
 										</div>
-										<pre class="font-mono-cta mt-4 overflow-x-auto text-sm leading-relaxed text-slate-300 sm:text-xs"><code>{curlInit}</code></pre>
+										<pre class="font-mono-cta mt-4 overflow-x-auto text-sm leading-relaxed text-text-secondary sm:text-xs"><code>{curlInit}</code></pre>
 									</div>
 								</div>
 							</div>
 						) : (
-							<p class="mt-8 border border-dashed border-white/15 bg-[#070b13] p-5 text-sm text-slate-400">
-								Set <code class="font-mono-cta text-slate-300">PUBLIC_MCP_REPO_URL</code> in
-								<code class="font-mono-cta text-slate-300">.env</code> to show your MCP endpoint, health link, and curl example.
+							<p class="mt-8 border border-dashed border-border bg-[#070b13] p-5 text-sm text-muted-foreground">
+								Set <code class="font-mono-cta text-text-secondary">PUBLIC_MCP_REPO_URL</code> in
+								<code class="font-mono-cta text-text-secondary">.env</code> to show your MCP endpoint, health link, and curl example.
 							</p>
 						)
 					}
 
-					<div class="mt-10 border border-emerald-300/20 bg-emerald-950/[0.15] p-5 text-sm text-slate-300 sm:p-6">
+					<div class="mt-10 border border-emerald-300/20 bg-emerald-950/[0.15] p-5 text-sm text-text-secondary sm:p-6">
 						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">
 							<span class="text-emerald-300">▸</span> Step 0 · in your app repo
 						</p>
 						<p class="mt-3">
 							<code class="font-mono-cta text-emerald-200/95">npx aadm-init-repo --minimal</code> scaffolds{' '}
-							<code class="font-mono-cta text-slate-200">.aadm/config.json</code> in your app repo.{' '}
+							<code class="font-mono-cta text-foreground">.aadm/config.json</code> in your app repo.{' '}
 							<a href="/governance" class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
 								Init guide →
 							</a>
 						</p>
-						<p class="mt-3 text-xs text-slate-400">
-							Optional — the hosted MCP works <span class="text-slate-300">standalone</span> without a repo config.
+						<p class="mt-3 text-xs text-muted-foreground">
+							Optional — the hosted MCP works <span class="text-text-secondary">standalone</span> without a repo config.
 						</p>
 					</div>
 
 					{
 						hasMcpMarketingLink || urlMcpCustomerDocs ? (
-							<div class="mt-8 flex flex-col gap-2 text-xs text-slate-400">
+							<div class="mt-8 flex flex-col gap-2 text-xs text-muted-foreground">
 								{hasMcpMarketingLink ? (
 									<p>
 										Subscription covers the running service, updates, and subscriber guides — see{' '}
@@ -740,45 +740,45 @@ const outcomes: Outcome[] = [
 		<!-- =============================================================
 		     §06 — Open standard, hosted bridge (the two-products story)
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 06</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Two products</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Two products</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<div class="grid grid-cols-12 gap-8">
 						<div class="col-span-12 lg:col-span-7">
-							<h2 class="font-display text-balance text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
-								Open standard. <span class="font-light italic text-slate-400">Hosted bridge.</span>
+							<h2 class="font-display text-balance text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+								Open standard. <span class="font-light italic text-muted-foreground">Hosted bridge.</span>
 							</h2>
-							<p class="mt-6 text-base leading-relaxed text-slate-300">
-								<span class="font-semibold text-white">One living standard, visible to everyone who ships with you.</span>
+							<p class="mt-6 text-base leading-relaxed text-text-secondary">
+								<span class="font-semibold text-foreground">One living standard, visible to everyone who ships with you.</span>
 								The text stays public so your org, partners, and community can discuss changes, propose updates, and stay on
 								the same page — like any mature open project.
 							</p>
-							<p class="mt-4 text-base leading-relaxed text-slate-400">
-								<span class="font-semibold text-white">Pay for uptime and evolution, not a zip file.</span>
+							<p class="mt-4 text-base leading-relaxed text-muted-foreground">
+								<span class="font-semibold text-foreground">Pay for uptime and evolution, not a zip file.</span>
 								Hosted MCP is a separate subscription so the endpoint your agents call stays online, versioned, and maintained.
 								You get operational continuity instead of self-hosting a moving target.
 							</p>
-							<p class="mt-6 text-sm leading-relaxed text-slate-400">
+							<p class="mt-6 text-sm leading-relaxed text-muted-foreground">
 								Your production AUTH, gateways, tests, and CI stay authoritative. MCP is how agents load the standard's
 								context and workflows predictably.
 							</p>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border border-white/10 bg-[#070b13]">
-								<div class="border-b border-white/[0.08] p-6">
-									<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">What you get</p>
+							<div class="border border-border bg-[#070b13]">
+								<div class="border-b border-border p-6">
+									<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">What you get</p>
 								</div>
 								<ul class="divide-y divide-white/[0.06]">
 									<li class="group flex items-start gap-4 p-6">
 										<span class="font-display mt-1 text-2xl font-light leading-none text-amber-200/90">A</span>
 										<div>
 											<p class="font-semibold text-amber-200">Open standard</p>
-											<p class="mt-1 text-sm leading-relaxed text-slate-400">
+											<p class="mt-1 text-sm leading-relaxed text-muted-foreground">
 												Always readable, adoptable, and improvable in public. No paywall on the definitions.
 											</p>
 										</div>
@@ -787,7 +787,7 @@ const outcomes: Outcome[] = [
 										<span class="font-display mt-1 text-2xl font-light leading-none text-emerald-200/90">B</span>
 										<div>
 											<p class="font-semibold text-emerald-200">Hosted MCP</p>
-											<p class="mt-1 text-sm leading-relaxed text-slate-400">
+											<p class="mt-1 text-sm leading-relaxed text-muted-foreground">
 												Versioned tools and resources for subscribers' agents. Someone ships fixes and keeps the service
 												current.
 											</p>
@@ -810,23 +810,23 @@ const outcomes: Outcome[] = [
 				class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.08),transparent_60%)]"
 			></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:px-8 sm:py-40">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 07</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Start here</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Start here</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 						<span class="text-emerald-200/90">▸</span> Two paths · one rail
 					</p>
-					<h2 class="font-display mt-6 max-w-[16ch] text-balance text-[clamp(2.4rem,6.8vw,6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Read it in <span class="font-light italic text-slate-400">public.</span><br />
+					<h2 class="font-display mt-6 max-w-[16ch] text-balance text-[clamp(2.4rem,6.8vw,6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Read it in <span class="font-light italic text-muted-foreground">public.</span><br />
 						Run it <span class="whitespace-nowrap">in <span class="relative inline-block">
 							<span class="relative z-10 text-emerald-300">production.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.08em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span></span>
 					</h2>
-					<p class="mt-10 max-w-xl text-base leading-relaxed text-slate-300">
+					<p class="mt-10 max-w-xl text-base leading-relaxed text-text-secondary">
 						The standard is free to read and lives in public. When your agents need versioned context they can load on every
 						turn, connect the hosted MCP.
 					</p>
@@ -843,14 +843,14 @@ const outcomes: Outcome[] = [
 						</a>
 						<a
 							href={urlStandard}
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-8 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-8 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
 							<span>Read the Standard</span>
 						</a>
 						<a
 							href="/about"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
 						>
 							<span>What agentic engineering means</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
@@ -858,15 +858,15 @@ const outcomes: Outcome[] = [
 					</div>
 
 					<!-- Colophon -->
-					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-border pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Project</span> · AADM v1
+							<span class="text-muted-foreground">Project</span> · AADM v1
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / MCP</span>
+							<span class="text-muted-foreground">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / MCP</span>
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Hosted at</span> · <span class="text-emerald-300/80">mcp.aadm.io</span>
+							<span class="text-muted-foreground">Hosted at</span> · <span class="text-emerald-300/80">mcp.aadm.io</span>
 						</div>
 					</div>
 				</div>

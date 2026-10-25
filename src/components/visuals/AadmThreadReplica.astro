@@ -401,7 +401,7 @@ const toolIcon = {
 		the map and gave the meeting a shared agenda and stop rules, in fifteen minutes instead of the three weeks
 		a formal audit would take.
 	</p>
-	<div class="overflow-hidden rounded-xl border border-white/10 bg-[#0b0d14] shadow-[0_40px_120px_-40px_rgba(16,185,129,0.25)]">
+	<div class="overflow-hidden rounded-xl border border-border bg-[#0b0d14] shadow-[0_40px_120px_-40px_rgba(16,185,129,0.25)]">
 		<div class="flex items-center gap-3 border-b border-white/[0.07] bg-[#0e1119] px-4 py-2.5">
 			<span class="hidden gap-1.5 sm:flex" aria-hidden="true">
 				<span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
@@ -414,19 +414,19 @@ const toolIcon = {
 					type="button"
 					data-scenario-prev
 					aria-label="Previous scenario"
-					class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-white/[0.07] hover:text-slate-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-400/60"
+					class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-white/[0.07] hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-400/60"
 				>
 					<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5" /></svg>
 				</button>
 				<span class="flex min-w-0 items-baseline gap-1.5 px-0.5" aria-live="polite">
-					<span data-scenario-count class="shrink-0 font-mono text-[11px] text-slate-500">1/{scenarios.length}</span>
-					<span data-scenario-name class="truncate text-[13px] font-medium text-slate-200">{scenarios[0].name}</span>
+					<span data-scenario-count class="shrink-0 font-mono text-[11px] text-muted-foreground">1/{scenarios.length}</span>
+					<span data-scenario-name class="truncate text-[13px] font-medium text-foreground">{scenarios[0].name}</span>
 				</span>
 				<button
 					type="button"
 					data-scenario-next
 					aria-label="Next scenario"
-					class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-white/[0.07] hover:text-slate-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-400/60"
+					class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-white/[0.07] hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-400/60"
 				>
 					<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5" /></svg>
 				</button>
@@ -448,23 +448,23 @@ const toolIcon = {
 							{scenario.steps.map((m) =>
 								m.kind === "user" ? (
 									<div data-step="user" class="aadm-step flex justify-end">
-										<p class="max-w-[85%] rounded-lg bg-white/[0.07] px-4 py-2.5 text-[14px] leading-relaxed text-slate-100">
-											<span class="text-[11.5px] font-semibold text-slate-400">You · agentic engineer</span><br />
+										<p class="max-w-[85%] rounded-lg bg-white/[0.07] px-4 py-2.5 text-[14px] leading-relaxed text-text-primary">
+											<span class="text-[11.5px] font-semibold text-muted-foreground">You · agentic engineer</span><br />
 											<span data-type={m.text}>{m.text}</span>
 										</p>
 									</div>
 								) : m.kind === "think" ? (
-									<p data-step="think" data-ms={m.ms} class="aadm-step text-[13px] italic text-slate-500">
+									<p data-step="think" data-ms={m.ms} class="aadm-step text-[13px] italic text-muted-foreground">
 										<span data-live>Thinking<span class="aadm-dots"></span></span>
 										<span data-done class="aadm-hidden">{m.label}</span>
 									</p>
 								) : m.kind === "agent" ? (
-									<p data-step="agent" class="aadm-step max-w-[90%] text-[14px] leading-relaxed text-slate-300">
+									<p data-step="agent" class="aadm-step max-w-[90%] text-[14px] leading-relaxed text-text-secondary">
 										<span data-type={m.text}>{m.text}</span>
 									</p>
 								) : m.kind === "tool" ? (
-									<p data-step="tool" class="aadm-step flex items-center gap-2 font-mono text-[12.5px] text-slate-400">
-										<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" class="shrink-0 text-slate-500"><path d={toolIcon[m.icon]} /></svg>
+									<p data-step="tool" class="aadm-step flex items-center gap-2 font-mono text-[12.5px] text-muted-foreground">
+										<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" class="shrink-0 text-muted-foreground"><path d={toolIcon[m.icon]} /></svg>
 										{m.text}
 									</p>
 								) : (
@@ -472,19 +472,19 @@ const toolIcon = {
 										<div class="flex flex-wrap items-center gap-2 text-[12px]">
 											<img src="/favicon.svg" alt="" width="18" height="18" class="aadm-mark h-[18px] w-[18px]" />
 											<span class="font-semibold text-emerald-200">AADM</span>
-											<code class="text-slate-400">{m.tool}</code>
-											<span data-running class="ml-auto inline-flex items-center gap-1.5 text-slate-400">
+											<code class="text-muted-foreground">{m.tool}</code>
+											<span data-running class="ml-auto inline-flex items-center gap-1.5 text-muted-foreground">
 												<span class="aadm-spin h-3 w-3 rounded-full border border-emerald-300/30 border-t-emerald-300"></span> Working
 											</span>
 											<span data-status class="ml-auto aadm-hidden rounded border border-violet-400/30 px-1.5 py-0.5 text-violet-200">{m.status}</span>
 										</div>
-										<ul class="mt-2 space-y-1 text-[13.5px] leading-relaxed text-slate-200">
+										<ul class="mt-2 space-y-1 text-[13.5px] leading-relaxed text-foreground">
 											{m.lines.map((l) => <li data-line>{l}</li>)}
 										</ul>
 										{m.chips && (
 											<div data-line class="mt-2.5 flex flex-wrap gap-1.5">
 												{m.chips.map((c) => (
-													<span class="rounded border border-white/10 px-1.5 py-0.5 text-[11.5px] text-slate-400">{c}</span>
+													<span class="rounded border border-border px-1.5 py-0.5 text-[11.5px] text-muted-foreground">{c}</span>
 												))}
 											</div>
 										)}
@@ -498,11 +498,11 @@ const toolIcon = {
 			</div>
 
 			<div class="flex items-center gap-2 border-t border-white/[0.07] px-4 py-3">
-				<span data-composer class="flex-1 truncate rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-[13px] text-slate-500">Ask the agent…</span>
+				<span data-composer class="flex-1 truncate rounded-md border border-border bg-white/[0.03] px-3 py-2 text-[13px] text-muted-foreground">Ask the agent…</span>
 			</div>
 		</div>
 	</div>
-	<figcaption class="mt-4 text-center text-[13px] text-slate-500">
+	<figcaption class="mt-4 text-center text-[13px] text-muted-foreground">
 		Replica of a real session in Cursor or Claude Code. Highlighted turns are AADM at work — use ‹ › to switch scenarios.
 	</figcaption>
 </figure>

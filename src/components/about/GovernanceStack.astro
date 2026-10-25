@@ -13,11 +13,11 @@ type Tier = {
 const tierStyles: Record<Tier["tone"], { box: string; label: string }> = {
 	white: {
 		box: "border-white/25 bg-white/[0.05]",
-		label: "text-white",
+		label: "text-foreground",
 	},
 	slate: {
 		box: "border-white/12 bg-white/[0.02]",
-		label: "text-slate-200",
+		label: "text-foreground",
 	},
 	emerald: {
 		box: "border-emerald-300/35 bg-emerald-950/25",
@@ -98,15 +98,15 @@ const carriedStyles = {
 						<p class:list={["font-display text-[1.05rem] font-bold tracking-tight sm:text-[1.15rem]", t.label]}>
 							{tier.label}
 						</p>
-						<p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-[0.8rem]">{tier.sub}</p>
+						<p class="mt-1.5 text-xs leading-relaxed text-muted-foreground sm:text-[0.8rem]">{tier.sub}</p>
 					</div>
 					<div aria-hidden="true" class="flex h-7 items-center justify-center">
-						<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-500">
+						<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-muted-foreground">
 							<path d="M5 0v21M1 17l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square" />
 						</svg>
 					</div>
 					{idx === above.length - 1 ? (
-						<p class="font-mono-cta mb-3 text-center text-[13px] normal-case tracking-[0.01em] text-slate-400">
+						<p class="font-mono-cta mb-3 text-center text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 							carries three things
 						</p>
 					) : null}
@@ -129,18 +129,18 @@ const carriedStyles = {
 						>
 							{item.term}
 						</span>
-						<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+						<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 							<span aria-hidden="true">→</span> {item.maps}
 						</span>
 					</div>
-					<p class="mt-4 text-xs leading-relaxed text-slate-400">{item.body}</p>
+					<p class="mt-4 text-xs leading-relaxed text-muted-foreground">{item.body}</p>
 				</div>
 			))
 		}
 	</div>
 
 	<div aria-hidden="true" class="flex h-7 items-center justify-center">
-		<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-500">
+		<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-muted-foreground">
 			<path d="M5 0v21M1 17l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"></path>
 		</svg>
 	</div>
@@ -154,11 +154,11 @@ const carriedStyles = {
 						<p class:list={["font-display text-[1.05rem] font-bold tracking-tight sm:text-[1.15rem]", t.label]}>
 							{tier.label}
 						</p>
-						<p class="mt-1.5 text-xs leading-relaxed text-slate-400 sm:text-[0.8rem]">{tier.sub}</p>
+						<p class="mt-1.5 text-xs leading-relaxed text-muted-foreground sm:text-[0.8rem]">{tier.sub}</p>
 					</div>
 					{idx === below.length - 1 ? null : (
 						<div aria-hidden="true" class="flex h-7 items-center justify-center">
-							<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-slate-500">
+							<svg width="10" height="28" viewBox="0 0 10 28" fill="none" class="text-muted-foreground">
 								<path d="M5 0v21M1 17l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square" />
 							</svg>
 						</div>
@@ -169,9 +169,9 @@ const carriedStyles = {
 	}
 </div>
 
-<p class="mx-auto mt-10 max-w-3xl border-l border-amber-300/40 pl-5 text-sm leading-relaxed text-slate-400">
+<p class="mx-auto mt-10 max-w-3xl border-l border-amber-300/40 pl-5 text-sm leading-relaxed text-muted-foreground">
 	Read the stack downward and it is a governance path. Read it upward and it is an accountability path: when the
 	application does the wrong thing, the answer is never
-	<span class="italic text-slate-300"> “the model did it.”</span> It is that somebody's frame was wrong, and that
+	<span class="italic text-text-secondary"> “the model did it.”</span> It is that somebody's frame was wrong, and that
 	somebody is at the top.
 </p>

@@ -23,8 +23,8 @@ const toneStyles: Record<
 	{ numeral: string; chip: string; rule: string; glow: string; box: string }
 > = {
 	slate: {
-		numeral: "text-slate-400",
-		chip: "border-slate-400/25 text-slate-300",
+		numeral: "text-muted-foreground",
+		chip: "border-slate-400/25 text-text-secondary",
 		rule: "border-slate-400/30",
 		glow: "bg-slate-400/[0.05]",
 		box: "bg-surface-deep",
@@ -134,7 +134,7 @@ const rungs: Rung[] = [
 							<h3
 								class:list={[
 									"font-display mt-5 text-balance text-[1.2rem] font-bold leading-[1.15] tracking-tight sm:text-[1.35rem]",
-									isHere ? "text-white" : "text-slate-100",
+									isHere ? "text-foreground" : "text-text-primary",
 								]}
 							>
 								{rung.role}
@@ -143,15 +143,15 @@ const rungs: Rung[] = [
 
 						<div class="col-span-12 sm:col-span-5">
 							<div class:list={["border-l pl-5", t.rule]}>
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 									<span aria-hidden="true">+</span> {rung.adds}
 								</p>
-								<p class="mt-4 text-[0.95rem] leading-[1.65] text-slate-300">{rung.body}</p>
+								<p class="mt-4 text-[0.95rem] leading-[1.65] text-text-secondary">{rung.body}</p>
 							</div>
 						</div>
 
 						<div class="col-span-12 sm:col-span-4">
-							<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+							<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 								What you now own
 							</p>
 							<div class="mt-4 flex flex-wrap gap-1.5">
@@ -169,9 +169,9 @@ const rungs: Rung[] = [
 	}
 </ol>
 
-<p class="mt-8 max-w-3xl border-l border-emerald-300/40 pl-5 text-sm leading-relaxed text-slate-400">
+<p class="mt-8 max-w-3xl border-l border-emerald-300/40 pl-5 text-sm leading-relaxed text-muted-foreground">
 	Each rung keeps everything under it. An agentic engineer has not stopped being a traditional engineer — the
 	deterministic parts of the system are still where most of the correctness lives, and knowing which parts
-	<span class="text-slate-200"> should stay deterministic</span> is itself one of the judgments a model cannot make for
+	<span class="text-foreground"> should stay deterministic</span> is itself one of the judgments a model cannot make for
 	you.
 </p>

@@ -25,8 +25,8 @@ const actorStyles: Record<
 	{ box: string; tag: string; tagLabel: string; dot: string }
 > = {
 	input: {
-		box: "border-white/10 bg-white/[0.015]",
-		tag: "text-slate-400",
+		box: "border-border bg-white/[0.015]",
+		tag: "text-muted-foreground",
 		tagLabel: "In",
 		dot: "bg-slate-500",
 	},
@@ -44,7 +44,7 @@ const actorStyles: Record<
 	},
 	output: {
 		box: "border-white/25 bg-white/[0.05]",
-		tag: "text-white/70",
+		tag: "text-foreground/70",
 		tagLabel: "Out",
 		dot: "bg-white",
 	},
@@ -115,12 +115,12 @@ const pipelines: Pipeline[] = [
 					{pipeline.era}
 				</p>
 
-				<h3 class="font-display mt-4 text-balance text-[1.5rem] font-bold leading-[1.12] tracking-tight text-white sm:text-[1.8rem]">
+				<h3 class="font-display mt-4 text-balance text-[1.5rem] font-bold leading-[1.12] tracking-tight text-foreground sm:text-[1.8rem]">
 					{pipeline.title}{" "}
-					<span class="font-light italic text-slate-400">{pipeline.titleTail}</span>
+					<span class="font-light italic text-muted-foreground">{pipeline.titleTail}</span>
 				</h3>
 
-				<p class="mt-4 max-w-md text-[0.95rem] leading-relaxed text-slate-400">{pipeline.sub}</p>
+				<p class="mt-4 max-w-md text-[0.95rem] leading-relaxed text-muted-foreground">{pipeline.sub}</p>
 
 				<ol class="mt-9">
 					{pipeline.steps.map((step, stepIdx) => {
@@ -135,7 +135,7 @@ const pipelines: Pipeline[] = [
 									]}
 								>
 									<span class:list={["block h-1.5 w-1.5 shrink-0 rounded-full", s.dot]} />
-									<span class="flex-1 text-pretty text-[0.95rem] font-medium leading-snug text-slate-100">
+									<span class="flex-1 text-pretty text-[0.95rem] font-medium leading-snug text-text-primary">
 										{step.label}
 									</span>
 									<span
@@ -150,7 +150,7 @@ const pipelines: Pipeline[] = [
 
 								{isLast ? null : (
 									<div aria-hidden="true" class="flex h-6 items-center justify-center">
-										<svg width="10" height="24" viewBox="0 0 10 24" fill="none" class="text-slate-500">
+										<svg width="10" height="24" viewBox="0 0 10 24" fill="none" class="text-muted-foreground">
 											<path
 												d="M5 0v17M1 13l4 4 4-4"
 												stroke="currentColor"
@@ -167,7 +167,7 @@ const pipelines: Pipeline[] = [
 
 				<p
 					class:list={[
-						"mt-8 border-l pl-5 text-sm leading-relaxed text-slate-400",
+						"mt-8 border-l pl-5 text-sm leading-relaxed text-muted-foreground",
 						pipelineIdx === 1 ? "border-emerald-300/40" : "border-amber-300/40",
 					]}
 				>

@@ -70,28 +70,28 @@ const qa = [
 	description="AADM shapes how agents reason and what to demand. Cursor applies those standards in your workspace. Understanding the division makes both more useful."
 	headerActiveNav="ides"
 >
-	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-text-primary">
 
 		<!-- =============================================================
 		     §00 — Hero
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
 			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-violet-500/[0.07] blur-3xl"></div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 00</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">AADM + Cursor</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">AADM + Cursor</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-slate-400">
+					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 						<span class="text-violet-200/90">▸</span> How responsibility divides
 					</p>
 
-					<h1 class="font-display max-w-[20ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Standard as <span class="font-light italic text-slate-400">coaching.</span><br />
+					<h1 class="font-display max-w-[20ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Standard as <span class="font-light italic text-muted-foreground">coaching.</span><br />
 						Cursor as <span class="relative inline-block">
 							<span class="relative z-10 text-violet-300">editor.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-violet-300/30"></span>
@@ -102,29 +102,29 @@ const qa = [
 						<div class="col-span-12 sm:col-span-4">
 							<div class="border-l border-violet-300/40 pl-5">
 								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/80">The division</p>
-								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
 									AADM defines the workflows, layer language, and evidence discipline. Cursor is the harness — it and the
 									model inside it open your project and apply that standard to real code.
 								</p>
 							</div>
 						</div>
 						<div class="col-span-12 sm:col-span-8">
-							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
 								Understanding the division makes both more useful. AADM doesn't read or patch your repo. Cursor doesn't define
 								what “done” means. Wire them together and your agent's first PR
-								<span class="font-light italic text-slate-400"> matches the team's bar.</span>
+								<span class="font-light italic text-muted-foreground"> matches the team's bar.</span>
 							</p>
 						</div>
 					</div>
 
-					<div class="mt-10 flex flex-wrap gap-x-4 gap-y-2 font-mono-cta text-sm normal-case tracking-[0.01em] text-slate-400">
+					<div class="mt-10 flex flex-wrap gap-x-4 gap-y-2 font-mono-cta text-sm normal-case tracking-[0.01em] text-muted-foreground">
 						<a href={mcpConnectHref} class="text-violet-300 underline decoration-violet-400/40 underline-offset-[6px] hover:decoration-violet-300">MCP credentials · /mcp#connect-bearer</a>
 						<span class="text-slate-700">·</span>
 						<a href={memberSignInUrl} class="text-violet-300 underline decoration-violet-400/40 underline-offset-[6px] hover:decoration-violet-300">Sign in for API keys</a>
 						<span class="text-slate-700">·</span>
 						<a href="/governance" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-[6px] hover:decoration-emerald-300">Step 0 · npx aadm-init-repo</a>
 						<span class="text-slate-700">·</span>
-						<a href="/about" class="text-slate-300 underline decoration-slate-700 underline-offset-[6px] hover:text-white hover:decoration-slate-500">The discipline · agentic engineering</a>
+						<a href="/about" class="text-text-secondary underline decoration-slate-700 underline-offset-[6px] hover:text-foreground hover:decoration-slate-500">The discipline · agentic engineering</a>
 					</div>
 
 					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
@@ -139,7 +139,7 @@ const qa = [
 						</a>
 						<a
 							href={urlStandard}
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							Read the standard
 						</a>
@@ -151,28 +151,28 @@ const qa = [
 		<!-- =============================================================
 		     §01 — What AADM does + What it does not
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 01</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">What AADM is</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">What AADM is</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<div class="grid grid-cols-12 gap-8">
 						<div class="col-span-12 lg:col-span-7">
-							<h2 class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
+							<h2 class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
 								What AADM actually does.
 							</h2>
-							<p class="mt-6 text-base leading-relaxed text-slate-300">
-								AADM — the standard plus MCP — is <span class="font-semibold text-white">guidance and guardrails</span>: workflows
+							<p class="mt-6 text-base leading-relaxed text-text-secondary">
+								AADM — the standard plus MCP — is <span class="font-semibold text-foreground">guidance and guardrails</span>: workflows
 								(Navigator / Investigator / Sentinel), layer language, evidence-before-fix discipline, templates, and tools that
 								return structured prompts and checklists.
 							</p>
-							<p class="mt-4 text-base leading-relaxed text-slate-400">
-								It is <span class="text-white">not your app</span> and does not run inside your product codebase.
+							<p class="mt-4 text-base leading-relaxed text-muted-foreground">
+								It is <span class="text-foreground">not your app</span> and does not run inside your product codebase.
 							</p>
-							<p class="mt-8 border-l-2 border-emerald-300/40 py-1 pl-5 text-sm italic text-slate-400">
+							<p class="mt-8 border-l-2 border-emerald-300/40 py-1 pl-5 text-sm italic text-muted-foreground">
 								“Application repos prove AADM through code, tests, and evidence.”
 								<span class="not-italic"> — AGENTS.md</span>
 							</p>
@@ -180,7 +180,7 @@ const qa = [
 						<div class="col-span-12 lg:col-span-5">
 							<div class="border-l-2 border-amber-300/40 pl-6">
 								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/80">What the MCP does not do</p>
-								<ul class="mt-6 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+								<ul class="mt-6 divide-y divide-white/[0.06] border-t border-border">
 									{
 										[
 											{ k: "No repo scan", v: "The MCP server does not read your codebase or issue a “certified compliant” verdict." },
@@ -190,8 +190,8 @@ const qa = [
 											<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-4">
 												<span class="font-mono-cta text-sm text-amber-300/80">{String(idx + 1).padStart(2, "0")}</span>
 												<span class="text-sm leading-relaxed">
-													<span class="text-white">{item.k}</span>
-													<span class="block mt-1 text-slate-400">{item.v}</span>
+													<span class="text-foreground">{item.k}</span>
+													<span class="block mt-1 text-muted-foreground">{item.v}</span>
 												</span>
 											</li>
 										))
@@ -207,22 +207,22 @@ const qa = [
 		<!-- =============================================================
 		     §02 — What Cursor does + Three lanes
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 02</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">What Cursor does</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">What Cursor does</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						What Cursor / the AI does.
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						Cursor and the model can open your project, grep, read files, and change code. That is normal engineering work in
 						your workspace — not “AADM certifying” anything.
 					</p>
-					<p class="mt-4 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						If the model ever said it violated AADM by reading code, that was an over-correction. AADM never says <em>“don't read
 						the repo.”</em> It says the MCP isn't the authority that scanned everything — and you shouldn't treat tool output as a
 						compliance score without your own evidence.
@@ -244,8 +244,8 @@ const qa = [
 											</div>
 										</div>
 										<div class="col-span-12 sm:col-span-10">
-											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{lane.line}</p>
-											<p class="mt-4 max-w-3xl text-[0.98rem] leading-[1.65] text-slate-200">{lane.body}</p>
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{lane.line}</p>
+											<p class="mt-4 max-w-3xl text-[0.98rem] leading-[1.65] text-foreground">{lane.body}</p>
 										</div>
 									</article>
 								);
@@ -259,18 +259,18 @@ const qa = [
 		<!-- =============================================================
 		     §03 — Cursor in action (illustrative mock)
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]" aria-labelledby="cursor-in-action-heading">
+		<section class="relative border-b border-border bg-surface-mid" aria-labelledby="cursor-in-action-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 03</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Cursor in action</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Cursor in action</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="cursor-in-action-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
-						Cursor in action <span class="font-light italic text-slate-400">(illustrative).</span>
+					<h2 id="cursor-in-action-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+						Cursor in action <span class="font-light italic text-muted-foreground">(illustrative).</span>
 					</h2>
-					<p class="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400">
+					<p class="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">
 						The transcript is fictional. Real MCP payloads follow{' '}
 						<code class="font-mono-cta text-emerald-200/85">tools/list</code> contracts on your server build.
 					</p>
@@ -286,7 +286,7 @@ const qa = [
 								<span class="h-3 w-3 rounded-full bg-[#28c840]/90"></span>
 							</div>
 							<div class="flex min-w-0 flex-1 items-center justify-center gap-2">
-								<span class="truncate font-mono-cta text-xs text-slate-400">workspace-api · Cursor</span>
+								<span class="truncate font-mono-cta text-xs text-muted-foreground">workspace-api · Cursor</span>
 							</div>
 							<span class="w-14 shrink-0"></span>
 						</div>
@@ -294,8 +294,8 @@ const qa = [
 						<div class="flex min-h-[520px] flex-col lg:min-h-[560px] lg:flex-row">
 							<div class="flex min-w-0 flex-1 flex-col bg-[#1e1e1e]">
 								<div class="border-b border-[#2d2d2d] px-4 py-2">
-									<p class="font-mono-cta text-[13px] font-medium normal-case tracking-wider text-slate-400">Agent · MCP enabled</p>
-									<p class="truncate text-xs text-slate-400">Slice audit · L7 DTO / serialization · Sentinel framing</p>
+									<p class="font-mono-cta text-[13px] font-medium normal-case tracking-wider text-muted-foreground">Agent · MCP enabled</p>
+									<p class="truncate text-xs text-muted-foreground">Slice audit · L7 DTO / serialization · Sentinel framing</p>
 								</div>
 
 								<div class="flex-1 space-y-4 overflow-y-auto px-4 py-4 font-mono-cta text-[13px] leading-relaxed">
@@ -309,9 +309,9 @@ const qa = [
 									</div>
 
 									<div class="flex justify-start">
-										<div class="max-w-[92%] border border-[#333] bg-[#252526] px-4 py-3 text-slate-300">
+										<div class="max-w-[92%] border border-[#333] bg-[#252526] px-4 py-3 text-text-secondary">
 											<p class="text-sm font-semibold normal-case tracking-wide text-violet-300/90">Agent</p>
-											<p class="mt-1 text-slate-400">
+											<p class="mt-1 text-muted-foreground">
 												On it. I'll pull the orchestrator snapshot, then kick an assurance-shaped audit run so we inherit the section spine and suggested AUTH pulls — then I'll summarize data-flow risks for your team.
 											</p>
 										</div>
@@ -323,7 +323,7 @@ const qa = [
 											<span class="text-sm text-emerald-200/80">tools/call</span>
 											<code class="text-[12px] text-emerald-300">standard_brief</code>
 										</div>
-										<pre class="max-h-32 overflow-y-auto p-3 text-sm text-slate-400">{`{
+										<pre class="max-h-32 overflow-y-auto p-3 text-sm text-muted-foreground">{`{
   "capabilities_schema_version": "…",
   "sentinel_assurance": { "workflow_id": "assurance", "stages": [ … ] },
   "follow_on_catalog": [ { "id": "audit_run_nl", "suggested_tool": "audit_run" }, … ]
@@ -336,28 +336,28 @@ const qa = [
 											<span class="text-sm text-emerald-200/80">tools/call</span>
 											<code class="text-[12px] text-emerald-300">audit_run</code>
 										</div>
-										<pre class="max-h-36 overflow-y-auto p-3 text-sm text-slate-400">{`{
+										<pre class="max-h-36 overflow-y-auto p-3 text-sm text-muted-foreground">{`{
   "request": "Assess workspace API for response leakage, camelCase vs snake_case mismatches, date/string drift in DTOs, and silent batch truncation.",
   "app_name": "Workspace API (illustrative)"
 }`}</pre>
 									</div>
 
 									<div class="flex justify-start">
-										<div class="max-w-[98%] border border-[#333] bg-[#252526] px-4 py-3 text-slate-300">
+										<div class="max-w-[98%] border border-[#333] bg-[#252526] px-4 py-3 text-text-secondary">
 											<p class="text-sm font-semibold normal-case tracking-wide text-violet-300/90">Agent · readout</p>
-											<p class="mt-2 text-slate-400">
-												Slice readout — framed as <span class="text-slate-200">data-flow</span> bugs (harder than “is the filter present?” enforcement checks):
+											<p class="mt-2 text-muted-foreground">
+												Slice readout — framed as <span class="text-foreground">data-flow</span> bugs (harder than “is the filter present?” enforcement checks):
 											</p>
 											<div class="mt-3 max-h-52 overflow-y-auto border border-[#3e3e42] bg-[#1e1e1e] p-3 text-[12px]">
 												<p class="font-semibold text-amber-200/90">Representative risks (illustrative)</p>
-												<ul class="mt-2 list-disc space-y-2 pl-4 text-slate-400">
-													<li><span class="text-slate-300">Field leakage</span> — response includes internal-only columns because the list DTO mirrors the persistence model.</li>
-													<li><span class="text-slate-300">Format mismatch</span> — <code class="text-sky-300/90">deleted_at</code> stored correctly but serialized as a plain string where clients expect ISO-8601.</li>
-													<li><span class="text-slate-300">Silent truncation</span> — batch accepts 100 rows; mapper drops half with no error surface.</li>
+												<ul class="mt-2 list-disc space-y-2 pl-4 text-muted-foreground">
+													<li><span class="text-text-secondary">Field leakage</span> — response includes internal-only columns because the list DTO mirrors the persistence model.</li>
+													<li><span class="text-text-secondary">Format mismatch</span> — <code class="text-sky-300/90">deleted_at</code> stored correctly but serialized as a plain string where clients expect ISO-8601.</li>
+													<li><span class="text-text-secondary">Silent truncation</span> — batch accepts 100 rows; mapper drops half with no error surface.</li>
 												</ul>
-												<p class="mt-4 text-slate-400">These are contract / observability problems across hops — not a substitute for gateway AUTH, which still has to be proven in your repo.</p>
-												<p class="mt-4 border-t border-[#3e3e42] pt-3 text-sm text-slate-400">
-													Next: paste the <code class="text-slate-400">coding_agent_markdown</code> brief from a real <code class="text-slate-400">audit_run</code> response, pair it with two HAR or test fixtures, and we'll turn this into repo-specific file paths and fixes — still evidence-first.
+												<p class="mt-4 text-muted-foreground">These are contract / observability problems across hops — not a substitute for gateway AUTH, which still has to be proven in your repo.</p>
+												<p class="mt-4 border-t border-[#3e3e42] pt-3 text-sm text-muted-foreground">
+													Next: paste the <code class="text-muted-foreground">coding_agent_markdown</code> brief from a real <code class="text-muted-foreground">audit_run</code> response, pair it with two HAR or test fixtures, and we'll turn this into repo-specific file paths and fixes — still evidence-first.
 												</p>
 											</div>
 										</div>
@@ -365,7 +365,7 @@ const qa = [
 								</div>
 							</div>
 						</div>
-						<figcaption class="border-t border-[#2d2d2d] bg-[#1f1f1f] px-4 py-2 text-center font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+						<figcaption class="border-t border-[#2d2d2d] bg-[#1f1f1f] px-4 py-2 text-center font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 							Fictional transcript for storytelling
 						</figcaption>
 					</figure>
@@ -376,37 +376,37 @@ const qa = [
 		<!-- =============================================================
 		     §04 — Direct answers (Q&A)
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 04</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Direct answers</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Direct answers</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
-						Common questions, <span class="font-light italic text-slate-400">short answers.</span>
+					<h2 class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+						Common questions, <span class="font-light italic text-muted-foreground">short answers.</span>
 					</h2>
 
-					<div class="mt-14 border-t border-white/10">
+					<div class="mt-14 border-t border-border">
 						{
 							qa.map((row, idx) => (
-								<article class="group grid grid-cols-12 gap-6 border-b border-white/[0.08] py-8 transition duration-300 hover:bg-white/[0.015]">
+								<article class="group grid grid-cols-12 gap-6 border-b border-border py-8 transition duration-300 hover:bg-white/[0.015]">
 									<div class="col-span-12 sm:col-span-4">
 										<div class="flex items-baseline gap-3">
-											<span class="font-display text-3xl font-light leading-none text-white/85 sm:text-4xl">
+											<span class="font-display text-3xl font-light leading-none text-foreground/85 sm:text-4xl">
 												{String(idx + 1).padStart(2, "0")}
 											</span>
-											<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Question</span>
+											<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Question</span>
 										</div>
-										<p class="font-display mt-4 text-[1.15rem] font-bold leading-snug tracking-tight text-white sm:text-[1.25rem]">
+										<p class="font-display mt-4 text-[1.15rem] font-bold leading-snug tracking-tight text-foreground sm:text-[1.25rem]">
 											{row.q}
 										</p>
 									</div>
 									<div class="col-span-12 sm:col-span-8">
 										<div class="border-l border-emerald-300/40 pl-5">
 											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Short answer</p>
-											<p class="mt-2 text-[0.95rem] leading-relaxed text-slate-300">{row.a}</p>
+											<p class="mt-2 text-[0.95rem] leading-relaxed text-text-secondary">{row.a}</p>
 										</div>
 									</div>
 								</article>
@@ -423,14 +423,14 @@ const qa = [
 		<section class="relative bg-surface-deep">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(157,123,245,0.07),transparent_60%)]"></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 05</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Mental model</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Mental model</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
-						Three pieces. <span class="font-light italic text-slate-400">Three jobs.</span>
+					<h2 class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+						Three pieces. <span class="font-light italic text-muted-foreground">Three jobs.</span>
 					</h2>
 
 					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
@@ -445,21 +445,21 @@ const qa = [
 									tier.tone === "emerald" ? "text-emerald-300/90" :
 									"text-amber-300/90";
 								return (
-									<article class="group bg-surface-deep p-6 transition duration-300 hover:bg-[#0a0e1a] sm:p-8">
+									<article class="group bg-surface-deep p-6 transition duration-300 hover:bg-surface-mid sm:p-8">
 										<div class="flex items-baseline gap-4">
 											<span class:list={["font-display text-[3.5rem] font-light leading-[0.85]", c]}>
 												{tier.letter}
 											</span>
-											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{tier.role}</p>
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{tier.role}</p>
 										</div>
-										<p class="mt-6 text-sm leading-relaxed text-slate-400">{tier.body}</p>
+										<p class="mt-6 text-sm leading-relaxed text-muted-foreground">{tier.body}</p>
 									</article>
 								);
 							})
 						}
 					</div>
 
-					<p class="mt-10 max-w-3xl text-sm leading-relaxed text-slate-400">
+					<p class="mt-10 max-w-3xl text-sm leading-relaxed text-muted-foreground">
 						Model inconsistency (e.g. <em>“gaps don't exist”</em> from a line read, then <em>“I shouldn't verify in code”</em>) is
 						not a faithful reading of AADM. The standard asks for behavioral proof — not permission to avoid reading your repo.
 					</p>
@@ -476,13 +476,13 @@ const qa = [
 						</a>
 						<a
 							href="/claude-code"
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-7 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-7 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							AADM + Claude Code →
 						</a>
 						<a
 							href="/why-aadm"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
 						>
 							<span>Why AADM, vs raw loops</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>

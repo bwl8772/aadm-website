@@ -131,29 +131,29 @@ const rolloutStages = [
 	description="Open standard. Hosted MCP. No repo scanning. The governance layer security and compliance teams can read in public — and engineering teams actually adopt."
 	headerActiveNav="enterprise"
 >
-	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-text-primary">
 
 		<!-- =============================================================
 		     §00 — Hero
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
 			<div aria-hidden="true" class="absolute left-0 top-0 -z-10 h-[40rem] w-[40rem] -translate-x-1/3 -translate-y-1/3 rounded-full bg-amber-500/[0.05] blur-3xl"></div>
 			<div aria-hidden="true" class="absolute right-0 top-32 -z-10 h-[32rem] w-[32rem] translate-x-1/3 rounded-full bg-emerald-500/[0.06] blur-3xl"></div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 00</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Enterprise</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Enterprise</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-slate-400">
+					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 						<span class="text-amber-200/90">▸</span> Procurement-friendly · security-readable · engineering-adoptable
 					</p>
 
-					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,7.5vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						The governance layer <span class="font-light italic text-slate-400">for AI coding agents,</span><br />
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,7.5vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						The governance layer <span class="font-light italic text-muted-foreground">for AI coding agents,</span><br />
 						<span class="relative inline-block">
 							<span class="relative z-10 text-emerald-300">at enterprise scale.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
@@ -164,7 +164,7 @@ const rolloutStages = [
 						<div class="col-span-12 sm:col-span-4">
 							<div class="border-l border-amber-300/40 pl-5">
 								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/80">The premise</p>
-								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
 									Your engineers are already running agent harnesses — Cursor, Claude Code, Windsurf — with or without you.
 									AADM gives the org a standard those agents load on every turn, so adoption stops being a per-engineer
 									security risk.
@@ -172,11 +172,11 @@ const rolloutStages = [
 							</div>
 						</div>
 						<div class="col-span-12 sm:col-span-8">
-							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
-								AADM is built for orgs where <em class="text-white">“the model shipped it”</em> isn't an acceptable incident
+							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
+								AADM is built for orgs where <em class="text-foreground">“the model shipped it”</em> isn't an acceptable incident
 								report. An open standard your security team can read, a hosted service your platform team can wire once, and
 								engineering discipline your reviewers
-								<span class="font-light italic text-slate-400"> stop having to argue for.</span>
+								<span class="font-light italic text-muted-foreground"> stop having to argue for.</span>
 							</p>
 						</div>
 					</div>
@@ -193,24 +193,24 @@ const rolloutStages = [
 						</a>
 						<a
 							href={urlStandard}
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							Send your security team the standard
 						</a>
 						<a
 							href="#due-diligence"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
 						>
 							<span>Vendor due diligence answers</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↓</span>
 						</a>
 					</div>
 
-					<p class="mt-8 max-w-2xl text-sm leading-relaxed text-slate-400">
+					<p class="mt-8 max-w-2xl text-sm leading-relaxed text-muted-foreground">
 						Building the internal case with your staff and principal engineers?{' '}
 						<a
 							href="/about"
-							class="font-semibold text-slate-300 underline decoration-slate-700 underline-offset-4 transition hover:text-amber-200 hover:decoration-amber-300"
+							class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-amber-200 hover:decoration-amber-300"
 							>Agentic engineering</a
 						>{' '}
 						makes the argument in their language — where twenty years of judgment now creates leverage, rather than why they
@@ -223,18 +223,18 @@ const rolloutStages = [
 		<!-- =============================================================
 		     §01 — Three pillars
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 01</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Boundary</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Boundary</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[20ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						The three things <span class="font-light italic text-slate-400">we deliberately are.</span>
+					<h2 class="font-display max-w-[20ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						The three things <span class="font-light italic text-muted-foreground">we deliberately are.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						AADM is opinionated about what it is — and aggressive about what it is not. The boundary is the product.
 					</p>
 
@@ -243,16 +243,16 @@ const rolloutStages = [
 							pillars.map((p) => {
 								const t = pillarToneClasses[p.tone];
 								return (
-									<article class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
+									<article class="group bg-surface-mid p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
 										<div class="flex items-baseline gap-4">
 											<span class:list={["font-display text-5xl font-light leading-none tracking-tight sm:text-6xl", t.numeral]}>
 												{p.num}
 											</span>
 										</div>
-										<h3 class="font-display mt-7 text-balance text-[1.25rem] font-bold leading-snug tracking-tight text-white sm:text-[1.4rem]">
+										<h3 class="font-display mt-7 text-balance text-[1.25rem] font-bold leading-snug tracking-tight text-foreground sm:text-[1.4rem]">
 											{p.title}
 										</h3>
-										<p class="mt-4 text-sm leading-relaxed text-slate-300">{p.body}</p>
+										<p class="mt-4 text-sm leading-relaxed text-text-secondary">{p.body}</p>
 										<div aria-hidden="true" class:list={["mt-7 h-px w-12 transition-all duration-500 group-hover:w-24", t.numeral.replace("text-", "bg-").replace("/90", "/50")]}></div>
 									</article>
 								);
@@ -266,29 +266,29 @@ const rolloutStages = [
 		<!-- =============================================================
 		     §02 — Who it's for
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 02</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Stakeholders</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Stakeholders</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Three stakeholders, <span class="font-light italic text-slate-400">one answer each.</span>
+					<h2 class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Three stakeholders, <span class="font-light italic text-muted-foreground">one answer each.</span>
 					</h2>
 
 					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
 						{
 							audiences.map((a) => (
-								<article class="group bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-9">
+								<article class="group bg-surface-deep p-7 transition duration-300 hover:bg-surface-mid sm:p-9">
 									<div class="flex items-baseline gap-4">
 										<span class="font-display text-[3.5rem] font-light leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
 											{a.letter}
 										</span>
-										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{a.role}</p>
+										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{a.role}</p>
 									</div>
-									<p class="mt-7 text-sm leading-relaxed text-slate-300">{a.body}</p>
+									<p class="mt-7 text-sm leading-relaxed text-text-secondary">{a.body}</p>
 									<div aria-hidden="true" class="mt-7 h-px w-10 bg-emerald-300/40 transition-all duration-500 group-hover:w-20 group-hover:bg-emerald-300/70"></div>
 								</article>
 							))
@@ -301,38 +301,38 @@ const rolloutStages = [
 		<!-- =============================================================
 		     §03 — Due diligence Q&A
 		     ============================================================= -->
-		<section id="due-diligence" class="relative scroll-mt-24 border-b border-white/[0.06] bg-[#06080f] sm:scroll-mt-28">
+		<section id="due-diligence" class="relative scroll-mt-24 border-b border-border bg-surface-mid sm:scroll-mt-28">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 03</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Due diligence</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Due diligence</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Vendor due diligence, <span class="font-light italic text-slate-400">short answers.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Vendor due diligence, <span class="font-light italic text-muted-foreground">short answers.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						The questions your security team is going to ask anyway. Paste them into your RFP and skip the back-and-forth.
 					</p>
 
-					<div class="mt-14 border-t border-white/[0.06]">
+					<div class="mt-14 border-t border-border">
 						{
 							ddQuestions.map((row) => (
-								<article class="group grid grid-cols-12 gap-6 border-b border-white/[0.08] py-8 transition duration-300 hover:bg-white/[0.015]">
+								<article class="group grid grid-cols-12 gap-6 border-b border-border py-8 transition duration-300 hover:bg-white/[0.015]">
 									<div class="col-span-12 sm:col-span-3">
 										<div class="flex items-baseline gap-3">
 											<span class="font-display text-3xl font-light leading-none text-amber-200/85 sm:text-4xl">{row.num}</span>
-											<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Question</span>
+											<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Question</span>
 										</div>
-										<p class="font-display mt-4 text-[1.05rem] font-bold leading-snug tracking-tight text-white sm:text-[1.15rem]">
+										<p class="font-display mt-4 text-[1.05rem] font-bold leading-snug tracking-tight text-foreground sm:text-[1.15rem]">
 											{row.q}
 										</p>
 									</div>
 									<div class="col-span-12 sm:col-span-9">
 										<div class="border-l border-emerald-300/40 pl-5">
 											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Short answer</p>
-											<p class="mt-2 text-[0.95rem] leading-relaxed text-slate-200">{row.a}</p>
+											<p class="mt-2 text-[0.95rem] leading-relaxed text-foreground">{row.a}</p>
 										</div>
 									</div>
 								</article>
@@ -346,18 +346,18 @@ const rolloutStages = [
 		<!-- =============================================================
 		     §04 — Rollout pattern
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 04</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Rollout</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Rollout</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Three stages. <span class="font-light italic text-slate-400">Pilot · team · org.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Three stages. <span class="font-light italic text-muted-foreground">Pilot · team · org.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						Adoption is a per-engineer paste. You don't need a quarter of platform work to prove value.
 					</p>
 
@@ -374,8 +374,8 @@ const rolloutStages = [
 										</div>
 									</div>
 									<div class="col-span-12 sm:col-span-10">
-										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{s.who}</p>
-										<p class="mt-4 max-w-3xl text-[0.98rem] leading-[1.65] text-slate-200">{s.body}</p>
+										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{s.who}</p>
+										<p class="mt-4 max-w-3xl text-[0.98rem] leading-[1.65] text-foreground">{s.body}</p>
 									</div>
 								</article>
 							))
@@ -391,20 +391,20 @@ const rolloutStages = [
 		<section class="relative bg-surface-deep">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(252,211,77,0.07),transparent_60%)]"></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 05</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Start here</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Start here</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[18ch] text-balance text-[clamp(2rem,5.5vw,4.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Read the standard. <span class="font-light italic text-slate-400">Wire the MCP.</span><br />
+					<h2 class="font-display max-w-[18ch] text-balance text-[clamp(2rem,5.5vw,4.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Read the standard. <span class="font-light italic text-muted-foreground">Wire the MCP.</span><br />
 						<span class="relative inline-block">
 							<span class="relative z-10 text-emerald-300">Ship governed.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span>
 					</h2>
-					<p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
+					<p class="mt-6 max-w-2xl text-base leading-relaxed text-text-secondary">
 						Engineering adoption starts with a single paste in a single IDE. The standard, the hosted service, and the answer
 						to your security team's questions are all already public — start there.
 					</p>
@@ -421,13 +421,13 @@ const rolloutStages = [
 						</a>
 						<a
 							href={urlStandard}
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-7 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-7 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-white/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							Read the standard
 						</a>
 						<a
 							href="/ides"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
 						>
 							<span>Every IDE that connects</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
@@ -435,15 +435,15 @@ const rolloutStages = [
 					</div>
 
 					<!-- Colophon -->
-					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-border pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">For</span> · Procurement · Security · Platform
+							<span class="text-muted-foreground">For</span> · Procurement · Security · Platform
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Identity</span> · <span class="text-emerald-300/80">AADM login</span>
+							<span class="text-muted-foreground">Identity</span> · <span class="text-emerald-300/80">AADM login</span>
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / MCP</span>
+							<span class="text-muted-foreground">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / MCP</span>
 						</div>
 					</div>
 				</div>

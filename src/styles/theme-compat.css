@@ -92,10 +92,31 @@ html:not(.dark) .hover\:border-amber-300\/60:hover {
 
 html:not(.dark) .bg-\[\#050810\],
 html:not(.dark) .bg-\[\#06080f\],
+html:not(.dark) .bg-\[\#070b13\],
+html:not(.dark) .bg-\[\#080c16\],
 html:not(.dark) .bg-\[\#0a0e1a\],
 html:not(.dark) .hover\:bg-\[\#0a0e1a\]:hover,
-html:not(.dark) .hover\:bg-\[\#080f16\]:hover {
+html:not(.dark) .hover\:bg-\[\#080f16\]:hover,
+html:not(.dark) .hover\:bg-\[\#080c16\]:hover {
 	background-color: var(--surface-mid);
+}
+
+html:not(.dark) .bg-white\/\[0\.08\] {
+	background-color: var(--border);
+}
+html:not(.dark) .hover\:bg-white\/\[0\.015\]:hover {
+	background-color: var(--hover);
+}
+html:not(.dark) .hover\:border-white\/40:hover {
+	border-color: var(--foreground);
+}
+
+/* Filled “white” CTAs invert against the page in both themes */
+html:not(.dark) .bg-white {
+	background-color: var(--foreground);
+}
+html:not(.dark) .text-slate-950 {
+	color: var(--background);
 }
 
 /* Active inverted chips stay high-contrast on both themes */
