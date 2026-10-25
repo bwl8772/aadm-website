@@ -249,9 +249,9 @@ const laneMeta: LaneMeta[] = [
 		plain:
 			"Tools the host calls first. They tell the agent what kind of work is on the table and how to branch.",
 		tone: "amber",
-		accent: "text-amber-300/90",
-		chip: "border-amber-300/40 text-amber-200",
-		rule: "border-amber-300/40",
+		accent: "text-brand-warn",
+		chip: "border-brand-warn-border text-brand-warn",
+		rule: "border-brand-warn-border",
 	},
 	{
 		key: "Navigator",
@@ -260,8 +260,8 @@ const laneMeta: LaneMeta[] = [
 		plain:
 			"Turn a vague ask into layer-aware slices with authorization, ownership, and acceptance criteria baked in.",
 		tone: "violet",
-		accent: "text-violet-300/90",
-		chip: "border-violet-400/40 text-violet-200",
+		accent: "text-brand-violet",
+		chip: "border-violet-400/40 text-brand-violet",
 		rule: "border-violet-400/40",
 	},
 	{
@@ -271,8 +271,8 @@ const laneMeta: LaneMeta[] = [
 		plain:
 			"Evidence-first. Recon classifies the failure; remediation is gated until proof crosses the router.",
 		tone: "sky",
-		accent: "text-sky-300/90",
-		chip: "border-sky-400/40 text-sky-200",
+		accent: "text-brand-sky",
+		chip: "border-sky-400/40 text-brand-sky",
 		rule: "border-sky-400/40",
 	},
 	{
@@ -282,8 +282,8 @@ const laneMeta: LaneMeta[] = [
 		plain:
 			"Audit programs scope seams. Evidence binds per crossing. Closure tiers come back in VERT/HORI language.",
 		tone: "emerald",
-		accent: "text-emerald-300/90",
-		chip: "border-emerald-400/40 text-emerald-200",
+		accent: "text-brand-mcp",
+		chip: "border-emerald-400/40 text-brand-mcp",
 		rule: "border-emerald-400/40",
 	},
 	{
@@ -293,18 +293,18 @@ const laneMeta: LaneMeta[] = [
 		plain:
 			"Pull canonical AUTH controls, SEAM archetypes, and role doctrine straight from the standard — verbatim, not paraphrased.",
 		tone: "slate",
-		accent: "text-slate-300/90",
-		chip: "border-slate-300/40 text-slate-200",
+		accent: "text-text-secondary/90",
+		chip: "border-slate-300/40 text-foreground",
 		rule: "border-slate-300/40",
 	},
 ];
 
 const badgeClass: Record<Lane, string> = {
-	Orchestration: "border-amber-300/40 text-amber-200",
-	Navigator: "border-violet-300/40 text-violet-200",
-	Investigator: "border-sky-300/40 text-sky-200",
-	Sentinel: "border-emerald-300/40 text-emerald-200",
-	Doctrine: "border-slate-300/40 text-slate-200",
+	Orchestration: "border-brand-warn-border text-brand-warn",
+	Navigator: "border-brand-violet/40 text-brand-violet",
+	Investigator: "border-brand-sky/40 text-brand-sky",
+	Sentinel: "border-brand-mcp-border text-brand-mcp",
+	Doctrine: "border-slate-300/40 text-foreground",
 };
 
 const toolsByLane: Record<Lane, Tool[]> = {
@@ -325,58 +325,58 @@ const totalCount = tools.length;
 	headerActiveNav="tools"
 	ogImage="/og/og-tools.png"
 >
-	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-text-primary">
 
 		<!-- =============================================================
 		     §00 — HERO
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
 			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.06] blur-3xl"></div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Tools / catalog</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Tools / catalog</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-slate-400">
-						<span class="text-emerald-200/90">▸</span> {totalCount} typed tools · five lanes · all return structured JSON
+					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
+						<span class="text-brand-mcp">▸</span> {totalCount} typed tools · five lanes · all return structured JSON
 					</p>
 
-					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Every tool. <span class="font-light italic text-slate-400">Every contract.</span><br />
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Every tool. <span class="font-light italic text-muted-foreground">Every contract.</span><br />
 						<span class="relative inline-block">
-							<span class="relative z-10 text-emerald-300">One catalog.</span>
+							<span class="relative z-10 text-brand-mcp">One catalog.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span>
 					</h1>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">Authoritative source</p>
-								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+							<div class="border-l border-brand-mcp-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Authoritative source</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
 									This page mirrors the hosted server's published surface. After you connect,{' '}
-									<code class="font-mono-cta text-emerald-200/85">tools/list</code> and{' '}
-									<code class="font-mono-cta text-emerald-200/85">inputSchema</code> on your running MCP are the final word.
+									<code class="font-mono-cta text-brand-mcp">tools/list</code> and{' '}
+									<code class="font-mono-cta text-brand-mcp">inputSchema</code> on your running MCP are the final word.
 								</p>
 							</div>
 						</div>
 						<div class="col-span-12 sm:col-span-8">
-							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
 								AADM exposes a small, deliberate set of tools. Each one is named so a human reviewer can read the call log and
 								understand what just happened. None of them edit your repo —
-								<span class="font-light italic text-slate-400"> your agent does that.</span>
+								<span class="font-light italic text-muted-foreground"> your agent does that.</span>
 							</p>
-							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-slate-400">
+							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
 								This catalog is the concrete answer to
-								<span class="italic text-slate-400"> “what may the agent do.”</span> For why bounding that surface is the
+								<span class="italic text-muted-foreground"> “what may the agent do.”</span> For why bounding that surface is the
 								job rather than a constraint on it, see{' '}
 								<a
 									href="/about"
-									class="font-semibold text-slate-300 underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+									class="font-semibold text-text-secondary underline decoration-border underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 									>agentic engineering</a
 								>.
 							</p>
@@ -387,25 +387,25 @@ const totalCount = tools.length;
 					<nav class="mt-14 flex flex-wrap items-center gap-2" aria-label="Tool lanes">
 						<a
 							href="#entry-points"
-							class="group inline-flex items-center gap-2 border border-amber-300/50 bg-amber-300/[0.06] px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-100 transition hover:bg-amber-300/[0.12]"
+							class="group inline-flex items-center gap-2 border border-brand-warn-border bg-brand-warn-bg px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn transition hover:border-brand-warn"
 						>
 							<span class="block h-1.5 w-1.5 rounded-full bg-amber-300/90"></span>
 							<span>Entry points</span>
-							<span class="text-amber-200/60">· start here</span>
+							<span class="text-brand-warn">· start here</span>
 						</a>
 						{
 							laneMeta.map((m) => (
 								<a
 									href={`#lane-${m.key.toLowerCase()}`}
 									class:list={[
-										"group inline-flex items-center gap-2 border bg-transparent px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em] transition hover:bg-white/[0.04]",
+										"group inline-flex items-center gap-2 border bg-transparent px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em] transition hover:bg-accent",
 										m.chip,
 									]}
 								>
 									<span class:list={["block h-1.5 w-1.5 rounded-full", m.accent.replace("text-", "bg-").replace("/90", "")]}></span>
 									<span>{m.key}</span>
-									<span class="text-slate-400">·</span>
-									<span class="text-slate-400">{toolsByLane[m.key].length}</span>
+									<span class="text-muted-foreground">·</span>
+									<span class="text-muted-foreground">{toolsByLane[m.key].length}</span>
 								</a>
 							))
 						}
@@ -414,7 +414,7 @@ const totalCount = tools.length;
 					<div class="mt-10 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<a
 							href={urlMcpMarketing}
-							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="group inline-flex items-center gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg focus-visible:ring-2 focus-visible:ring-brand-mcp focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<span>See how the MCP works</span>
 							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -423,7 +423,7 @@ const totalCount = tools.length;
 						</a>
 						<a
 							href={urlStandard}
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							Read the standard
 						</a>
@@ -442,18 +442,18 @@ const totalCount = tools.length;
 				<section
 					id={`lane-${m.key.toLowerCase()}`}
 					class:list={[
-						"relative scroll-mt-24 border-b border-white/[0.06] sm:scroll-mt-28",
-						laneIdx % 2 === 0 ? "bg-[#06080f]" : "",
+						"relative scroll-mt-24 border-b border-border sm:scroll-mt-28",
+						laneIdx % 2 === 0 ? "bg-surface-mid" : "",
 					]}
 				>
 					<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-						<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
+						<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
 							<span
 								class:list={["font-mono-cta text-[13px] normal-case tracking-[0.01em]", m.accent.replace("/90", "/70")]}
 							>
 								§ {String(laneIdx + 1).padStart(2, "0")}
 							</span>
-							<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+							<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 								{m.key}
 							</span>
 						</aside>
@@ -466,15 +466,15 @@ const totalCount = tools.length;
 									</p>
 								</div>
 								<div class="col-span-12 sm:col-span-10">
-									<h2 class="font-display text-balance text-[clamp(1.9rem,4.2vw,3.2rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
+									<h2 class="font-display text-balance text-[clamp(1.9rem,4.2vw,3.2rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 										{m.key}
 									</h2>
-									<p class="mt-3 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{m.tagline}</p>
-									<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-300">{m.plain}</p>
+									<p class="mt-3 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{m.tagline}</p>
+									<p class="mt-5 max-w-3xl text-base leading-relaxed text-text-secondary">{m.plain}</p>
 									{m.key === "Doctrine" && (
 										<a
 											href={urlStandard}
-											class="mt-6 inline-flex items-center gap-2 border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/[0.04]"
+											class="mt-6 inline-flex items-center gap-2 border border-border px-4 py-2 text-sm font-semibold text-foreground transition hover:border-foreground/25 hover:bg-accent"
 										>
 											<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
 											Read the Standard on GitHub
@@ -487,23 +487,23 @@ const totalCount = tools.length;
 								(() => {
 									const laneTools = toolsByLane[m.key];
 									const visuals = gridVisualPlacements(laneTools.length, 3);
-									const cellBg = laneIdx % 2 === 0 ? "bg-[#06080f]" : "bg-surface-deep";
+									const cellBg = laneIdx % 2 === 0 ? "bg-surface-mid" : "bg-surface-deep";
 
 									return (
-										<ul class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+										<ul class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] lg:grid-cols-3">
 											{laneTools.map((tool, i) => (
 												<li
 													id={tool.tool}
 													class:list={[
-														"group flex scroll-mt-24 flex-col p-6 transition duration-300 hover:bg-[#080c16] sm:scroll-mt-28 sm:p-7",
+														"group flex scroll-mt-24 flex-col p-6 transition duration-300 hover:bg-secondary sm:scroll-mt-28 sm:p-7",
 														cellBg,
 													]}
 												>
 													<div class="flex items-baseline justify-between gap-3">
-														<code class="font-mono-cta break-all text-[15px] font-semibold text-white">
-															<a href={`#${tool.tool}`} class="transition hover:text-emerald-200">{tool.tool}</a>
+														<code class="font-mono-cta break-all text-[15px] font-semibold text-foreground">
+															<a href={`#${tool.tool}`} class="transition hover:text-brand-mcp">{tool.tool}</a>
 														</code>
-														<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
+														<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 															{String(i + 1).padStart(2, "0")}
 														</span>
 													</div>
@@ -519,9 +519,9 @@ const totalCount = tools.length;
 															</span>
 														))}
 													</div>
-													<p class="mt-5 text-sm leading-relaxed text-slate-300">{tool.purpose}</p>
+													<p class="mt-5 text-sm leading-relaxed text-text-secondary">{tool.purpose}</p>
 													<div class:list={["mt-5 border-l pl-4", m.rule]}>
-														<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">When to call</p>
+														<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">When to call</p>
 														<p class:list={["mt-1.5 text-sm leading-relaxed", m.accent.replace("/90", "/85").replace("text-", "text-")]}>
 															{tool.when}
 														</p>
@@ -529,7 +529,7 @@ const totalCount = tools.length;
 													{tool.source && (
 														<a
 															href={`${urlStandard.replace(/\/$/, "")}/blob/main/${tool.source.path}`}
-															class="mt-5 inline-flex items-center gap-2 text-sm text-slate-300 underline decoration-slate-600 underline-offset-4 transition hover:text-white hover:decoration-white"
+															class="mt-5 inline-flex items-center gap-2 text-sm text-text-secondary underline decoration-border underline-offset-4 transition hover:text-foreground hover:decoration-foreground"
 														>
 															<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
 															Source: {tool.source.label}
@@ -543,9 +543,9 @@ const totalCount = tools.length;
 											{visuals.map((visual) => (
 												<li
 													class:list={[
-														"grid-visual-slot-cols-3 relative overflow-hidden transition duration-300 hover:bg-[#080c16]",
+														"grid-visual-slot-cols-3 relative overflow-hidden transition duration-300 hover:bg-secondary",
 														cellBg,
-														visual.variant === "wide" ? "sm:col-span-2 lg:col-span-2" : "",
+														visual.variant === "wide" ? "lg:col-span-2" : "",
 													]}
 													style={gridVisualSlotStyle(visual)}
 												>
@@ -568,48 +568,48 @@ const totalCount = tools.length;
 		<section class="relative bg-surface-deep">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.07),transparent_60%)]"></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 06</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Authoritative</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 06</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Authoritative</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[20ch] text-balance text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.02] tracking-[-0.01em] text-white">
-						This page is a mirror. <span class="font-light italic text-slate-400">Your server is the truth.</span>
+					<h2 class="font-display max-w-[20ch] text-balance text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.02] tracking-[-0.01em] text-foreground">
+						This page is a mirror. <span class="font-light italic text-muted-foreground">Your server is the truth.</span>
 					</h2>
-					<p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
+					<p class="mt-6 max-w-2xl text-base leading-relaxed text-text-secondary">
 						The catalog above tracks the hosted AADM MCP's published surface. After you connect,{' '}
-						<code class="font-mono-cta text-emerald-200/85">tools/list</code> and{' '}
-						<code class="font-mono-cta text-emerald-200/85">inputSchema</code> on your running server are authoritative —
+						<code class="font-mono-cta text-brand-mcp">tools/list</code> and{' '}
+						<code class="font-mono-cta text-brand-mcp">inputSchema</code> on your running server are authoritative —
 						versions, parameter shapes, and new tools land there first.
 					</p>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-7">
-							<div class="border border-white/10 bg-[#050810]">
-								<div class="flex items-center justify-between border-b border-white/[0.06] px-5 py-3">
-									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Discover the running server</span>
+							<div class="border border-border bg-surface-mid">
+								<div class="flex items-center justify-between border-b border-border px-5 py-3">
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Discover the running server</span>
 									<span class="flex gap-1" aria-hidden="true">
 										<span class="block h-1.5 w-1.5 rounded-full bg-emerald-400/70"></span>
 										<span class="block h-1.5 w-1.5 rounded-full bg-amber-400/70"></span>
 										<span class="block h-1.5 w-1.5 rounded-full bg-slate-500/70"></span>
 									</span>
 								</div>
-								<pre class="font-mono-cta overflow-x-auto p-5 text-xs leading-relaxed text-slate-300 sm:text-sm"><code>{`curl -X POST ${urlMcpRpcUrl} \\
+								<pre class="font-mono-cta overflow-x-auto p-5 text-xs leading-relaxed text-text-secondary sm:text-sm"><code>{`curl -X POST ${urlMcpRpcUrl} \\
   -H "Accept: application/json, text/event-stream" \\
   -H "Authorization: Bearer <your token>" \\
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'`}</code></pre>
 							</div>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border-l-2 border-emerald-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">What you'll see</p>
-								<p class="mt-3 text-sm leading-relaxed text-slate-300">
+							<div class="border-l-2 border-brand-mcp-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">What you'll see</p>
+								<p class="mt-3 text-sm leading-relaxed text-text-secondary">
 									A JSON array of tools with name, description, and inputSchema. The same tools listed here, plus any newer
 									additions your server may already expose.
 								</p>
-								<p class="mt-4 text-xs leading-relaxed text-slate-400">
-									Don't have a token? <a href={urlMcpMarketing} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Get access</a>.
+								<p class="mt-4 text-xs leading-relaxed text-muted-foreground">
+									Don't have a token? <a href={urlMcpMarketing} class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">Get access</a>.
 								</p>
 							</div>
 						</div>
@@ -618,7 +618,7 @@ const totalCount = tools.length;
 					<div class="mt-16 flex flex-col flex-wrap items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
 						<a
 							href={urlMcpMarketing}
-							class="group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="group inline-flex items-center gap-3 bg-foreground px-7 py-4 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg focus-visible:ring-2 focus-visible:ring-brand-mcp focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<span>See how the MCP works</span>
 							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -627,22 +627,22 @@ const totalCount = tools.length;
 						</a>
 						<a
 							href="/why-aadm"
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-7 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-7 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							Why these tools, vs raw loops
 						</a>
 					</div>
 
 					<!-- Colophon -->
-					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-border pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Catalog</span> · {totalCount} tools
+							<span class="text-muted-foreground">Catalog</span> · {totalCount} tools
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Lanes</span> · <span class="text-emerald-300/80">{laneMeta.length}</span>
+							<span class="text-muted-foreground">Lanes</span> · <span class="text-brand-mcp">{laneMeta.length}</span>
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Authoritative</span> · <span class="text-emerald-300/80">tools/list on your server</span>
+							<span class="text-muted-foreground">Authoritative</span> · <span class="text-brand-mcp">tools/list on your server</span>
 						</div>
 					</div>
 				</div>

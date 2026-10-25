@@ -206,12 +206,12 @@ const stackRows: StackRow[] = [
 ];
 
 const stackTones: Record<StackRow["tone"], { label: string; bar: string }> = {
-	white: { label: "text-white", bar: "bg-white/70" },
-	amber: { label: "text-amber-200", bar: "bg-amber-300/70" },
-	emerald: { label: "text-emerald-200", bar: "bg-emerald-300/70" },
-	violet: { label: "text-violet-200", bar: "bg-violet-400/70" },
-	sky: { label: "text-sky-200", bar: "bg-sky-400/70" },
-	slate: { label: "text-slate-300", bar: "bg-slate-400/50" },
+	white: { label: "text-foreground", bar: "bg-white/70" },
+	amber: { label: "text-brand-warn", bar: "bg-amber-300/70" },
+	emerald: { label: "text-brand-mcp", bar: "bg-emerald-300/70" },
+	violet: { label: "text-brand-violet", bar: "bg-violet-400/70" },
+	sky: { label: "text-brand-sky", bar: "bg-sky-400/70" },
+	slate: { label: "text-text-secondary", bar: "bg-slate-400/50" },
 };
 
 type NextStep = {
@@ -275,12 +275,12 @@ const nextSteps: NextStep[] = [
 	headerActiveNav="about"
 	ogType="article"
 >
-	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-text-primary">
 
 		<!-- =============================================================
 		     §00 — HERO
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div
 				aria-hidden="true"
 				class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"
@@ -300,50 +300,50 @@ const nextSteps: NextStep[] = [
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-24 pt-10 sm:px-8 sm:pb-32 sm:pt-16">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">About / The discipline</span>
-					<span class="hidden font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500 sm:mt-auto sm:block">
-						<span class="text-slate-400">Written for</span><br />
-						<span class="text-slate-400">Engineers with scars</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">About / The discipline</span>
+					<span class="hidden font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground sm:mt-auto sm:block">
+						<span class="text-muted-foreground">Written for</span><br />
+						<span class="text-muted-foreground">Engineers with scars</span>
 					</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-slate-400">
-						<span class="text-emerald-200/90">▸</span> A definition, for people who have shipped enough to be suspicious of new ones
+					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
+						<span class="text-brand-mcp">▸</span> A definition, for people who have shipped enough to be suspicious of new ones
 					</p>
 
 					<h1
-						class="font-display max-w-[17ch] text-balance text-[clamp(2.5rem,8vw,6.6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[17ch] text-balance text-[clamp(2.5rem,8vw,6.6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						You didn't spend<br class="hidden sm:inline" />
 						twenty years
-						<span class="font-light italic text-slate-400"> learning to type.</span>
+						<span class="font-light italic text-muted-foreground"> learning to type.</span>
 					</h1>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">The claim</p>
-								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
+							<div class="border-l border-brand-mcp-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">The claim</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
 									Agentic engineering does not make your experience less valuable. It moves where that experience creates
 									leverage — from the code you personally write to the systems that write code on your behalf.
 								</p>
 							</div>
 						</div>
 						<div class="col-span-12 sm:col-span-8">
-							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
 								You spent them learning where boundaries belong, which abstractions survive contact with scale, and how
 								systems fail at three in the morning. Those judgments used to be applied
-								<span class="text-white underline decoration-emerald-300/50 decoration-2 underline-offset-[6px]">
+								<span class="text-foreground underline decoration-brand-mcp decoration-2 underline-offset-[6px]">
 									while writing the software</span
 								>. They can now be applied
-								<span class="text-white underline decoration-emerald-300/50 decoration-2 underline-offset-[6px]">
+								<span class="text-foreground underline decoration-brand-mcp decoration-2 underline-offset-[6px]">
 									while governing machines that write it</span
 								>
-								<span class="font-light italic text-slate-400"> — which is a much larger surface.</span>
+								<span class="font-light italic text-muted-foreground"> — which is a much larger surface.</span>
 							</p>
 						</div>
 					</div>
@@ -352,7 +352,7 @@ const nextSteps: NextStep[] = [
 					<div class="mt-16 grid grid-cols-12 gap-4 sm:gap-6">
 						<div class="col-span-12 lg:col-span-8">
 							<article
-								class="group relative overflow-hidden border border-emerald-300/25 bg-gradient-to-br from-emerald-950/25 via-[#0b0e18] to-[#0b0e18] p-7 transition duration-300 hover:border-emerald-300/50 sm:p-10"
+								class="group relative overflow-hidden border border-brand-mcp-border bg-gradient-to-br from-emerald-950/25 via-muted to-muted p-7 transition duration-300 hover:border-brand-mcp-border sm:p-10"
 							>
 								<div
 									aria-hidden="true"
@@ -361,34 +361,34 @@ const nextSteps: NextStep[] = [
 								</div>
 								<div class="flex items-center gap-3">
 									<span class="block h-2 w-2 rounded-full bg-emerald-300"></span>
-									<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/90">
+									<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
 										Agentic engineer · the definition
 									</p>
 								</div>
 								<p
-									class="font-display mt-5 text-balance text-[1.35rem] leading-[1.22] tracking-tight text-white sm:text-[1.7rem]"
+									class="font-display mt-5 text-balance text-[1.35rem] leading-[1.22] tracking-tight text-foreground sm:text-[1.7rem]"
 								>
 									Designs, builds, governs, and validates systems in which AI can reason and act toward an outcome
-									<span class="font-light italic text-emerald-200/90">
+									<span class="font-light italic text-brand-mcp">
 										while remaining inside explicit architecture, authority, data, tool, and human-control boundaries.</span
 									>
 								</p>
-								<p class="mt-6 text-sm leading-relaxed text-slate-400">
+								<p class="mt-6 text-sm leading-relaxed text-muted-foreground">
 									Note what the definition does not say. It does not say
-									<span class="italic text-slate-300">“someone who builds agents.”</span> That is a component. This is the
+									<span class="italic text-text-secondary">“someone who builds agents.”</span> That is a component. This is the
 									system the component runs inside.
 								</p>
 							</article>
 						</div>
 						<div class="col-span-12 lg:col-span-4 lg:mt-16">
-							<article class="border border-white/12 bg-[#070b13] p-7 sm:p-8">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Where AADM fits</p>
-								<p class="mt-5 text-sm leading-relaxed text-slate-300">
-									Agentic engineering is the discipline. <span class="text-white">AADM</span> is one operating model for
+							<article class="border border-white/12 bg-muted p-7 sm:p-8">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Where AADM fits</p>
+								<p class="mt-5 text-sm leading-relaxed text-text-secondary">
+									Agentic engineering is the discipline. <span class="text-foreground">AADM</span> is one operating model for
 									practising it — an open standard plus a hosted MCP that carries the standard to whatever tool you happen
 									to be using.
 								</p>
-								<p class="mt-4 text-sm leading-relaxed text-slate-400">
+								<p class="mt-4 text-sm leading-relaxed text-muted-foreground">
 									You can adopt the discipline without buying anything. The standard is public.
 								</p>
 							</article>
@@ -398,7 +398,7 @@ const nextSteps: NextStep[] = [
 					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<a
 							href="#the-shift"
-							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="group inline-flex items-center gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg focus-visible:ring-2 focus-visible:ring-brand-mcp focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<span>Start with the shift</span>
 							<svg
@@ -414,13 +414,13 @@ const nextSteps: NextStep[] = [
 						</a>
 						<a
 							href="/why-aadm"
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							Why AADM, vs raw loops
 						</a>
 						<a
 							href={urlStandard}
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>Read the open standard</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↗</span>
@@ -429,10 +429,10 @@ const nextSteps: NextStep[] = [
 				</div>
 				<!-- Where the work goes: the shift as one screenshot-able picture -->
 				<figure class="col-span-12 mt-20 sm:mt-24">
-					<div class="overflow-x-auto border border-white/[0.08] [scrollbar-width:thin]">
+					<div class="overflow-x-auto border border-border [scrollbar-width:thin]">
 						<div class="coding-shift min-w-[760px]" set:html={codingShift} />
 					</div>
-					<figcaption class="mt-4 flex flex-col gap-2 text-sm text-slate-400 sm:flex-row sm:items-baseline sm:justify-between">
+					<figcaption class="mt-4 flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-baseline sm:justify-between">
 						<span>
 							Same six steps, two eras. Coding goes from the widest box to the narrowest; the boxes around it are where
 							your experience now does its work.
@@ -441,7 +441,7 @@ const nextSteps: NextStep[] = [
 							href="/visuals/coding-shift.svg"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="font-mono-cta shrink-0 normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="font-mono-cta shrink-0 normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							Open as SVG ↗
 						</a>
@@ -454,24 +454,24 @@ const nextSteps: NextStep[] = [
 		<!-- =============================================================
 		     §01 — The shift (two pipelines)
 		     ============================================================= -->
-		<section id="the-shift" class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section id="the-shift" class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 01</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">The shift</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 01</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">The shift</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<h2
-						class="font-display max-w-[20ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[20ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						The work didn't move.<br />
-						<span class="font-light italic text-slate-400">The leverage did.</span>
+						<span class="font-light italic text-muted-foreground">The leverage did.</span>
 					</h2>
-					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
-						For twenty years, a senior engineer <span class="text-slate-200">was</span> the transformation from requirement
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
+						For twenty years, a senior engineer <span class="text-foreground">was</span> the transformation from requirement
 						to running software. Every step in that chain ran through one person. AI can now perform much of the mechanical
 						execution — which changes the shape of the chain, not the need for someone who understands it.
 					</p>
@@ -482,9 +482,9 @@ const nextSteps: NextStep[] = [
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-7">
-							<p class="text-pretty text-base leading-[1.7] text-slate-300">
+							<p class="text-pretty text-base leading-[1.7] text-text-secondary">
 								Read the two together and the change is easy to state:
-								<span class="text-white">
+								<span class="text-foreground">
 									the scarce skill moves from producing code to exercising engineering judgment over machines that can
 									produce code.
 								</span>
@@ -493,15 +493,15 @@ const nextSteps: NextStep[] = [
 							</p>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border-l-2 border-emerald-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">
+							<div class="border-l-2 border-brand-mcp-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
 									The economics, restated
 								</p>
-								<p class="mt-4 text-sm leading-relaxed text-slate-400">
-									Your value used to be <span class="italic text-slate-300">“I can build this complicated system.”</span>
+								<p class="mt-4 text-sm leading-relaxed text-muted-foreground">
+									Your value used to be <span class="italic text-text-secondary">“I can build this complicated system.”</span>
 								</p>
-								<p class="mt-4 text-sm leading-relaxed text-slate-200">
-									It becomes <span class="text-white">
+								<p class="mt-4 text-sm leading-relaxed text-foreground">
+									It becomes <span class="text-foreground">
 										“I can architect a system that humans and AI agents can safely build, operate, diagnose, and evolve at
 										much greater speed.”
 									</span>
@@ -516,71 +516,71 @@ const nextSteps: NextStep[] = [
 		<!-- =============================================================
 		     §02 — What twenty years bought
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 02</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">The inventory</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 02</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">The inventory</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<h2
-						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						What you know that<br />
-						<span class="font-light italic text-slate-400">the model doesn't.</span>
+						<span class="font-light italic text-muted-foreground">the model doesn't.</span>
 					</h2>
-					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
 						This is not a list of things AI will eventually learn. It is a list of judgments that require holding a system's
 						future in your head — and each one has a characteristic way an unguided agent gets it wrong.
 					</p>
 
-					<div class="mt-14 hidden grid-cols-12 gap-8 border-t border-white/10 pb-3 pt-5 font-mono-cta text-[13px] normal-case tracking-[0.01em] lg:grid">
-						<div class="col-span-5 text-slate-400">Your judgment</div>
-						<div class="col-span-7 text-amber-200/80">▸ The characteristic agent failure</div>
+					<div class="mt-14 hidden grid-cols-12 gap-8 border-t border-border pb-3 pt-5 font-mono-cta text-[13px] normal-case tracking-[0.01em] lg:grid">
+						<div class="col-span-5 text-muted-foreground">Your judgment</div>
+						<div class="col-span-7 text-brand-warn">▸ The characteristic agent failure</div>
 					</div>
 
-					<ol class="border-t border-white/10 lg:border-t-0">
+					<ol class="border-t border-border lg:border-t-0">
 						{
 							judgments.map((j) => (
-								<li class="group grid grid-cols-1 gap-4 border-b border-white/[0.08] py-8 transition duration-300 hover:bg-white/[0.015] lg:grid-cols-12 lg:gap-8">
+								<li class="group grid grid-cols-1 gap-4 border-b border-border py-8 transition duration-300 hover:bg-white/[0.015] lg:grid-cols-12 lg:gap-8">
 									<div class="lg:col-span-5">
 										<div class="flex items-baseline gap-4">
-											<span class="font-display text-3xl font-light leading-none text-white/80 sm:text-4xl">
+											<span class="font-display text-3xl font-light leading-none text-foreground/80 sm:text-4xl">
 												{j.num}
 											</span>
-											<h3 class="font-display text-balance text-[1.1rem] font-bold leading-[1.2] tracking-tight text-white sm:text-[1.2rem]">
+											<h3 class="font-display text-balance text-[1.1rem] font-bold leading-[1.2] tracking-tight text-foreground sm:text-[1.2rem]">
 												{j.knows}
 											</h3>
 										</div>
 										{j.anchor ? (
-											<p class="font-mono-cta mt-4 pl-[3.25rem] text-[13px] normal-case tracking-[0.01em] text-slate-500">
+											<p class="font-mono-cta mt-4 pl-[3.25rem] text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 												lands at ·{" "}
 												{j.anchorHref ? (
-													<a href={j.anchorHref} class="text-emerald-200/90 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">{j.anchor}</a>
+													<a href={j.anchorHref} class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">{j.anchor}</a>
 												) : (
-													<span class="text-emerald-200/80">{j.anchor}</span>
+													<span class="text-brand-mcp">{j.anchor}</span>
 												)}
 											</p>
 										) : null}
 									</div>
 									<div class="relative lg:col-span-7">
 										<div class="absolute -left-3 top-0 h-full w-px bg-amber-300/30 lg:left-[-1px]" />
-										<p class="font-mono-cta pl-4 text-[13px] normal-case tracking-[0.01em] text-amber-200/80 lg:hidden">
+										<p class="font-mono-cta pl-4 text-[13px] normal-case tracking-[0.01em] text-brand-warn lg:hidden">
 											The agent failure
 										</p>
-										<p class="mt-2 pl-4 text-[0.95rem] leading-relaxed text-slate-300 lg:mt-0">{j.fails}</p>
+										<p class="mt-2 pl-4 text-[0.95rem] leading-relaxed text-text-secondary lg:mt-0">{j.fails}</p>
 									</div>
 								</li>
 							))
 						}
 					</ol>
 
-					<p class="mt-14 max-w-3xl text-pretty text-base leading-[1.7] text-slate-300">
+					<p class="mt-14 max-w-3xl text-pretty text-base leading-[1.7] text-text-secondary">
 						None of these are model-intelligence problems, which is why waiting for a better model does not solve them. They
-						are <span class="text-white">context problems</span>: the agent has no durable reference for where your
+						are <span class="text-foreground">context problems</span>: the agent has no durable reference for where your
 						boundaries are, which controls bind, or what your team means by done. Give it that reference and most of the
 						column on the right stops happening.
 					</p>
@@ -591,7 +591,7 @@ const nextSteps: NextStep[] = [
 		<!-- =============================================================
 		     §03 — Faster technical debt
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section class="relative border-b border-border bg-surface-mid">
 			<div
 				aria-hidden="true"
 				class="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(252,211,77,0.04),transparent_30%)]"
@@ -599,29 +599,29 @@ const nextSteps: NextStep[] = [
 			</div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 03</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Without structure</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 03</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Without structure</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<h2
-						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						An unguided agent is<br />
-						<span class="font-light italic text-slate-400">a very fast junior.</span>
+						<span class="font-light italic text-muted-foreground">a very fast junior.</span>
 					</h2>
-					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
 						Hand a capable model an ambiguous task with no architecture, no boundaries, and no gates, and you get exactly
 						what you would get from a bright graduate with root access and no supervision — except at machine speed.
 					</p>
 
 					<div class="mt-14 grid grid-cols-12 gap-8">
 						<div class="col-span-12 lg:col-span-7">
-							<div class="border border-white/10 bg-[#050810]">
-								<div class="flex items-center justify-between border-b border-white/[0.08] px-5 py-3">
-									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+							<div class="border border-border bg-surface-mid">
+								<div class="flex items-center justify-between border-b border-border px-5 py-3">
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 										Session · unguided loop
 									</span>
 									<span class="flex gap-1" aria-hidden="true">
@@ -632,34 +632,34 @@ const nextSteps: NextStep[] = [
 								</div>
 								<dl class="divide-y divide-white/[0.06]">
 									<div class="px-5 py-5 sm:px-7">
-										<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">Agent</dt>
-										<dd class="mt-2 text-[1.05rem] leading-relaxed text-slate-200">
+										<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Agent</dt>
+										<dd class="mt-2 text-[1.05rem] leading-relaxed text-foreground">
 											“I can change 37 files in 45 seconds.”
 										</dd>
 									</div>
 									<div class="px-5 py-5 sm:px-7">
-										<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-white/70">Senior engineer</dt>
-										<dd class="mt-2 text-[1.05rem] leading-relaxed text-white">“Why did you change those files?”</dd>
+										<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-foreground/70">Senior engineer</dt>
+										<dd class="mt-2 text-[1.05rem] leading-relaxed text-foreground">“Why did you change those files?”</dd>
 									</div>
 									<div class="px-5 py-5 sm:px-7">
-										<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">Agent</dt>
-										<dd class="mt-2 text-[1.05rem] leading-relaxed text-slate-200">“Because they appeared related.”</dd>
+										<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Agent</dt>
+										<dd class="mt-2 text-[1.05rem] leading-relaxed text-foreground">“Because they appeared related.”</dd>
 									</div>
 								</dl>
 							</div>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true" class="text-amber-300/85">
+							<svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true" class="text-brand-warn">
 								<circle cx="28" cy="28" r="26" stroke="currentColor" stroke-width="1.2"></circle>
 								<path d="M28 14v18M28 38v2" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"></path>
 							</svg>
 							<p
-								class="font-display mt-8 text-balance text-[clamp(1.4rem,3vw,2.1rem)] font-bold leading-[1.12] tracking-tight text-white"
+								class="font-display mt-8 text-balance text-[clamp(1.4rem,3vw,2.1rem)] font-bold leading-[1.12] tracking-tight text-foreground"
 							>
 								That isn't leverage.
-								<span class="font-light italic text-amber-200/90"> That's faster technical debt.</span>
+								<span class="font-light italic text-brand-warn"> That's faster technical debt.</span>
 							</p>
-							<p class="mt-6 text-[0.95rem] leading-[1.7] text-slate-400">
+							<p class="mt-6 text-[0.95rem] leading-[1.7] text-muted-foreground">
 								“They appeared related” is a perfectly honest answer. Proximity in a vector space is the only signal the
 								agent had, because nobody gave it a better one. The fix is not a stern prompt. It is a durable frame the
 								agent loads before it starts reasoning.
@@ -673,45 +673,45 @@ const nextSteps: NextStep[] = [
 		<!-- =============================================================
 		     §04 — The directive
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 04</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">The brief</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 04</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">The brief</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<h2
-						class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						The nine things you<br />
-						<span class="font-light italic text-slate-400">have to be able to say.</span>
+						<span class="font-light italic text-muted-foreground">have to be able to say.</span>
 					</h2>
-					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
 						This is the whole discipline compressed into a brief. If you can hand a machine all nine of these and have them
 						hold across sessions, engineers, and tools, you are doing agentic engineering. If you cannot, you are
 						prompting — and hoping.
 					</p>
 
-					<ol class="mt-16 border-t border-white/[0.08]">
+					<ol class="mt-16 border-t border-border">
 						{
 							directive.map((d) => (
-								<li class="group grid grid-cols-12 gap-x-6 gap-y-3 border-b border-white/[0.08] py-7 transition duration-300 hover:bg-white/[0.015]">
+								<li class="group grid grid-cols-12 gap-x-6 gap-y-3 border-b border-border py-7 transition duration-300 hover:bg-white/[0.015]">
 									<div class="col-span-12 sm:col-span-1">
-										<span class="font-mono-cta text-sm text-emerald-200/70">{d.num}</span>
+										<span class="font-mono-cta text-sm text-brand-mcp">{d.num}</span>
 									</div>
 									<div class="col-span-12 sm:col-span-4">
-										<p class="font-display text-balance text-[1.1rem] font-bold leading-[1.25] tracking-tight text-white sm:text-[1.2rem]">
+										<p class="font-display text-balance text-[1.1rem] font-bold leading-[1.25] tracking-tight text-foreground sm:text-[1.2rem]">
 											{d.line}
 										</p>
 									</div>
 									<div class="col-span-12 sm:col-span-5">
-										<p class="text-[0.95rem] leading-relaxed text-slate-400">{d.supplied}</p>
+										<p class="text-[0.95rem] leading-relaxed text-muted-foreground">{d.supplied}</p>
 									</div>
 									<div class="col-span-12 sm:col-span-2">
-										<p class="font-mono-cta text-sm leading-relaxed text-emerald-200/85">{d.mechanism}</p>
+										<p class="font-mono-cta text-sm leading-relaxed text-brand-mcp">{d.mechanism}</p>
 									</div>
 								</li>
 							))
@@ -720,24 +720,24 @@ const nextSteps: NextStep[] = [
 
 					<div class="mt-10 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-8">
-							<p class="text-pretty text-base leading-[1.7] text-slate-300">
+							<p class="text-pretty text-base leading-[1.7] text-text-secondary">
 								The right-hand column is the part that is easy to underestimate. Any of these nine can be written into a
 								prompt once. The engineering problem is making them
-								<span class="text-white"> survive</span> — across a new session, a different engineer, a different IDE, and
+								<span class="text-foreground"> survive</span> — across a new session, a different engineer, a different IDE, and
 								the model release that quietly changed how your prompt is interpreted.
 							</p>
 						</div>
 						<div class="col-span-12 lg:col-span-4">
 							<a
 								href="/tools"
-								class="group block h-full border border-white/10 bg-[#070b13] p-6 transition duration-300 hover:border-emerald-300/40 hover:bg-[#080f16]"
+								class="group block h-full border border-border bg-muted p-6 transition duration-300 hover:border-brand-mcp-border hover:bg-surface-mid"
 							>
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">See the surface</p>
-								<p class="mt-4 text-sm leading-relaxed text-slate-300">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">See the surface</p>
+								<p class="mt-4 text-sm leading-relaxed text-text-secondary">
 									Every tool named in that column, grouped by lane, with what it returns.
 								</p>
 								<span
-									class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-white"
+									class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-foreground"
 								>
 									Tools catalog
 									<span aria-hidden="true" class="transition group-hover:translate-x-1">→</span>
@@ -752,7 +752,7 @@ const nextSteps: NextStep[] = [
 		<!-- =============================================================
 		     §05 — The progression
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section class="relative border-b border-border bg-surface-mid">
 			<div
 				aria-hidden="true"
 				class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(110,231,183,0.04)_1px,transparent_1px)] bg-[length:36px_36px] [mask-image:radial-gradient(ellipse_at_center,black_55%,transparent_85%)]"
@@ -760,20 +760,20 @@ const nextSteps: NextStep[] = [
 			</div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 05</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">The progression</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">§ 05</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">The progression</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<h2
-						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						Four rungs.<br />
-						<span class="font-light italic text-slate-400">Each one keeps the last.</span>
+						<span class="font-light italic text-muted-foreground">Each one keeps the last.</span>
 					</h2>
-					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
 						These titles get used interchangeably in job postings, which is unhelpful, because they describe genuinely
 						different scopes of responsibility. The distinction that matters is what breaks when you get it wrong.
 					</p>
@@ -788,34 +788,34 @@ const nextSteps: NextStep[] = [
 		<!-- =============================================================
 		     §06 — Separating the role from the system
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 06</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Seven pieces</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 06</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Seven pieces</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<h2
-						class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						Separate the person<br />
-						<span class="font-light italic text-slate-400">from the system they operate.</span>
+						<span class="font-light italic text-muted-foreground">from the system they operate.</span>
 					</h2>
-					<p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
 						Most confusion in this space comes from collapsing seven distinct things into the word
-						<span class="italic text-slate-300">“AI.”</span> They answer different questions, they fail differently, and
+						<span class="italic text-text-secondary">“AI.”</span> They answer different questions, they fail differently, and
 						they are owned by different people. Naming them separately is the first useful thing this vocabulary does.
 					</p>
 
-					<div class="mt-16 border-t border-white/[0.08]">
+					<div class="mt-16 border-t border-border">
 						{
 							stackRows.map((row) => {
 								const t = stackTones[row.tone];
 								return (
-									<div class="group relative grid grid-cols-12 gap-x-6 gap-y-2 border-b border-white/[0.08] py-7 pl-5 transition duration-300 hover:bg-white/[0.015]">
+									<div class="group relative grid grid-cols-12 gap-x-6 gap-y-2 border-b border-border py-7 pl-5 transition duration-300 hover:bg-white/[0.015]">
 										<div
 											aria-hidden="true"
 											class:list={[
@@ -829,12 +829,12 @@ const nextSteps: NextStep[] = [
 											</p>
 										</div>
 										<div class="col-span-12 sm:col-span-3">
-											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 												{row.question}
 											</p>
 										</div>
 										<div class="col-span-12 sm:col-span-6">
-											<p class="text-[0.95rem] leading-relaxed text-slate-300">{row.inAadm}</p>
+											<p class="text-[0.95rem] leading-relaxed text-text-secondary">{row.inAadm}</p>
 										</div>
 									</div>
 								);
@@ -842,7 +842,7 @@ const nextSteps: NextStep[] = [
 						}
 					</div>
 
-					<p class="mt-10 max-w-3xl text-pretty text-base leading-[1.7] text-slate-400">
+					<p class="mt-10 max-w-3xl text-pretty text-base leading-[1.7] text-muted-foreground">
 						Read the middle column top to bottom and you have a chain of custody for a decision: a person is accountable, a
 						model is governed, a vocabulary says where things belong, a harness constrains execution, an endpoint supplies
 						the context, an agent acts, and a tool list bounds what acting can mean.
@@ -854,26 +854,26 @@ const nextSteps: NextStep[] = [
 		<!-- =============================================================
 		     §07 — Cross-layer (UDALI)
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 07</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Cross-layer</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">§ 07</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Cross-layer</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<h2
-						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						Agentic engineers own every layer.
-						<span class="font-light italic text-slate-400">AADM gives them the map.</span>
+						<span class="font-light italic text-muted-foreground">AADM gives them the map.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						This is the role that keeps an agent's work coherent. An agent's change can land in any of twenty-two layers,
 						so someone has to hold the shape of all of them. When that work happens inside a customer's environment, that
-						person is a forward deployed engineer. <span class="text-slate-200">UDALI</span> is the shared vocabulary, and the
+						person is a forward deployed engineer. <span class="text-foreground">UDALI</span> is the shared vocabulary, and the
 						AADM MCP puts the same map in front of the agent on every turn, so engineer and agent work from one picture.
 					</p>
 
@@ -885,11 +885,11 @@ const nextSteps: NextStep[] = [
 								width="880"
 								height="1000"
 								loading="lazy"
-								class="mx-auto h-auto w-full max-w-3xl border border-white/10"
+								class="mx-auto h-auto w-full max-w-3xl border border-border"
 							/>
-							<figcaption class="mx-auto mt-4 max-w-3xl text-sm text-slate-400">
+							<figcaption class="mx-auto mt-4 max-w-3xl text-sm text-muted-foreground">
 								All 22 UDALI layers by band.{" "}
-								<a href="/images/udali-layers.png" class="text-emerald-200 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Download the PNG</a>
+								<a href="/images/udali-layers.png" class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">Download the PNG</a>
 							</figcaption>
 						</figure>
 						<UdaliSpan />
@@ -897,10 +897,10 @@ const nextSteps: NextStep[] = [
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-8">
-							<p class="text-pretty text-base leading-[1.7] text-slate-300">
+							<p class="text-pretty text-base leading-[1.7] text-text-secondary">
 								The value of a layer vocabulary is not taxonomy for its own sake. It is that
-								<span class="text-white">“this belongs at L11, not L18”</span> is a reviewable statement, and
-								<span class="italic text-slate-400"> “that feels like it's in the wrong place”</span> is not. Features move
+								<span class="text-foreground">“this belongs at L11, not L18”</span> is a reviewable statement, and
+								<span class="italic text-muted-foreground"> “that feels like it's in the wrong place”</span> is not. Features move
 								through clean handoffs between bands instead of being dropped whole into one monolithic implementation
 								pass.
 							</p>
@@ -908,14 +908,14 @@ const nextSteps: NextStep[] = [
 						<div class="col-span-12 lg:col-span-4">
 							<a
 								href="/governance"
-								class="group block h-full border border-white/10 bg-surface-deep p-6 transition duration-300 hover:border-emerald-300/40 hover:bg-[#080f16]"
+								class="group block h-full border border-border bg-surface-deep p-6 transition duration-300 hover:border-brand-mcp-border hover:bg-surface-mid"
 							>
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Make it concrete</p>
-								<p class="mt-4 text-sm leading-relaxed text-slate-300">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Make it concrete</p>
+								<p class="mt-4 text-sm leading-relaxed text-text-secondary">
 									Map these bands onto the real paths in your repository so ownership travels with the code.
 								</p>
 								<span
-									class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-white"
+									class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-foreground"
 								>
 									Init your repo
 									<span aria-hidden="true" class="transition group-hover:translate-x-1">→</span>
@@ -930,23 +930,23 @@ const nextSteps: NextStep[] = [
 		<!-- =============================================================
 		     §08 — The governance path
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 08</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">The path</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 08</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">The path</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<h2
-						class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						An operating system<br />
-						<span class="font-light italic text-slate-400">for architectural reasoning.</span>
+						<span class="font-light italic text-muted-foreground">for architectural reasoning.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						Between you and the agent sits a harness, and between the harness and the standard sits an endpoint. That
 						middle span is the part teams usually improvise — a folder of prompt files, a rules doc somebody maintains, a
 						pinned Slack message. It is also the part that decides whether your discipline survives the next session.
@@ -962,23 +962,23 @@ const nextSteps: NextStep[] = [
 		<!-- =============================================================
 		     §09 — Two loops
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/70">§ 09</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Two loops</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-sky">§ 09</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Two loops</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<h2
-						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						One engineer.<br />
-						<span class="font-light italic text-slate-400">Two agent loops.</span>
+						<span class="font-light italic text-muted-foreground">Two agent loops.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						This is the distinction that most cleanly separates agentic engineering from prompt engineering. There is a loop
 						that builds your product and a loop that runs inside it, and the same person is responsible for the design of
 						both — even though only one of them is visible in a pull request.
@@ -994,46 +994,46 @@ const nextSteps: NextStep[] = [
 		<!-- =============================================================
 		     §10 — Honest boundary
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 10</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Boundary</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 10</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Boundary</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<div class="grid grid-cols-12 gap-8">
 						<div class="col-span-12 lg:col-span-7">
 							<p
-								class="font-display text-balance text-[clamp(1.5rem,3.6vw,2.6rem)] font-bold leading-[1.1] tracking-tight text-white"
+								class="font-display text-balance text-[clamp(1.5rem,3.6vw,2.6rem)] font-bold leading-[1.1] tracking-tight text-foreground"
 							>
 								This is about engineering well.<br />
-								<span class="font-light italic text-slate-400">AI just raised the stakes.</span>
+								<span class="font-light italic text-muted-foreground">AI just raised the stakes.</span>
 							</p>
-							<p class="mt-8 text-[1rem] leading-[1.75] text-slate-300">
+							<p class="mt-8 text-[1rem] leading-[1.75] text-text-secondary">
 								AI compresses coding. A change that took a week now takes an afternoon, so the parts that were never about
 								typing carry all the weight: where a boundary belongs, who is allowed to act, how a release is proven. You spent
 								years learning how software should be built. Agentic engineering is how that knowledge stops being applied one
 								pull request at a time and gets
-								<span class="text-white"> encoded into architecture, constraints, tools, and harnesses</span> that machines can
+								<span class="text-foreground"> encoded into architecture, constraints, tools, and harnesses</span> that machines can
 								run again and again without dropping the discipline.
 							</p>
-							<p class="mt-6 text-[0.98rem] leading-[1.7] text-slate-400">
+							<p class="mt-6 text-[0.98rem] leading-[1.7] text-muted-foreground">
 								Engineers and forward deployed engineers need two things to do this well:
-								<span class="text-slate-200">structure</span>, so every change lands in a named layer with a named owner, and
-								<span class="text-slate-200">visibility</span>, so they can see what an agent did, why, and what proves it. AADM
+								<span class="text-foreground">structure</span>, so every change lands in a named layer with a named owner, and
+								<span class="text-foreground">visibility</span>, so they can see what an agent did, why, and what proves it. AADM
 								gives them both as a standard and a context service, deliberately not an enforcement product. Your code, tests,
 								and CI still prove the result. Being clear about that boundary is what keeps the rest credible.
 							</p>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border-l-2 border-amber-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/85">
+							<div class="border-l-2 border-brand-warn-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">
 									What AADM deliberately does not do
 								</p>
-								<ul class="mt-6 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+								<ul class="mt-6 divide-y divide-white/[0.06] border-t border-border">
 									{
 										[
 											"Run your business logic or mutate your database.",
@@ -1043,17 +1043,17 @@ const nextSteps: NextStep[] = [
 											"Make the engineering judgment for you.",
 										].map((item, idx) => (
 											<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-4">
-												<span class="font-mono-cta text-sm text-amber-300/80">
+												<span class="font-mono-cta text-sm text-brand-warn">
 													{String(idx + 1).padStart(2, "0")}
 												</span>
-												<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">
+												<span class="text-sm leading-relaxed text-text-secondary transition group-hover:text-foreground">
 													{item}
 												</span>
 											</li>
 										))
 									}
 								</ul>
-								<p class="mt-6 text-sm leading-relaxed text-slate-400">
+								<p class="mt-6 text-sm leading-relaxed text-muted-foreground">
 									Your production authorization, gateways, tests, and CI stay authoritative. The last line on that list is
 									not a limitation to be engineered away — it is the job description.
 								</p>
@@ -1075,27 +1075,27 @@ const nextSteps: NextStep[] = [
 			</div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:px-8 sm:py-40">
 				<aside
-					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4"
+					class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4"
 				>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 11</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Where next</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 11</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Where next</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
-						<span class="text-emerald-200/90">▸</span> Seven directions
+					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
+						<span class="text-brand-mcp">▸</span> Seven directions
 					</p>
 					<h2
-						class="font-display mt-6 max-w-[15ch] text-balance text-[clamp(2.4rem,6.8vw,6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+						class="font-display mt-6 max-w-[15ch] text-balance text-[clamp(2.4rem,6.8vw,6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground"
 					>
 						Encode the<br />
 						judgment
 						<span class="relative inline-block">
-							<span class="relative z-10 text-emerald-300">once.</span>
+							<span class="relative z-10 text-brand-mcp">once.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.08em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span>
 					</h2>
-					<p class="mt-10 max-w-xl text-base leading-relaxed text-slate-300">
+					<p class="mt-10 max-w-xl text-base leading-relaxed text-text-secondary">
 						The standard is free to read and lives in public. The hosted MCP exists so the same text reaches every agent,
 						every session, without anyone maintaining a fork.
 					</p>
@@ -1105,22 +1105,22 @@ const nextSteps: NextStep[] = [
 							nextSteps.map((step) => (
 								<a
 									href={step.href}
-									class="group border border-white/[0.08] bg-[#0a0e1a] p-7 transition duration-300 hover:border-white/20 sm:p-8"
+									class="group border border-border bg-surface-mid p-7 transition duration-300 hover:border-border sm:p-8"
 								>
 									<div class="flex items-baseline gap-4">
-										<span class="font-display text-[3rem] font-light leading-[0.85] text-emerald-200/80 transition duration-300 group-hover:text-emerald-300">
+										<span class="font-display text-[3rem] font-light leading-[0.85] text-brand-mcp transition duration-300 group-hover:text-brand-mcp">
 											{step.letter}
 										</span>
-										<h3 class="font-display text-[1.05rem] font-bold leading-tight tracking-tight text-white">
+										<h3 class="font-display text-[1.05rem] font-bold leading-tight tracking-tight text-foreground">
 											{step.label}
 											{step.external ? (
-												<span aria-hidden="true" class="ml-1 text-slate-400">
+												<span aria-hidden="true" class="ml-1 text-muted-foreground">
 													↗
 												</span>
 											) : null}
 										</h3>
 									</div>
-									<p class="mt-5 text-sm leading-relaxed text-slate-400">{step.body}</p>
+									<p class="mt-5 text-sm leading-relaxed text-muted-foreground">{step.body}</p>
 									<div
 										aria-hidden="true"
 										class="mt-7 h-px w-10 bg-emerald-300/40 transition-all duration-500 group-hover:w-20 group-hover:bg-emerald-300/70"
@@ -1133,7 +1133,7 @@ const nextSteps: NextStep[] = [
 					<div class="mt-16 flex flex-col flex-wrap items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
 						<a
 							href={urlMcpMarketing}
-							class="group inline-flex items-center gap-3 bg-white px-8 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="group inline-flex items-center gap-3 bg-foreground px-8 py-4 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg focus-visible:ring-2 focus-visible:ring-brand-mcp focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<span>See how the MCP works</span>
 							<svg
@@ -1149,7 +1149,7 @@ const nextSteps: NextStep[] = [
 						</a>
 						<a
 							href="/case-studies"
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-8 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-8 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							See it in a session
 						</a>
@@ -1157,17 +1157,17 @@ const nextSteps: NextStep[] = [
 
 					<!-- Colophon -->
 					<div
-						class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500"
+						class="mt-24 grid grid-cols-12 gap-6 border-t border-border pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground"
 					>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Essay</span> · Agentic engineering v1
+							<span class="text-muted-foreground">Essay</span> · Agentic engineering v1
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">For</span> · Engineers with twenty years of judgment
+							<span class="text-muted-foreground">For</span> · Engineers with twenty years of judgment
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Layer map</span> ·
-							<span class="text-emerald-300/80">UDALI L1–L22</span>
+							<span class="text-muted-foreground">Layer map</span> ·
+							<span class="text-brand-mcp">UDALI L1–L22</span>
 						</div>
 					</div>
 				</div>

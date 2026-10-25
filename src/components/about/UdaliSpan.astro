@@ -22,34 +22,34 @@ const toneStyles: Record<
 	{ label: string; rule: string; bar: string; chip: string }
 > = {
 	violet: {
-		label: "text-violet-200",
+		label: "text-brand-violet",
 		rule: "border-violet-400/40",
 		bar: "bg-violet-400/60",
-		chip: "border-violet-400/25 text-violet-200/90",
+		chip: "border-violet-400/25 text-brand-violet",
 	},
 	sky: {
-		label: "text-sky-200",
+		label: "text-brand-sky",
 		rule: "border-sky-400/40",
 		bar: "bg-sky-400/60",
-		chip: "border-sky-400/25 text-sky-200/90",
+		chip: "border-sky-400/25 text-brand-sky",
 	},
 	amber: {
-		label: "text-amber-200",
-		rule: "border-amber-300/45",
+		label: "text-brand-warn",
+		rule: "border-brand-warn-border",
 		bar: "bg-amber-300/70",
-		chip: "border-amber-300/30 text-amber-200/90",
+		chip: "border-brand-warn-border text-brand-warn",
 	},
 	emerald: {
-		label: "text-emerald-200",
-		rule: "border-emerald-300/40",
+		label: "text-brand-mcp",
+		rule: "border-brand-mcp-border",
 		bar: "bg-emerald-300/60",
-		chip: "border-emerald-300/25 text-emerald-200/90",
+		chip: "border-brand-mcp-border text-brand-mcp",
 	},
 	slate: {
-		label: "text-slate-300",
+		label: "text-text-secondary",
 		rule: "border-slate-400/30",
 		bar: "bg-slate-400/50",
-		chip: "border-slate-400/25 text-slate-300",
+		chip: "border-slate-400/25 text-text-secondary",
 	},
 };
 
@@ -131,14 +131,14 @@ const bands: Band[] = [
 	<!-- Spanning rail: the engineer is accountable across every band -->
 	<div class="col-span-12 lg:col-span-3">
 		<div class="lg:sticky lg:top-24">
-			<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+			<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 				The span
 			</p>
-			<h3 class="font-display mt-4 text-balance text-[1.4rem] font-bold leading-[1.15] tracking-tight text-white sm:text-[1.6rem]">
+			<h3 class="font-display mt-4 text-balance text-[1.4rem] font-bold leading-[1.15] tracking-tight text-foreground sm:text-[1.6rem]">
 				Accountable across all&nbsp;22.
-				<span class="font-light italic text-slate-400"> Resident in none.</span>
+				<span class="font-light italic text-muted-foreground"> Resident in none.</span>
 			</h3>
-			<p class="mt-5 text-[0.95rem] leading-relaxed text-slate-400">
+			<p class="mt-5 text-[0.95rem] leading-relaxed text-muted-foreground">
 				A staff engineer is usually deep in two or three bands. An agentic engineer has to hold the shape of all of
 				them at once, because the agent will happily cross every boundary in a single commit unless someone named
 				where the boundaries were.
@@ -148,7 +148,7 @@ const bands: Band[] = [
 				aria-hidden="true"
 				class="mt-8 hidden items-stretch gap-3 lg:flex"
 			>
-				<svg width="24" height="120" viewBox="0 0 24 120" fill="none" class="text-emerald-300/50">
+				<svg width="24" height="120" viewBox="0 0 24 120" fill="none" class="text-brand-mcp">
 					<path
 						d="M22 2H12v56H2M12 58v60h10"
 						stroke="currentColor"
@@ -156,7 +156,7 @@ const bands: Band[] = [
 						stroke-linecap="square"
 					></path>
 				</svg>
-				<p class="font-mono-cta self-center text-[13px] normal-case leading-relaxed tracking-[0.01em] text-slate-400">
+				<p class="font-mono-cta self-center text-[13px] normal-case leading-relaxed tracking-[0.01em] text-muted-foreground">
 					L1<br />↕<br />L22
 				</p>
 			</div>
@@ -172,7 +172,7 @@ const bands: Band[] = [
 					return (
 						<li
 							id={`udali-${band.layers.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-							class="group relative scroll-mt-24 bg-surface-deep transition duration-300 hover:bg-[#080c16] target:bg-[#0b1220]"
+							class="group relative scroll-mt-24 bg-surface-deep transition duration-300 hover:bg-secondary target:bg-secondary"
 						>
 							<div class="grid grid-cols-12 gap-x-6 gap-y-4 py-7 pl-6 pr-6 sm:py-8 sm:pl-8">
 								<div
@@ -187,26 +187,26 @@ const bands: Band[] = [
 									<p class:list={["font-display text-[1.15rem] font-bold tracking-tight", t.label]}>
 										{band.band}
 									</p>
-									<p class="font-mono-cta mt-1.5 text-sm normal-case tracking-[0.01em] text-white/70">
+									<p class="font-mono-cta mt-1.5 text-sm normal-case tracking-[0.01em] text-foreground/70">
 										{band.layers}
 									</p>
-									<p class="mt-2 text-xs italic text-slate-400">{band.zone}</p>
+									<p class="mt-2 text-xs italic text-muted-foreground">{band.zone}</p>
 								</div>
 
 								<div class="col-span-12 sm:col-span-4">
 									<ul class="space-y-1.5">
 										{band.members.map((member) => (
-											<li class="font-mono-cta text-sm leading-relaxed text-slate-400">{member}</li>
+											<li class="font-mono-cta text-sm leading-relaxed text-muted-foreground">{member}</li>
 										))}
 									</ul>
 								</div>
 
 								<div class="col-span-12 sm:col-span-5">
 									<div class:list={["border-l pl-5", t.rule]}>
-										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 											The judgment call
 										</p>
-										<p class="mt-3 text-sm leading-relaxed text-slate-300">{band.judgment}</p>
+										<p class="mt-3 text-sm leading-relaxed text-text-secondary">{band.judgment}</p>
 									</div>
 								</div>
 							</div>

@@ -667,28 +667,28 @@ const toneClasses: Record<
 	{ numeral: string; rule: string; chip: string; hour: string }
 > = {
 	violet: {
-		numeral: "text-violet-300/90",
+		numeral: "text-brand-violet",
 		rule: "border-violet-400/40",
-		chip: "border-violet-400/30 text-violet-200",
-		hour: "border-violet-300/30 bg-violet-950/30 text-violet-100",
+		chip: "border-violet-400/30 text-brand-violet",
+		hour: "border-brand-violet/40 bg-accent text-brand-violet",
 	},
 	amber: {
-		numeral: "text-amber-300/90",
-		rule: "border-amber-300/40",
-		chip: "border-amber-300/30 text-amber-200",
-		hour: "border-amber-300/30 bg-amber-950/30 text-amber-100",
+		numeral: "text-brand-warn",
+		rule: "border-brand-warn-border",
+		chip: "border-brand-warn-border text-brand-warn",
+		hour: "border-brand-warn-border bg-brand-warn-bg text-brand-warn",
 	},
 	sky: {
-		numeral: "text-sky-300/90",
+		numeral: "text-brand-sky",
 		rule: "border-sky-400/40",
-		chip: "border-sky-400/30 text-sky-200",
-		hour: "border-sky-300/30 bg-sky-950/30 text-sky-100",
+		chip: "border-sky-400/30 text-brand-sky",
+		hour: "border-brand-sky/40 bg-accent text-brand-sky",
 	},
 	emerald: {
-		numeral: "text-emerald-300/90",
-		rule: "border-emerald-300/40",
-		chip: "border-emerald-300/30 text-emerald-200",
-		hour: "border-emerald-300/30 bg-emerald-950/30 text-emerald-100",
+		numeral: "text-brand-mcp",
+		rule: "border-brand-mcp-border",
+		chip: "border-brand-mcp-border text-brand-mcp",
+		hour: "border-brand-mcp-border bg-brand-mcp-bg text-brand-mcp",
 	},
 };
 
@@ -715,56 +715,56 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 	headerActiveNav="stories"
 	ogImage="/og/og-stories.png"
 >
-	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-text-primary">
 
 		<!-- =============================================================
 		     §00 — Hero
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
 			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.06] blur-3xl"></div>
 			<div aria-hidden="true" class="absolute left-0 top-40 -z-10 h-[32rem] w-[32rem] -translate-x-1/3 rounded-full bg-amber-500/[0.05] blur-3xl"></div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 00</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Stories · field</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Stories · field</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-slate-400">
-						<span class="text-amber-200/90">▸</span> {vignettes.length} vignettes · agent sessions with the hosted AADM MCP
+					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
+						<span class="text-brand-warn">▸</span> {vignettes.length} vignettes · agent sessions with the hosted AADM MCP
 					</p>
 
-					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Patterns <span class="font-light italic text-slate-400">from the field.</span>
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Patterns <span class="font-light italic text-muted-foreground">from the field.</span>
 					</h1>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">Portfolio band</p>
-								<p class="font-display mt-3 text-balance text-3xl font-bold leading-tight text-white sm:text-4xl">
-									~{totalLow.toLocaleString()}–{totalHigh.toLocaleString()}<span class="font-mono-cta ml-2 align-middle text-sm normal-case tracking-[0.01em] text-emerald-200/85">engineer-hours</span>
+							<div class="border-l border-brand-mcp-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Portfolio band</p>
+								<p class="font-display mt-3 text-balance text-3xl font-bold leading-tight text-foreground sm:text-4xl">
+									~{totalLow.toLocaleString()}–{totalHigh.toLocaleString()}<span class="font-mono-cta ml-2 align-middle text-sm normal-case tracking-[0.01em] text-brand-mcp">engineer-hours</span>
 								</p>
-								<p class="mt-3 text-sm leading-relaxed text-slate-400">
+								<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 									Redirected from wrong fixes, duplicate UI, false CI, and meeting loops across these 20+1 patterns — not raw codegen
 									speed.
 								</p>
 							</div>
 						</div>
 						<div class="col-span-12 sm:col-span-8">
-							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
 								These are real session patterns from teams running the AADM MCP. The app names are
-								<span class="font-light italic text-slate-400"> fictional.</span> The bugs, refactors, and decisions are not.
+								<span class="font-light italic text-muted-foreground"> fictional.</span> The bugs, refactors, and decisions are not.
 								Hours are illustrative — the typical-wrong-path vs the attested-path, for a senior engineer + agent pair.
 							</p>
-							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-slate-400">
+							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
 								Every vignette below is the same move: a senior engineer's judgment applied before the agent starts editing
 								rather than after.{' '}
 								<a
 									href="/about"
-									class="font-semibold text-slate-300 underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+									class="font-semibold text-text-secondary underline decoration-border underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 									>Agentic engineering</a
 								>{' '}
 								is the general form of that move.
@@ -775,7 +775,7 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<a
 							href="#vignettes"
-							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="group inline-flex items-center gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-warn hover:text-brand-warn-fg focus-visible:ring-2 focus-visible:ring-brand-warn focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<span>Read the vignettes</span>
 							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -784,13 +784,13 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						</a>
 						<a
 							href={urlMcpMarketing}
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							Get access
 						</a>
 						<a
 							href="#honest-boundary"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
 						>
 							<span>The honest boundary</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↓</span>
@@ -803,16 +803,16 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 		<!-- =============================================================
 		     §01 — Honesty box (apps fictional, patterns real)
 		     ============================================================= -->
-		<section id="honest-boundary" class="relative scroll-mt-24 border-b border-white/[0.06] bg-[#06080f] sm:scroll-mt-28">
+		<section id="honest-boundary" class="relative scroll-mt-24 border-b border-border bg-surface-mid sm:scroll-mt-28">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-20 sm:px-8 sm:py-24">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 01</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Read this first</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 01</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Read this first</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[24ch] text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
-						Fictional apps. <span class="font-light italic text-slate-400">Real patterns.</span>
+					<h2 class="font-display max-w-[24ch] text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+						Fictional apps. <span class="font-light italic text-muted-foreground">Real patterns.</span>
 					</h2>
 
 					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
@@ -834,12 +834,12 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 									body: "AADM MCP frames problems, names seams, and enforces evidence obligations. Your repository's tests and CI still decide pass/fail. Nothing here is a compliance verdict.",
 								},
 							].map((item) => (
-								<article class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-8">
+								<article class="group bg-surface-mid p-7 transition duration-300 hover:bg-secondary sm:p-8">
 									<div class="flex items-baseline gap-4">
-										<span class="font-display text-[3.5rem] font-light leading-[0.85] text-amber-300/85 transition duration-300 group-hover:text-amber-300">{item.num}</span>
+										<span class="font-display text-[3.5rem] font-light leading-[0.85] text-brand-warn transition duration-300 group-hover:text-brand-warn">{item.num}</span>
 									</div>
-									<h3 class="font-display mt-6 text-balance text-lg font-bold leading-snug tracking-tight text-white">{item.title}</h3>
-									<p class="mt-3 text-sm leading-relaxed text-slate-400">{item.body}</p>
+									<h3 class="font-display mt-6 text-balance text-lg font-bold leading-snug tracking-tight text-foreground">{item.title}</h3>
+									<p class="mt-3 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
 								</article>
 							))
 						}
@@ -851,18 +851,18 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 		<!-- =============================================================
 		     §02 — Vignette cards (all)
 		     ============================================================= -->
-		<section id="vignettes" class="relative scroll-mt-24 border-b border-white/[0.06] sm:scroll-mt-28">
+		<section id="vignettes" class="relative scroll-mt-24 border-b border-border sm:scroll-mt-28">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 02</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{vignettes.length} vignettes</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 02</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{vignettes.length} vignettes</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						The catalog. <span class="font-light italic text-slate-400">In one place.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						The catalog. <span class="font-light italic text-muted-foreground">In one place.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						Each story walks through the same four beats: the situation your team is in, the decision you face, what AADM had the agent
 						do, and what changed. App names are fictional; the patterns are real. Skim for the one that looks like your week.
 					</p>
@@ -872,15 +872,15 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 							vignettes.map((v) => {
 								const t = toneClasses[v.tone];
 								return (
-									<li class="group flex flex-col bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-9">
+									<li class="group flex flex-col bg-surface-deep p-7 transition duration-300 hover:bg-surface-mid sm:p-9">
 										<header class="flex items-baseline justify-between gap-4">
 											<div class="flex items-baseline gap-4">
 												<span class:list={["font-display text-[3.5rem] font-light leading-[0.85] tracking-tight sm:text-[4rem]", t.numeral]}>
 													{v.id}
 												</span>
 												<div>
-													<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{v.industry}</p>
-													<h3 class="font-display mt-1 text-balance text-lg font-bold leading-snug text-white sm:text-xl">
+													<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{v.industry}</p>
+													<h3 class="font-display mt-1 text-balance text-lg font-bold leading-snug text-foreground sm:text-xl">
 														{v.app}
 													</h3>
 												</div>
@@ -890,7 +890,7 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 											</span>
 										</header>
 
-										<p class="font-display mt-7 text-balance text-[1.05rem] font-bold leading-snug tracking-tight text-white sm:text-[1.15rem]">
+										<p class="font-display mt-7 text-balance text-[1.05rem] font-bold leading-snug tracking-tight text-foreground sm:text-[1.15rem]">
 											{v.title}
 										</p>
 										<dl class="mt-5 space-y-4 text-[15px] leading-relaxed">
@@ -901,17 +901,17 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 												["The impact", v.impact],
 											].map(([label, text]) => (
 												<div>
-													<dt class="text-[13px] font-semibold text-slate-400">{label}</dt>
-													<dd class:list={["mt-1", label === "The impact" ? "text-white" : "text-slate-300"]}>{text}</dd>
+													<dt class="text-[13px] font-semibold text-muted-foreground">{label}</dt>
+													<dd class:list={["mt-1", label === "The impact" ? "text-foreground" : "text-text-secondary"]}>{text}</dd>
 												</div>
 											))}
 										</dl>
 
 										<div class:list={["mt-6 border-l pl-4", t.rule]}>
-											<p class="text-[13px] font-semibold text-slate-400">Three AADM tools that did the work</p>
+											<p class="text-[13px] font-semibold text-muted-foreground">Three AADM tools that did the work</p>
 											<ul class="mt-2 space-y-1.5">
 												{v.tools.map((tool) => (
-													<li class="flex flex-wrap items-baseline gap-x-2 text-sm text-slate-200">
+													<li class="flex flex-wrap items-baseline gap-x-2 text-sm text-foreground">
 														<span>{tool.label}</span>
 														<code class:list={["border bg-transparent px-1.5 py-0.5 text-[12px]", t.chip]}>{tool.id}</code>
 													</li>
@@ -929,7 +929,7 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						{vignetteVisuals.map((visual) => (
 							<li
 								class:list={[
-									"grid-visual-slot-cols-2 relative overflow-hidden bg-surface-deep transition duration-300 hover:bg-[#0a0e1a]",
+									"grid-visual-slot-cols-2 relative overflow-hidden bg-surface-deep transition duration-300 hover:bg-surface-mid",
 									visual.variant === "wide" ? "sm:col-span-2" : "",
 								]}
 								style={gridVisualSlotStyle(visual)}
@@ -945,7 +945,7 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						))}
 					</ul>
 
-					<p class="mt-14 max-w-3xl text-sm leading-relaxed text-slate-400">
+					<p class="mt-14 max-w-3xl text-sm leading-relaxed text-muted-foreground">
 						Hour ranges are method · typical wrong path (meetings, wrong fixes, full CI, parallel UI) vs attested path (one
 						governed agent session). A senior engineer + agent pair. Not a guaranteed SLA. Not a compliance claim. Your repository's
 						tests and CI still decide pass/fail.
@@ -957,45 +957,45 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 		<!-- =============================================================
 		     §03 — Industry rollup + portfolio band
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
+		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 03</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Rollup</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 03</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Rollup</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						The portfolio band. <span class="font-light italic text-slate-400">All of them together.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						The portfolio band. <span class="font-light italic text-muted-foreground">All of them together.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						If the patterns above all ran in your quarter — they won't all show up, but the shapes recur — the redirected effort
 						adds up.
 					</p>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-7">
-							<div class="border border-emerald-300/30 bg-[#070b13] p-7 sm:p-10">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">If these patterns landed in one quarter</p>
-								<p class="font-display mt-5 text-balance text-[clamp(2.6rem,6vw,5rem)] font-bold leading-[1.08] tracking-tight text-white">
-									~{totalLow.toLocaleString()}<span class="text-slate-400">–</span>{totalHigh.toLocaleString()}
+							<div class="border border-brand-mcp-border bg-muted p-7 sm:p-10">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">If these patterns landed in one quarter</p>
+								<p class="font-display mt-5 text-balance text-[clamp(2.6rem,6vw,5rem)] font-bold leading-[1.08] tracking-tight text-foreground">
+									~{totalLow.toLocaleString()}<span class="text-muted-foreground">–</span>{totalHigh.toLocaleString()}
 								</p>
-								<p class="font-mono-cta mt-2 text-sm normal-case tracking-[0.01em] text-emerald-200/85">engineer-hours redirected</p>
-								<p class="mt-6 text-sm leading-relaxed text-slate-300">
+								<p class="font-mono-cta mt-2 text-sm normal-case tracking-[0.01em] text-brand-mcp">engineer-hours redirected</p>
+								<p class="mt-6 text-sm leading-relaxed text-text-secondary">
 									Redirected from wrong fixes, duplicate UI, false CI, and meeting loops. Not raw codegen throughput. Not a compliance
 									claim. A summed estimate of the kinds of wasted time these patterns prevent.
 								</p>
 							</div>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border-l-2 border-emerald-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">By industry · {vignettes.length} vignettes</p>
-								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+							<div class="border-l-2 border-brand-mcp-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">By industry · {vignettes.length} vignettes</p>
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-border">
 									{
 										industryRollup.map((row) => (
 											<li class="group grid grid-cols-[1fr_auto] items-baseline gap-4 py-3">
-												<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">{row.industry}</span>
-												<span class="font-mono-cta text-sm normal-case tracking-[0.01em] text-emerald-200/85">{row.count}</span>
+												<span class="text-sm leading-relaxed text-text-secondary transition group-hover:text-foreground">{row.industry}</span>
+												<span class="font-mono-cta text-sm normal-case tracking-[0.01em] text-brand-mcp">{row.count}</span>
 											</li>
 										))
 									}
@@ -1010,27 +1010,27 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 		<!-- =============================================================
 		     §04 — Copy rules / what AADM doesn't claim
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 04</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Copy rules</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 04</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Copy rules</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
-						How we talk about this. <span class="font-light italic text-slate-400">How we don't.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+						How we talk about this. <span class="font-light italic text-muted-foreground">How we don't.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						The framing rules we hold ourselves to when reporting these patterns. Useful if you're considering AADM and want to
 						know what claims we'll make in front of your auditor.
 					</p>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-6">
-							<div class="border-l-2 border-emerald-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">We say</p>
-								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+							<div class="border-l-2 border-brand-mcp-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">We say</p>
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-border">
 									{
 										[
 											"12–18 hours avoided wrong Back button implementation and review cycle",
@@ -1039,8 +1039,8 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 											"Vertical through_domain_and_data plus horizontal seams signed off",
 										].map((line) => (
 											<li class="grid grid-cols-[auto_1fr] items-baseline gap-3 py-3">
-												<span class="font-mono-cta text-sm text-emerald-300/80">✓</span>
-												<span class="text-sm leading-relaxed text-slate-300">{line}</span>
+												<span class="font-mono-cta text-sm text-brand-mcp">✓</span>
+												<span class="text-sm leading-relaxed text-text-secondary">{line}</span>
 											</li>
 										))
 									}
@@ -1048,9 +1048,9 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 							</div>
 						</div>
 						<div class="col-span-12 lg:col-span-6">
-							<div class="border-l-2 border-amber-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/85">We don't say</p>
-								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+							<div class="border-l-2 border-brand-warn-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">We don't say</p>
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-border">
 									{
 										[
 											"AADM saved 90% of development",
@@ -1059,8 +1059,8 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 											"Certified compliant",
 										].map((line) => (
 											<li class="grid grid-cols-[auto_1fr] items-baseline gap-3 py-3">
-												<span class="font-mono-cta text-sm text-amber-300/80">✗</span>
-												<span class="text-sm leading-relaxed text-slate-400">{line}</span>
+												<span class="font-mono-cta text-sm text-brand-warn">✗</span>
+												<span class="text-sm leading-relaxed text-muted-foreground">{line}</span>
 											</li>
 										))
 									}
@@ -1069,9 +1069,9 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						</div>
 					</div>
 
-					<p class="mt-14 max-w-3xl text-base leading-relaxed text-slate-300">
-						<span class="font-semibold text-white">Honest boundary ·</span> AADM MCP frames problems, names seams, and enforces
-						proof obligations. <span class="font-light italic text-slate-400">Your repository's tests and evidence</span> still
+					<p class="mt-14 max-w-3xl text-base leading-relaxed text-text-secondary">
+						<span class="font-semibold text-foreground">Honest boundary ·</span> AADM MCP frames problems, names seams, and enforces
+						proof obligations. <span class="font-light italic text-muted-foreground">Your repository's tests and evidence</span> still
 						decide pass/fail. That's the line, and we hold it.
 					</p>
 				</div>
@@ -1084,16 +1084,16 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 		<section class="relative bg-surface-deep">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.07),transparent_60%)]"></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 05</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Yours</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 05</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Yours</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[16ch] text-balance text-[clamp(2rem,5.5vw,4.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						The best case study <span class="font-light italic text-slate-400">is yours.</span>
+					<h2 class="font-display max-w-[16ch] text-balance text-[clamp(2rem,5.5vw,4.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						The best case study <span class="font-light italic text-muted-foreground">is yours.</span>
 					</h2>
-					<p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
+					<p class="mt-6 max-w-2xl text-base leading-relaxed text-text-secondary">
 						Try the patterns on something real this week. Catch a classification bug, attest a release without theater, onboard
 						a senior engineer in a week. When it works, tell us — we'll feature consenting teams here.
 					</p>
@@ -1101,7 +1101,7 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<a
 							href={urlMcpMarketing}
-							class="group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200"
+							class="group inline-flex items-center gap-3 bg-foreground px-7 py-4 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg"
 						>
 							<span>See how the MCP works</span>
 							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -1110,13 +1110,13 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						</a>
 						<a
 							href={urlStandard}
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-7 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04]"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-7 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent"
 						>
 							Read the standard
 						</a>
 						<a
 							href="/why-aadm"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>Why AADM, vs raw loops</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
@@ -1124,12 +1124,12 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 					</div>
 
 					<!-- Colophon -->
-					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-border pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 						<div class="col-span-12 sm:col-span-6">
-							<span class="text-slate-400">Catalog</span> · {vignettes.length} vignettes
+							<span class="text-muted-foreground">Catalog</span> · {vignettes.length} vignettes
 						</div>
 						<div class="col-span-12 sm:col-span-6">
-							<span class="text-slate-400">Hours band</span> · <span class="text-emerald-300/80">~{totalLow.toLocaleString()}–{totalHigh.toLocaleString()} engineer-hours redirected</span>
+							<span class="text-muted-foreground">Hours band</span> · <span class="text-brand-mcp">~{totalLow.toLocaleString()}–{totalHigh.toLocaleString()} engineer-hours redirected</span>
 						</div>
 					</div>
 				</div>

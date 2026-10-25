@@ -224,11 +224,11 @@ const toolBadgeClass: Record<
 	(typeof mcpToolsCatalog)[number]["badges"][number],
 	string
 > = {
-	Orchestration: "border-amber-300/40 text-amber-200",
-	Navigator: "border-violet-300/40 text-violet-200",
-	Investigator: "border-sky-300/40 text-sky-200",
-	Sentinel: "border-emerald-300/40 text-emerald-200",
-	Doctrine: "border-slate-300/30 text-slate-200",
+	Orchestration: "border-brand-warn-border text-brand-warn",
+	Navigator: "border-brand-violet/40 text-brand-violet",
+	Investigator: "border-brand-sky/40 text-brand-sky",
+	Sentinel: "border-brand-mcp-border text-brand-mcp",
+	Doctrine: "border-border text-foreground",
 };
 
 const outcomes: Array<{ num: string; title: string; body: string }> = [
@@ -299,22 +299,22 @@ const laneToneClasses: Record<
 	{ numeral: string; chip: string; rule: string; bullet: string }
 > = {
 	violet: {
-		numeral: "text-violet-300/90",
-		chip: "border-violet-400/30 text-violet-200",
-		rule: "border-violet-400/40",
-		bullet: "bg-violet-300",
+		numeral: "text-brand-violet",
+		chip: "border-brand-violet/40 text-brand-violet",
+		rule: "border-brand-violet/40",
+		bullet: "bg-brand-violet",
 	},
 	blue: {
-		numeral: "text-sky-300/90",
-		chip: "border-sky-400/30 text-sky-200",
+		numeral: "text-brand-sky",
+		chip: "border-sky-400/30 text-brand-sky",
 		rule: "border-sky-400/40",
 		bullet: "bg-sky-300",
 	},
 	emerald: {
-		numeral: "text-emerald-300/90",
-		chip: "border-emerald-400/30 text-emerald-200",
-		rule: "border-emerald-400/40",
-		bullet: "bg-emerald-300",
+		numeral: "text-brand-mcp",
+		chip: "border-brand-mcp-border text-brand-mcp",
+		rule: "border-brand-mcp-border",
+		bullet: "bg-brand-mcp",
 	},
 };
 
@@ -350,58 +350,58 @@ const surfaces = [
 	footerVariant="mcp"
 	ogImage="/og/og-mcp.png"
 >
-	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-text-primary">
 
 		<!-- =============================================================
 		     §00 — Hero
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]" aria-labelledby="mcp-hero-heading">
+		<section class="relative border-b border-border" aria-labelledby="mcp-hero-heading">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
 			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.07] blur-3xl"></div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Hosted MCP</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Hosted MCP</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-slate-400">
-						<span class="text-emerald-200/90">▸</span> Subscriber service · Streamable HTTP
+					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
+						<span class="text-brand-mcp">▸</span> Subscriber service · Streamable HTTP
 					</p>
 
 					<h1
 						id="mcp-hero-heading"
-						class="scroll-mt-24 font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white sm:scroll-mt-28"
+						class="scroll-mt-24 font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground sm:scroll-mt-28"
 					>
 						Connect to the
 						<span class="relative inline-block">
-							<span class="relative z-10 text-emerald-300">AADM MCP.</span>
+							<span class="relative z-10 text-brand-mcp">AADM MCP.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span>
 					</h1>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">Subscriber service</p>
-								<p class="mt-3 text-[0.95rem] leading-relaxed text-slate-300">
-									Authenticate with <span class="text-white">one</span> method, point your MCP host at the URL below, and reload.
+							<div class="border-l border-brand-mcp-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Subscriber service</p>
+								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
+									Authenticate with <span class="text-foreground">one</span> method, point your MCP host at the URL below, and reload.
 									The MCP does not scan your repo — your apps and CI still prove enforcement.
 								</p>
 							</div>
 						</div>
 						<div class="col-span-12 sm:col-span-8">
-							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
 								Subscribers point any MCP-capable harness at one Streamable HTTP endpoint — Cursor, Claude Code, Windsurf,
 								claude.ai Connectors. Versioned tools, deterministic routing,
-								<span class="font-light italic text-slate-400">no per-team prompt sprawl.</span>
+								<span class="font-light italic text-muted-foreground">no per-team prompt sprawl.</span>
 							</p>
-							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-slate-400">
+							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
 								This is the delivery mechanism, not the argument. For what it is delivering and why that matters, read{' '}
 								<a
 									href="/about"
-									class="font-semibold text-slate-300 underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+									class="font-semibold text-text-secondary underline decoration-border underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 									>agentic engineering</a
 								>.
 							</p>
@@ -413,7 +413,7 @@ const surfaces = [
 							<a
 								id="get-access"
 								href={signUpUrl}
-								class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+								class="group inline-flex items-center gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg focus-visible:ring-2 focus-visible:ring-brand-mcp focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 							>
 								<span>Get access</span>
 								<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -422,7 +422,7 @@ const surfaces = [
 							</a>
 							<a
 								href={signInUrl}
-								class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+								class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 							>
 								Sign in to AADM
 							</a>
@@ -431,7 +431,7 @@ const surfaces = [
 							<a
 								id="get-access"
 								href={memberMcpOAuthUrl}
-								class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+								class="group inline-flex items-center gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg focus-visible:ring-2 focus-visible:ring-brand-mcp focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 							>
 								<span>Connect your client</span>
 								<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -441,7 +441,7 @@ const surfaces = [
 						</Show>
 						<a
 							href="#two-ways"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>Connection steps</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↓</span>
@@ -454,37 +454,37 @@ const surfaces = [
 		<!-- =============================================================
 		     §01 — MCP Server URL
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]" aria-labelledby="mcp-endpoint-heading">
+		<section class="relative border-b border-border bg-surface-mid" aria-labelledby="mcp-endpoint-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-16 sm:px-8 sm:py-20">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 01</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Endpoint</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 01</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Endpoint</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="mcp-endpoint-heading" class="font-display text-[clamp(1.5rem,3.6vw,2.4rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
+					<h2 id="mcp-endpoint-heading" class="font-display text-[clamp(1.5rem,3.6vw,2.4rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
 						MCP server URL
 					</h2>
-					<p class="mt-3 max-w-3xl text-sm text-slate-400">
-						Use this <span class="text-white">exact</span> URL in every client — include the
-						<code class="font-mono-cta text-emerald-200/90">/mcp</code> path.
+					<p class="mt-3 max-w-3xl text-sm text-muted-foreground">
+						Use this <span class="text-foreground">exact</span> URL in every client — include the
+						<code class="font-mono-cta text-brand-mcp">/mcp</code> path.
 					</p>
 					<div class="mt-6 flex flex-wrap items-center gap-3">
-						<code class="font-mono-cta break-all border border-emerald-300/40 bg-[#070b13] px-5 py-3.5 text-sm font-semibold text-emerald-200 sm:text-base">
+						<code class="font-mono-cta break-all border border-brand-mcp-border bg-muted px-5 py-3.5 text-sm font-semibold text-brand-mcp sm:text-base">
 							{mcpRpcUrl}
 						</code>
 						<button
 							type="button"
 							id="mcp-url-copy-btn"
 							data-url={mcpRpcUrl}
-							class="font-mono-cta inline-flex items-center gap-2 border border-white/20 bg-transparent px-4 py-2.5 text-xs normal-case tracking-[0.01em] text-white transition hover:border-white/40 hover:bg-white/[0.04]"
+							class="font-mono-cta inline-flex items-center gap-2 border border-border bg-transparent px-4 py-2.5 text-xs normal-case tracking-[0.01em] text-foreground transition hover:border-foreground/25 hover:bg-accent"
 						>
 							Copy URL
 						</button>
 					</div>
-					<p class="mt-4 text-xs text-slate-400">
-						Discovery · <a href={discoveryUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">{mcpOrigin}/</a>
-						· Health · <a href={healthUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">{mcpOrigin}/health</a>
+					<p class="mt-4 text-xs text-muted-foreground">
+						Discovery · <a href={discoveryUrl} class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">{mcpOrigin}/</a>
+						· Health · <a href={healthUrl} class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">{mcpOrigin}/health</a>
 					</p>
 				</div>
 			</div>
@@ -493,55 +493,55 @@ const surfaces = [
 		<!-- =============================================================
 		     §02 — Two ways to connect
 		     ============================================================= -->
-		<section id="two-ways" class="relative scroll-mt-24 border-b border-white/[0.06] sm:scroll-mt-28" aria-labelledby="two-ways-heading">
+		<section id="two-ways" class="relative scroll-mt-24 border-b border-border sm:scroll-mt-28" aria-labelledby="two-ways-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-28">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 02</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Two ways</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 02</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Two ways</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="two-ways-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
+					<h2 id="two-ways-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Two ways to connect.<br />
-						<span class="font-light italic text-slate-400">Pick one per client.</span>
+						<span class="font-light italic text-muted-foreground">Pick one per client.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
-						Don't paste an <code class="font-mono-cta text-slate-300">aadm_</code> token <em>and</em> an OAuth Client ID
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
+						Don't paste an <code class="font-mono-cta text-text-secondary">aadm_</code> token <em>and</em> an OAuth Client ID
 						together — they're different auth paths.
 					</p>
 
 					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
-						<a href="#connect-bearer" class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
+						<a href="#connect-bearer" class="group bg-surface-mid p-7 transition duration-300 hover:bg-secondary sm:p-9">
 							<div class="flex items-baseline gap-4">
-								<span class="font-display text-5xl font-light leading-none text-sky-300/90 sm:text-6xl">1</span>
-								<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/85">Bearer token</span>
+								<span class="font-display text-5xl font-light leading-none text-brand-sky sm:text-6xl">1</span>
+								<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-sky">Bearer token</span>
 							</div>
-							<h3 class="font-display mt-6 text-[1.35rem] font-bold leading-snug tracking-tight text-white sm:text-[1.5rem]">
+							<h3 class="font-display mt-6 text-[1.35rem] font-bold leading-snug tracking-tight text-foreground sm:text-[1.5rem]">
 								Standard header token
 							</h3>
-							<p class="mt-3 text-sm leading-relaxed text-slate-400">
-								Cursor, Windsurf, curl — create an <code class="font-mono-cta text-xs text-sky-200/85">ak_…</code> API key under
-								<span class="text-slate-300">Member area → API keys</span>.
+							<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+								Cursor, Windsurf, curl — create an <code class="font-mono-cta text-xs text-brand-sky">ak_…</code> API key under
+								<span class="text-text-secondary">Member area → API keys</span>.
 							</p>
-							<div aria-hidden="true" class="mt-7 flex items-center gap-2 text-sky-300/80">
+							<div aria-hidden="true" class="mt-7 flex items-center gap-2 text-brand-sky">
 								<span class="font-mono-cta text-sm normal-case tracking-[0.01em]">Set up</span>
 								<svg width="14" height="10" viewBox="0 0 14 10" fill="none" class="transition group-hover:translate-x-0.5">
 									<path d="M1 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" />
 								</svg>
 							</div>
 						</a>
-						<a href="#connect-oauth" class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-9">
+						<a href="#connect-oauth" class="group bg-surface-mid p-7 transition duration-300 hover:bg-secondary sm:p-9">
 							<div class="flex items-baseline gap-4">
-								<span class="font-display text-5xl font-light leading-none text-violet-300/90 sm:text-6xl">2</span>
-								<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">OAuth</span>
+								<span class="font-display text-5xl font-light leading-none text-brand-violet sm:text-6xl">2</span>
+								<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">OAuth</span>
 							</div>
-							<h3 class="font-display mt-6 text-[1.35rem] font-bold leading-snug tracking-tight text-white sm:text-[1.5rem]">
+							<h3 class="font-display mt-6 text-[1.35rem] font-bold leading-snug tracking-tight text-foreground sm:text-[1.5rem]">
 								Browser sign-in
 							</h3>
-							<p class="mt-3 text-sm leading-relaxed text-slate-400">
-								Cursor, Claude Code, claude.ai, ChatGPT — paste the URL, sign in with your AADM account when the browser opens, click <span class="text-slate-300">Allow</span>. No client ID to copy.
+							<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+								Cursor, Claude Code, claude.ai, ChatGPT — paste the URL, sign in with your AADM account when the browser opens, click <span class="text-text-secondary">Allow</span>. No client ID to copy.
 							</p>
-							<div aria-hidden="true" class="mt-7 flex items-center gap-2 text-violet-300/80">
+							<div aria-hidden="true" class="mt-7 flex items-center gap-2 text-brand-violet">
 								<span class="font-mono-cta text-sm normal-case tracking-[0.01em]">Set up</span>
 								<svg width="14" height="10" viewBox="0 0 14 10" fill="none" class="transition group-hover:translate-x-0.5">
 									<path d="M1 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" />
@@ -558,61 +558,61 @@ const surfaces = [
 		     ============================================================= -->
 		<section
 			id="connect-bearer"
-			class="relative scroll-mt-24 border-b border-white/[0.06] bg-[#06080f] sm:scroll-mt-28"
+			class="relative scroll-mt-24 border-b border-border bg-surface-mid sm:scroll-mt-28"
 			aria-labelledby="connect-bearer-heading"
 		>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/70">§ 03</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Method A · Bearer</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-sky">§ 03</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Method A · Bearer</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="connect-bearer-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
+					<h2 id="connect-bearer-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Bearer / header token.
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
-						<a href={memberSignInUrl} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Sign in to AADM</a>
-						to open the member area and create an API key (<code class="font-mono-cta text-slate-300">ak_…</code>) under{' '}
-						<span class="text-slate-300">API keys</span>.
-						<span class="text-amber-200/90"> Not for claude.ai web Connectors</span> — they require OAuth below.
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
+						<a href={memberSignInUrl} class="font-semibold text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">Sign in to AADM</a>
+						to open the member area and create an API key (<code class="font-mono-cta text-text-secondary">ak_…</code>) under{' '}
+						<span class="text-text-secondary">API keys</span>.
+						<span class="text-brand-warn"> Not for claude.ai web Connectors</span> — they require OAuth below.
 					</p>
 
 					<!-- Auth header -->
 					<div class="mt-10 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border border-white/10 bg-[#070b13] p-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/85">Member API key</p>
-								<p class="mt-3 text-sm leading-relaxed text-slate-400">
-									Use <code class="font-mono-cta text-xs text-slate-300">Bearer</code> + full
-									<code class="font-mono-cta text-xs text-slate-300">ak_…</code> from
-									<span class="text-slate-300">Member area → API keys</span>.
+							<div class="border border-border bg-muted p-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-sky">Member API key</p>
+								<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+									Use <code class="font-mono-cta text-xs text-text-secondary">Bearer</code> + full
+									<code class="font-mono-cta text-xs text-text-secondary">ak_…</code> from
+									<span class="text-text-secondary">Member area → API keys</span>.
 								</p>
-								<pre class="font-mono-cta mt-5 overflow-x-auto border border-white/[0.08] bg-[#050810] p-4 text-xs text-slate-300"><code>Authorization: Bearer &lt;your token here&gt;</code></pre>
+								<pre class="font-mono-cta mt-5 overflow-x-auto border border-border bg-surface-mid p-4 text-xs text-text-secondary"><code>Authorization: Bearer &lt;your token here&gt;</code></pre>
 							</div>
 						</div>
 						<div class="col-span-12 lg:col-span-7">
-							<div class="border border-white/10 bg-[#050810]">
-								<div class="flex items-center justify-between border-b border-white/[0.08] px-5 py-3">
-									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
-										Cursor · <code class="text-slate-300">~/.cursor/mcp.json</code>
+							<div class="border border-border bg-surface-mid">
+								<div class="flex items-center justify-between border-b border-border px-5 py-3">
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
+										Cursor · <code class="text-text-secondary">~/.cursor/mcp.json</code>
 									</span>
 									<button
 										type="button"
 										id="mcp-connect-copy-btn"
-										class="font-mono-cta border border-white/20 bg-transparent px-3 py-1.5 text-[13px] normal-case tracking-[0.01em] text-white transition hover:border-white/40 hover:bg-white/[0.04]"
+										class="font-mono-cta border border-border bg-transparent px-3 py-1.5 text-[13px] normal-case tracking-[0.01em] text-foreground transition hover:border-foreground/25 hover:bg-accent"
 									>
 										Copy JSON
 									</button>
 								</div>
-								<pre class="font-mono-cta overflow-x-auto p-5 text-xs leading-relaxed text-slate-300 sm:text-sm" id="mcp-connect-config-pre"><code id="mcp-connect-config-code">{cursorMcpFullConfigSnippet}</code></pre>
+								<pre class="font-mono-cta overflow-x-auto p-5 text-xs leading-relaxed text-text-secondary sm:text-sm" id="mcp-connect-config-pre"><code id="mcp-connect-config-code">{cursorMcpFullConfigSnippet}</code></pre>
 							</div>
-							<p class="mt-3 text-xs text-slate-400">
-								<code class="font-mono-cta text-slate-300">url</code> must be{' '}
-								<code class="font-mono-cta text-emerald-300">{mcpRpcUrl}</code>. For{' '}
-								<code class="font-mono-cta text-slate-300">ak_</code> account API keys, use Bearer form:
+							<p class="mt-3 text-xs text-muted-foreground">
+								<code class="font-mono-cta text-text-secondary">url</code> must be{' '}
+								<code class="font-mono-cta text-brand-mcp">{mcpRpcUrl}</code>. For{' '}
+								<code class="font-mono-cta text-text-secondary">ak_</code> account API keys, use Bearer form:
 							</p>
-							<pre class="font-mono-cta mt-3 overflow-x-auto border border-white/[0.06] bg-[#050810] p-4 text-xs text-slate-400"><code>{cursorMcpBearerAkSnippet}</code></pre>
+							<pre class="font-mono-cta mt-3 overflow-x-auto border border-border bg-surface-mid p-4 text-xs text-muted-foreground"><code>{cursorMcpBearerAkSnippet}</code></pre>
 						</div>
 					</div>
 
@@ -622,44 +622,44 @@ const surfaces = [
 								{
 									num: "01",
 									label: "Sign in to AADM",
-									body: <><a href={memberSignInUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">accounts.aadm.io</a>, subscribe if needed, then create an API key in the member area.</>,
+									body: <><a href={memberSignInUrl} class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">accounts.aadm.io</a>, subscribe if needed, then create an API key in the member area.</>,
 								},
 								{
 									num: "02",
 									label: "Paste into Authorization",
-									body: <>Paste into <code class="font-mono-cta text-emerald-200/85 text-xs">Authorization</code> in <code class="font-mono-cta text-emerald-200/85 text-xs">mcp.json</code>.</>,
+									body: <>Paste into <code class="font-mono-cta text-brand-mcp text-xs">Authorization</code> in <code class="font-mono-cta text-brand-mcp text-xs">mcp.json</code>.</>,
 								},
 								{
 									num: "03",
 									label: "Reload",
-									body: <>Reload Cursor (or restart MCP) so <code class="font-mono-cta text-emerald-200/85 text-xs">tools/list</code> refreshes.</>,
+									body: <>Reload Cursor (or restart MCP) so <code class="font-mono-cta text-brand-mcp text-xs">tools/list</code> refreshes.</>,
 								},
 							].map((s) => (
-								<li class="bg-[#06080f] p-6 sm:p-7">
+								<li class="bg-surface-mid p-6 sm:p-7">
 									<div class="flex items-baseline gap-3">
-										<span class="font-display text-3xl font-light leading-none text-sky-300/80 sm:text-4xl">{s.num}</span>
-										<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/85">{s.label}</span>
+										<span class="font-display text-3xl font-light leading-none text-brand-sky sm:text-4xl">{s.num}</span>
+										<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-sky">{s.label}</span>
 									</div>
-									<p class="mt-4 text-sm leading-relaxed text-slate-300">{s.body}</p>
+									<p class="mt-4 text-sm leading-relaxed text-text-secondary">{s.body}</p>
 								</li>
 							))
 						}
 					</ol>
 
-					<div class="mt-10 border border-emerald-300/30 bg-[#070b13] p-7 sm:p-9" aria-labelledby="bearer-key-heading">
-						<h3 id="bearer-key-heading" class="font-display text-balance text-2xl font-bold leading-snug text-white">
+					<div class="mt-10 border border-brand-mcp-border bg-muted p-7 sm:p-9" aria-labelledby="bearer-key-heading">
+						<h3 id="bearer-key-heading" class="font-display text-balance text-2xl font-bold leading-snug text-foreground">
 							Your API key
 						</h3>
-						<p class="mt-3 text-sm leading-relaxed text-slate-400">
+						<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 							Credentials are not shown on this public page.{' '}
-							<a href={memberSignInUrl} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Sign in to AADM</a>{' '}
-							to open the member area and create <span class="text-slate-300">your <code class="font-mono text-xs">ak_…</code> key</span>. Paste it as the Bearer token in Cursor, Windsurf, Codex, or curl.
+							<a href={memberSignInUrl} class="font-semibold text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">Sign in to AADM</a>{' '}
+							to open the member area and create <span class="text-text-secondary">your <code class="font-mono text-xs">ak_…</code> key</span>. Paste it as the Bearer token in Cursor, Windsurf, Codex, or curl.
 						</p>
 						<div class="mt-6 flex flex-wrap gap-3">
 							<Show when="signed-out">
 								<a
 									href={memberSignInUrl}
-									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+									class="inline-flex items-center gap-2 bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 								>
 									Sign in for your API key
 								</a>
@@ -667,14 +667,14 @@ const surfaces = [
 							<Show when="signed-in">
 								<a
 									href={memberAreaUrl}
-									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+									class="inline-flex items-center gap-2 bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 								>
 									Open member area — your API key
 								</a>
 							</Show>
 						</div>
-						<p class="mt-5 text-xs text-slate-400">
-							MCP server URL · <code class="font-mono-cta text-emerald-300/95">{mcpRpcUrl}</code>
+						<p class="mt-5 text-xs text-muted-foreground">
+							MCP server URL · <code class="font-mono-cta text-brand-mcp">{mcpRpcUrl}</code>
 						</p>
 					</div>
 				</div>
@@ -686,51 +686,51 @@ const surfaces = [
 		     ============================================================= -->
 		<section
 			id="connect-oauth"
-			class="relative scroll-mt-24 border-b border-white/[0.06] sm:scroll-mt-28"
+			class="relative scroll-mt-24 border-b border-border sm:scroll-mt-28"
 			aria-labelledby="connect-oauth-heading"
 		>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 04</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Method B · OAuth</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">§ 04</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Method B · OAuth</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="connect-oauth-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
+					<h2 id="connect-oauth-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						OAuth.<br />
-						<span class="font-light italic text-slate-400">Sign in once in the browser.</span>
+						<span class="font-light italic text-muted-foreground">Sign in once in the browser.</span>
 					</h2>
 
-					<div class="mt-8 border-2 border-amber-300/40 bg-amber-950/[0.15] p-6">
-						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/90">
-							<span class="text-amber-300">⚠</span> Do not use an API key here
+					<div class="mt-8 border-2 border-brand-warn-border bg-brand-warn-bg p-6">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">
+							<span class="text-brand-warn">⚠</span> Do not use an API key here
 						</p>
-						<p class="mt-3 text-sm leading-relaxed text-amber-100/95">
+						<p class="mt-3 text-sm leading-relaxed text-brand-warn">
 							Give your client only the server URL. It opens{' '}
-								<a href={signInUrl} class="font-semibold text-amber-200 underline decoration-amber-300/50 underline-offset-4 hover:decoration-amber-200">accounts.aadm.io</a>;
-								sign in with the <span class="font-semibold text-amber-50">same account you subscribed with</span> and click Allow.
+								<a href={signInUrl} class="font-semibold text-brand-warn underline decoration-brand-warn underline-offset-4 hover:decoration-brand-warn">accounts.aadm.io</a>;
+								sign in with the <span class="font-semibold text-brand-warn">same account you subscribed with</span> and click Allow.
 								Leave any Client ID and Client Secret fields empty.
 						</p>
 					</div>
 
-					<div class="mt-10 border border-violet-400/30 bg-[#070b13] p-7 sm:p-9" aria-labelledby="oauth-client-id-heading">
-						<h3 id="oauth-client-id-heading" class="font-display text-balance text-2xl font-bold leading-snug text-white">
+					<div class="mt-10 border border-brand-violet/40 bg-muted p-7 sm:p-9" aria-labelledby="oauth-client-id-heading">
+						<h3 id="oauth-client-id-heading" class="font-display text-balance text-2xl font-bold leading-snug text-foreground">
 							One URL. Your AADM login does the rest.
 							</h3>
-						<p class="mt-3 text-sm leading-relaxed text-slate-400">
+						<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 							Your client identifies itself to AADM's sign-in service, so there is no client ID to copy.
 								You need an active subscription on the account you sign in with. Per-client steps, and a fallback for clients
 								that still ask for a Client ID, are in the{' '}
 								<MemberMcpOAuthLink
 									label="member area"
-									class="font-semibold text-violet-300 underline decoration-violet-400/40 underline-offset-4 hover:decoration-violet-300"
+									class="font-semibold text-brand-violet underline decoration-brand-violet/40 underline-offset-4 hover:decoration-brand-violet"
 								/>.
 						</p>
 						<div class="mt-6 flex flex-wrap gap-3">
 							<Show when="signed-out">
 								<a
 									href={memberMcpOAuthSignInUrl}
-									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+									class="inline-flex items-center gap-2 bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 								>
 									Sign in and connect a client
 								</a>
@@ -738,33 +738,33 @@ const surfaces = [
 							<Show when="signed-in">
 								<a
 									href={memberMcpOAuthUrl}
-									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+									class="inline-flex items-center gap-2 bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 								>
 									Open member area — connect a client
 								</a>
 							</Show>
 						</div>
-						<p class="mt-5 text-xs text-slate-400">
-							MCP server URL · <code class="font-mono-cta text-violet-300/95">{mcpRpcUrl}</code>
+						<p class="mt-5 text-xs text-muted-foreground">
+							MCP server URL · <code class="font-mono-cta text-brand-violet">{mcpRpcUrl}</code>
 						</p>
 					</div>
 
 					<div class="mt-10 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
 						<article class="bg-surface-deep p-7 sm:p-9">
 							<div class="flex items-center gap-3">
-								<span class="block h-2 w-2 rounded-full bg-violet-300"></span>
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">Claude Code</p>
+								<span class="block h-2 w-2 rounded-full bg-brand-violet"></span>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">Claude Code</p>
 							</div>
-							<ol class="mt-6 space-y-3 text-sm leading-relaxed text-slate-300">
+							<ol class="mt-6 space-y-3 text-sm leading-relaxed text-text-secondary">
 								{
 									[
-										<>Run <code class="font-mono-cta text-xs text-violet-300">claude mcp add --transport http aadm {mcpRpcUrl}</code></>,
-											<>In Claude Code, type <code class="font-mono-cta text-xs text-violet-300">/mcp</code> and choose <span class="text-white">Authenticate</span> for aadm.</>,
-											<>Leave <span class="text-white">Client ID</span> and <span class="text-white">Client Secret</span> empty if asked.</>,
-											<>Sign in with the <span class="text-white">same AADM account</span> when the consent screen appears, then click Allow.</>,
+										<>Run <code class="font-mono-cta text-xs text-brand-violet">claude mcp add --transport http aadm {mcpRpcUrl}</code></>,
+											<>In Claude Code, type <code class="font-mono-cta text-xs text-brand-violet">/mcp</code> and choose <span class="text-foreground">Authenticate</span> for aadm.</>,
+											<>Leave <span class="text-foreground">Client ID</span> and <span class="text-foreground">Client Secret</span> empty if asked.</>,
+											<>Sign in with the <span class="text-foreground">same AADM account</span> when the consent screen appears, then click Allow.</>,
 									].map((item, idx) => (
 										<li class="grid grid-cols-[auto_1fr] items-baseline gap-3">
-											<span class="font-mono-cta text-[13px] text-violet-300/80">{String(idx + 1).padStart(2, "0")}</span>
+											<span class="font-mono-cta text-[13px] text-brand-violet">{String(idx + 1).padStart(2, "0")}</span>
 											<span>{item}</span>
 										</li>
 									))
@@ -773,20 +773,20 @@ const surfaces = [
 						</article>
 						<article class="bg-surface-deep p-7 sm:p-9">
 							<div class="flex items-center gap-3">
-								<span class="block h-2 w-2 rounded-full bg-violet-300"></span>
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">claude.ai Connectors</p>
+								<span class="block h-2 w-2 rounded-full bg-brand-violet"></span>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">claude.ai Connectors</p>
 							</div>
-							<ol class="mt-6 space-y-3 text-sm leading-relaxed text-slate-300">
+							<ol class="mt-6 space-y-3 text-sm leading-relaxed text-text-secondary">
 								{
 									[
 										<><em>Settings → Connectors → Add custom connector</em></>,
-										<>Server URL · <code class="font-mono-cta text-xs text-violet-300">{mcpRpcUrl}</code></>,
-										<>Leave the <span class="text-white">Advanced</span> OAuth Client ID and Secret fields empty</>,
-											<>Click <span class="text-white">Connect</span> and sign in with the same AADM account</>,
-											<>Click <span class="text-white">Allow</span> on the consent screen · the connector turns active</>,
+										<>Server URL · <code class="font-mono-cta text-xs text-brand-violet">{mcpRpcUrl}</code></>,
+										<>Leave the <span class="text-foreground">Advanced</span> OAuth Client ID and Secret fields empty</>,
+											<>Click <span class="text-foreground">Connect</span> and sign in with the same AADM account</>,
+											<>Click <span class="text-foreground">Allow</span> on the consent screen · the connector turns active</>,
 									].map((item, idx) => (
 										<li class="grid grid-cols-[auto_1fr] items-baseline gap-3">
-											<span class="font-mono-cta text-[13px] text-violet-300/80">{String(idx + 1).padStart(2, "0")}</span>
+											<span class="font-mono-cta text-[13px] text-brand-violet">{String(idx + 1).padStart(2, "0")}</span>
 											<span>{item}</span>
 										</li>
 									))
@@ -803,33 +803,33 @@ const surfaces = [
 		     ============================================================= -->
 		<section
 			id="repo-config"
-			class="relative scroll-mt-24 border-b border-white/[0.06] bg-[#06080f] sm:scroll-mt-28"
+			class="relative scroll-mt-24 border-b border-border bg-surface-mid sm:scroll-mt-28"
 			aria-labelledby="repo-config-heading"
 		>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-20 sm:px-8 sm:py-24">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 05</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Optional · Repo init</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 05</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Optional · Repo init</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">
-						<span class="text-emerald-300">▸</span> Optional · not required to connect
+					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
+						<span class="text-brand-mcp">▸</span> Optional · not required to connect
 					</p>
-					<h2 id="repo-config-heading" class="font-display mt-5 text-[clamp(1.5rem,3.6vw,2.6rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
-						Repo governance config <span class="font-light italic text-slate-400">(aadm-init-repo)</span>
+					<h2 id="repo-config-heading" class="font-display mt-5 text-[clamp(1.5rem,3.6vw,2.6rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+						Repo governance config <span class="font-light italic text-muted-foreground">(aadm-init-repo)</span>
 					</h2>
-					<p class="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400">
-						You <span class="text-white">do not</span> need this to connect the hosted MCP. Use it when you want
-						<code class="font-mono-cta text-slate-300"> .aadm/config.json</code> in an application repo (UDALI paths, lanes, CI
+					<p class="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+						You <span class="text-foreground">do not</span> need this to connect the hosted MCP. Use it when you want
+						<code class="font-mono-cta text-text-secondary"> .aadm/config.json</code> in an application repo (UDALI paths, lanes, CI
 						stubs). Tokens stay in your IDE — never commit secrets into the config file.
 					</p>
-					<pre class="font-mono-cta mt-7 max-w-xl overflow-x-auto border border-white/10 bg-[#050810] p-5 text-sm text-slate-300"><code>npx aadm-init-repo --minimal
+					<pre class="font-mono-cta mt-7 max-w-xl overflow-x-auto border border-border bg-surface-mid p-5 text-sm text-text-secondary"><code>npx aadm-init-repo --minimal
 npx aadm-init-repo --full</code></pre>
-					<p class="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-mono-cta text-sm normal-case tracking-[0.01em] text-slate-400">
-						<a href="/governance" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Customize on /governance</a>
-						<a href={aadmConfigSchemaUrl} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300" target="_blank" rel="noopener noreferrer">Config JSON Schema</a>
-						<a href="https://www.npmjs.com/package/aadm-init-repo" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300" target="_blank" rel="noopener noreferrer">npm package</a>
+					<p class="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-mono-cta text-sm normal-case tracking-[0.01em] text-muted-foreground">
+						<a href="/governance" class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">Customize on /governance</a>
+						<a href={aadmConfigSchemaUrl} class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp" target="_blank" rel="noopener noreferrer">Config JSON Schema</a>
+						<a href="https://www.npmjs.com/package/aadm-init-repo" class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp" target="_blank" rel="noopener noreferrer">npm package</a>
 					</p>
 				</div>
 			</div>
@@ -862,18 +862,18 @@ npx aadm-init-repo --full</code></pre>
 		<!-- =============================================================
 		     §06 — Governed surfaces + outcomes
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]" aria-labelledby="mcp-cap-heading">
+		<section class="relative border-b border-border" aria-labelledby="mcp-cap-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 06</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">What you get</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 06</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">What you get</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="mcp-cap-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						One connection, <span class="font-light italic text-slate-400">governed surfaces.</span>
+					<h2 id="mcp-cap-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						One connection, <span class="font-light italic text-muted-foreground">governed surfaces.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						Subscribers point hosts at the MCP endpoint and get deterministic access to the standard library — not a chatty
 						wrapper around the public web.
 					</p>
@@ -881,35 +881,35 @@ npx aadm-init-repo --full</code></pre>
 					<div class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
 						{
 							surfaces.map((s) => (
-								<article class="group bg-surface-deep p-6 transition duration-300 hover:bg-[#0a0e1a] sm:p-7">
+								<article class="group bg-surface-deep p-6 transition duration-300 hover:bg-surface-mid sm:p-7">
 									<div class="flex items-baseline gap-4">
-										<span class="font-display text-[3rem] font-light leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
+										<span class="font-display text-[3rem] font-light leading-[0.85] text-brand-mcp transition duration-300 group-hover:text-brand-mcp">
 											{s.letter}
 										</span>
 									</div>
-									<h3 class="font-display mt-6 text-balance text-lg font-bold leading-snug tracking-tight text-white">
+									<h3 class="font-display mt-6 text-balance text-lg font-bold leading-snug tracking-tight text-foreground">
 										{s.name}
 									</h3>
-									<p class="mt-3 text-sm leading-relaxed text-slate-400">{s.body}</p>
+									<p class="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
 								</article>
 							))
 						}
 					</div>
 
-					<div class="mt-14 border-l-2 border-emerald-300/40 pl-6">
-						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Citation namespaces</p>
-						<p class="mt-3 text-sm leading-relaxed text-slate-400">
+					<div class="mt-14 border-l-2 border-brand-mcp-border pl-6">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Citation namespaces</p>
+						<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 							Keep audit labels distinct ·
-							<span class="text-white"> AUTH</span> = must-enforce ·
-							<span class="text-white"> SEAM</span> = which crossing to prove ·
-							<span class="text-white"> TRACE</span> = drift pattern ·
-							<span class="text-white"> VERT/HORI</span> = attestation depth and boundary kind (from
-							<code class="font-mono-cta text-emerald-200/85">sentinel_closure</code>).
+							<span class="text-foreground"> AUTH</span> = must-enforce ·
+							<span class="text-foreground"> SEAM</span> = which crossing to prove ·
+							<span class="text-foreground"> TRACE</span> = drift pattern ·
+							<span class="text-foreground"> VERT/HORI</span> = attestation depth and boundary kind (from
+							<code class="font-mono-cta text-brand-mcp">sentinel_closure</code>).
 						</p>
-						<p class="mt-3 text-xs text-slate-400">
-							Column-only traces miss dispatch-time ids. Use <span class="text-slate-300">SEAM-04 / SEAM-05</span> when aliases are
+						<p class="mt-3 text-xs text-muted-foreground">
+							Column-only traces miss dispatch-time ids. Use <span class="text-text-secondary">SEAM-04 / SEAM-05</span> when aliases are
 							normalized in-process. Public policy ·{' '}
-							<a href="https://github.com/bwl8772/aadm-standard/blob/main/standards/seam-catalog.md" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
+							<a href="https://github.com/bwl8772/aadm-standard/blob/main/standards/seam-catalog.md" class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">
 								standards/seam-catalog.md
 							</a>.
 						</p>
@@ -917,23 +917,23 @@ npx aadm-init-repo --full</code></pre>
 
 					<!-- Outcomes ribbon -->
 					<div class="mt-20">
-						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">
-							<span class="text-emerald-300">▸</span> Outcomes your teams can drive
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
+							<span class="text-brand-mcp">▸</span> Outcomes your teams can drive
 						</p>
-						<ol class="mt-8 border-t border-white/[0.06]">
+						<ol class="mt-8 border-t border-border">
 							{
 								outcomes.map((o) => (
-									<li class="group grid grid-cols-12 gap-6 border-b border-white/[0.08] py-7 transition duration-300 hover:bg-white/[0.015]">
+									<li class="group grid grid-cols-12 gap-6 border-b border-border py-7 transition duration-300 hover:bg-white/[0.015]">
 										<div class="col-span-12 sm:col-span-2">
-											<span class="font-display text-4xl font-light leading-none tracking-tight text-emerald-200/80 transition duration-300 group-hover:text-emerald-300 sm:text-5xl">
+											<span class="font-display text-4xl font-light leading-none tracking-tight text-brand-mcp transition duration-300 group-hover:text-brand-mcp sm:text-5xl">
 												{o.num}
 											</span>
 										</div>
 										<div class="col-span-12 sm:col-span-10">
-											<h3 class="font-display text-balance text-[1.15rem] font-bold leading-[1.2] tracking-tight text-white sm:text-[1.25rem]">
+											<h3 class="font-display text-balance text-[1.15rem] font-bold leading-[1.2] tracking-tight text-foreground sm:text-[1.25rem]">
 												{o.title}
 											</h3>
-											<p class="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">{o.body}</p>
+											<p class="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">{o.body}</p>
 										</div>
 									</li>
 								))
@@ -947,18 +947,18 @@ npx aadm-init-repo --full</code></pre>
 		<!-- =============================================================
 		     §07 — Three workflows + mock conversations
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]" aria-labelledby="mcp-workflows-heading">
+		<section class="relative border-b border-border bg-surface-mid" aria-labelledby="mcp-workflows-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 07</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Three workflows</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">§ 07</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Three workflows</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="mcp-workflows-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
-						Three equal lanes. <span class="font-light italic text-slate-400">Pick the question.</span>
+					<h2 id="mcp-workflows-heading" class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Three equal lanes. <span class="font-light italic text-muted-foreground">Pick the question.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						The MCP treats Navigator, Investigator, and Sentinel as peers. Pick the lane that matches the primary question —
 						standard orchestration uses first-match routing so you don't <em>“Navigator away”</em> a defect.
 					</p>
@@ -968,7 +968,7 @@ npx aadm-init-repo --full</code></pre>
 							lanes.map((lane) => {
 								const t = laneToneClasses[lane.tone];
 								return (
-									<article class="grid grid-cols-12 gap-6 bg-[#06080f] px-1 py-10 sm:px-2 sm:py-12">
+									<article class="grid grid-cols-12 gap-6 bg-surface-mid px-1 py-10 sm:px-2 sm:py-12">
 										<div class="col-span-12 sm:col-span-2">
 											<p class:list={["font-display text-[4.5rem] font-light leading-[0.85] tracking-tight sm:text-[6rem]", t.numeral]}>
 												{lane.num}
@@ -979,8 +979,8 @@ npx aadm-init-repo --full</code></pre>
 											</div>
 										</div>
 										<div class="col-span-12 sm:col-span-10">
-											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">{lane.line}</p>
-											<p class="mt-4 max-w-3xl text-[0.98rem] leading-[1.65] text-slate-200">{lane.body}</p>
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{lane.line}</p>
+											<p class="mt-4 max-w-3xl text-[0.98rem] leading-[1.65] text-foreground">{lane.body}</p>
 										</div>
 									</article>
 								);
@@ -990,100 +990,100 @@ npx aadm-init-repo --full</code></pre>
 
 					<!-- Mocks -->
 					<div class="mt-20" id="mcp-mocks-heading">
-						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">
-							<span class="text-emerald-300">▸</span> What it feels like to talk to the MCP
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
+							<span class="text-brand-mcp">▸</span> What it feels like to talk to the MCP
 						</p>
-						<p class="mt-4 max-w-3xl text-base leading-relaxed text-slate-400">
+						<p class="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
 							Illustrative panels — wording is shortened; real payloads follow the server's JSON contracts and gates.
 						</p>
 
 						<div class="mt-10 space-y-10">
 							<!-- Navigator mock -->
-							<article class="border border-white/10 bg-[#050810]">
-								<div class="flex flex-wrap items-center gap-3 border-b border-white/[0.06] px-5 py-3">
-									<span class="block h-2 w-2 rounded-full bg-violet-400"></span>
-									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">
+							<article class="border border-border bg-surface-mid">
+								<div class="flex flex-wrap items-center gap-3 border-b border-border px-5 py-3">
+									<span class="block h-2 w-2 rounded-full bg-brand-violet"></span>
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">
 										Navigator · tools/call · standard_brief
 									</span>
 								</div>
 								<div class="grid grid-cols-1 divide-y divide-white/[0.06] font-mono-cta text-sm leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-									<div class="space-y-3 p-5 text-slate-400">
+									<div class="space-y-3 p-5 text-muted-foreground">
 										<p>
-											<span class="text-violet-300">You</span> · Feature: OAuth-backed export for enterprise tenants. Need UDALI-shaped scope and AUTH touchpoints.
+											<span class="text-brand-violet">You</span> · Feature: OAuth-backed export for enterprise tenants. Need UDALI-shaped scope and AUTH touchpoints.
 										</p>
 										<p>
-											<span class="text-slate-400">Host</span> · <code class="bg-white/[0.04] px-1 text-slate-300">standard_brief</code> with issue text + repo hints.
+											<span class="text-muted-foreground">Host</span> · <code class="bg-accent px-1 text-text-secondary">standard_brief</code> with issue text + repo hints.
 										</p>
 									</div>
-									<div class="space-y-3 bg-black/20 p-5 text-slate-300">
+									<div class="space-y-3 bg-muted p-5 text-text-secondary">
 										<p>
-											<span class="text-emerald-300">MCP</span> · <code class="text-emerald-300/90">capabilities_schema_version</code>,
-											<code class="text-emerald-300/90">navigator_feature_delivery</code> stages,
-											<code class="text-emerald-300/90">orchestrator_contract</code>.
+											<span class="text-brand-mcp">MCP</span> · <code class="text-brand-mcp">capabilities_schema_version</code>,
+											<code class="text-brand-mcp">navigator_feature_delivery</code> stages,
+											<code class="text-brand-mcp">orchestrator_contract</code>.
 										</p>
-										<p class="text-slate-400">
-											Follow-on catalog points to <code class="text-slate-400">fetch_auth</code>, doctrine slices,
-											<code class="text-slate-400">plan_delivery</code> — single next action per recon posture.
+										<p class="text-muted-foreground">
+											Follow-on catalog points to <code class="text-muted-foreground">fetch_auth</code>, doctrine slices,
+											<code class="text-muted-foreground">plan_delivery</code> — single next action per recon posture.
 										</p>
 									</div>
 								</div>
 							</article>
 
 							<!-- Investigator mock -->
-							<article class="border border-white/10 bg-[#050810]">
-								<div class="flex flex-wrap items-center gap-3 border-b border-white/[0.06] px-5 py-3">
+							<article class="border border-border bg-surface-mid">
+								<div class="flex flex-wrap items-center gap-3 border-b border-border px-5 py-3">
 									<span class="block h-2 w-2 rounded-full bg-sky-400"></span>
-									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-sky-200/85">
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-sky">
 										Investigator · tools/call · debug_defect
 									</span>
 								</div>
 								<div class="grid grid-cols-1 divide-y divide-white/[0.06] font-mono-cta text-sm leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-									<div class="space-y-3 p-5 text-slate-400">
+									<div class="space-y-3 p-5 text-muted-foreground">
 										<p>
-											<span class="text-sky-300">You</span> · Playwright times out on checkout; bumped timeout — still flaky.
+											<span class="text-brand-sky">You</span> · Playwright times out on checkout; bumped timeout — still flaky.
 										</p>
 										<p>
-											<span class="text-slate-400">Host</span> · Second call with <code class="bg-white/[0.04] px-1 text-slate-300">append_evidence</code>: last HAR row + test name.
+											<span class="text-muted-foreground">Host</span> · Second call with <code class="bg-accent px-1 text-text-secondary">append_evidence</code>: last HAR row + test name.
 										</p>
 									</div>
-									<div class="space-y-3 bg-black/20 p-5 text-slate-300">
+									<div class="space-y-3 bg-muted p-5 text-text-secondary">
 										<p>
-											<span class="text-emerald-300">MCP</span> · <code class="text-amber-300/90">rootCauseClassificationStatus: UNCLASSIFIED</code>, Path A recon;
-											<code class="text-slate-400">testTimeoutInflationRuleActive</code> nudges proof before timeout edits.
+											<span class="text-brand-mcp">MCP</span> · <code class="text-brand-warn">rootCauseClassificationStatus: UNCLASSIFIED</code>, Path A recon;
+											<code class="text-muted-foreground">testTimeoutInflationRuleActive</code> nudges proof before timeout edits.
 										</p>
-										<p class="text-slate-400">
+										<p class="text-muted-foreground">
 											Single next action · capture missing network stub vs UI assertion — no multi-file refactor until
-											<code class="text-slate-400">CLASSIFIED</code>.
+											<code class="text-muted-foreground">CLASSIFIED</code>.
 										</p>
 									</div>
 								</div>
 							</article>
 
 							<!-- Sentinel mock -->
-							<article class="border border-white/10 bg-[#050810]">
-								<div class="flex flex-wrap items-center gap-3 border-b border-white/[0.06] px-5 py-3">
-									<span class="block h-2 w-2 rounded-full bg-emerald-400"></span>
-									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">
+							<article class="border border-border bg-surface-mid">
+								<div class="flex flex-wrap items-center gap-3 border-b border-border px-5 py-3">
+									<span class="block h-2 w-2 rounded-full bg-brand-mcp"></span>
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
 										Sentinel · tools/call · sentinel_assurance
 									</span>
 								</div>
 								<div class="grid grid-cols-1 divide-y divide-white/[0.06] font-mono-cta text-sm leading-relaxed sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-									<div class="space-y-3 p-5 text-slate-400">
+									<div class="space-y-3 p-5 text-muted-foreground">
 										<p>
-											<span class="text-emerald-300">You</span> · Quarterly attest: MCP integration + L7 gateway + CI evidence for AUTH-12.
+											<span class="text-brand-mcp">You</span> · Quarterly attest: MCP integration + L7 gateway + CI evidence for AUTH-12.
 										</p>
 										<p>
-											<span class="text-slate-400">Host</span> · Scope = MCP host + repo CI; bind
-											<code class="bg-white/[0.04] px-1 text-slate-300">agent_observability_expectations</code> per seam.
+											<span class="text-muted-foreground">Host</span> · Scope = MCP host + repo CI; bind
+											<code class="bg-accent px-1 text-text-secondary">agent_observability_expectations</code> per seam.
 										</p>
 									</div>
-									<div class="space-y-3 bg-black/20 p-5 text-slate-300">
+									<div class="space-y-3 bg-muted p-5 text-text-secondary">
 										<p>
-											<span class="text-emerald-300">MCP</span> · Audit program slice +
-											<code class="text-emerald-300/90">sentinel_audit_exit_kind</code> framing; gaps hand off to Investigator
+											<span class="text-brand-mcp">MCP</span> · Audit program slice +
+											<code class="text-brand-mcp">sentinel_audit_exit_kind</code> framing; gaps hand off to Investigator
 											or Navigator per edge-case rules — not mixed in one thread.
 										</p>
-										<p class="text-slate-400">
+										<p class="text-muted-foreground">
 											Attestation dimensions reference AUTH resources and UDALI layers; hosts keep local evidence IDs.
 										</p>
 									</div>
@@ -1098,24 +1098,24 @@ npx aadm-init-repo --full</code></pre>
 		<!-- =============================================================
 		     §08 — Subscriber checkout
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]" aria-labelledby="mcp-included-heading">
+		<section class="relative border-b border-border" aria-labelledby="mcp-included-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 08</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Subscriber checkout</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 08</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Subscriber checkout</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<div class="grid grid-cols-12 gap-8">
 						<div class="col-span-12 lg:col-span-7">
-							<h2 id="mcp-included-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
-								What paid access <span class="font-light italic text-slate-400">includes.</span>
+							<h2 id="mcp-included-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+								What paid access <span class="font-light italic text-muted-foreground">includes.</span>
 							</h2>
-							<p class="mt-6 text-base leading-relaxed text-slate-400">
+							<p class="mt-6 text-base leading-relaxed text-muted-foreground">
 								Subscribers run the hosted MCP service (Streamable HTTP) against your org's credentials. Tokens, rotation, and
 								billing live in the operator app — this page is the story; the portal is the mechanics.
 							</p>
-							<ul class="mt-8 divide-y divide-white/[0.06] border-y border-white/[0.06]">
+							<ul class="mt-8 divide-y divide-white/[0.06] border-y border-border">
 								{
 									[
 										"Versioned tools, prompts, and resources aligned to the published AADM standard narrative.",
@@ -1124,8 +1124,8 @@ npx aadm-init-repo --full</code></pre>
 										"Operational endpoints: GET /health, service discovery at GET /.",
 									].map((item, idx) => (
 										<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-3.5">
-											<span class="font-mono-cta text-sm text-emerald-300/80">{String(idx + 1).padStart(2, "0")}</span>
-											<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">{item}</span>
+											<span class="font-mono-cta text-sm text-brand-mcp">{String(idx + 1).padStart(2, "0")}</span>
+											<span class="text-sm leading-relaxed text-text-secondary transition group-hover:text-foreground">{item}</span>
 										</li>
 									))
 								}
@@ -1133,7 +1133,7 @@ npx aadm-init-repo --full</code></pre>
 							<p class="mt-8">
 								<a
 									href={urlStandard}
-									class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300 underline decoration-emerald-300/40 underline-offset-[6px] transition hover:decoration-emerald-300"
+									class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-brand-mcp underline decoration-brand-mcp underline-offset-[6px] transition hover:decoration-brand-mcp"
 								>
 									<span>Read the public standard first</span>
 									<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↗</span>
@@ -1141,20 +1141,20 @@ npx aadm-init-repo --full</code></pre>
 							</p>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border border-emerald-300/30 bg-[#070b13] p-8">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Subscriber checkout</p>
-								<h3 class="font-display mt-4 text-3xl font-bold leading-snug text-white">Get access</h3>
-								<p class="mt-3 text-sm leading-relaxed text-slate-400">
+							<div class="border border-brand-mcp-border bg-muted p-8">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Subscriber checkout</p>
+								<h3 class="font-display mt-4 text-3xl font-bold leading-snug text-foreground">Get access</h3>
+								<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 									Create an account at{' '}
-									<a href={signUpUrl} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">accounts.aadm.io</a>,
-									then open <a href={memberSignInUrl} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Member area</a>{' '}
+									<a href={signUpUrl} class="font-semibold text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">accounts.aadm.io</a>,
+									then open <a href={memberSignInUrl} class="font-semibold text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">Member area</a>{' '}
 									for API keys or MCP OAuth.
 								</p>
 								<div class="mt-8 flex flex-col gap-3">
 									<Show when="signed-out">
 										<a
 											href={signUpUrl}
-											class="group inline-flex items-center justify-between gap-3 bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+											class="group inline-flex items-center justify-between gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 										>
 											<span>Create AADM account</span>
 											<svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -1163,7 +1163,7 @@ npx aadm-init-repo --full</code></pre>
 										</a>
 										<a
 											href={signInUrl}
-											class="inline-flex items-center justify-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/[0.04]"
+											class="inline-flex items-center justify-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground transition hover:border-foreground/25 hover:bg-accent"
 										>
 											Already subscribed? Sign in
 										</a>
@@ -1171,7 +1171,7 @@ npx aadm-init-repo --full</code></pre>
 									<Show when="signed-in">
 										<a
 											href={memberAreaUrl}
-											class="group inline-flex items-center justify-between gap-3 bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+											class="group inline-flex items-center justify-between gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold text-background transition hover:bg-brand-mcp hover:text-brand-mcp-fg"
 										>
 											<span>Open member area — API keys</span>
 											<svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -1190,41 +1190,41 @@ npx aadm-init-repo --full</code></pre>
 		<!-- =============================================================
 		     §09 — Technical confidence (operators)
 		     ============================================================= -->
-		<section id="technical" class="relative border-b border-white/[0.06] bg-[#06080f]" aria-labelledby="mcp-tech-heading">
+		<section id="technical" class="relative border-b border-border bg-surface-mid" aria-labelledby="mcp-tech-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 09</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Operators</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 09</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Operators</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="mcp-tech-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-white">
-						Technical confidence <span class="font-light italic text-slate-400">for operators.</span>
+					<h2 id="mcp-tech-heading" class="font-display text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+						Technical confidence <span class="font-light italic text-muted-foreground">for operators.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-sm leading-relaxed text-slate-400">
-						The MCP speaks over <span class="text-white">Streamable HTTP</span>:
-						<code class="font-mono-cta text-emerald-200/85">POST</code> with
-						<code class="font-mono-cta text-emerald-200/85">Accept: application/json, text/event-stream</code>. Browser GET to
-						the MCP path without that header often returns <span class="text-amber-200/90">406</span> — expected.
+					<p class="mt-5 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+						The MCP speaks over <span class="text-foreground">Streamable HTTP</span>:
+						<code class="font-mono-cta text-brand-mcp">POST</code> with
+						<code class="font-mono-cta text-brand-mcp">Accept: application/json, text/event-stream</code>. Browser GET to
+						the MCP path without that header often returns <span class="text-brand-warn">406</span> — expected.
 					</p>
 
 					{
 						urlMcpEndpoint ? (
 							<>
-								<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+								<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] lg:grid-cols-3">
 									{healthUrl ? (
 										<a
 											href={healthUrl}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
+											class="group bg-surface-mid p-6 transition duration-300 hover:bg-secondary"
 										>
-											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Liveness</p>
-											<code class="font-mono-cta mt-3 block text-sm font-semibold text-white">GET /health</code>
-											<p class="mt-3 text-sm leading-relaxed text-slate-400">
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Liveness</p>
+											<code class="font-mono-cta mt-3 block text-sm font-semibold text-foreground">GET /health</code>
+											<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 												JSON probe for deploy checks and uptime monitors — not the MCP session itself.
 											</p>
-											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300">
+											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-brand-mcp">
 												Open endpoint <span aria-hidden="true">↗</span>
 											</span>
 										</a>
@@ -1234,15 +1234,15 @@ npx aadm-init-repo --full</code></pre>
 											href={discoveryUrl}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
+											class="group bg-surface-mid p-6 transition duration-300 hover:bg-secondary"
 										>
-											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Discovery</p>
-											<code class="font-mono-cta mt-3 block text-sm font-semibold text-white">GET /</code>
-											<p class="mt-3 text-sm leading-relaxed text-slate-400">
-												Service JSON on the MCP host (e.g. <span class="font-mono-cta text-slate-400">mcp_endpoint</span>)
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Discovery</p>
+											<code class="font-mono-cta mt-3 block text-sm font-semibold text-foreground">GET /</code>
+											<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+												Service JSON on the MCP host (e.g. <span class="font-mono-cta text-muted-foreground">mcp_endpoint</span>)
 												for wiring proxies and clients.
 											</p>
-											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300">
+											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-brand-mcp">
 												Open discovery <span aria-hidden="true">↗</span>
 											</span>
 										</a>
@@ -1251,29 +1251,29 @@ npx aadm-init-repo --full</code></pre>
 										href={mcpRpcUrl}
 										target="_blank"
 										rel="noopener noreferrer"
-										class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
+										class="group bg-surface-mid p-6 transition duration-300 hover:bg-secondary"
 									>
-										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Streamable HTTP</p>
-										<code class="font-mono-cta mt-3 block break-all text-sm font-semibold text-emerald-300">{mcpRpcUrl}</code>
-										<p class="mt-3 text-sm leading-relaxed text-slate-400">
-											JSON-RPC <code class="font-mono-cta text-slate-400">POST</code> target — include{' '}
-											<code class="font-mono-cta text-slate-400">/mcp</code> and{' '}
-											<code class="font-mono-cta text-slate-400">Accept: application/json, text/event-stream</code>.
+										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Streamable HTTP</p>
+										<code class="font-mono-cta mt-3 block break-all text-sm font-semibold text-brand-mcp">{mcpRpcUrl}</code>
+										<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+											JSON-RPC <code class="font-mono-cta text-muted-foreground">POST</code> target — include{' '}
+											<code class="font-mono-cta text-muted-foreground">/mcp</code> and{' '}
+											<code class="font-mono-cta text-muted-foreground">Accept: application/json, text/event-stream</code>.
 										</p>
-										<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300">
+										<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-brand-mcp">
 											Open endpoint <span aria-hidden="true">↗</span>
 										</span>
 									</a>
 									<a
 										href="#connect-bearer"
-										class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
+										class="group bg-surface-mid p-6 transition duration-300 hover:bg-secondary"
 									>
-										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">Integrations</p>
-										<span class="font-mono-cta mt-3 block text-sm font-semibold text-white">Connect guide</span>
-										<p class="mt-3 text-sm leading-relaxed text-slate-400">
+										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">Integrations</p>
+										<span class="font-mono-cta mt-3 block text-sm font-semibold text-foreground">Connect guide</span>
+										<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 											Bearer token vs OAuth — copy-paste configs for Cursor and Claude.
 										</p>
-										<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-violet-300">
+										<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-brand-violet">
 											Jump to setup <span aria-hidden="true">↓</span>
 										</span>
 									</a>
@@ -1282,14 +1282,14 @@ npx aadm-init-repo --full</code></pre>
 											href={urlStandard}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
+											class="group bg-surface-mid p-6 transition duration-300 hover:bg-secondary"
 										>
-											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/85">Standard</p>
-											<span class="font-display mt-3 block text-sm font-bold text-white">Public AADM narrative</span>
-											<p class="mt-3 text-sm leading-relaxed text-slate-400">
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">Standard</p>
+											<span class="font-display mt-3 block text-sm font-bold text-foreground">Public AADM narrative</span>
+											<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 												Free, versioned standard text — the MCP is governed context on top of this story.
 											</p>
-											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-amber-300">
+											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-brand-warn">
 												Open standard <span aria-hidden="true">↗</span>
 											</span>
 										</a>
@@ -1299,14 +1299,14 @@ npx aadm-init-repo --full</code></pre>
 											href={urlMcpCustomerDocs}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="group bg-[#06080f] p-6 transition duration-300 hover:bg-[#080c16]"
+											class="group bg-surface-mid p-6 transition duration-300 hover:bg-secondary"
 										>
-											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Subscriber</p>
-											<span class="font-display mt-3 block text-sm font-bold text-white">Integration docs</span>
-											<p class="mt-3 text-sm leading-relaxed text-slate-400">
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Subscriber</p>
+											<span class="font-display mt-3 block text-sm font-bold text-foreground">Integration docs</span>
+											<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 												Portal or handbook material for org rollout — when this URL is configured at build time.
 											</p>
-											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300">
+											<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-brand-mcp">
 												Open docs <span aria-hidden="true">↗</span>
 											</span>
 										</a>
@@ -1314,8 +1314,8 @@ npx aadm-init-repo --full</code></pre>
 									{operatorVisuals.map((visual) => (
 										<div
 											class:list={[
-												"grid-visual-slot-cols-3 relative overflow-hidden bg-[#06080f] transition duration-300 hover:bg-[#080c16]",
-												visual.variant === "wide" ? "sm:col-span-2 lg:col-span-2" : "",
+												"grid-visual-slot-cols-3 relative overflow-hidden bg-surface-mid transition duration-300 hover:bg-secondary",
+												visual.variant === "wide" ? "lg:col-span-2" : "",
 											]}
 											style={gridVisualSlotStyle(visual)}
 										>
@@ -1324,21 +1324,21 @@ npx aadm-init-repo --full</code></pre>
 									))}
 								</div>
 
-								<div class="mt-10 border border-white/10 bg-[#050810]">
-									<div class="flex items-center justify-between border-b border-white/[0.06] px-5 py-3">
-										<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Smoke · initialize</span>
+								<div class="mt-10 border border-border bg-surface-mid">
+									<div class="flex items-center justify-between border-b border-border px-5 py-3">
+										<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Smoke · initialize</span>
 										<span class="flex gap-1" aria-hidden="true">
-											<span class="block h-1.5 w-1.5 rounded-full bg-emerald-400/70"></span>
-											<span class="block h-1.5 w-1.5 rounded-full bg-amber-400/70"></span>
-											<span class="block h-1.5 w-1.5 rounded-full bg-slate-500/70"></span>
+											<span class="block h-1.5 w-1.5 rounded-full bg-brand-mcp/70"></span>
+											<span class="block h-1.5 w-1.5 rounded-full bg-brand-warn/70"></span>
+											<span class="block h-1.5 w-1.5 rounded-full bg-muted-foreground/70"></span>
 										</span>
 									</div>
-									<pre class="font-mono-cta overflow-x-auto p-5 text-xs leading-relaxed text-slate-300 sm:text-sm"><code>{curlInit}</code></pre>
+									<pre class="font-mono-cta overflow-x-auto p-5 text-xs leading-relaxed text-text-secondary sm:text-sm"><code>{curlInit}</code></pre>
 								</div>
 							</>
 						) : (
-							<p class="mt-6 text-sm text-slate-400">
-								Set <code class="font-mono-cta text-slate-300">PUBLIC_MCP_REPO_URL</code> at build time to render your MCP
+							<p class="mt-6 text-sm text-muted-foreground">
+								Set <code class="font-mono-cta text-text-secondary">PUBLIC_MCP_REPO_URL</code> at build time to render your MCP
 								endpoint and curl on this page.
 							</p>
 						)
@@ -1352,26 +1352,26 @@ npx aadm-init-repo --full</code></pre>
 		     ============================================================= -->
 		<section class="relative bg-surface-deep" aria-labelledby="mcp-tools-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 10</span>
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">Tools catalog</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 10</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Tools catalog</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 id="mcp-tools-heading" class="font-display text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white">
+					<h2 id="mcp-tools-heading" class="font-display text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Typed tools & outcomes.
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						Each tool returns structured JSON for orchestrators and IDEs. After you connect,{' '}
-						<code class="font-mono-cta text-emerald-200/85">tools/list</code> and{' '}
-						<code class="font-mono-cta text-emerald-200/85">inputSchema</code> on the running server are authoritative — names below
+						<code class="font-mono-cta text-brand-mcp">tools/list</code> and{' '}
+						<code class="font-mono-cta text-brand-mcp">inputSchema</code> on the running server are authoritative — names below
 						match the hosted AADM MCP surface.
 					</p>
-					<p class="mt-3 max-w-3xl text-sm leading-relaxed text-slate-500">
+					<p class="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
 						Wondering whether your framework or cloud is covered?{' '}
 						<a
 							href="/stacks"
-							class="font-semibold text-slate-300 underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="font-semibold text-text-secondary underline decoration-border underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 							>See compatible stacks</a
 						>.
 					</p>
@@ -1379,8 +1379,8 @@ npx aadm-init-repo --full</code></pre>
 					<ul class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 xl:grid-cols-3">
 						{
 							mcpToolsCatalog.map((row) => (
-								<li class="group flex flex-col bg-surface-deep p-5 transition duration-300 hover:bg-[#0a0e1a]">
-									<code class="font-mono-cta break-all text-sm font-semibold text-white">{row.tool}</code>
+								<li class="group flex flex-col bg-surface-deep p-5 transition duration-300 hover:bg-surface-mid">
+									<code class="font-mono-cta break-all text-sm font-semibold text-foreground">{row.tool}</code>
 									<div class="mt-3 flex flex-wrap gap-1.5">
 										{row.badges.map((b) => (
 											<span
@@ -1393,9 +1393,9 @@ npx aadm-init-repo --full</code></pre>
 											</span>
 										))}
 									</div>
-									<p class="mt-4 text-sm leading-relaxed text-slate-400">{row.outcome}</p>
+									<p class="mt-4 text-sm leading-relaxed text-muted-foreground">{row.outcome}</p>
 									<div aria-hidden="true" class="mt-auto pt-5">
-										<div class="h-px w-8 bg-emerald-300/30 transition-all duration-500 group-hover:w-16 group-hover:bg-emerald-300/60"></div>
+										<div class="h-px w-8 bg-brand-mcp-border transition-all duration-500 group-hover:w-16 group-hover:bg-brand-mcp"></div>
 									</div>
 								</li>
 							))
@@ -1403,15 +1403,15 @@ npx aadm-init-repo --full</code></pre>
 					</ul>
 
 					<!-- Colophon -->
-					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-500">
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-border pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Service</span> · AADM MCP
+							<span class="text-muted-foreground">Service</span> · AADM MCP
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Endpoint</span> · <span class="text-emerald-300/80">{mcpRpcUrl}</span>
+							<span class="text-muted-foreground">Endpoint</span> · <span class="text-brand-mcp">{mcpRpcUrl}</span>
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-400">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / JSON-RPC</span>
+							<span class="text-muted-foreground">Transport</span> · <span class="text-brand-mcp">Streamable HTTP / JSON-RPC</span>
 						</div>
 					</div>
 				</div>

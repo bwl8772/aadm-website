@@ -1,7 +1,7 @@
 ---
 /**
  * Astro-owned member navigation — top tabs on every viewport.
- * Colors inherit site surface tokens (see `src/styles/global.css`), not hardcoded light.
+ * Colors inherit site light/dark semantic tokens, not a forced light or dark panel.
  */
 import {
 	MEMBER_API_KEYS_SEGMENT,
@@ -96,19 +96,19 @@ const tabs = [
 		font-size: 0.875rem;
 		font-weight: 600;
 		line-height: 1.25;
-		color: rgb(148 163 184);
+		color: var(--text-muted);
 		text-decoration: none;
 		white-space: nowrap;
 	}
 
 	.member-nav-tabs__tab:hover {
-		color: rgb(241 245 249);
-		background: rgb(255 255 255 / 0.04);
+		color: var(--text-primary);
+		background: var(--hover);
 	}
 
 	.member-nav-tabs__tab--active {
-		color: rgb(241 245 249);
-		border-bottom-color: var(--color-accent-violet);
+		color: var(--text-primary);
+		border-bottom-color: var(--accent-violet);
 	}
 
 	.member-nav-tabs__tab:focus-visible {

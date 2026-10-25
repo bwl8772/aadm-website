@@ -35,13 +35,10 @@ try {
 
 	// Menu closed: overlay must not intercept taps on main content.
 	const menuClosed = page.locator("#site-mobile-menu");
-	await assert(
-		!(await menuClosed.isVisible()),
-		"menu should be hidden on load",
-	);
+	assert(!(await menuClosed.isVisible()), "menu should be hidden on load");
 
 	const mainLink = page.locator("main a").first();
-	await assert(
+	assert(
 		await mainLink.isVisible(),
 		"main content link should be tappable when menu closed",
 	);
@@ -49,12 +46,12 @@ try {
 
 	// Open menu.
 	const toggle = page.locator("[data-menu-toggle]");
-	await assert(await toggle.isVisible(), "hamburger toggle visible on mobile");
+	assert(await toggle.isVisible(), "hamburger toggle visible on mobile");
 	await toggle.click();
 	await page.waitForTimeout(350);
 
-	await assert(await menuClosed.isVisible(), "menu overlay visible after open");
-	await assert(
+	assert(await menuClosed.isVisible(), "menu overlay visible after open");
+	assert(
 		(await toggle.getAttribute("aria-expanded")) === "true",
 		"toggle aria-expanded true",
 	);
@@ -96,14 +93,11 @@ try {
 
 	// Hidden mobile-only links reachable in panel.
 	const toolsLink = page.locator("#site-mobile-menu a", { hasText: "Tools" });
-	await assert(
-		await toolsLink.isVisible(),
-		"Tools link visible in mobile menu",
-	);
-	await assert(await toolsLink.isEnabled(), "Tools link enabled");
+	assert(await toolsLink.isVisible(), "Tools link visible in mobile menu");
+	assert(await toolsLink.isEnabled(), "Tools link enabled");
 
 	const idesLink = page.locator("#site-mobile-menu a", { hasText: "IDEs" });
-	await assert(await idesLink.isVisible(), "IDEs link visible in mobile menu");
+	assert(await idesLink.isVisible(), "IDEs link visible in mobile menu");
 
 	// Backdrop closes menu.
 	const backdrop = page.locator("[data-menu-backdrop]");
@@ -111,15 +105,15 @@ try {
 	assert(box && box.width > 0, "backdrop has size");
 	await page.mouse.click(box.x + 12, box.y + box.height / 2);
 	await page.waitForTimeout(250);
-	await assert(!(await menuClosed.isVisible()), "menu closes on backdrop tap");
+	assert(!(await menuClosed.isVisible()), "menu closes on backdrop tap");
 
 	// Escape closes menu.
 	await toggle.click();
 	await page.waitForTimeout(200);
-	await assert(await menuClosed.isVisible(), "menu open again");
+	assert(await menuClosed.isVisible(), "menu open again");
 	await page.keyboard.press("Escape");
 	await page.waitForTimeout(200);
-	await assert(!(await menuClosed.isVisible()), "menu closes on Escape");
+	assert(!(await menuClosed.isVisible()), "menu closes on Escape");
 
 	// Scroll long page: menu still covers viewport when open.
 	await page.goto(`${base}/case-studies`, {
