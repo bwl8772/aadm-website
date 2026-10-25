@@ -553,6 +553,12 @@ const failureModes: FailureMode[] = [
 										</p>
 									</div>
 
+									<a
+										href={row.tool ? `/tools#${row.tool.split(" · ")[0]}` : "/tools"}
+										aria-label={`${row.scenario} — see ${row.tool ? row.tool.split(" · ")[0] : "the tools"} on the Tools page`}
+										class="absolute inset-0 z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+									></a>
+
 									<!-- Hover chevron (desktop) -->
 									<div aria-hidden="true" class="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-2 opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100 lg:block">
 										<svg width="20" height="14" viewBox="0 0 20 14" fill="none" class="text-emerald-300/80">

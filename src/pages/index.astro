@@ -1,4 +1,5 @@
 ---
+import AadmThreadReplica from "../components/visuals/AadmThreadReplica.astro";
 import Layout from "../layouts/Layout.astro";
 import { getSiteUrlConfig } from "../lib/site-urls";
 
@@ -336,6 +337,21 @@ const outcomes: Outcome[] = [
 						> is the discipline this standard serves — written for engineers who already know how software should be built.
 					</p>
 				</div>
+			</div>
+		</section>
+
+		<!-- AADM thread replica (decorative, non-interactive) -->
+		<section class="relative border-b border-white/[0.06] px-4 py-24 sm:px-8 sm:py-28">
+			<div class="mx-auto max-w-3xl text-center">
+				<h2 class="font-display text-balance text-[clamp(1.6rem,3.4vw,2.4rem)] font-bold leading-[1.15] text-white">
+					What it looks like in your editor
+				</h2>
+				<p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-400">
+					Your agent works as usual. When the task needs governance, it calls AADM and follows what comes back.
+				</p>
+			</div>
+			<div class="mt-12">
+				<AadmThreadReplica />
 			</div>
 		</section>
 
