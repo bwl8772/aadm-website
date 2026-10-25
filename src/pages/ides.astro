@@ -150,23 +150,23 @@ const toneClasses: Record<
 	{ letter: string; chip: string; rule: string }
 > = {
 	amber: {
-		letter: "text-amber-300/85",
-		chip: "border-amber-300/30 text-amber-200",
-		rule: "border-amber-300/40",
+		letter: "text-brand-warn",
+		chip: "border-brand-warn-border text-brand-warn",
+		rule: "border-brand-warn-border",
 	},
 	violet: {
-		letter: "text-violet-300/90",
-		chip: "border-violet-400/30 text-violet-200",
+		letter: "text-brand-violet",
+		chip: "border-violet-400/30 text-brand-violet",
 		rule: "border-violet-400/40",
 	},
 	sky: {
-		letter: "text-sky-300/90",
-		chip: "border-sky-400/30 text-sky-200",
+		letter: "text-brand-sky",
+		chip: "border-sky-400/30 text-brand-sky",
 		rule: "border-sky-400/40",
 	},
 	emerald: {
-		letter: "text-emerald-300/90",
-		chip: "border-emerald-400/30 text-emerald-200",
+		letter: "text-brand-mcp",
+		chip: "border-emerald-400/30 text-brand-mcp",
 		rule: "border-emerald-400/40",
 	},
 	slate: {
@@ -243,27 +243,27 @@ const totalIdes =
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 00</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">IDEs</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
-						<span class="text-emerald-200/90">▸</span> {totalIdes} clients · one Streamable HTTP endpoint · no per-team forks
+						<span class="text-brand-mcp">▸</span> {totalIdes} clients · one Streamable HTTP endpoint · no per-team forks
 					</p>
 
 					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Any MCP-capable IDE. <span class="font-light italic text-muted-foreground"> Same standard.</span><br />
 						<span class="relative inline-block">
-							<span class="relative z-10 text-emerald-300">Same wire.</span>
+							<span class="relative z-10 text-brand-mcp">Same wire.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span>
 					</h1>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">The wire</p>
+							<div class="border-l border-brand-mcp-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">The wire</p>
 								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
 									One endpoint, one transport, one config. Cursor, Claude Code, Windsurf, Cline, JetBrains AI, Zed,
 									claude.ai Connectors, even raw curl — they all paste the same MCP server URL.
@@ -280,7 +280,7 @@ const totalIdes =
 								The harness is the part of the stack that decides what your agent can actually run.{' '}
 								<a
 									href="/about"
-									class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+									class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 									>Agentic engineering</a
 								>{' '}
 								covers why swapping harnesses should change nothing about how the work is governed.
@@ -315,7 +315,7 @@ const totalIdes =
 		<section id="universal" class="relative scroll-mt-24 border-b border-border bg-surface-mid sm:scroll-mt-28">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-20 sm:px-8 sm:py-24">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ U</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ U</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Universal snippet</span>
 				</aside>
 
@@ -325,7 +325,7 @@ const totalIdes =
 					</h2>
 					<p class="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						This is the canonical config. Most MCP-capable clients take this verbatim under their
-						<code class="font-mono-cta text-emerald-200/85"> mcpServers</code> key. Edit the<span class="text-foreground"> Authorization</span>
+						<code class="font-mono-cta text-brand-mcp"> mcpServers</code> key. Edit the<span class="text-foreground"> Authorization</span>
 						header with your token.
 					</p>
 
@@ -333,7 +333,7 @@ const totalIdes =
 						<div class="col-span-12 lg:col-span-7">
 							<div class="border border-border bg-surface-mid">
 								<div class="flex items-center justify-between border-b border-border px-5 py-3">
-									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">mcpServers.aadm</span>
+									<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">mcpServers.aadm</span>
 									<button
 										type="button"
 										id="universal-copy-btn"
@@ -346,32 +346,32 @@ const totalIdes =
 							</div>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border-l-2 border-emerald-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Three universal rules</p>
+							<div class="border-l-2 border-brand-mcp-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Three universal rules</p>
 								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-border">
 									<li class="grid grid-cols-[auto_1fr] items-baseline gap-3 py-3">
-										<span class="font-mono-cta text-sm text-emerald-300/80">01</span>
+										<span class="font-mono-cta text-sm text-brand-mcp">01</span>
 										<span class="text-sm leading-relaxed text-text-secondary">
-											The URL must include <code class="font-mono-cta text-xs text-emerald-200/85">/mcp</code>.
+											The URL must include <code class="font-mono-cta text-xs text-brand-mcp">/mcp</code>.
 										</span>
 									</li>
 									<li class="grid grid-cols-[auto_1fr] items-baseline gap-3 py-3">
-										<span class="font-mono-cta text-sm text-emerald-300/80">02</span>
+										<span class="font-mono-cta text-sm text-brand-mcp">02</span>
 										<span class="text-sm leading-relaxed text-text-secondary">
-											<code class="font-mono-cta text-xs text-emerald-200/85">type: http</code> means Streamable HTTP, not stdio.
+											<code class="font-mono-cta text-xs text-brand-mcp">type: http</code> means Streamable HTTP, not stdio.
 										</span>
 									</li>
 									<li class="grid grid-cols-[auto_1fr] items-baseline gap-3 py-3">
-										<span class="font-mono-cta text-sm text-emerald-300/80">03</span>
+										<span class="font-mono-cta text-sm text-brand-mcp">03</span>
 										<span class="text-sm leading-relaxed text-text-secondary">
-											Use <code class="font-mono-cta text-xs text-emerald-200/85">Bearer ak_…</code> for API keys,
-											or just <code class="font-mono-cta text-xs text-emerald-200/85">aadm_…</code> for dashboard tokens.
+											Use <code class="font-mono-cta text-xs text-brand-mcp">Bearer ak_…</code> for API keys,
+											or just <code class="font-mono-cta text-xs text-brand-mcp">aadm_…</code> for dashboard tokens.
 										</span>
 									</li>
 								</ul>
 								<p class="mt-5 text-xs leading-relaxed text-muted-foreground">
 									Some clients (claude.ai, Claude Code) prefer OAuth instead — see{' '}
-									<a href="/mcp#connect-oauth" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">OAuth setup</a>.
+									<a href="/mcp#connect-oauth" class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">OAuth setup</a>.
 								</p>
 							</div>
 						</div>
@@ -406,7 +406,7 @@ const totalIdes =
 				>
 					<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 						<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-							<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ {g.num}</span>
+							<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ {g.num}</span>
 							<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{g.tagline}</span>
 						</aside>
 
@@ -458,7 +458,7 @@ const totalIdes =
 														class:list={[
 															"group/cta font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] underline decoration-white/20 underline-offset-[6px] transition",
 															t.letter.replace("/85", "").replace("/90", ""),
-															"hover:decoration-emerald-300",
+															"hover:decoration-brand-mcp",
 														]}
 													>
 														<span>{ide.cta.label}</span>
@@ -482,7 +482,7 @@ const totalIdes =
 		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 05</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 05</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Setup pattern</span>
 				</aside>
 
@@ -500,12 +500,12 @@ const totalIdes =
 							].map((s) => (
 								<li class="bg-surface-deep p-7 sm:p-9">
 									<div class="flex items-baseline gap-4">
-										<span class="font-display text-5xl font-light leading-none text-emerald-200/85 sm:text-6xl">{s.num}</span>
+										<span class="font-display text-5xl font-light leading-none text-brand-mcp sm:text-6xl">{s.num}</span>
 									</div>
 									<h3 class="font-display mt-6 text-balance text-lg font-bold leading-snug tracking-tight text-foreground sm:text-xl">{s.t}</h3>
 									<p class="mt-3 text-sm leading-relaxed text-muted-foreground">{s.b}</p>
 									<p class="mt-5">
-										<a href={s.link.href} class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300 underline decoration-emerald-300/30 underline-offset-[6px] hover:decoration-emerald-300">
+										<a href={s.link.href} class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-brand-mcp underline decoration-brand-mcp underline-offset-[6px] hover:decoration-brand-mcp">
 											<span>{s.link.label}</span>
 											<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
 										</a>
@@ -525,7 +525,7 @@ const totalIdes =
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.07),transparent_60%)]"></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 06</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 06</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Start here</span>
 				</aside>
 
@@ -533,7 +533,7 @@ const totalIdes =
 					<h2 class="font-display max-w-[18ch] text-balance text-[clamp(2rem,5.5vw,4.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Pick an IDE. <span class="font-light italic text-muted-foreground">Paste a snippet.</span><br />
 						<span class="relative inline-block">
-							<span class="relative z-10 text-emerald-300">Ship governed.</span>
+							<span class="relative z-10 text-brand-mcp">Ship governed.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span>
 					</h2>
@@ -559,14 +559,14 @@ const totalIdes =
 						</a>
 						<a
 							href="/tools"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>Browse the tools catalog</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
 						</a>
 						<a
 							href="/stacks"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>See compatible stacks</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
@@ -579,10 +579,10 @@ const totalIdes =
 							<span class="text-muted-foreground">Clients listed</span> · {totalIdes}
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-muted-foreground">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / MCP</span>
+							<span class="text-muted-foreground">Transport</span> · <span class="text-brand-mcp">Streamable HTTP / MCP</span>
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-muted-foreground">Endpoint</span> · <span class="text-emerald-300/80">{urlMcpRpcUrl}</span>
+							<span class="text-muted-foreground">Endpoint</span> · <span class="text-brand-mcp">{urlMcpRpcUrl}</span>
 						</div>
 					</div>
 				</div>

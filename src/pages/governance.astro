@@ -51,13 +51,13 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 00</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Governance</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
-						<span class="text-amber-200/90">▸</span> Optional · the hosted MCP works fine without this
+						<span class="text-brand-warn">▸</span> Optional · the hosted MCP works fine without this
 					</p>
 
 					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
@@ -66,30 +66,30 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-amber-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/80">When to use this</p>
+							<div class="border-l border-brand-warn-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">When to use this</p>
 								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
-									Only when you want a versioned <code class="font-mono-cta text-amber-200/85">.aadm/config.json</code>
-									in an application repo — <a href="/about#udali" class="text-amber-200 underline decoration-amber-300/40 underline-offset-4 hover:decoration-amber-300">UDALI</a> paths, lane defaults, CI stubs. Skip otherwise.
+									Only when you want a versioned <code class="font-mono-cta text-brand-warn">.aadm/config.json</code>
+									in an application repo — <a href="/about#udali" class="text-brand-warn underline decoration-brand-warn underline-offset-4 hover:decoration-brand-warn">UDALI</a> paths, lane defaults, CI stubs. Skip otherwise.
 								</p>
 							</div>
 						</div>
 						<div class="col-span-12 sm:col-span-8">
 							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
 								Run this in <span class="text-foreground">your application project</span> — not the MCP server repo. From the folder
-								where you want <code class="font-mono-cta text-emerald-200/85">.aadm/config.json</code> to live. Per-repo, not
+								where you want <code class="font-mono-cta text-brand-mcp">.aadm/config.json</code> to live. Per-repo, not
 								<span class="font-light italic text-muted-foreground"> per-laptop.</span>
 							</p>
 						</div>
 					</div>
 
 					<!-- Pre-check -->
-					<div class="mt-14 border border-amber-300/30 bg-amber-950/[0.12] p-6">
-						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/90">
-							<span class="text-amber-300">▸</span> Before init · run this once
+					<div class="mt-14 border border-brand-warn-border bg-amber-950/[0.12] p-6">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">
+							<span class="text-brand-warn">▸</span> Before init · run this once
 						</p>
 						<p class="mt-3 text-sm leading-relaxed text-text-secondary">
-							Must print <code class="font-mono-cta text-amber-200/85">OK</code>. If it says
+							Must print <code class="font-mono-cta text-brand-warn">OK</code>. If it says
 							<code class="font-mono-cta text-red-300/90">REMOVE THIS</code>, run the cleanup further down first.
 						</p>
 						<pre class="font-mono-cta mt-4 overflow-x-auto border border-border bg-surface-mid p-4 text-xs text-text-secondary sm:text-sm"><code>{verifyNoShadow}</code></pre>
@@ -97,13 +97,13 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 
 					<!-- Init command -->
 					<div class="mt-10">
-						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">
-							<span class="text-emerald-300">▸</span> The init command
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
+							<span class="text-brand-mcp">▸</span> The init command
 						</p>
-						<pre class="font-mono-cta mt-4 overflow-x-auto border border-emerald-300/40 bg-surface-mid p-6 text-base leading-relaxed text-emerald-200 sm:text-lg"><code>{initCmd}</code></pre>
+						<pre class="font-mono-cta mt-4 overflow-x-auto border border-brand-mcp-border bg-surface-mid p-6 text-base leading-relaxed text-brand-mcp sm:text-lg"><code>{initCmd}</code></pre>
 						<p class="mt-4 text-sm text-muted-foreground">
 							Faster template · <code class="font-mono-cta text-text-secondary">{initMinimal}</code> · npm package{' '}
-							<a href="https://www.npmjs.com/package/aadm-init-repo" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300" rel="noopener noreferrer" target="_blank">
+							<a href="https://www.npmjs.com/package/aadm-init-repo" class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp" rel="noopener noreferrer" target="_blank">
 								aadm-init-repo
 							</a>
 							· Node 22+
@@ -111,7 +111,7 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 						<p class="mt-4 max-w-3xl text-sm text-muted-foreground">
 							Edit the JSON for <span class="text-text-secondary">your</span> paths and teams. Don't ship the template{' '}
 							<code class="font-mono-cta text-text-secondary">src/adapter/**</code> defaults.
-							<a href="#customize" class="ml-2 text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
+							<a href="#customize" class="ml-2 text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">
 								Customize checklist ↓
 							</a>
 						</p>
@@ -130,7 +130,7 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 		>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 01</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 01</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Many repos</span>
 				</aside>
 
@@ -140,7 +140,7 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 					</h2>
 					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						Init is <span class="text-foreground">per repository</span>, not per laptop. Each project gets its own{' '}
-						<code class="font-mono-cta text-emerald-200/85">.aadm/config.json</code>, hooks, and workflow stub under that repo's
+						<code class="font-mono-cta text-brand-mcp">.aadm/config.json</code>, hooks, and workflow stub under that repo's
 						root. Run the command once per app — customize each file for that codebase.
 					</p>
 
@@ -155,7 +155,7 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 							].map((item) => (
 								<li class="bg-surface-mid p-6 sm:p-7">
 									<div class="flex items-baseline gap-4">
-										<span class="font-display text-[3rem] font-light leading-[0.85] text-emerald-200/85">{item.num}</span>
+										<span class="font-display text-[3rem] font-light leading-[0.85] text-brand-mcp">{item.num}</span>
 									</div>
 									<h3 class="font-display mt-6 text-balance text-base font-bold leading-snug tracking-tight text-foreground">
 										{item.title}
@@ -166,8 +166,8 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 						}
 					</ul>
 
-					<div class="mt-16 border-l-2 border-amber-300/40 pl-6">
-						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/85">Permission denied?</p>
+					<div class="mt-16 border-l-2 border-brand-warn-border pl-6">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">Permission denied?</p>
 						<p class="mt-3 text-sm text-text-secondary">One-time machine fix (stale global install), then rerun init:</p>
 						<pre class="font-mono-cta mt-4 max-w-md overflow-x-auto border border-border bg-surface-mid p-4 text-xs text-text-secondary"><code>{fixPermission}</code></pre>
 					</div>
@@ -181,7 +181,7 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 		<section id="customize" class="relative border-b border-border" aria-labelledby="customize-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 02</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">§ 02</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">After init</span>
 				</aside>
 
@@ -196,13 +196,13 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 					<ul class="mt-14 divide-y divide-white/[0.06] border-y border-border">
 						{
 							[
-								{ num: "01", body: <>Map <code class="font-mono-cta text-xs text-violet-200/85">udali_ownership.patterns</code> to real folders (<code class="font-mono-cta text-xs text-text-secondary">app/</code>, <code class="font-mono-cta text-xs text-text-secondary">lib/</code>, …).</> },
+								{ num: "01", body: <>Map <code class="font-mono-cta text-xs text-brand-violet">udali_ownership.patterns</code> to real folders (<code class="font-mono-cta text-xs text-text-secondary">app/</code>, <code class="font-mono-cta text-xs text-text-secondary">lib/</code>, …).</> },
 								{ num: "02", body: <>Replace placeholder GitHub teams and AUTH/SEAM entries with yours.</> },
-								{ num: "03", body: <>Keep <code class="font-mono-cta text-xs text-emerald-200/85">{"${AADM_TOKEN}"}</code> in config. Put the real token in IDE MCP settings only.</> },
-								{ num: "04", body: <>Connect hosted MCP · <a href={urlMcpMarketing} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">aadm.io/mcp</a></> },
+								{ num: "03", body: <>Keep <code class="font-mono-cta text-xs text-brand-mcp">{"${AADM_TOKEN}"}</code> in config. Put the real token in IDE MCP settings only.</> },
+								{ num: "04", body: <>Connect hosted MCP · <a href={urlMcpMarketing} class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">aadm.io/mcp</a></> },
 							].map((s) => (
 								<li class="group grid grid-cols-[auto_1fr] items-baseline gap-5 py-4">
-									<span class="font-mono-cta text-sm text-violet-300/80">{s.num}</span>
+									<span class="font-mono-cta text-sm text-brand-violet">{s.num}</span>
 									<span class="text-sm leading-relaxed text-text-secondary transition group-hover:text-foreground">{s.body}</span>
 								</li>
 							))
@@ -213,7 +213,7 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 					<div class="mt-14 border border-violet-400/30 bg-muted" aria-labelledby="customize-prompt-heading">
 						<div class="flex flex-wrap items-start justify-between gap-4 border-b border-border px-7 py-5 sm:px-8">
 							<div>
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/85">Agent prompt</p>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">Agent prompt</p>
 								<h3 id="customize-prompt-heading" class="font-display mt-2 text-xl font-bold text-foreground sm:text-2xl">
 									Customize this repo
 								</h3>
@@ -240,16 +240,16 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 
 					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
 						<a href={schemaUrl} class="group bg-surface-deep p-7 transition duration-300 hover:bg-surface-mid sm:p-8" target="_blank" rel="noopener noreferrer">
-							<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Reference</p>
+							<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Reference</p>
 							<h3 class="font-display mt-3 text-xl font-bold text-foreground">Config JSON Schema</h3>
-							<p class="mt-3 text-sm leading-relaxed text-muted-foreground">The authoritative schema for <code class="font-mono-cta text-xs text-emerald-200/85">.aadm/config.json</code>.</p>
-							<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-emerald-300">Open schema <span aria-hidden="true">↗</span></span>
+							<p class="mt-3 text-sm leading-relaxed text-muted-foreground">The authoritative schema for <code class="font-mono-cta text-xs text-brand-mcp">.aadm/config.json</code>.</p>
+							<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-brand-mcp">Open schema <span aria-hidden="true">↗</span></span>
 						</a>
 						<a href={urlStandard} class="group bg-surface-deep p-7 transition duration-300 hover:bg-surface-mid sm:p-8" target="_blank" rel="noopener noreferrer">
-							<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/85">Reference</p>
+							<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">Reference</p>
 							<h3 class="font-display mt-3 text-xl font-bold text-foreground">Open standard</h3>
 							<p class="mt-3 text-sm leading-relaxed text-muted-foreground">The public standard your engineers, security team, and partners can read.</p>
-							<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-amber-300">Open standard <span aria-hidden="true">↗</span></span>
+							<span class="font-mono-cta mt-6 inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-brand-warn">Open standard <span aria-hidden="true">↗</span></span>
 						</a>
 					</div>
 				</div>
@@ -263,7 +263,7 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.06),transparent_60%)]"></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 03</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 03</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Next</span>
 				</aside>
 				<div class="col-span-12 sm:col-span-10">
@@ -271,7 +271,7 @@ Work in the open repo. Propose edits to \`.aadm/config.json\` only after you hav
 						Now connect the agent.
 					</h2>
 					<p class="mt-5 max-w-2xl text-base leading-relaxed text-text-secondary">
-						The <code class="font-mono-cta text-emerald-200/85">.aadm/config.json</code> is just scaffolding. The actual
+						The <code class="font-mono-cta text-brand-mcp">.aadm/config.json</code> is just scaffolding. The actual
 						discipline arrives when an MCP-capable IDE points at the hosted server.
 					</p>
 					<div class="mt-10 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">

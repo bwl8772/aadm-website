@@ -435,7 +435,7 @@ const toolIcon = {
 			<span class="ml-auto inline-flex shrink-0 items-center gap-1.5 text-[12px] text-rose-200">
 				<span class="aadm-live-dot h-1.5 w-1.5 rounded-full bg-rose-400"></span> Live session
 			</span>
-			<span class="hidden shrink-0 items-center gap-1.5 rounded border border-emerald-400/30 px-2 py-0.5 text-[12px] text-emerald-200 lg:inline-flex">
+			<span class="hidden shrink-0 items-center gap-1.5 rounded border border-emerald-400/30 px-2 py-0.5 text-[12px] text-brand-mcp lg:inline-flex">
 				<img src="/favicon.svg" alt="" width="12" height="12" class="h-3 w-3" /> aadm
 			</span>
 		</div>
@@ -471,12 +471,12 @@ const toolIcon = {
 									<div data-step="aadm" class="aadm-step aadm-call rounded-lg border border-emerald-400/30 bg-emerald-400/[0.05] px-4 py-3">
 										<div class="flex flex-wrap items-center gap-2 text-[12px]">
 											<img src="/favicon.svg" alt="" width="18" height="18" class="aadm-mark h-[18px] w-[18px]" />
-											<span class="font-semibold text-emerald-200">AADM</span>
+											<span class="font-semibold text-brand-mcp">AADM</span>
 											<code class="text-muted-foreground">{m.tool}</code>
 											<span data-running class="ml-auto inline-flex items-center gap-1.5 text-muted-foreground">
-												<span class="aadm-spin h-3 w-3 rounded-full border border-emerald-300/30 border-t-emerald-300"></span> Working
+												<span class="aadm-spin h-3 w-3 rounded-full border border-brand-mcp-border border-t-emerald-300"></span> Working
 											</span>
-											<span data-status class="ml-auto aadm-hidden rounded border border-violet-400/30 px-1.5 py-0.5 text-violet-200">{m.status}</span>
+											<span data-status class="ml-auto aadm-hidden rounded border border-violet-400/30 px-1.5 py-0.5 text-brand-violet">{m.status}</span>
 										</div>
 										<ul class="mt-2 space-y-1 text-[13.5px] leading-relaxed text-foreground">
 											{m.lines.map((l) => <li data-line>{l}</li>)}

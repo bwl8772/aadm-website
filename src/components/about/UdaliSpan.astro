@@ -22,28 +22,28 @@ const toneStyles: Record<
 	{ label: string; rule: string; bar: string; chip: string }
 > = {
 	violet: {
-		label: "text-violet-200",
+		label: "text-brand-violet",
 		rule: "border-violet-400/40",
 		bar: "bg-violet-400/60",
-		chip: "border-violet-400/25 text-violet-200/90",
+		chip: "border-violet-400/25 text-brand-violet",
 	},
 	sky: {
-		label: "text-sky-200",
+		label: "text-brand-sky",
 		rule: "border-sky-400/40",
 		bar: "bg-sky-400/60",
-		chip: "border-sky-400/25 text-sky-200/90",
+		chip: "border-sky-400/25 text-brand-sky",
 	},
 	amber: {
-		label: "text-amber-200",
-		rule: "border-amber-300/45",
+		label: "text-brand-warn",
+		rule: "border-brand-warn-border",
 		bar: "bg-amber-300/70",
-		chip: "border-amber-300/30 text-amber-200/90",
+		chip: "border-brand-warn-border text-brand-warn",
 	},
 	emerald: {
-		label: "text-emerald-200",
-		rule: "border-emerald-300/40",
+		label: "text-brand-mcp",
+		rule: "border-brand-mcp-border",
 		bar: "bg-emerald-300/60",
-		chip: "border-emerald-300/25 text-emerald-200/90",
+		chip: "border-brand-mcp-border text-brand-mcp",
 	},
 	slate: {
 		label: "text-text-secondary",
@@ -148,7 +148,7 @@ const bands: Band[] = [
 				aria-hidden="true"
 				class="mt-8 hidden items-stretch gap-3 lg:flex"
 			>
-				<svg width="24" height="120" viewBox="0 0 24 120" fill="none" class="text-emerald-300/50">
+				<svg width="24" height="120" viewBox="0 0 24 120" fill="none" class="text-brand-mcp">
 					<path
 						d="M22 2H12v56H2M12 58v60h10"
 						stroke="currentColor"

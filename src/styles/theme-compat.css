@@ -1,12 +1,15 @@
 /*
  * Light-mode remaps for leftover dark-first utilities.
- * Prefer semantic tokens on new work. These keep existing pages readable
- * until each class is migrated.
+ * Prefer semantic tokens (text-brand-warn, text-brand-mcp, …) on new work.
+ *
+ * Pale Tailwind accents (amber-200, emerald-200, …) are designed for dark
+ * surfaces — on light paper they fail contrast. Remap them to brand tokens.
  *
  * Intentionally NOT remapped: product chrome mocks (Cursor / Claude terminal
  * frames with VS Code–like hexes). Those stay dark in both themes.
  */
 
+/* ——— Neutrals ——— */
 html:not(.dark) .text-white {
 	color: var(--text-primary);
 }
@@ -24,29 +27,290 @@ html:not(.dark) .text-slate-400,
 html:not(.dark) .text-slate-500 {
 	color: var(--text-muted);
 }
-html:not(.dark) .text-emerald-100,
-html:not(.dark) .text-emerald-200,
-html:not(.dark) .text-emerald-200\/85,
-html:not(.dark) .text-emerald-200\/90,
-html:not(.dark) .text-emerald-200\/95 {
-	color: var(--brand-mcp);
-}
+
+/* ——— Amber / warn (yellow-on-light failure) ——— */
+html:not(.dark) .text-amber-50,
 html:not(.dark) .text-amber-100,
 html:not(.dark) .text-amber-100\/95,
 html:not(.dark) .text-amber-200,
-html:not(.dark) .text-amber-200\/85 {
+html:not(.dark) .text-amber-200\/60,
+html:not(.dark) .text-amber-200\/70,
+html:not(.dark) .text-amber-200\/75,
+html:not(.dark) .text-amber-200\/80,
+html:not(.dark) .text-amber-200\/85,
+html:not(.dark) .text-amber-200\/90,
+html:not(.dark) .text-amber-300,
+html:not(.dark) .text-amber-300\/80,
+html:not(.dark) .text-amber-300\/85,
+html:not(.dark) .text-amber-300\/90,
+html:not(.dark) .hover\:text-amber-200:hover,
+html:not(.dark) .hover\:text-amber-300:hover {
 	color: var(--brand-warn);
 }
-html:not(.dark) .text-sky-200,
-html:not(.dark) .text-sky-200\/85 {
-	color: var(--brand-sky);
+
+html:not(.dark) .border-amber-300,
+html:not(.dark) .border-amber-300\/25,
+html:not(.dark) .border-amber-300\/30,
+html:not(.dark) .border-amber-300\/40,
+html:not(.dark) .border-amber-300\/45,
+html:not(.dark) .border-amber-300\/50,
+html:not(.dark) .border-amber-300\/60,
+html:not(.dark) .border-amber-500\/25,
+html:not(.dark) .border-amber-500\/35,
+html:not(.dark) .hover\:border-amber-300\/60:hover,
+html:not(.dark) .hover\:border-amber-300:hover {
+	border-color: var(--brand-warn-border);
 }
+
+html:not(.dark) .decoration-amber-200,
+html:not(.dark) .decoration-amber-300,
+html:not(.dark) .decoration-amber-300\/40,
+html:not(.dark) .decoration-amber-300\/50,
+html:not(.dark) .decoration-amber-400\/40,
+html:not(.dark) .hover\:decoration-amber-300:hover {
+	text-decoration-color: var(--brand-warn);
+}
+
+html:not(.dark) .bg-amber-500\/\[0\.05\],
+html:not(.dark) .bg-amber-500\/\[0\.06\],
+html:not(.dark) .bg-amber-500\/\[0\.07\],
+html:not(.dark) .bg-amber-300\/\[0\.08\],
+html:not(.dark) .bg-amber-300\/\[0\.14\],
+html:not(.dark) .bg-amber-400\/10,
+html:not(.dark) .bg-amber-950\/25,
+html:not(.dark) .bg-amber-950\/\[0\.12\],
+html:not(.dark) .bg-amber-950\/\[0\.15\],
+html:not(.dark) .bg-amber-950\/\[0\.18\],
+html:not(.dark) .hover\:bg-amber-500\/\[0\.06\]:hover,
+html:not(.dark) .hover\:bg-amber-300\/\[0\.12\]:hover {
+	background-color: var(--brand-warn-bg);
+}
+
+html:not(.dark) .fill-amber-200\/80,
+html:not(.dark) .fill-amber-200\/90,
+html:not(.dark) .fill-amber-300\/50 {
+	fill: var(--brand-warn);
+}
+html:not(.dark) .fill-amber-300\/10,
+html:not(.dark) .fill-amber-300\/12,
+html:not(.dark) .fill-amber-300\/15 {
+	fill: color-mix(in srgb, var(--brand-warn) 18%, transparent);
+}
+html:not(.dark) .stroke-amber-300\/40,
+html:not(.dark) .stroke-amber-300\/50 {
+	stroke: var(--brand-warn-border);
+}
+
+/* ——— Emerald / MCP ——— */
+html:not(.dark) .text-emerald-100,
+html:not(.dark) .text-emerald-200,
+html:not(.dark) .text-emerald-200\/70,
+html:not(.dark) .text-emerald-200\/80,
+html:not(.dark) .text-emerald-200\/85,
+html:not(.dark) .text-emerald-200\/90,
+html:not(.dark) .text-emerald-200\/95,
+html:not(.dark) .text-emerald-300,
+html:not(.dark) .text-emerald-300\/50,
+html:not(.dark) .text-emerald-300\/80,
+html:not(.dark) .text-emerald-300\/85,
+html:not(.dark) .text-emerald-300\/90,
+html:not(.dark) .text-emerald-300\/95,
+html:not(.dark) .hover\:text-emerald-200:hover,
+html:not(.dark) .hover\:text-emerald-300:hover {
+	color: var(--brand-mcp);
+}
+
+html:not(.dark) .border-emerald-300,
+html:not(.dark) .border-emerald-300\/20,
+html:not(.dark) .border-emerald-300\/25,
+html:not(.dark) .border-emerald-300\/30,
+html:not(.dark) .border-emerald-300\/35,
+html:not(.dark) .border-emerald-300\/40,
+html:not(.dark) .border-emerald-300\/50,
+html:not(.dark) .border-emerald-300\/60,
+html:not(.dark) .border-emerald-400\/30,
+html:not(.dark) .border-emerald-400\/40,
+html:not(.dark) .border-emerald-500\/20,
+html:not(.dark) .border-emerald-500\/30,
+html:not(.dark) .hover\:border-emerald-300\/50:hover,
+html:not(.dark) .hover\:border-emerald-300\/60:hover,
+html:not(.dark) .hover\:border-emerald-300\/70:hover,
+html:not(.dark) .hover\:border-emerald-300:hover {
+	border-color: var(--brand-mcp-border);
+}
+
+html:not(.dark) .decoration-emerald-300,
+html:not(.dark) .decoration-emerald-300\/30,
+html:not(.dark) .decoration-emerald-300\/40,
+html:not(.dark) .decoration-emerald-300\/50,
+html:not(.dark) .hover\:decoration-emerald-300:hover {
+	text-decoration-color: var(--brand-mcp);
+}
+
+html:not(.dark) .bg-emerald-950\/20,
+html:not(.dark) .bg-emerald-950\/25,
+html:not(.dark) .bg-emerald-950\/30,
+html:not(.dark) .bg-emerald-950\/35,
+html:not(.dark) .bg-emerald-950\/\[0\.15\],
+html:not(.dark) .bg-emerald-950\/\[0\.18\],
+html:not(.dark) .bg-emerald-400\/10,
+html:not(.dark) .bg-emerald-400\/\[0\.05\],
+html:not(.dark) .bg-emerald-300\/\[0\.08\],
+html:not(.dark) .bg-emerald-300\/\[0\.14\],
+html:not(.dark) .bg-emerald-500\/\[0\.06\],
+html:not(.dark) .bg-emerald-500\/\[0\.07\],
+html:not(.dark) .bg-emerald-500\/\[0\.09\],
+html:not(.dark) .hover\:bg-emerald-900\/30:hover,
+html:not(.dark) .hover\:bg-emerald-900\/40:hover {
+	background-color: var(--brand-mcp-bg);
+}
+
+html:not(.dark) .fill-emerald-200\/70,
+html:not(.dark) .fill-emerald-200\/80,
+html:not(.dark) .fill-emerald-200\/90,
+html:not(.dark) .fill-emerald-300\/80,
+html:not(.dark) .fill-emerald-400\/60 {
+	fill: var(--brand-mcp);
+}
+html:not(.dark) .fill-emerald-400\/8,
+html:not(.dark) .fill-emerald-400\/10,
+html:not(.dark) .fill-emerald-400\/12,
+html:not(.dark) .fill-emerald-400\/25 {
+	fill: color-mix(in srgb, var(--brand-mcp) 18%, transparent);
+}
+html:not(.dark) .stroke-emerald-300\/30,
+html:not(.dark) .stroke-emerald-300\/40,
+html:not(.dark) .stroke-emerald-300\/50,
+html:not(.dark) .stroke-emerald-300\/70,
+html:not(.dark) .stroke-emerald-400\/30,
+html:not(.dark) .stroke-emerald-400\/35,
+html:not(.dark) .stroke-emerald-400\/40,
+html:not(.dark) .stroke-emerald-400\/50 {
+	stroke: var(--brand-mcp-border);
+}
+
+/* ——— Violet ——— */
+html:not(.dark) .text-violet-100,
 html:not(.dark) .text-violet-200,
+html:not(.dark) .text-violet-200\/70,
+html:not(.dark) .text-violet-200\/80,
 html:not(.dark) .text-violet-200\/85,
-html:not(.dark) .text-violet-300 {
+html:not(.dark) .text-violet-200\/90,
+html:not(.dark) .text-violet-300,
+html:not(.dark) .text-violet-300\/80,
+html:not(.dark) .text-violet-300\/85,
+html:not(.dark) .text-violet-300\/90,
+html:not(.dark) .text-violet-300\/95,
+html:not(.dark) .hover\:text-violet-200:hover,
+html:not(.dark) .hover\:text-violet-300:hover {
 	color: var(--brand-violet);
 }
 
+html:not(.dark) .border-violet-300\/30,
+html:not(.dark) .border-violet-300\/40,
+html:not(.dark) .border-violet-300\/60,
+html:not(.dark) .border-violet-400\/25,
+html:not(.dark) .border-violet-400\/30,
+html:not(.dark) .border-violet-400\/35,
+html:not(.dark) .border-violet-400\/40,
+html:not(.dark) .border-violet-500\/20,
+html:not(.dark) .border-violet-500\/30,
+html:not(.dark) .hover\:border-violet-300\/60:hover,
+html:not(.dark) .hover\:border-violet-400:hover {
+	border-color: color-mix(in srgb, var(--brand-violet) 40%, transparent);
+}
+
+html:not(.dark) .decoration-violet-300,
+html:not(.dark) .decoration-violet-400\/40,
+html:not(.dark) .hover\:decoration-violet-300:hover {
+	text-decoration-color: var(--brand-violet);
+}
+
+html:not(.dark) .bg-violet-950\/20,
+html:not(.dark) .bg-violet-950\/35,
+html:not(.dark) .bg-violet-950\/\[0\.16\],
+html:not(.dark) .bg-violet-400\/10,
+html:not(.dark) .bg-violet-500\/\[0\.06\],
+html:not(.dark) .bg-violet-500\/\[0\.07\] {
+	background-color: color-mix(in srgb, var(--brand-violet) 12%, transparent);
+}
+
+html:not(.dark) .fill-violet-100\/70,
+html:not(.dark) .fill-violet-200\/80 {
+	fill: var(--brand-violet);
+}
+html:not(.dark) .fill-violet-400\/10,
+html:not(.dark) .fill-violet-400\/12,
+html:not(.dark) .fill-violet-400\/15 {
+	fill: color-mix(in srgb, var(--brand-violet) 18%, transparent);
+}
+html:not(.dark) .stroke-violet-300\/30,
+html:not(.dark) .stroke-violet-400\/30,
+html:not(.dark) .stroke-violet-400\/40,
+html:not(.dark) .stroke-violet-400\/50 {
+	stroke: color-mix(in srgb, var(--brand-violet) 40%, transparent);
+}
+
+/* ——— Sky ——— */
+html:not(.dark) .text-sky-100,
+html:not(.dark) .text-sky-200,
+html:not(.dark) .text-sky-200\/70,
+html:not(.dark) .text-sky-200\/80,
+html:not(.dark) .text-sky-200\/85,
+html:not(.dark) .text-sky-200\/90,
+html:not(.dark) .text-sky-300,
+html:not(.dark) .text-sky-300\/80,
+html:not(.dark) .text-sky-300\/90,
+html:not(.dark) .hover\:text-sky-200:hover,
+html:not(.dark) .hover\:text-sky-300:hover {
+	color: var(--brand-sky);
+}
+
+html:not(.dark) .border-sky-300\/40,
+html:not(.dark) .border-sky-300\/60,
+html:not(.dark) .border-sky-400\/25,
+html:not(.dark) .border-sky-400\/30,
+html:not(.dark) .border-sky-400\/35,
+html:not(.dark) .border-sky-400\/40,
+html:not(.dark) .border-sky-500\/20,
+html:not(.dark) .border-sky-500\/25 {
+	border-color: color-mix(in srgb, var(--brand-sky) 40%, transparent);
+}
+
+html:not(.dark) .bg-sky-950\/30,
+html:not(.dark) .bg-sky-950\/40,
+html:not(.dark) .bg-sky-950\/\[0\.16\],
+html:not(.dark) .bg-sky-400\/10,
+html:not(.dark) .bg-sky-500\/\[0\.06\],
+html:not(.dark) .bg-sky-500\/\[0\.07\] {
+	background-color: color-mix(in srgb, var(--brand-sky) 12%, transparent);
+}
+
+html:not(.dark) .fill-sky-100\/90,
+html:not(.dark) .fill-sky-200\/80,
+html:not(.dark) .fill-sky-200\/90,
+html:not(.dark) .fill-sky-300\/40,
+html:not(.dark) .fill-sky-300\/60 {
+	fill: var(--brand-sky);
+}
+html:not(.dark) .fill-sky-400\/10,
+html:not(.dark) .fill-sky-400\/12,
+html:not(.dark) .fill-sky-400\/20 {
+	fill: color-mix(in srgb, var(--brand-sky) 18%, transparent);
+}
+html:not(.dark) .stroke-sky-400\/20,
+html:not(.dark) .stroke-sky-400\/30,
+html:not(.dark) .stroke-sky-400\/40,
+html:not(.dark) .stroke-sky-400\/50 {
+	stroke: color-mix(in srgb, var(--brand-sky) 40%, transparent);
+}
+
+/* ——— Rose (live / alert accents) ——— */
+html:not(.dark) .text-rose-200 {
+	color: #be123c;
+}
+
+/* ——— White / black translucents ——— */
 html:not(.dark) .border-white\/10,
 html:not(.dark) .border-white\/12,
 html:not(.dark) .border-white\/15,
@@ -88,34 +352,11 @@ html:not(.dark) .bg-black\/70 {
 	background-color: var(--overlay);
 }
 
-html:not(.dark) .bg-emerald-950\/20,
-html:not(.dark) .bg-emerald-950\/25,
-html:not(.dark) .bg-emerald-950\/30,
-html:not(.dark) .hover\:bg-emerald-900\/30:hover,
-html:not(.dark) .hover\:bg-emerald-900\/40:hover {
-	background-color: var(--brand-mcp-bg);
-}
-html:not(.dark) .border-emerald-300\/25,
-html:not(.dark) .border-emerald-300\/30,
-html:not(.dark) .border-emerald-300\/40,
-html:not(.dark) .hover\:border-emerald-300\/50:hover,
-html:not(.dark) .hover\:border-emerald-300\/60:hover,
-html:not(.dark) .hover\:border-emerald-300\/70:hover {
-	border-color: var(--brand-mcp-border);
+html:not(.dark) .bg-white\/\[0\.08\] {
+	background-color: var(--border);
 }
 
-html:not(.dark) .bg-amber-500\/\[0\.06\],
-html:not(.dark) .hover\:bg-amber-500\/\[0\.06\]:hover,
-html:not(.dark) .hover\:bg-amber-300\/\[0\.12\]:hover {
-	background-color: var(--brand-warn-bg);
-}
-html:not(.dark) .border-amber-300\/30,
-html:not(.dark) .border-amber-300\/50,
-html:not(.dark) .hover\:border-amber-300\/60:hover {
-	border-color: var(--brand-warn-border);
-}
-
-/* Residual hex panels (prefer semantic tokens on new work) */
+/* Residual hex panels */
 html:not(.dark) .bg-\[\#050810\],
 html:not(.dark) .bg-\[\#06080f\],
 html:not(.dark) .bg-\[\#070b13\],
@@ -131,10 +372,6 @@ html:not(.dark) .hover\:bg-\[\#080c16\]:hover {
 	background-color: var(--surface-mid);
 }
 
-html:not(.dark) .bg-white\/\[0\.08\] {
-	background-color: var(--border);
-}
-
 /* Filled “white” CTAs invert against the page in both themes */
 html:not(.dark) .bg-white {
 	background-color: var(--foreground);
@@ -143,7 +380,6 @@ html:not(.dark) .text-slate-950 {
 	color: var(--background);
 }
 
-/* Active inverted chips stay high-contrast on both themes */
 html:not(.dark) .\!bg-white {
 	background-color: var(--foreground) !important;
 }
@@ -154,7 +390,6 @@ html:not(.dark) .\!border-white {
 	border-color: var(--foreground) !important;
 }
 
-/* SiteHeader active chip uses foreground/background; keep legacy slate-950 chips working */
 html:not(.dark) .\!bg-foreground {
 	background-color: var(--foreground) !important;
 }

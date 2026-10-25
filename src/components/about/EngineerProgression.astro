@@ -30,23 +30,23 @@ const toneStyles: Record<
 		box: "bg-surface-deep",
 	},
 	sky: {
-		numeral: "text-sky-300/90",
-		chip: "border-sky-400/25 text-sky-200",
+		numeral: "text-brand-sky",
+		chip: "border-sky-400/25 text-brand-sky",
 		rule: "border-sky-400/35",
 		glow: "bg-sky-500/[0.06]",
 		box: "bg-surface-deep",
 	},
 	violet: {
-		numeral: "text-violet-300/90",
-		chip: "border-violet-400/25 text-violet-200",
+		numeral: "text-brand-violet",
+		chip: "border-violet-400/25 text-brand-violet",
 		rule: "border-violet-400/35",
 		glow: "bg-violet-500/[0.06]",
 		box: "bg-surface-deep",
 	},
 	emerald: {
-		numeral: "text-emerald-300",
-		chip: "border-emerald-300/30 text-emerald-200",
-		rule: "border-emerald-300/50",
+		numeral: "text-brand-mcp",
+		chip: "border-brand-mcp-border text-brand-mcp",
+		rule: "border-brand-mcp-border",
 		glow: "bg-emerald-500/[0.09]",
 		box: "bg-muted",
 	},
@@ -126,7 +126,7 @@ const rungs: Rung[] = [
 									{rung.num}
 								</span>
 								{isHere ? (
-									<span class="font-mono-cta border border-emerald-300/40 px-2 py-1 text-[13px] normal-case tracking-[0.01em] text-emerald-200">
+									<span class="font-mono-cta border border-brand-mcp-border px-2 py-1 text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
 										You are here
 									</span>
 								) : null}
@@ -169,7 +169,7 @@ const rungs: Rung[] = [
 	}
 </ol>
 
-<p class="mt-8 max-w-3xl border-l border-emerald-300/40 pl-5 text-sm leading-relaxed text-muted-foreground">
+<p class="mt-8 max-w-3xl border-l border-brand-mcp-border pl-5 text-sm leading-relaxed text-muted-foreground">
 	Each rung keeps everything under it. An agentic engineer has not stopped being a traditional engineer — the
 	deterministic parts of the system are still where most of the correctness lives, and knowing which parts
 	<span class="text-foreground"> should stay deterministic</span> is itself one of the judgments a model cannot make for

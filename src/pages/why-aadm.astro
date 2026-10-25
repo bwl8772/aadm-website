@@ -126,24 +126,24 @@ const laneToneClasses: Record<
 	{ numeral: string; rule: string; chip: string; accent: string; glow: string }
 > = {
 	violet: {
-		numeral: "text-violet-300/90",
+		numeral: "text-brand-violet",
 		rule: "border-violet-400/40",
-		chip: "border-violet-400/30 text-violet-200",
-		accent: "text-violet-200",
+		chip: "border-violet-400/30 text-brand-violet",
+		accent: "text-brand-violet",
 		glow: "bg-violet-500/[0.07]",
 	},
 	blue: {
-		numeral: "text-sky-300/90",
+		numeral: "text-brand-sky",
 		rule: "border-sky-400/40",
-		chip: "border-sky-400/30 text-sky-200",
-		accent: "text-sky-200",
+		chip: "border-sky-400/30 text-brand-sky",
+		accent: "text-brand-sky",
 		glow: "bg-sky-500/[0.07]",
 	},
 	emerald: {
-		numeral: "text-emerald-300/90",
+		numeral: "text-brand-mcp",
 		rule: "border-emerald-400/40",
-		chip: "border-emerald-400/30 text-emerald-200",
-		accent: "text-emerald-200",
+		chip: "border-emerald-400/30 text-brand-mcp",
+		accent: "text-brand-mcp",
 		glow: "bg-emerald-500/[0.07]",
 	},
 };
@@ -267,7 +267,7 @@ const failureModes: FailureMode[] = [
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-24 pt-10 sm:px-8 sm:pb-32 sm:pt-16">
 				<!-- Left marginalia rail -->
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 00</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Why AADM / Manifesto</span>
 					<span class="hidden font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground sm:mt-auto sm:block">
 						Filed under<br />
@@ -278,7 +278,7 @@ const failureModes: FailureMode[] = [
 				<!-- Headline column -->
 				<div class="col-span-12 sm:col-span-10">
 					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
-						<span class="text-amber-200/90">▸</span> An advisory for teams shipping enterprise software with AI assistance
+						<span class="text-brand-warn">▸</span> An advisory for teams shipping enterprise software with AI assistance
 					</p>
 
 					<h1
@@ -288,7 +288,7 @@ const failureModes: FailureMode[] = [
 						<span class="font-light italic text-muted-foreground"> are powerful.</span><br />
 						They are also<br class="hidden sm:inline" />
 						<span class="relative inline-block">
-							<span class="relative z-10 text-amber-300">confidently wrong</span>
+							<span class="relative z-10 text-brand-warn">confidently wrong</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-amber-300/30"></span>
 						</span>
 						<span class="font-light italic text-muted-foreground"> on enterprise code.</span>
@@ -297,8 +297,8 @@ const failureModes: FailureMode[] = [
 					<!-- Body + margin note -->
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-amber-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/80">The thesis</p>
+							<div class="border-l border-brand-warn-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">The thesis</p>
 								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
 									AADM is the missing layer between your agents and your code: an open standard your engineers read, plus a
 									hosted service your agents load every session.
@@ -308,9 +308,9 @@ const failureModes: FailureMode[] = [
 						<div class="col-span-12 sm:col-span-8">
 							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
 								Every coding tool — Cursor, Claude Code, Windsurf, anything that speaks MCP — reasons the same way about your
-								<span class="text-foreground underline decoration-emerald-300/50 decoration-2 underline-offset-[6px]">authorization</span>,
-								your <span class="text-foreground underline decoration-emerald-300/50 decoration-2 underline-offset-[6px]">boundaries</span>,
-								and your <span class="text-foreground underline decoration-emerald-300/50 decoration-2 underline-offset-[6px]">bar for "done."</span>
+								<span class="text-foreground underline decoration-brand-mcp decoration-2 underline-offset-[6px]">authorization</span>,
+								your <span class="text-foreground underline decoration-brand-mcp decoration-2 underline-offset-[6px]">boundaries</span>,
+								and your <span class="text-foreground underline decoration-brand-mcp decoration-2 underline-offset-[6px]">bar for "done."</span>
 								The model doesn't need to be smarter. It needs a standard.
 							</p>
 						</div>
@@ -319,32 +319,32 @@ const failureModes: FailureMode[] = [
 					<!-- Dual TL;DR — deliberately staggered + overlapped feel -->
 					<div class="mt-16 grid grid-cols-12 gap-4 sm:gap-6">
 						<div class="col-span-12 lg:col-span-7">
-							<article class="group relative overflow-hidden border border-amber-300/25 bg-gradient-to-br from-amber-950/30 via-muted to-muted p-7 transition duration-300 sm:p-10 hover:border-amber-300/50">
+							<article class="group relative overflow-hidden border border-brand-warn-border bg-gradient-to-br from-amber-950/30 via-muted to-muted p-7 transition duration-300 sm:p-10 hover:border-brand-warn-border">
 								<div
 									aria-hidden="true"
 									class="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-amber-300/[0.08] blur-3xl transition duration-500 group-hover:bg-amber-300/[0.14]"
 								></div>
 								<div class="flex items-center gap-3">
 									<span class="block h-2 w-2 rounded-full bg-amber-300"></span>
-									<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/90">For leaders · one sentence</p>
+									<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">For leaders · one sentence</p>
 								</div>
 								<p class="font-display mt-5 text-balance text-[1.45rem] leading-[1.18] tracking-tight text-foreground sm:text-[1.85rem]">
 									AADM teaches your AI coding tools the same engineering discipline your senior reviewers expect — so the work that lands in main is closer to ship-ready,
-									<span class="font-light italic text-amber-200/90"> the first time.</span>
+									<span class="font-light italic text-brand-warn"> the first time.</span>
 								</p>
 							</article>
 						</div>
 						<div class="col-span-12 lg:col-span-5 lg:mt-16">
-							<article class="group relative border border-emerald-300/20 bg-muted p-7 transition duration-300 hover:border-emerald-300/40 sm:p-8">
+							<article class="group relative border border-brand-mcp-border bg-muted p-7 transition duration-300 hover:border-brand-mcp-border sm:p-8">
 								<div class="flex items-center gap-3">
 									<span class="block h-2 w-2 rounded-full bg-emerald-300"></span>
-									<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/90">For engineers · one sentence</p>
+									<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">For engineers · one sentence</p>
 								</div>
 								<p class="mt-5 text-base leading-relaxed text-foreground">
 									A hosted MCP exposes typed tools, doctrine, and gates over Streamable HTTP. Your agents call them every turn —
-									<span class="font-mono-cta text-[13px] text-emerald-200/90">route_lane</span>,
-									<span class="font-mono-cta text-[13px] text-emerald-200/90">fetch_auth</span>,
-									<span class="font-mono-cta text-[13px] text-emerald-200/90">debug_defect</span>.
+									<span class="font-mono-cta text-[13px] text-brand-mcp">route_lane</span>,
+									<span class="font-mono-cta text-[13px] text-brand-mcp">fetch_auth</span>,
+									<span class="font-mono-cta text-[13px] text-brand-mcp">debug_defect</span>.
 								</p>
 							</article>
 						</div>
@@ -369,7 +369,7 @@ const failureModes: FailureMode[] = [
 						</a>
 						<a
 							href={urlStandard}
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
 						>
 							<span>Read the open standard</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↗</span>
@@ -381,7 +381,7 @@ const failureModes: FailureMode[] = [
 						layers, and the two agent loops a senior engineer now owns — read
 						<a
 							href="/about"
-							class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-amber-200 hover:decoration-amber-300"
+							class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-brand-warn hover:decoration-brand-warn"
 							>agentic engineering</a
 						>.
 					</p>
@@ -399,7 +399,7 @@ const failureModes: FailureMode[] = [
 			></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 01</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 01</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Diagnosis</span>
 				</aside>
 
@@ -420,7 +420,7 @@ const failureModes: FailureMode[] = [
 									<!-- Custom schematic SVG as background art -->
 									<svg
 										aria-hidden="true"
-										class="pointer-events-none absolute -right-6 -top-6 -z-10 text-amber-200/[0.08] transition duration-500 group-hover:text-amber-200/[0.18]"
+										class="pointer-events-none absolute -right-6 -top-6 -z-10 text-brand-warn transition duration-500 group-hover:text-brand-warn"
 										width="180"
 										height="180"
 										viewBox="0 0 180 180"
@@ -453,10 +453,10 @@ const failureModes: FailureMode[] = [
 									</svg>
 
 									<div class="flex items-baseline gap-4">
-										<span class="font-display text-5xl font-light leading-none text-amber-200/80 sm:text-6xl">
+										<span class="font-display text-5xl font-light leading-none text-brand-warn sm:text-6xl">
 											{m.num}
 										</span>
-										<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/60">
+										<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">
 											Failure mode
 										</span>
 									</div>
@@ -486,7 +486,7 @@ const failureModes: FailureMode[] = [
 			></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 02</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 02</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Side by side</span>
 				</aside>
 
@@ -502,8 +502,8 @@ const failureModes: FailureMode[] = [
 					<!-- Column legend (desktop only) -->
 					<div class="mt-14 hidden grid-cols-12 gap-8 border-t border-border pb-3 pt-5 text-[13px] font-mono-cta normal-case tracking-[0.01em] lg:grid">
 						<div class="col-span-3 text-muted-foreground">Scenario</div>
-						<div class="col-span-4 text-amber-200/80">▸ Without AADM</div>
-						<div class="col-span-5 text-emerald-200/80">▸ With AADM</div>
+						<div class="col-span-4 text-brand-warn">▸ Without AADM</div>
+						<div class="col-span-5 text-brand-mcp">▸ With AADM</div>
 					</div>
 
 					<div class="border-t border-border lg:border-t-0">
@@ -516,7 +516,7 @@ const failureModes: FailureMode[] = [
 											<span class="font-display text-3xl font-light leading-none text-foreground/90 sm:text-4xl">
 												{row.num}
 											</span>
-											<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground transition group-hover:text-emerald-200/80">
+											<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground transition group-hover:text-brand-mcp">
 												Case file
 											</span>
 										</div>
@@ -526,7 +526,7 @@ const failureModes: FailureMode[] = [
 										<p class="mt-2 text-sm italic leading-relaxed text-muted-foreground">{row.plain}</p>
 										{row.tool ? (
 											<p class="mt-5 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
-												tool · <span class="text-emerald-200/80">{row.tool}</span>
+												tool · <span class="text-brand-mcp">{row.tool}</span>
 											</p>
 										) : null}
 									</div>
@@ -534,7 +534,7 @@ const failureModes: FailureMode[] = [
 									<!-- Without -->
 									<div class="relative lg:col-span-4">
 										<div class="absolute -left-3 top-0 h-full w-px bg-amber-300/30 lg:left-[-1px]"></div>
-										<p class="font-mono-cta pl-4 text-[13px] normal-case tracking-[0.01em] text-amber-200/80 lg:hidden">
+										<p class="font-mono-cta pl-4 text-[13px] normal-case tracking-[0.01em] text-brand-warn lg:hidden">
 											Without AADM
 										</p>
 										<p class="mt-2 pl-4 text-[0.95rem] leading-relaxed text-muted-foreground lg:mt-0">
@@ -545,7 +545,7 @@ const failureModes: FailureMode[] = [
 									<!-- With -->
 									<div class="relative lg:col-span-5">
 										<div class="absolute -left-3 top-0 h-full w-px bg-emerald-300/40 lg:left-[-1px]"></div>
-										<p class="font-mono-cta pl-4 text-[13px] normal-case tracking-[0.01em] text-emerald-200/90 lg:hidden">
+										<p class="font-mono-cta pl-4 text-[13px] normal-case tracking-[0.01em] text-brand-mcp lg:hidden">
 											With AADM
 										</p>
 										<p class="mt-2 pl-4 text-[0.95rem] leading-relaxed text-text-primary lg:mt-0">
@@ -561,7 +561,7 @@ const failureModes: FailureMode[] = [
 
 									<!-- Hover chevron (desktop) -->
 									<div aria-hidden="true" class="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-2 opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100 lg:block">
-										<svg width="20" height="14" viewBox="0 0 20 14" fill="none" class="text-emerald-300/80">
+										<svg width="20" height="14" viewBox="0 0 20 14" fill="none" class="text-brand-mcp">
 											<path d="M1 7h17M13 1l5 6-5 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" />
 										</svg>
 									</div>
@@ -580,7 +580,7 @@ const failureModes: FailureMode[] = [
 		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 03</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">§ 03</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Three lanes</span>
 				</aside>
 
@@ -664,7 +664,7 @@ const failureModes: FailureMode[] = [
 			></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 04</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 04</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Mechanics</span>
 				</aside>
 
@@ -682,7 +682,7 @@ const failureModes: FailureMode[] = [
 							mechanics.map((m) => (
 								<li class="group relative bg-surface-mid p-7 transition duration-300 hover:bg-secondary sm:p-10">
 									<div class="flex items-baseline gap-5">
-										<span class="font-display text-5xl font-light leading-none tracking-tight text-emerald-200/80 transition duration-300 group-hover:text-emerald-300 sm:text-6xl">
+										<span class="font-display text-5xl font-light leading-none tracking-tight text-brand-mcp transition duration-300 group-hover:text-brand-mcp sm:text-6xl">
 											{m.num}
 										</span>
 										<div class="flex-1">
@@ -694,7 +694,7 @@ const failureModes: FailureMode[] = [
 									<p class="mt-5 text-[0.95rem] leading-relaxed text-text-secondary">{m.body}</p>
 									<div class="mt-7 flex items-center gap-3 border-t border-border pt-4">
 										<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">runs</span>
-										<span class="font-mono-cta text-sm text-emerald-200/90">{m.tech}</span>
+										<span class="font-mono-cta text-sm text-brand-mcp">{m.tech}</span>
 									</div>
 								</li>
 							))
@@ -710,7 +710,7 @@ const failureModes: FailureMode[] = [
 		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 05</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 05</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Boundary</span>
 				</aside>
 
@@ -718,13 +718,13 @@ const failureModes: FailureMode[] = [
 					<div class="grid grid-cols-12 gap-8">
 						<div class="col-span-12 lg:col-span-7">
 							<!-- Large editorial mark -->
-							<svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true" class="text-amber-300/85">
+							<svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true" class="text-brand-warn">
 								<circle cx="28" cy="28" r="26" stroke="currentColor" stroke-width="1.2" />
 								<path d="M28 14v18M28 38v2" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" />
 							</svg>
 							<p class="font-display mt-8 text-balance text-[clamp(1.5rem,3.6vw,2.6rem)] font-bold leading-[1.1] tracking-tight text-foreground">
 								AADM is governance
-								<span class="text-amber-300"> context</span>,
+								<span class="text-brand-warn"> context</span>,
 								<span class="font-light italic text-muted-foreground"> not enforcement.</span>
 							</p>
 							<p class="mt-7 text-[0.98rem] leading-[1.7] text-text-secondary">
@@ -738,8 +738,8 @@ const failureModes: FailureMode[] = [
 							</p>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border-l-2 border-amber-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/85">It deliberately does not</p>
+							<div class="border-l-2 border-brand-warn-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">It deliberately does not</p>
 								<ul class="mt-6 divide-y divide-white/[0.06] border-t border-border">
 									{
 										[
@@ -749,7 +749,7 @@ const failureModes: FailureMode[] = [
 											"Scan your repo and hand out pass / fail verdicts.",
 										].map((item, idx) => (
 											<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-4">
-												<span class="font-mono-cta text-sm text-amber-300/80">
+												<span class="font-mono-cta text-sm text-brand-warn">
 													{String(idx + 1).padStart(2, "0")}
 												</span>
 												<span class="text-sm leading-relaxed text-text-secondary transition group-hover:text-foreground">{item}</span>
@@ -770,7 +770,7 @@ const failureModes: FailureMode[] = [
 		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 06</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 06</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Audience</span>
 				</aside>
 
@@ -785,7 +785,7 @@ const failureModes: FailureMode[] = [
 							audiences.map((a) => (
 								<article class="group bg-surface-mid p-7 transition duration-300 hover:bg-secondary sm:p-9">
 									<div class="flex items-baseline gap-4">
-										<span class="font-display text-[3.5rem] font-light leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
+										<span class="font-display text-[3.5rem] font-light leading-[0.85] text-brand-mcp transition duration-300 group-hover:text-brand-mcp">
 											{a.num}
 										</span>
 										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{a.role}</p>
@@ -813,19 +813,19 @@ const failureModes: FailureMode[] = [
 			></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:px-8 sm:py-40">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 07</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 07</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Start here</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
-						<span class="text-amber-200/90">▸</span> The directive
+						<span class="text-brand-warn">▸</span> The directive
 					</p>
 					<h2 class="font-display mt-6 max-w-[16ch] text-balance text-[clamp(2.5rem,7vw,6.5rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Stop shipping<br />
 						the <span class="font-light italic text-muted-foreground">wrong</span>
 						<span class="whitespace-nowrap"><span class="font-light italic text-muted-foreground">thing</span> <span class="relative inline-block">
-							<span class="relative z-10 text-amber-300">faster.</span>
+							<span class="relative z-10 text-brand-warn">faster.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.08em] -z-0 h-[0.2em] bg-amber-300/30"></span>
 						</span></span>
 					</h2>
@@ -853,7 +853,7 @@ const failureModes: FailureMode[] = [
 						</a>
 						<a
 							href="/mcp#mcp-tools-heading"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
 						>
 							<span>Browse the tools catalog</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↗</span>
@@ -869,7 +869,7 @@ const failureModes: FailureMode[] = [
 							<span class="text-muted-foreground">For</span> · Senior engineering &amp; platform teams
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-muted-foreground">Status</span> · <span class="text-emerald-300/80">Open standard, hosted MCP</span>
+							<span class="text-muted-foreground">Status</span> · <span class="text-brand-mcp">Open standard, hosted MCP</span>
 						</div>
 					</div>
 				</div>

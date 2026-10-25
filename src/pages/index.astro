@@ -78,26 +78,26 @@ const laneToneClasses: Record<
 	}
 > = {
 	violet: {
-		numeral: "text-violet-300/90",
+		numeral: "text-brand-violet",
 		rule: "border-violet-400/40",
-		chip: "border-violet-400/30 text-violet-200",
-		accent: "text-violet-200",
+		chip: "border-violet-400/30 text-brand-violet",
+		accent: "text-brand-violet",
 		glow: "bg-violet-500/[0.07]",
 		bullet: "bg-violet-300",
 	},
 	blue: {
-		numeral: "text-sky-300/90",
+		numeral: "text-brand-sky",
 		rule: "border-sky-400/40",
-		chip: "border-sky-400/30 text-sky-200",
-		accent: "text-sky-200",
+		chip: "border-sky-400/30 text-brand-sky",
+		accent: "text-brand-sky",
 		glow: "bg-sky-500/[0.07]",
 		bullet: "bg-sky-300",
 	},
 	emerald: {
-		numeral: "text-emerald-300/90",
+		numeral: "text-brand-mcp",
 		rule: "border-emerald-400/40",
-		chip: "border-emerald-400/30 text-emerald-200",
-		accent: "text-emerald-200",
+		chip: "border-emerald-400/30 text-brand-mcp",
+		accent: "text-brand-mcp",
 		glow: "bg-emerald-500/[0.07]",
 		bullet: "bg-emerald-300",
 	},
@@ -140,14 +140,14 @@ const mentalToneClasses: Record<
 	{ numeral: string; pill: string; rule: string }
 > = {
 	amber: {
-		numeral: "text-amber-300/90",
-		pill: "border-amber-300/30 text-amber-200",
-		rule: "border-amber-300/40",
+		numeral: "text-brand-warn",
+		pill: "border-brand-warn-border text-brand-warn",
+		rule: "border-brand-warn-border",
 	},
 	emerald: {
-		numeral: "text-emerald-300/90",
-		pill: "border-emerald-300/30 text-emerald-200",
-		rule: "border-emerald-300/40",
+		numeral: "text-brand-mcp",
+		pill: "border-brand-mcp-border text-brand-mcp",
+		rule: "border-brand-mcp-border",
 	},
 	white: {
 		numeral: "text-foreground/90",
@@ -249,8 +249,8 @@ const outcomes: Outcome[] = [
 			</svg>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-24 pt-10 sm:px-8 sm:pb-32 sm:pt-16">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 md:col-span-2 md:mb-0 md:flex-col md:items-start md:justify-start md:gap-3 md:border-b-0 md:border-r md:border-border md:pb-0 md:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 00</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">AADM / Overview</span>
 					<span class="hidden font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground sm:mt-auto sm:block">
 						<span class="text-muted-foreground">Filed under</span><br />
@@ -258,12 +258,12 @@ const outcomes: Outcome[] = [
 					</span>
 				</aside>
 
-				<div class="col-span-12 sm:col-span-10">
+				<div class="col-span-12 md:col-span-10">
 					<p class="font-mono-cta mb-10 flex flex-wrap items-center gap-3 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
-						<span class="inline-flex items-center gap-2 border border-emerald-300/30 px-2.5 py-1 text-emerald-200/90">
+						<span class="inline-flex items-center gap-2 border border-brand-mcp-border px-2.5 py-1 text-brand-mcp">
 							<span class="block h-1 w-1 rounded-full bg-emerald-300"></span> Open standard
 						</span>
-						<span class="inline-flex items-center gap-2 border border-amber-300/30 px-2.5 py-1 text-amber-200/90">
+						<span class="inline-flex items-center gap-2 border border-brand-warn-border px-2.5 py-1 text-brand-warn">
 							<span class="block h-1 w-1 rounded-full bg-amber-300"></span> Hosted MCP
 						</span>
 					</p>
@@ -274,16 +274,16 @@ const outcomes: Outcome[] = [
 						The <span class="font-light italic text-muted-foreground">standard</span> your agents
 						<br class="hidden sm:inline" />
 						load on <span class="relative inline-block">
-							<span class="relative z-10 text-emerald-300">every turn.</span>
+							<span class="relative z-10 text-brand-mcp">every turn.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span>
 					</h1>
 
-					<!-- Body + margin note -->
-					<div class="mt-14 grid grid-cols-12 gap-6">
-						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">Two products · one story</p>
+					<!-- Body + margin note — stack until md so phone/tablet keep full measure -->
+					<div class="mt-14 grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-6">
+						<div class="md:col-span-4">
+							<div class="border-l border-brand-mcp-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Two products · one story</p>
 								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
 									<span class="text-foreground">The standard</span> is a public document anyone can read, adopt, and improve.
 									<span class="text-foreground">The hosted MCP</span> is a subscription service that streams that standard to your
@@ -291,7 +291,7 @@ const outcomes: Outcome[] = [
 								</p>
 							</div>
 						</div>
-						<div class="col-span-12 sm:col-span-8">
+						<div class="min-w-0 md:col-span-8">
 							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
 								Same vocabulary, three workflows: <span class="text-foreground">Navigator</span> for new features,
 								<span class="text-foreground">Investigator</span> for defects, <span class="text-foreground">Sentinel</span> for assurance —
@@ -322,7 +322,7 @@ const outcomes: Outcome[] = [
 						</a>
 						<a
 							href="/why-aadm"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>Why AADM, vs raw loops</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
@@ -332,7 +332,7 @@ const outcomes: Outcome[] = [
 					<p class="mt-8 max-w-2xl text-sm leading-relaxed text-muted-foreground">
 						New to the term? <a
 							href="/about"
-							class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 							>Agentic engineering</a
 						> is the discipline this standard serves — written for engineers who already know how software should be built.
 					</p>
@@ -360,12 +360,12 @@ const outcomes: Outcome[] = [
 		     ============================================================= -->
 		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 01</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 md:col-span-2 md:mb-0 md:flex-col md:items-start md:justify-start md:gap-3 md:border-b-0 md:border-r md:border-border md:pb-0 md:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">§ 01</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Three lanes</span>
 				</aside>
 
-				<div class="col-span-12 sm:col-span-10">
+				<div class="col-span-12 md:col-span-10">
 					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Three workflows. <span class="font-light italic text-muted-foreground">Equal weight.</span>
 					</h2>
@@ -381,30 +381,33 @@ const outcomes: Outcome[] = [
 								return (
 									<article class="group relative overflow-hidden bg-surface-mid transition duration-300 hover:bg-secondary">
 										<div aria-hidden="true" class:list={["pointer-events-none absolute -left-24 -top-24 -z-0 h-72 w-72 rounded-full blur-3xl opacity-50 transition duration-500 group-hover:opacity-100", t.glow]}></div>
-										<div class="relative grid grid-cols-12 gap-6 px-1 py-12 sm:px-2 sm:py-14">
-											<div class="col-span-12 sm:col-span-2">
-												<p class:list={["font-display text-[5rem] font-light leading-[0.85] tracking-tight sm:text-[6.5rem]", t.numeral]}>
-													{lane.num}
-												</p>
-												<div class:list={["mt-3 inline-flex items-center gap-2 border px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em]", t.chip]}>
-													<span class:list={["block h-1.5 w-1.5 rounded-full", t.bullet]}></span>
-													{lane.name}
+										{/* Stack until lg — sm three-column crushed tablet/narrow desktop */}
+										<div class="relative grid grid-cols-1 gap-8 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-12 lg:gap-6 lg:px-2 lg:py-14">
+											<div class="min-w-0 lg:col-span-2">
+												<div class="flex flex-wrap items-end gap-4 lg:block">
+													<p class:list={["font-display text-[3.5rem] font-light leading-[0.85] tracking-tight sm:text-[4.5rem] lg:text-[6.5rem]", t.numeral]}>
+														{lane.num}
+													</p>
+													<div class:list={["mb-1 inline-flex items-center gap-2 border px-3 py-1.5 font-mono-cta text-[13px] normal-case tracking-[0.01em] lg:mt-3 lg:mb-0", t.chip]}>
+														<span class:list={["block h-1.5 w-1.5 rounded-full", t.bullet]}></span>
+														{lane.name}
+													</div>
 												</div>
 											</div>
 
-											<div class="col-span-12 sm:col-span-6">
+											<div class="min-w-0 lg:col-span-6">
 												<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{lane.tagline}</p>
-												<p class="mt-5 text-[0.98rem] leading-[1.65] text-foreground">{lane.plain}</p>
+												<p class="mt-4 text-[0.98rem] leading-[1.65] text-foreground lg:mt-5">{lane.plain}</p>
 											</div>
 
-											<div class="col-span-12 sm:col-span-4">
-												<div class:list={["border-l pl-5", t.rule]}>
+											<div class="min-w-0 lg:col-span-4">
+												<div class:list={["border-t pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-5", t.rule]}>
 													<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">What you get</p>
 													<ul class="mt-4 space-y-3 text-sm leading-relaxed text-text-secondary">
 														{lane.bullets.map((b) => (
 															<li class="grid grid-cols-[auto_1fr] items-start gap-3">
-																<span class:list={["mt-[0.5em] block h-1 w-1 rounded-full", t.bullet]}></span>
-																<span>{b}</span>
+																<span class:list={["mt-[0.5em] block h-1 w-1 shrink-0 rounded-full", t.bullet]}></span>
+																<span class="min-w-0">{b}</span>
 															</li>
 														))}
 													</ul>
@@ -420,9 +423,9 @@ const outcomes: Outcome[] = [
 					<!-- Boundary statement chip -->
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-7">
-							<div class="border-l-2 border-amber-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/80">What it deliberately does not do</p>
-								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-border">
+							<div class="border-l-2 border-brand-warn-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">What it deliberately does not do</p>
+								<ul class="mt-5 divide-y divide-border border-t border-border">
 									{
 										[
 											"Run business logic or mutate your database",
@@ -431,7 +434,7 @@ const outcomes: Outcome[] = [
 											"Store long-lived secrets — credentials are your deployment concern",
 										].map((item, idx) => (
 											<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-3.5">
-												<span class="font-mono-cta text-sm text-amber-300/80">{String(idx + 1).padStart(2, "0")}</span>
+												<span class="font-mono-cta text-sm text-brand-warn">{String(idx + 1).padStart(2, "0")}</span>
 												<span class="text-sm leading-relaxed text-text-secondary transition group-hover:text-foreground">{item}</span>
 											</li>
 										))
@@ -441,7 +444,7 @@ const outcomes: Outcome[] = [
 						</div>
 						<div class="col-span-12 lg:col-span-5">
 							<div class="border border-border bg-muted p-6 sm:p-7">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">When you'd use it</p>
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">When you'd use it</p>
 								<p class="mt-4 text-[0.95rem] leading-relaxed text-text-secondary">
 									Connect the MCP in your IDE so the agent loads the same standard every session — UDALI placement, AUTH
 									references, build intent, troubleshooter discipline — instead of improvising from random doc snippets.
@@ -466,12 +469,12 @@ const outcomes: Outcome[] = [
 				class="absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[length:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_45%,transparent_80%)]"
 			></div>
 			<div id="how-it-works" class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 02</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 md:col-span-2 md:mb-0 md:flex-col md:items-start md:justify-start md:gap-3 md:border-b-0 md:border-r md:border-border md:pb-0 md:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 02</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Mental model</span>
 				</aside>
 
-				<div class="col-span-12 sm:col-span-10">
+				<div class="col-span-12 md:col-span-10">
 					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Three pieces. <span class="font-light italic text-muted-foreground">Each does one job.</span>
 					</h2>
@@ -512,7 +515,7 @@ const outcomes: Outcome[] = [
 						pieces relate to the harness, the agent, and the person accountable for the result, see
 						<a
 							href="/about"
-							class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 							>agentic engineering</a
 						>.
 					</p>
@@ -525,12 +528,12 @@ const outcomes: Outcome[] = [
 		     ============================================================= -->
 		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 03</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 md:col-span-2 md:mb-0 md:flex-col md:items-start md:justify-start md:gap-3 md:border-b-0 md:border-r md:border-border md:pb-0 md:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 03</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">What the MCP exposes</span>
 				</aside>
 
-				<div class="col-span-12 sm:col-span-10">
+				<div class="col-span-12 md:col-span-10">
 					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Three surfaces <span class="font-light italic text-muted-foreground">your agents read.</span>
 					</h2>
@@ -540,7 +543,7 @@ const outcomes: Outcome[] = [
 							surfaces.map((s) => (
 								<article class="group bg-surface-mid p-7 transition duration-300 hover:bg-secondary sm:p-9">
 									<div class="flex items-baseline gap-4">
-										<span class="font-display text-[3.5rem] font-light leading-[0.85] text-emerald-200/85 transition duration-300 group-hover:text-emerald-300">
+										<span class="font-display text-[3.5rem] font-light leading-[0.85] text-brand-mcp transition duration-300 group-hover:text-brand-mcp">
 											{s.letter}
 										</span>
 										<div>
@@ -551,7 +554,7 @@ const outcomes: Outcome[] = [
 									<p class="mt-6 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
 									<div class="mt-6 border-t border-border pt-4">
 										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Examples</p>
-										<p class="font-mono-cta mt-1.5 text-sm leading-relaxed text-emerald-200/85">{s.examples}</p>
+										<p class="font-mono-cta mt-1.5 text-sm leading-relaxed text-brand-mcp">{s.examples}</p>
 									</div>
 								</article>
 							))
@@ -560,8 +563,8 @@ const outcomes: Outcome[] = [
 
 					<p class="mt-10 max-w-3xl text-sm leading-relaxed text-muted-foreground">
 						Transport is <span class="text-text-secondary">HTTP Streamable MCP</span> at
-						<code class="font-mono-cta text-emerald-200/85">/mcp</code> (plus
-						<code class="font-mono-cta text-emerald-200/85">/health</code> for liveness). Connect from any MCP client with your org's
+						<code class="font-mono-cta text-brand-mcp">/mcp</code> (plus
+						<code class="font-mono-cta text-brand-mcp">/health</code> for liveness). Connect from any MCP client with your org's
 						URL and auth.
 					</p>
 				</div>
@@ -573,12 +576,12 @@ const outcomes: Outcome[] = [
 		     ============================================================= -->
 		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 04</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 md:col-span-2 md:mb-0 md:flex-col md:items-start md:justify-start md:gap-3 md:border-b-0 md:border-r md:border-border md:pb-0 md:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 04</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Outcomes</span>
 				</aside>
 
-				<div class="col-span-12 sm:col-span-10">
+				<div class="col-span-12 md:col-span-10">
 					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						What engineers get out of it <span class="font-light italic text-muted-foreground">on a normal day.</span>
 					</h2>
@@ -586,13 +589,13 @@ const outcomes: Outcome[] = [
 					<ol class="mt-16 border-t border-border">
 						{
 							outcomes.map((o) => (
-								<li class="group grid grid-cols-12 gap-6 border-b border-border py-8 transition duration-300 hover:bg-white/[0.015]">
-									<div class="col-span-12 sm:col-span-2">
-										<span class="font-display text-4xl font-light leading-none tracking-tight text-emerald-200/80 transition duration-300 group-hover:text-emerald-300 sm:text-5xl">
+								<li class="group grid grid-cols-1 gap-4 border-b border-border py-8 transition duration-300 hover:bg-white/[0.015] md:grid-cols-12 md:gap-6">
+									<div class="md:col-span-2">
+										<span class="font-display text-4xl font-light leading-none tracking-tight text-brand-mcp transition duration-300 group-hover:text-brand-mcp sm:text-5xl">
 											{o.num}
 										</span>
 									</div>
-									<div class="col-span-12 sm:col-span-10">
+									<div class="min-w-0 md:col-span-10">
 										<h3 class="font-display text-balance text-[1.25rem] font-bold leading-[1.2] tracking-tight text-foreground sm:text-[1.4rem]">
 											{o.title}
 										</h3>
@@ -615,21 +618,21 @@ const outcomes: Outcome[] = [
 				class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(110,231,183,0.04)_1px,transparent_1px)] bg-[length:36px_36px] [mask-image:radial-gradient(ellipse_at_top,black_45%,transparent_85%)]"
 			></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 05</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 md:col-span-2 md:mb-0 md:flex-col md:items-start md:justify-start md:gap-3 md:border-b-0 md:border-r md:border-border md:pb-0 md:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 05</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Wire your stack</span>
 				</aside>
 
-				<div class="col-span-12 sm:col-span-10">
+				<div class="col-span-12 md:col-span-10">
 					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Quick MCP reference <span class="font-light italic text-muted-foreground">for engineers.</span>
 					</h2>
 					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						The hosted service speaks <span class="text-foreground">Streamable HTTP</span>:
-						<code class="font-mono-cta bg-accent px-1.5 py-0.5 text-emerald-200/90">POST</code> with
-						<code class="font-mono-cta text-emerald-200/85">Accept: application/json, text/event-stream</code>. A browser
-						<code class="font-mono-cta text-emerald-200/85">GET</code> to the MCP path without that header often returns
-						<span class="text-amber-200/90">406</span> — expected.
+						<code class="font-mono-cta bg-accent px-1.5 py-0.5 text-brand-mcp">POST</code> with
+						<code class="font-mono-cta text-brand-mcp">Accept: application/json, text/event-stream</code>. A browser
+						<code class="font-mono-cta text-brand-mcp">GET</code> to the MCP path without that header often returns
+						<span class="text-brand-warn">406</span> — expected.
 					</p>
 
 					{
@@ -638,11 +641,11 @@ const outcomes: Outcome[] = [
 								<!-- Endpoint card -->
 								<div class="col-span-12 lg:col-span-7">
 									<div class="border border-border bg-muted p-7 sm:p-8">
-										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">
+										<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
 											MCP service · JSON-RPC
 										</p>
 										<p class="mt-2 text-xs italic text-muted-foreground">(not the marketing page)</p>
-										<p class="font-mono-cta mt-5 break-all text-base font-semibold text-emerald-200 sm:text-lg">
+										<p class="font-mono-cta mt-5 break-all text-base font-semibold text-brand-mcp sm:text-lg">
 											{urlMcpEndpoint}
 										</p>
 										<div class="mt-7 flex flex-wrap gap-2">
@@ -694,14 +697,14 @@ const outcomes: Outcome[] = [
 						)
 					}
 
-					<div class="mt-10 border border-emerald-300/20 bg-emerald-950/[0.15] p-5 text-sm text-text-secondary sm:p-6">
-						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">
-							<span class="text-emerald-300">▸</span> Step 0 · in your app repo
+					<div class="mt-10 border border-brand-mcp-border bg-emerald-950/[0.15] p-5 text-sm text-text-secondary sm:p-6">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">
+							<span class="text-brand-mcp">▸</span> Step 0 · in your app repo
 						</p>
 						<p class="mt-3">
-							<code class="font-mono-cta text-emerald-200/95">npx aadm-init-repo --minimal</code> scaffolds{' '}
+							<code class="font-mono-cta text-brand-mcp">npx aadm-init-repo --minimal</code> scaffolds{' '}
 							<code class="font-mono-cta text-foreground">.aadm/config.json</code> in your app repo.{' '}
-							<a href="/governance" class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
+							<a href="/governance" class="font-semibold text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">
 								Init guide →
 							</a>
 						</p>
@@ -716,7 +719,7 @@ const outcomes: Outcome[] = [
 								{hasMcpMarketingLink ? (
 									<p>
 										Subscription covers the running service, updates, and subscriber guides — see{' '}
-										<a href={urlMcpMarketing} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
+										<a href={urlMcpMarketing} class="font-semibold text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">
 											{urlMcpMarketing}
 										</a>
 										.
@@ -725,7 +728,7 @@ const outcomes: Outcome[] = [
 								{urlMcpCustomerDocs ? (
 									<p>
 										Additional material:{' '}
-										<a href={urlMcpCustomerDocs} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">
+										<a href={urlMcpCustomerDocs} class="font-semibold text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">
 											Customer documentation
 										</a>
 									</p>
@@ -742,12 +745,12 @@ const outcomes: Outcome[] = [
 		     ============================================================= -->
 		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 06</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 md:col-span-2 md:mb-0 md:flex-col md:items-start md:justify-start md:gap-3 md:border-b-0 md:border-r md:border-border md:pb-0 md:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 06</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Two products</span>
 				</aside>
 
-				<div class="col-span-12 sm:col-span-10">
+				<div class="col-span-12 md:col-span-10">
 					<div class="grid grid-cols-12 gap-8">
 						<div class="col-span-12 lg:col-span-7">
 							<h2 class="font-display text-balance text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
@@ -775,18 +778,18 @@ const outcomes: Outcome[] = [
 								</div>
 								<ul class="divide-y divide-white/[0.06]">
 									<li class="group flex items-start gap-4 p-6">
-										<span class="font-display mt-1 text-2xl font-light leading-none text-amber-200/90">A</span>
+										<span class="font-display mt-1 text-2xl font-light leading-none text-brand-warn">A</span>
 										<div>
-											<p class="font-semibold text-amber-200">Open standard</p>
+											<p class="font-semibold text-brand-warn">Open standard</p>
 											<p class="mt-1 text-sm leading-relaxed text-muted-foreground">
 												Always readable, adoptable, and improvable in public. No paywall on the definitions.
 											</p>
 										</div>
 									</li>
 									<li class="group flex items-start gap-4 p-6">
-										<span class="font-display mt-1 text-2xl font-light leading-none text-emerald-200/90">B</span>
+										<span class="font-display mt-1 text-2xl font-light leading-none text-brand-mcp">B</span>
 										<div>
-											<p class="font-semibold text-emerald-200">Hosted MCP</p>
+											<p class="font-semibold text-brand-mcp">Hosted MCP</p>
 											<p class="mt-1 text-sm leading-relaxed text-muted-foreground">
 												Versioned tools and resources for subscribers' agents. Someone ships fixes and keeps the service
 												current.
@@ -810,19 +813,19 @@ const outcomes: Outcome[] = [
 				class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.08),transparent_60%)]"
 			></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:px-8 sm:py-40">
-				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 07</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 md:col-span-2 md:mb-0 md:flex-col md:items-start md:justify-start md:gap-3 md:border-b-0 md:border-r md:border-border md:pb-0 md:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 07</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Start here</span>
 				</aside>
 
-				<div class="col-span-12 sm:col-span-10">
+				<div class="col-span-12 md:col-span-10">
 					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
-						<span class="text-emerald-200/90">▸</span> Two paths · one rail
+						<span class="text-brand-mcp">▸</span> Two paths · one rail
 					</p>
 					<h2 class="font-display mt-6 max-w-[16ch] text-balance text-[clamp(2.4rem,6.8vw,6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Read it in <span class="font-light italic text-muted-foreground">public.</span><br />
 						Run it <span class="whitespace-nowrap">in <span class="relative inline-block">
-							<span class="relative z-10 text-emerald-300">production.</span>
+							<span class="relative z-10 text-brand-mcp">production.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.08em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span></span>
 					</h2>
@@ -850,7 +853,7 @@ const outcomes: Outcome[] = [
 						</a>
 						<a
 							href="/about"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>What agentic engineering means</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
@@ -863,10 +866,10 @@ const outcomes: Outcome[] = [
 							<span class="text-muted-foreground">Project</span> · AADM v1
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-muted-foreground">Transport</span> · <span class="text-emerald-300/80">Streamable HTTP / MCP</span>
+							<span class="text-muted-foreground">Transport</span> · <span class="text-brand-mcp">Streamable HTTP / MCP</span>
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-muted-foreground">Hosted at</span> · <span class="text-emerald-300/80">mcp.aadm.io</span>
+							<span class="text-muted-foreground">Hosted at</span> · <span class="text-brand-mcp">mcp.aadm.io</span>
 						</div>
 					</div>
 				</div>

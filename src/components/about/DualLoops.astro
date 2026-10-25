@@ -21,14 +21,14 @@ const toneStyles: Record<
 	{ label: string; box: string; rule: string; dot: string; glow: string }
 > = {
 	violet: {
-		label: "text-violet-200",
+		label: "text-brand-violet",
 		box: "border-violet-400/25 bg-violet-950/[0.16]",
 		rule: "border-violet-400/40",
 		dot: "bg-violet-300",
 		glow: "bg-violet-500/[0.07]",
 	},
 	sky: {
-		label: "text-sky-200",
+		label: "text-brand-sky",
 		box: "border-sky-400/25 bg-sky-950/[0.16]",
 		rule: "border-sky-400/40",
 		dot: "bg-sky-300",
@@ -99,8 +99,8 @@ const loops: Loop[] = [
 	</div>
 
 	<!-- Forward deployed boundary: optional mode, so dashed and amber. -->
-	<div class="relative border border-dashed border-amber-300/40 p-3 pt-7 sm:p-4 sm:pt-8">
-		<p class="font-mono-cta absolute left-4 top-1.5 text-[13px] text-amber-200 sm:top-2">
+	<div class="relative border border-dashed border-brand-warn-border p-3 pt-7 sm:p-4 sm:pt-8">
+		<p class="font-mono-cta absolute left-4 top-1.5 text-[13px] text-brand-warn sm:top-2">
 			Customer environment, when forward deployed
 		</p>
 	<div class="grid grid-cols-1 gap-px bg-white/[0.08] lg:grid-cols-2">
@@ -170,9 +170,9 @@ const loops: Loop[] = [
 			})
 		}
 	</div>
-		<div class="mt-4 flex flex-col gap-3 border-t border-dashed border-amber-300/30 pt-4 text-sm sm:flex-row sm:items-center sm:justify-between">
+		<div class="mt-4 flex flex-col gap-3 border-t border-dashed border-brand-warn-border pt-4 text-sm sm:flex-row sm:items-center sm:justify-between">
 			<span class="text-text-secondary">A named person on the customer side accepts the result.</span>
-			<span class="inline-flex items-center gap-2 font-medium text-amber-200">
+			<span class="inline-flex items-center gap-2 font-medium text-brand-warn">
 				Handover: their team owns both loops
 				<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
 					<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" />
@@ -182,13 +182,13 @@ const loops: Loop[] = [
 	</div>
 </div>
 
-<p class="mt-10 max-w-3xl border-l border-emerald-300/40 pl-5 text-sm leading-relaxed text-muted-foreground">
+<p class="mt-10 max-w-3xl border-l border-brand-mcp-border pl-5 text-sm leading-relaxed text-muted-foreground">
 	The two loops are not independent. The development loop decides what the runtime loop is allowed to do — which tools
 	exist, where authorization sits, what gets logged, what a bad decision can reach. Govern the first one badly and you
 	have shipped an ungovernable second one.
 </p>
 
-<p class="mt-6 max-w-3xl border-l border-amber-300/40 pl-5 text-sm leading-relaxed text-muted-foreground">
+<p class="mt-6 max-w-3xl border-l border-brand-warn-border pl-5 text-sm leading-relaxed text-muted-foreground">
 	<span class="font-medium text-foreground">Forward deployed is the same engineer in someone else's environment.</span> Both
 	loops run inside the customer's systems, a named person on their side accepts the result, and ownership of both loops
 	transfers at the end. The AADM MCP's FDE engagement recon checks that contract, its gates, and the handover.

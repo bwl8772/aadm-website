@@ -122,9 +122,9 @@ const stackGroups: StackGroup[] = [
 
 const toneClasses: Record<StackGroup["tone"], { label: string; rule: string }> =
 	{
-		emerald: { label: "text-emerald-200/85", rule: "border-emerald-300/40" },
-		violet: { label: "text-violet-200/85", rule: "border-violet-400/40" },
-		amber: { label: "text-amber-200/85", rule: "border-amber-300/40" },
+		emerald: { label: "text-brand-mcp", rule: "border-brand-mcp-border" },
+		violet: { label: "text-brand-violet", rule: "border-violet-400/40" },
+		amber: { label: "text-brand-warn", rule: "border-brand-warn-border" },
 	};
 
 const languages = [
@@ -184,13 +184,13 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 00</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Stacks</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
-						<span class="text-emerald-200/90">▸</span> {totalStacks} stacks with idiom-level translation · zero required
+						<span class="text-brand-mcp">▸</span> {totalStacks} stacks with idiom-level translation · zero required
 					</p>
 
 					<h1 class="font-display max-w-[20ch] text-balance text-[clamp(2.4rem,8vw,6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
@@ -199,8 +199,8 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">Cloud</p>
+							<div class="border-l border-brand-mcp-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Cloud</p>
 								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
 									AADM never names a cloud. The doctrine reasons about layers and AUTH controls — never vendors.
 								</p>
@@ -209,7 +209,7 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 									<span class="border border-border px-2.5 py-1 text-text-secondary">Azure</span>
 									<span class="border border-border px-2.5 py-1 text-text-secondary">GCP</span>
 									<span class="border border-border px-2.5 py-1 text-text-secondary">Self-hosted</span>
-									<span class="text-emerald-300">= the same to AADM</span>
+									<span class="text-brand-mcp">= the same to AADM</span>
 								</div>
 							</div>
 						</div>
@@ -252,7 +252,7 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 		<section id="named-support" class="relative scroll-mt-20 border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-20 sm:px-8 sm:py-24">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 01</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 01</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Named support</span>
 				</aside>
 
@@ -261,11 +261,11 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 						Your framework's own words, <span class="font-light italic text-muted-foreground">turned into citations.</span>
 					</h2>
 					<p class="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
-						Paste <code class="font-mono-cta text-emerald-200/85">useEffect</code>, <code class="font-mono-cta text-emerald-200/85">ngOnInit</code>, or
-						<code class="font-mono-cta text-emerald-200/85"> RemoteEvent</code> and the MCP returns the matching stack role, AUTH control, and
+						Paste <code class="font-mono-cta text-brand-mcp">useEffect</code>, <code class="font-mono-cta text-brand-mcp">ngOnInit</code>, or
+						<code class="font-mono-cta text-brand-mcp"> RemoteEvent</code> and the MCP returns the matching stack role, AUTH control, and
 						UDALI band — a deterministic keyword lookup, never a guess. Stack identity itself is only ever set by evidence
-						you provide (a <code class="font-mono-cta text-emerald-200/85">framework_hint</code> or your own
-						<code class="font-mono-cta text-emerald-200/85"> package.json</code> / <code class="font-mono-cta text-emerald-200/85">go.mod</code>
+						you provide (a <code class="font-mono-cta text-brand-mcp">framework_hint</code> or your own
+						<code class="font-mono-cta text-brand-mcp"> package.json</code> / <code class="font-mono-cta text-brand-mcp">go.mod</code>
 						dependencies) — never inferred from free text.
 					</p>
 
@@ -304,7 +304,7 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 		<section id="everything-else" class="relative scroll-mt-20 border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-20 sm:px-8 sm:py-24">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 02</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 02</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Everything else</span>
 				</aside>
 
@@ -337,8 +337,8 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 						</div>
 					</div>
 
-					<div class="mt-16 border-l-2 border-amber-300/40 pl-6">
-						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/85">Honestly, not covered yet</p>
+					<div class="mt-16 border-l-2 border-brand-warn-border pl-6">
+						<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">Honestly, not covered yet</p>
 						<ul class="mt-5 divide-y divide-white/[0.06] border-t border-border">
 							{
 								openGaps.map((g) => (
@@ -364,7 +364,7 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.07),transparent_60%)]"></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 03</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 03</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Start here</span>
 				</aside>
 
@@ -394,7 +394,7 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 						</a>
 						<a
 							href={urlStandard}
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>Read the open standard</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>

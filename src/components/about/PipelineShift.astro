@@ -31,14 +31,14 @@ const actorStyles: Record<
 		dot: "bg-slate-500",
 	},
 	human: {
-		box: "border-amber-300/25 bg-amber-950/[0.18]",
-		tag: "text-amber-200/85",
+		box: "border-brand-warn-border bg-amber-950/[0.18]",
+		tag: "text-brand-warn",
 		tagLabel: "Human",
 		dot: "bg-amber-300",
 	},
 	agent: {
-		box: "border-emerald-300/25 bg-emerald-950/[0.18]",
-		tag: "text-emerald-200/85",
+		box: "border-brand-mcp-border bg-emerald-950/[0.18]",
+		tag: "text-brand-mcp",
 		tagLabel: "Agent",
 		dot: "bg-emerald-300",
 	},
@@ -109,7 +109,7 @@ const pipelines: Pipeline[] = [
 				<p
 					class:list={[
 						"font-mono-cta text-[13px] normal-case tracking-[0.01em]",
-						pipelineIdx === 1 ? "text-emerald-200/85" : "text-amber-200/75",
+						pipelineIdx === 1 ? "text-brand-mcp" : "text-brand-warn",
 					]}
 				>
 					{pipeline.era}
@@ -168,7 +168,7 @@ const pipelines: Pipeline[] = [
 				<p
 					class:list={[
 						"mt-8 border-l pl-5 text-sm leading-relaxed text-muted-foreground",
-						pipelineIdx === 1 ? "border-emerald-300/40" : "border-amber-300/40",
+						pipelineIdx === 1 ? "border-brand-mcp-border" : "border-brand-warn-border",
 					]}
 				>
 					{pipeline.footnote}

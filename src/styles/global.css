@@ -7,6 +7,10 @@
  * AADM design system — readability standard (v2)
  *
  * Tokens (light + dark): src/styles/theme.css
+ * Light-on-light guard: npm run test:theme-contrast
+ *   Ban pale Tailwind text accents (amber/emerald/violet/sky 50–300 bands).
+ *   Use brand tokens: warn | mcp | violet | sky (text-brand-* / border-*-border).
+ *   Auto-rewrite: npm run fix:theme-contrast
  * Audience: engineers reading carefully, not skimming a terminal.
  * Type
  *   - Smallest text on the site is 13px (labels, meta). Nothing at 10–11px.

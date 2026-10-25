@@ -33,18 +33,18 @@ const laneCards = [
 
 const laneToneClasses = {
 	violet: {
-		numeral: "text-violet-300/90",
-		chip: "border-violet-400/30 text-violet-200",
+		numeral: "text-brand-violet",
+		chip: "border-violet-400/30 text-brand-violet",
 		bullet: "bg-violet-300",
 	},
 	blue: {
-		numeral: "text-sky-300/90",
-		chip: "border-sky-400/30 text-sky-200",
+		numeral: "text-brand-sky",
+		chip: "border-sky-400/30 text-brand-sky",
 		bullet: "bg-sky-300",
 	},
 	emerald: {
-		numeral: "text-emerald-300/90",
-		chip: "border-emerald-400/30 text-emerald-200",
+		numeral: "text-brand-mcp",
+		chip: "border-emerald-400/30 text-brand-mcp",
 		bullet: "bg-emerald-300",
 	},
 };
@@ -81,27 +81,27 @@ const qa = [
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">§ 00</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">AADM + Cursor</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
-						<span class="text-violet-200/90">▸</span> How responsibility divides
+						<span class="text-brand-violet">▸</span> How responsibility divides
 					</p>
 
 					<h1 class="font-display max-w-[20ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Standard as <span class="font-light italic text-muted-foreground">coaching.</span><br />
 						Cursor as <span class="relative inline-block">
-							<span class="relative z-10 text-violet-300">editor.</span>
+							<span class="relative z-10 text-brand-violet">editor.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-violet-300/30"></span>
 						</span>
 					</h1>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-violet-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/80">The division</p>
+							<div class="border-l border-brand-violet/40 pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">The division</p>
 								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
 									AADM defines the workflows, layer language, and evidence discipline. Cursor is the harness — it and the
 									model inside it open your project and apply that standard to real code.
@@ -118,11 +118,11 @@ const qa = [
 					</div>
 
 					<div class="mt-10 flex flex-wrap gap-x-4 gap-y-2 font-mono-cta text-sm normal-case tracking-[0.01em] text-muted-foreground">
-						<a href={mcpConnectHref} class="text-violet-300 underline decoration-violet-400/40 underline-offset-[6px] hover:decoration-violet-300">MCP credentials · /mcp#connect-bearer</a>
+						<a href={mcpConnectHref} class="text-brand-violet underline decoration-violet-400/40 underline-offset-[6px] hover:decoration-brand-violet">MCP credentials · /mcp#connect-bearer</a>
 						<span class="text-slate-700">·</span>
-						<a href={memberSignInUrl} class="text-violet-300 underline decoration-violet-400/40 underline-offset-[6px] hover:decoration-violet-300">Sign in for API keys</a>
+						<a href={memberSignInUrl} class="text-brand-violet underline decoration-violet-400/40 underline-offset-[6px] hover:decoration-brand-violet">Sign in for API keys</a>
 						<span class="text-slate-700">·</span>
-						<a href="/governance" class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-[6px] hover:decoration-emerald-300">Step 0 · npx aadm-init-repo</a>
+						<a href="/governance" class="text-brand-mcp underline decoration-brand-mcp underline-offset-[6px] hover:decoration-brand-mcp">Step 0 · npx aadm-init-repo</a>
 						<span class="text-slate-700">·</span>
 						<a href="/about" class="text-text-secondary underline decoration-slate-700 underline-offset-[6px] hover:text-foreground hover:decoration-slate-500">The discipline · agentic engineering</a>
 					</div>
@@ -154,7 +154,7 @@ const qa = [
 		<section class="relative border-b border-border bg-surface-mid">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 01</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 01</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">What AADM is</span>
 				</aside>
 
@@ -172,14 +172,14 @@ const qa = [
 							<p class="mt-4 text-base leading-relaxed text-muted-foreground">
 								It is <span class="text-foreground">not your app</span> and does not run inside your product codebase.
 							</p>
-							<p class="mt-8 border-l-2 border-emerald-300/40 py-1 pl-5 text-sm italic text-muted-foreground">
+							<p class="mt-8 border-l-2 border-brand-mcp-border py-1 pl-5 text-sm italic text-muted-foreground">
 								“Application repos prove AADM through code, tests, and evidence.”
 								<span class="not-italic"> — AGENTS.md</span>
 							</p>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border-l-2 border-amber-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/80">What the MCP does not do</p>
+							<div class="border-l-2 border-brand-warn-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">What the MCP does not do</p>
 								<ul class="mt-6 divide-y divide-white/[0.06] border-t border-border">
 									{
 										[
@@ -188,7 +188,7 @@ const qa = [
 											{ k: "No app patching", v: "AADM shapes what agents demand (e.g. “pair mutations with invalidation”). It doesn't patch your branch." },
 										].map((item, idx) => (
 											<li class="group grid grid-cols-[auto_1fr] items-baseline gap-4 py-4">
-												<span class="font-mono-cta text-sm text-amber-300/80">{String(idx + 1).padStart(2, "0")}</span>
+												<span class="font-mono-cta text-sm text-brand-warn">{String(idx + 1).padStart(2, "0")}</span>
 												<span class="text-sm leading-relaxed">
 													<span class="text-foreground">{item.k}</span>
 													<span class="block mt-1 text-muted-foreground">{item.v}</span>
@@ -210,7 +210,7 @@ const qa = [
 		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 02</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">§ 02</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">What Cursor does</span>
 				</aside>
 
@@ -262,7 +262,7 @@ const qa = [
 		<section class="relative border-b border-border bg-surface-mid" aria-labelledby="cursor-in-action-heading">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 03</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 03</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Cursor in action</span>
 				</aside>
 
@@ -272,11 +272,11 @@ const qa = [
 					</h2>
 					<p class="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">
 						The transcript is fictional. Real MCP payloads follow{' '}
-						<code class="font-mono-cta text-emerald-200/85">tools/list</code> contracts on your server build.
+						<code class="font-mono-cta text-brand-mcp">tools/list</code> contracts on your server build.
 					</p>
 
 					<figure
-						class="mt-10 overflow-hidden border border-[#3e3e42] bg-[#181818] shadow-2xl shadow-black/50 ring-1 ring-white/5"
+						class="dark mt-10 overflow-hidden border border-[#3e3e42] bg-[#181818] shadow-2xl shadow-black/50 ring-1 ring-white/5"
 						aria-label="Fictional Cursor editor window showing chat and MCP tool calls"
 					>
 						<div class="flex items-center gap-3 border-b border-[#2d2d2d] bg-[#1f1f1f] px-3 py-2">
@@ -300,8 +300,8 @@ const qa = [
 
 								<div class="flex-1 space-y-4 overflow-y-auto px-4 py-4 font-mono-cta text-[13px] leading-relaxed">
 									<div class="flex justify-end">
-										<div class="max-w-[92%] border border-sky-400/30 bg-sky-950/40 px-4 py-3 text-sky-100">
-											<p class="text-sm font-semibold normal-case tracking-wide text-sky-300/80">You</p>
+										<div class="max-w-[92%] border border-sky-400/30 bg-sky-950/40 px-4 py-3 text-brand-sky">
+											<p class="text-sm font-semibold normal-case tracking-wide text-brand-sky">You</p>
 											<p class="mt-1">
 												Run a Sentinel-style slice on our workspace API: trace critical fields from request → schema → domain → DB → DTO → JSON response. Flag leakage, rename mismatches, and silent truncation — not just “is auth enforced.” Use AADM MCP for workflow + audit scaffolding.
 											</p>
@@ -310,18 +310,18 @@ const qa = [
 
 									<div class="flex justify-start">
 										<div class="max-w-[92%] border border-[#333] bg-[#252526] px-4 py-3 text-text-secondary">
-											<p class="text-sm font-semibold normal-case tracking-wide text-violet-300/90">Agent</p>
+											<p class="text-sm font-semibold normal-case tracking-wide text-brand-violet">Agent</p>
 											<p class="mt-1 text-muted-foreground">
 												On it. I'll pull the orchestrator snapshot, then kick an assurance-shaped audit run so we inherit the section spine and suggested AUTH pulls — then I'll summarize data-flow risks for your team.
 											</p>
 										</div>
 									</div>
 
-									<div class="overflow-hidden border border-emerald-500/30 bg-[#0a1410]">
-										<div class="flex items-center gap-2 border-b border-emerald-500/20 bg-emerald-950/35 px-3 py-2">
-											<span class="border border-emerald-300/60 bg-transparent px-1.5 py-0.5 font-mono-cta text-[13px] normal-case tracking-wider text-emerald-200">MCP</span>
-											<span class="text-sm text-emerald-200/80">tools/call</span>
-											<code class="text-[12px] text-emerald-300">standard_brief</code>
+									<div class="overflow-hidden border border-brand-mcp-border0/30 bg-[#0a1410]">
+										<div class="flex items-center gap-2 border-b border-brand-mcp-border0/20 bg-emerald-950/35 px-3 py-2">
+											<span class="border border-brand-mcp-border bg-transparent px-1.5 py-0.5 font-mono-cta text-[13px] normal-case tracking-wider text-brand-mcp">MCP</span>
+											<span class="text-sm text-brand-mcp">tools/call</span>
+											<code class="text-[12px] text-brand-mcp">standard_brief</code>
 										</div>
 										<pre class="max-h-32 overflow-y-auto p-3 text-sm text-muted-foreground">{`{
   "capabilities_schema_version": "…",
@@ -330,11 +330,11 @@ const qa = [
 }`}</pre>
 									</div>
 
-									<div class="overflow-hidden border border-emerald-500/30 bg-[#0a1410]">
-										<div class="flex items-center gap-2 border-b border-emerald-500/20 bg-emerald-950/35 px-3 py-2">
-											<span class="border border-emerald-300/60 bg-transparent px-1.5 py-0.5 font-mono-cta text-[13px] normal-case tracking-wider text-emerald-200">MCP</span>
-											<span class="text-sm text-emerald-200/80">tools/call</span>
-											<code class="text-[12px] text-emerald-300">audit_run</code>
+									<div class="overflow-hidden border border-brand-mcp-border0/30 bg-[#0a1410]">
+										<div class="flex items-center gap-2 border-b border-brand-mcp-border0/20 bg-emerald-950/35 px-3 py-2">
+											<span class="border border-brand-mcp-border bg-transparent px-1.5 py-0.5 font-mono-cta text-[13px] normal-case tracking-wider text-brand-mcp">MCP</span>
+											<span class="text-sm text-brand-mcp">tools/call</span>
+											<code class="text-[12px] text-brand-mcp">audit_run</code>
 										</div>
 										<pre class="max-h-36 overflow-y-auto p-3 text-sm text-muted-foreground">{`{
   "request": "Assess workspace API for response leakage, camelCase vs snake_case mismatches, date/string drift in DTOs, and silent batch truncation.",
@@ -344,15 +344,15 @@ const qa = [
 
 									<div class="flex justify-start">
 										<div class="max-w-[98%] border border-[#333] bg-[#252526] px-4 py-3 text-text-secondary">
-											<p class="text-sm font-semibold normal-case tracking-wide text-violet-300/90">Agent · readout</p>
+											<p class="text-sm font-semibold normal-case tracking-wide text-brand-violet">Agent · readout</p>
 											<p class="mt-2 text-muted-foreground">
 												Slice readout — framed as <span class="text-foreground">data-flow</span> bugs (harder than “is the filter present?” enforcement checks):
 											</p>
 											<div class="mt-3 max-h-52 overflow-y-auto border border-[#3e3e42] bg-[#1e1e1e] p-3 text-[12px]">
-												<p class="font-semibold text-amber-200/90">Representative risks (illustrative)</p>
+												<p class="font-semibold text-brand-warn">Representative risks (illustrative)</p>
 												<ul class="mt-2 list-disc space-y-2 pl-4 text-muted-foreground">
 													<li><span class="text-text-secondary">Field leakage</span> — response includes internal-only columns because the list DTO mirrors the persistence model.</li>
-													<li><span class="text-text-secondary">Format mismatch</span> — <code class="text-sky-300/90">deleted_at</code> stored correctly but serialized as a plain string where clients expect ISO-8601.</li>
+													<li><span class="text-text-secondary">Format mismatch</span> — <code class="text-brand-sky">deleted_at</code> stored correctly but serialized as a plain string where clients expect ISO-8601.</li>
 													<li><span class="text-text-secondary">Silent truncation</span> — batch accepts 100 rows; mapper drops half with no error surface.</li>
 												</ul>
 												<p class="mt-4 text-muted-foreground">These are contract / observability problems across hops — not a substitute for gateway AUTH, which still has to be proven in your repo.</p>
@@ -379,7 +379,7 @@ const qa = [
 		<section class="relative border-b border-border">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-amber-200/70">§ 04</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 04</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Direct answers</span>
 				</aside>
 
@@ -404,8 +404,8 @@ const qa = [
 										</p>
 									</div>
 									<div class="col-span-12 sm:col-span-8">
-										<div class="border-l border-emerald-300/40 pl-5">
-											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">Short answer</p>
+										<div class="border-l border-brand-mcp-border pl-5">
+											<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Short answer</p>
 											<p class="mt-2 text-[0.95rem] leading-relaxed text-text-secondary">{row.a}</p>
 										</div>
 									</div>
@@ -424,7 +424,7 @@ const qa = [
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(157,123,245,0.07),transparent_60%)]"></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-violet-200/70">§ 05</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">§ 05</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Mental model</span>
 				</aside>
 
@@ -441,9 +441,9 @@ const qa = [
 								{ letter: "C", role: "Cursor", body: "Editor / agent. Applies the coaching to real code in your workspace — reads, greps, ships the fixes.", tone: "amber" },
 							].map((tier) => {
 								const c =
-									tier.tone === "violet" ? "text-violet-300/90" :
-									tier.tone === "emerald" ? "text-emerald-300/90" :
-									"text-amber-300/90";
+									tier.tone === "violet" ? "text-brand-violet" :
+									tier.tone === "emerald" ? "text-brand-mcp" :
+									"text-brand-warn";
 								return (
 									<article class="group bg-surface-deep p-6 transition duration-300 hover:bg-surface-mid sm:p-8">
 										<div class="flex items-baseline gap-4">
@@ -482,7 +482,7 @@ const qa = [
 						</a>
 						<a
 							href="/why-aadm"
-							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-slate-700 underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
 						>
 							<span>Why AADM, vs raw loops</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>

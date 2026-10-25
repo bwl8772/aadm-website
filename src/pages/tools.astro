@@ -249,9 +249,9 @@ const laneMeta: LaneMeta[] = [
 		plain:
 			"Tools the host calls first. They tell the agent what kind of work is on the table and how to branch.",
 		tone: "amber",
-		accent: "text-amber-300/90",
-		chip: "border-amber-300/40 text-amber-200",
-		rule: "border-amber-300/40",
+		accent: "text-brand-warn",
+		chip: "border-brand-warn-border text-brand-warn",
+		rule: "border-brand-warn-border",
 	},
 	{
 		key: "Navigator",
@@ -260,8 +260,8 @@ const laneMeta: LaneMeta[] = [
 		plain:
 			"Turn a vague ask into layer-aware slices with authorization, ownership, and acceptance criteria baked in.",
 		tone: "violet",
-		accent: "text-violet-300/90",
-		chip: "border-violet-400/40 text-violet-200",
+		accent: "text-brand-violet",
+		chip: "border-violet-400/40 text-brand-violet",
 		rule: "border-violet-400/40",
 	},
 	{
@@ -271,8 +271,8 @@ const laneMeta: LaneMeta[] = [
 		plain:
 			"Evidence-first. Recon classifies the failure; remediation is gated until proof crosses the router.",
 		tone: "sky",
-		accent: "text-sky-300/90",
-		chip: "border-sky-400/40 text-sky-200",
+		accent: "text-brand-sky",
+		chip: "border-sky-400/40 text-brand-sky",
 		rule: "border-sky-400/40",
 	},
 	{
@@ -282,8 +282,8 @@ const laneMeta: LaneMeta[] = [
 		plain:
 			"Audit programs scope seams. Evidence binds per crossing. Closure tiers come back in VERT/HORI language.",
 		tone: "emerald",
-		accent: "text-emerald-300/90",
-		chip: "border-emerald-400/40 text-emerald-200",
+		accent: "text-brand-mcp",
+		chip: "border-emerald-400/40 text-brand-mcp",
 		rule: "border-emerald-400/40",
 	},
 	{
@@ -300,10 +300,10 @@ const laneMeta: LaneMeta[] = [
 ];
 
 const badgeClass: Record<Lane, string> = {
-	Orchestration: "border-amber-300/40 text-amber-200",
-	Navigator: "border-violet-300/40 text-violet-200",
-	Investigator: "border-sky-300/40 text-sky-200",
-	Sentinel: "border-emerald-300/40 text-emerald-200",
+	Orchestration: "border-brand-warn-border text-brand-warn",
+	Navigator: "border-brand-violet/40 text-brand-violet",
+	Investigator: "border-brand-sky/40 text-brand-sky",
+	Sentinel: "border-brand-mcp-border text-brand-mcp",
 	Doctrine: "border-slate-300/40 text-foreground",
 };
 
@@ -336,31 +336,31 @@ const totalCount = tools.length;
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 00</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Tools / catalog</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
 					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
-						<span class="text-emerald-200/90">▸</span> {totalCount} typed tools · five lanes · all return structured JSON
+						<span class="text-brand-mcp">▸</span> {totalCount} typed tools · five lanes · all return structured JSON
 					</p>
 
 					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
 						Every tool. <span class="font-light italic text-muted-foreground">Every contract.</span><br />
 						<span class="relative inline-block">
-							<span class="relative z-10 text-emerald-300">One catalog.</span>
+							<span class="relative z-10 text-brand-mcp">One catalog.</span>
 							<span aria-hidden="true" class="absolute inset-x-0 bottom-[0.1em] -z-0 h-[0.18em] bg-emerald-300/30"></span>
 						</span>
 					</h1>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/80">Authoritative source</p>
+							<div class="border-l border-brand-mcp-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Authoritative source</p>
 								<p class="mt-3 text-[0.95rem] leading-relaxed text-text-secondary">
 									This page mirrors the hosted server's published surface. After you connect,{' '}
-									<code class="font-mono-cta text-emerald-200/85">tools/list</code> and{' '}
-									<code class="font-mono-cta text-emerald-200/85">inputSchema</code> on your running MCP are the final word.
+									<code class="font-mono-cta text-brand-mcp">tools/list</code> and{' '}
+									<code class="font-mono-cta text-brand-mcp">inputSchema</code> on your running MCP are the final word.
 								</p>
 							</div>
 						</div>
@@ -376,7 +376,7 @@ const totalCount = tools.length;
 								job rather than a constraint on it, see{' '}
 								<a
 									href="/about"
-									class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+									class="font-semibold text-text-secondary underline decoration-slate-700 underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 									>agentic engineering</a
 								>.
 							</p>
@@ -391,7 +391,7 @@ const totalCount = tools.length;
 						>
 							<span class="block h-1.5 w-1.5 rounded-full bg-amber-300/90"></span>
 							<span>Entry points</span>
-							<span class="text-amber-200/60">· start here</span>
+							<span class="text-brand-warn">· start here</span>
 						</a>
 						{
 							laneMeta.map((m) => (
@@ -501,7 +501,7 @@ const totalCount = tools.length;
 												>
 													<div class="flex items-baseline justify-between gap-3">
 														<code class="font-mono-cta break-all text-[15px] font-semibold text-foreground">
-															<a href={`#${tool.tool}`} class="transition hover:text-emerald-200">{tool.tool}</a>
+															<a href={`#${tool.tool}`} class="transition hover:text-brand-mcp">{tool.tool}</a>
 														</code>
 														<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 															{String(i + 1).padStart(2, "0")}
@@ -569,7 +569,7 @@ const totalCount = tools.length;
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.07),transparent_60%)]"></div>
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
 				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/70">§ 06</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 06</span>
 					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Authoritative</span>
 				</aside>
 
@@ -579,8 +579,8 @@ const totalCount = tools.length;
 					</h2>
 					<p class="mt-6 max-w-2xl text-base leading-relaxed text-text-secondary">
 						The catalog above tracks the hosted AADM MCP's published surface. After you connect,{' '}
-						<code class="font-mono-cta text-emerald-200/85">tools/list</code> and{' '}
-						<code class="font-mono-cta text-emerald-200/85">inputSchema</code> on your running server are authoritative —
+						<code class="font-mono-cta text-brand-mcp">tools/list</code> and{' '}
+						<code class="font-mono-cta text-brand-mcp">inputSchema</code> on your running server are authoritative —
 						versions, parameter shapes, and new tools land there first.
 					</p>
 
@@ -602,14 +602,14 @@ const totalCount = tools.length;
 							</div>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border-l-2 border-emerald-300/40 pl-6">
-								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-emerald-200/85">What you'll see</p>
+							<div class="border-l-2 border-brand-mcp-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">What you'll see</p>
 								<p class="mt-3 text-sm leading-relaxed text-text-secondary">
 									A JSON array of tools with name, description, and inputSchema. The same tools listed here, plus any newer
 									additions your server may already expose.
 								</p>
 								<p class="mt-4 text-xs leading-relaxed text-muted-foreground">
-									Don't have a token? <a href={urlMcpMarketing} class="text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Get access</a>.
+									Don't have a token? <a href={urlMcpMarketing} class="text-brand-mcp underline decoration-brand-mcp underline-offset-4 hover:decoration-brand-mcp">Get access</a>.
 								</p>
 							</div>
 						</div>
@@ -639,10 +639,10 @@ const totalCount = tools.length;
 							<span class="text-muted-foreground">Catalog</span> · {totalCount} tools
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-muted-foreground">Lanes</span> · <span class="text-emerald-300/80">{laneMeta.length}</span>
+							<span class="text-muted-foreground">Lanes</span> · <span class="text-brand-mcp">{laneMeta.length}</span>
 						</div>
 						<div class="col-span-12 sm:col-span-4">
-							<span class="text-muted-foreground">Authoritative</span> · <span class="text-emerald-300/80">tools/list on your server</span>
+							<span class="text-muted-foreground">Authoritative</span> · <span class="text-brand-mcp">tools/list on your server</span>
 						</div>
 					</div>
 				</div>
