@@ -260,6 +260,12 @@ const nextSteps: NextStep[] = [
 		label: "Make the case",
 		body: "Due-diligence answers, rollout stages, and the boundary language for security and procurement conversations.",
 	},
+	{
+		letter: "G",
+		href: "/stacks",
+		label: "Check your stack",
+		body: "Cloud-agnostic by design, with named idiom support across 19 frontend, backend, and game-engine frameworks — and the same doctrine for everything else.",
+	},
 ];
 ---
 
@@ -1077,7 +1083,7 @@ const nextSteps: NextStep[] = [
 
 				<div class="col-span-12 sm:col-span-10">
 					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
-						<span class="text-emerald-200/90">▸</span> Six directions
+						<span class="text-emerald-200/90">▸</span> Seven directions
 					</p>
 					<h2
 						class="font-display mt-6 max-w-[15ch] text-balance text-[clamp(2.4rem,6.8vw,6rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
@@ -1094,12 +1100,12 @@ const nextSteps: NextStep[] = [
 						every session, without anyone maintaining a fork.
 					</p>
 
-					<div class="mt-16 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+					<div class="mt-16 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
 						{
 							nextSteps.map((step) => (
 								<a
 									href={step.href}
-									class="group bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-8"
+									class="group border border-white/[0.08] bg-[#0a0e1a] p-7 transition duration-300 hover:border-white/20 sm:p-8"
 								>
 									<div class="flex items-baseline gap-4">
 										<span class="font-display text-[3rem] font-light leading-[0.85] text-emerald-200/80 transition duration-300 group-hover:text-emerald-300">
