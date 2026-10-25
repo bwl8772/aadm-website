@@ -24,6 +24,7 @@
 |------|----------------|---------|
 | **`accounts.aadm.io`** | **Clerk** (CNAME — keep it) | Sign-in, sign-up only |
 | **`aadm.io/member`** | **Astro tabs + Clerk widgets** | API keys, Connectors OAuth (Astro), Profile, Security |
+| **`aadm.io/field/main`** | **Astro** (protected; same sync as `/member`) | Empty Field home for signed-in users — not public `/field` |
 | **`aadm.io`** | **Astro** | Marketing + MCP setup (no secrets) |
 | **`mcp.aadm.io`** | **aadm-mcp** | MCP JSON-RPC |
 
