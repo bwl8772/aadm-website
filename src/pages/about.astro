@@ -5,9 +5,11 @@ import GovernanceStack from "../components/about/GovernanceStack.astro";
 import PipelineShift from "../components/about/PipelineShift.astro";
 import UdaliSpan from "../components/about/UdaliSpan.astro";
 import Layout from "../layouts/Layout.astro";
+import { codingShiftSvg } from "../lib/coding-shift-svg";
 import { getSiteUrlConfig } from "../lib/site-urls";
 
 const { urlStandard, urlMcpMarketing } = getSiteUrlConfig(import.meta.env);
+const codingShift = codingShiftSvg();
 
 /** What two decades of engineering bought you — and the matching agent failure. */
 type Judgment = {
@@ -419,6 +421,27 @@ const nextSteps: NextStep[] = [
 						</a>
 					</div>
 				</div>
+				<!-- Where the work goes: the shift as one screenshot-able picture -->
+				<figure class="col-span-12 mt-20 sm:mt-24">
+					<div class="overflow-x-auto border border-white/[0.08] [scrollbar-width:thin]">
+						<div class="coding-shift min-w-[760px]" set:html={codingShift} />
+					</div>
+					<figcaption class="mt-4 flex flex-col gap-2 text-sm text-slate-400 sm:flex-row sm:items-baseline sm:justify-between">
+						<span>
+							Same six steps, two eras. Coding goes from the widest box to the narrowest; the boxes around it are where
+							your experience now does its work.
+						</span>
+						<a
+							href="/visuals/coding-shift.svg"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="font-mono-cta shrink-0 normal-case tracking-[0.01em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+						>
+							Open as SVG ↗
+						</a>
+					</figcaption>
+				</figure>
+
 			</div>
 		</section>
 
