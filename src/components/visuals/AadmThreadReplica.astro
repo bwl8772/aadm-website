@@ -239,6 +239,116 @@ const steps: Step[] = [
 		kind: "agent",
 		text: "Cluster 2 is proven. Next is the unique-index cluster: reproduce it in isolation, then classify before changing anything.",
 	},
+
+	// Scenario 3 — assessing an inherited, vibe-coded app before an architecture meeting.
+	{ kind: "divider", label: "Later · inherited-app" },
+	{
+		kind: "user",
+		text: "We inherited an app a contractor vibe-coded. Hundreds of services, two schemas, no tests. Leadership wants to know if we keep building on it. Where do we even start?",
+	},
+	{
+		kind: "agent",
+		text: "Tell me what you want to do with it. Ship it as is, harden it, or decide whether to rebuild?",
+	},
+	{ kind: "user", text: "Decide. We have one architecture meeting next week." },
+	{ kind: "think", label: "Thought for 2s", ms: 1600 },
+	{
+		kind: "agent",
+		text: "I'll start with AADM's repo-mapping path: route the work, pull the map contract, then collect evidence from this repo.",
+	},
+	{
+		kind: "aadm",
+		tool: "route_lane",
+		status: "Lane · assurance",
+		lines: [
+			"The question is prove what exists, not build or fix. Sentinel.",
+			"Scope & frame → Trace & bind evidence → Attest readiness.",
+			"Recommended skills: survey-context, then review-architecture.",
+		],
+		chips: ["Sentinel", "survey-context"],
+	},
+	{
+		kind: "aadm",
+		tool: "repo_architecture_map",
+		status: "Contract · bring evidence",
+		lines: [
+			"I do not scan your repo. You collect; I check the shape.",
+			"Each responsibility L1–L22: where it lives, proof kind (source · runtime · test), or unknown.",
+			"Missing proof stays unknown. Layer numbers are placement, not scores.",
+		],
+		chips: ["map contract", "no repo scan"],
+	},
+	{
+		kind: "tool",
+		icon: "read",
+		text: "Read docs/ENGINEERING_RULES.md + docs/DECISION_LOG.md  → the intended contract already exists",
+	},
+	{
+		kind: "tool",
+		icon: "run",
+		text: "Ran grep -rln 'x-organization-id|hasPermission|@shared/schema' src/  → 4 trust files · 208 leftover-schema importers · 21 raw fetch files",
+	},
+	{
+		kind: "tool",
+		icon: "read",
+		text: "Read apiClient.ts, chainDefinitions.ts, Documents.tsx, knowledge.routes.ts",
+	},
+	{
+		kind: "agent",
+		text: "Walked one journey: login → hub → documents → knowledge. Three things decide trust, one decides scope. Submitting the map.",
+	},
+	{
+		kind: "aadm",
+		tool: "repo_architecture_map",
+		status: "Checked · 15 placed, 7 unknown",
+		lines: [
+			"Two live paths for one product: the intended path and a leftover one. The map shows both.",
+			"The documents page is a UI stub; a knowledge API is already live behind it.",
+			"Unknown (no proof): authorization policy, audit trail, release gate, verification.",
+		],
+		chips: ["Mermaid ready", "7 unknown", "static-only ≠ verified"],
+	},
+	{
+		kind: "tool",
+		icon: "edit",
+		text: "Wrote docs/architecture-map.md  (intended path vs leftover path)",
+	},
+	{ kind: "user", text: "So what's actually broken?" },
+	{
+		kind: "aadm",
+		tool: "sentinel_handoff_hint",
+		status: "3 findings · 2 defects, 1 inventory",
+		lines: [
+			"Tenant: the client names the org, the server prefers the header. confirmed_defect, AUTH-32 → Investigator.",
+			"Admin gate: hasPermission returns true. confirmed_defect, AUTH-34 → Investigator.",
+			"208 files import the leftover schema. An inventory, not a rewrite list → Navigator, later.",
+		],
+		chips: ["AUTH-32", "AUTH-34", "do not open schema"],
+	},
+	{
+		kind: "agent",
+		text: "Honest version: AADM did not find these. Reading the source did. AADM named the map, linted the plan, and gave the room a shared agenda. The hard part was never the bugs; it is telling live product from leftover code so nobody boils the ocean.",
+	},
+	{
+		kind: "aadm",
+		tool: "interrogate_plan",
+		status: "Plan holds · 2 stop rules",
+		lines: [
+			"First slice: tenant header, then admin gate. One owner, proof of done per fix.",
+			"Out of scope for wave 1: schema migration, RAG, the leftover route tree.",
+			"Stop rule: a fix that touches more than the four trust files goes back to the room.",
+		],
+		chips: ["T1 → T2", "stop rules", "5–8 pages, one picture"],
+	},
+	{
+		kind: "agent",
+		text: "For the meeting: one diagram, a three-row risk register with file and line, the inventory counted but not scheduled, and a first-slice RFC. Ninety minutes in the room.",
+	},
+	{ kind: "user", text: "How long would that have taken us without this?" },
+	{
+		kind: "agent",
+		text: "About three weeks: a week of orientation for whoever is new to the repo, then one to two weeks of audit and sign-off paper. This thread took fifteen minutes. 120 working hours to a quarter of one, roughly 480×, for the same three findings.",
+	},
 ];
 
 const toolIcon = {
@@ -250,11 +360,11 @@ const toolIcon = {
 
 <figure class="aadm-replica relative mx-auto w-full max-w-3xl select-none" style="pointer-events:none">
 	<p class="sr-only">
-		Illustration of a live editor agent session with two threads. First, a developer reports a checkout error; the agent calls
+		Illustration of a live editor agent session with three threads. First, a developer reports a checkout error; the agent calls
 		AADM, which holds the fix until the failure is reproduced, classifies the root cause from evidence, requires one test, and
 		marks the release ready with one residual risk logged. Second, a five-hour integration suite shows about ninety failures;
 		AADM sorts them into four clusters, forbids raising timeouts, requires a trace of one hung test, which reveals a lock leak
-		in the test harness, and a targeted rerun clears sixty-one timeouts. The agent then isolates the llm-gateway cluster, AADM holds until an isolated run separates suite-order pollution from a real break, two one-file fixes land, and the cluster is proven green.
+		in the test harness, and a targeted rerun clears sixty-one timeouts. The agent then isolates the llm-gateway cluster, AADM holds until an isolated run separates suite-order pollution from a real break, two one-file fixes land, and the cluster is proven green. Third, a team inherits a vibe-coded app with two schemas and no tests; AADM routes it to assurance, hands over the map contract without scanning the repo, the agent walks one user journey and submits the map, three findings come back with controls and owners, and the agent says plainly that source reading found the bugs while AADM named the map and gave the meeting a shared agenda and stop rules, in fifteen minutes instead of the three weeks a formal audit would take.
 	</p>
 	<div aria-hidden="true" inert class="overflow-hidden rounded-xl border border-white/10 bg-[#0b0d14] shadow-[0_40px_120px_-40px_rgba(16,185,129,0.25)]">
 		<div class="flex items-center gap-3 border-b border-white/[0.07] bg-[#0e1119] px-4 py-2.5">
@@ -263,7 +373,7 @@ const toolIcon = {
 				<span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
 				<span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
 			</span>
-			<span class="text-[13px] text-slate-400">Agent · 2 threads</span>
+			<span class="text-[13px] text-slate-400">Agent · 3 threads</span>
 			<span class="ml-auto inline-flex items-center gap-1.5 text-[12px] text-rose-200">
 				<span class="aadm-live-dot h-1.5 w-1.5 rounded-full bg-rose-400"></span> Live session
 			</span>
