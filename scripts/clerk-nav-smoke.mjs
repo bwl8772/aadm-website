@@ -4,7 +4,8 @@
  * - Loads `/`, captures hrefs/buttons signed-out users see.
  * - Clicks Sign in (Account Portal link) to confirm navigation to Clerk-hosted sign-in.
  * - Loads `/mcp`, confirms Get access / Sign in CTAs are anchors with expected ids/text.
- * - Asserts unsigned `/member` redirects; forged sync param must not expose credentials.
+ * - Asserts unsigned `/member` shows the sync shell (no creds; sign-in redirect_url → /member).
+ * - Forged sync param must not expose credentials.
  *
  * Run: BASE_URL=http://127.0.0.1:4321 npm run test:clerk-smoke
  *      BASE_URL=https://aadm.io npm run test:clerk-smoke
@@ -109,26 +110,58 @@ try {
 	});
 	log("/mcp page (signed-out CTAs)", { url: page.url(), ...mcpData });
 
-	// Unauthenticated /member should redirect to Clerk sign-in (Account Portal)
+	// Unauthenticated /member stays on the sync shell (ba35c8f+) — no instant
+	// Account Portal redirect. Same pattern as scripts/field-home-smoke.mjs.
 	navigations.length = 0;
 	await page.goto(`${base}/member`, {
 		waitUntil: "domcontentloaded",
 		timeout: timeoutMs,
 	});
-	await page.waitForTimeout(2500);
+	await page.waitForTimeout(1500);
 	const memberUrl = page.url();
-	const memberRedirectOk =
-		/accounts\..+/.test(new URL(memberUrl).hostname) ||
-		/clerk\.accounts\.dev/.test(new URL(memberUrl).hostname) ||
-		/sign-in/.test(memberUrl);
-	log("/member (signed-out redirect)", {
+	const syncShell = await page.locator("[data-sign-in-url]").count();
+	const hasSyncCopy = await page.getByText("Syncing your session").count();
+	const signInHref =
+		(await page.locator("[data-sync-sign-in]").getAttribute("href")) ||
+		(await page.locator("[data-sign-in-url]").getAttribute("data-sign-in-url")) ||
+		"";
+	const credUi = await page
+		.locator(
+			"#oauth-heading, #api-keys-guide-heading, [data-member-area-root], [data-cred-panel]",
+		)
+		.count();
+	const redirectEndsWithMember = (() => {
+		try {
+			const redirect = new URL(signInHref).searchParams.get("redirect_url");
+			if (!redirect) return false;
+			const path = new URL(redirect).pathname.replace(/\/+$/, "") || "/";
+			return path === "/member" || path.endsWith("/member");
+		} catch {
+			return false;
+		}
+	})();
+	log("/member (signed-out sync shell)", {
 		finalUrl: memberUrl,
-		redirectedToClerk: memberRedirectOk,
+		syncShell,
+		hasSyncCopy,
+		credUi,
+		signInHref: signInHref.slice(0, 160),
+		redirectEndsWithMember,
 		navigations,
 	});
-	if (!memberRedirectOk) {
+	if (syncShell === 0 || hasSyncCopy === 0) {
 		throw new Error(
-			`/member did not redirect to Clerk sign-in; stayed at ${memberUrl}`,
+			`unsigned /member must show satellite sync shell; stayed at ${memberUrl}`,
+		);
+	}
+	if (credUi > 0) {
+		throw new Error(
+			"unsigned /member must not expose API key / credential UI",
+		);
+	}
+	if (!redirectEndsWithMember) {
+		throw new Error(
+			`[data-sync-sign-in] redirect_url must end with /member (got ${signInHref})`,
 		);
 	}
 
@@ -139,10 +172,14 @@ try {
 	);
 	const syncHtml = await syncReq.text();
 	const syncStatus = syncReq.status();
+	// Do not match MemberShell marketing copy ("Connectors OAuth") — only real
+	// credential chrome / profile mounts.
 	const leaksCredentials =
 		/data-copy-oauth-id=/i.test(syncHtml) ||
 		/clerk-user-profile/i.test(syncHtml) ||
-		/Connectors OAuth/i.test(syncHtml);
+		/data-member-area-root/i.test(syncHtml) ||
+		/data-cred-panel=/i.test(syncHtml) ||
+		/#api-keys-guide-heading|#oauth-heading/i.test(syncHtml);
 	log("/member?__clerk_synced=false (unsigned sync shell)", {
 		httpStatus: syncStatus,
 		hasSyncShell: /Syncing your session/i.test(syncHtml),
