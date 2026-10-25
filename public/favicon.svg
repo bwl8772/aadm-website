@@ -1,8 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="AADM">
-  <rect width="32" height="32" fill="#05040a"/>
-  <path
-    fill="#ffffff"
-    d="M16 5.5 26.5 25.5H22.8L20.6 20.5h-9.2L9.2 25.5H5.5L16 5.5Zm-3.8 12.5h7.6L16 10.8l-3.8 7.2Z"
-  />
-  <rect x="8" y="27.2" width="16" height="2.2" fill="#6ee7b7"/>
+  <title>AADM</title>
+  <path d="M3 28.5 11 5.5 19 28.5" fill="none" stroke="#10b981" stroke-width="4.2" stroke-linejoin="miter" stroke-miterlimit="10"/>
+  <path d="M13 28.5 21 5.5 29 28.5" fill="none" stroke="#8b5cf6" stroke-width="4.2" stroke-linejoin="miter" stroke-miterlimit="10"/>
+  <rect x="2" y="18.5" width="28" height="3.6" fill="#10b981"/>
 </svg>

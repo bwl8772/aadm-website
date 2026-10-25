@@ -645,6 +645,38 @@ const surfaces = [
 							))
 						}
 					</ol>
+
+					<div class="mt-10 border border-emerald-300/30 bg-[#070b13] p-7 sm:p-9" aria-labelledby="bearer-key-heading">
+						<h3 id="bearer-key-heading" class="font-display text-balance text-2xl font-bold leading-snug text-white">
+							Your API key
+						</h3>
+						<p class="mt-3 text-sm leading-relaxed text-slate-400">
+							Credentials are not shown on this public page.{' '}
+							<a href={memberSignInUrl} class="font-semibold text-emerald-300 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Sign in to AADM</a>{' '}
+							to open the member area and create <span class="text-slate-300">your <code class="font-mono text-xs">ak_…</code> key</span>. Paste it as the Bearer token in Cursor, Windsurf, Codex, or curl.
+						</p>
+						<div class="mt-6 flex flex-wrap gap-3">
+							<Show when="signed-out">
+								<a
+									href={memberSignInUrl}
+									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+								>
+									Sign in for your API key
+								</a>
+							</Show>
+							<Show when="signed-in">
+								<a
+									href={memberAreaUrl}
+									class="inline-flex items-center gap-2 bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-200"
+								>
+									Open member area — your API key
+								</a>
+							</Show>
+						</div>
+						<p class="mt-5 text-xs text-slate-400">
+							MCP server URL · <code class="font-mono-cta text-emerald-300/95">{mcpRpcUrl}</code>
+						</p>
+					</div>
 				</div>
 			</div>
 		</section>

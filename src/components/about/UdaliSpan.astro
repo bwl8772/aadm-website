@@ -170,7 +170,10 @@ const bands: Band[] = [
 				bands.map((band) => {
 					const t = toneStyles[band.tone];
 					return (
-						<li class="group relative bg-surface-deep transition duration-300 hover:bg-[#080c16]">
+						<li
+							id={`udali-${band.layers.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+							class="group relative scroll-mt-24 bg-surface-deep transition duration-300 hover:bg-[#080c16] target:bg-[#0b1220]"
+						>
 							<div class="grid grid-cols-12 gap-x-6 gap-y-4 py-7 pl-6 pr-6 sm:py-8 sm:pl-8">
 								<div
 									aria-hidden="true"
