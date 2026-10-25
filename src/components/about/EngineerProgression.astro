@@ -2,6 +2,7 @@
 /**
  * Four rungs from traditional engineering to agentic engineering. Each rung
  * keeps everything below it — the discipline accumulates, it does not replace.
+ * Forward deployed work is a mode of rung 04, shown on DualLoops, not a rung.
  */
 
 type Tone = "slate" | "sky" | "violet" | "emerald";
@@ -13,6 +14,8 @@ type Rung = {
 	body: string;
 	concerns: string[];
 	tone: Tone;
+	/** Shows the "You are here" badge. */
+	here?: boolean;
 };
 
 const toneStyles: Record<
@@ -91,15 +94,16 @@ const rungs: Rung[] = [
 			"human governance",
 		],
 		tone: "emerald",
+		here: true,
 	},
 ];
 ---
 
 <ol class="space-y-px bg-white/[0.08]">
 	{
-		rungs.map((rung, idx) => {
+		rungs.map((rung) => {
 			const t = toneStyles[rung.tone];
-			const isLast = idx === rungs.length - 1;
+			const isHere = rung.here === true;
 			return (
 				<li class:list={["group relative isolate overflow-hidden transition duration-300", t.box]}>
 					<div
@@ -121,8 +125,8 @@ const rungs: Rung[] = [
 								>
 									{rung.num}
 								</span>
-								{isLast ? (
-									<span class="font-mono-cta border border-emerald-300/40 px-2 py-1 text-[9px] normal-case tracking-[0.01em] text-emerald-200">
+								{isHere ? (
+									<span class="font-mono-cta border border-emerald-300/40 px-2 py-1 text-[13px] normal-case tracking-[0.01em] text-emerald-200">
 										You are here
 									</span>
 								) : null}
@@ -130,7 +134,7 @@ const rungs: Rung[] = [
 							<h3
 								class:list={[
 									"font-display mt-5 text-balance text-[1.2rem] font-bold leading-[1.15] tracking-tight sm:text-[1.35rem]",
-									isLast ? "text-white" : "text-slate-100",
+									isHere ? "text-white" : "text-slate-100",
 								]}
 							>
 								{rung.role}

@@ -15,6 +15,8 @@ type Judgment = {
 	knows: string;
 	fails: string;
 	anchor?: string;
+	/** On-page UDALI band this judgment lands in (UdaliSpan ids). */
+	anchorHref?: string;
 };
 
 const judgments: Judgment[] = [
@@ -24,6 +26,7 @@ const judgments: Judgment[] = [
 		fails:
 			"Puts the check wherever the call site happened to be. Validation lands in the domain layer because that file was already open.",
 		anchor: "L6 vs L7",
+		anchorHref: "#udali-l4-l8",
 	},
 	{
 		num: "02",
@@ -37,6 +40,7 @@ const judgments: Judgment[] = [
 		fails:
 			"Adds a nullable column to make the failing test green, and the data model quietly stops describing the business.",
 		anchor: "L4–L8",
+		anchorHref: "#udali-l4-l8",
 	},
 	{
 		num: "04",
@@ -44,6 +48,7 @@ const judgments: Judgment[] = [
 		fails:
 			"Puts the permission check in the controller, so authorization becomes something you audit per route forever instead of per band once.",
 		anchor: "L11 vs L18",
+		anchorHref: "#udali-l9-l12",
 	},
 	{
 		num: "05",
@@ -63,6 +68,7 @@ const judgments: Judgment[] = [
 		fails:
 			"Cannot distinguish passing from correct. Green is the only signal it has, so green is the answer it optimizes toward.",
 		anchor: "L21–L22",
+		anchorHref: "#udali-l21-l22",
 	},
 ];
 
@@ -522,7 +528,12 @@ const nextSteps: NextStep[] = [
 										</div>
 										{j.anchor ? (
 											<p class="font-mono-cta mt-4 pl-[3.25rem] text-[13px] normal-case tracking-[0.01em] text-slate-500">
-												lands at · <span class="text-emerald-200/80">{j.anchor}</span>
+												lands at ·{" "}
+												{j.anchorHref ? (
+													<a href={j.anchorHref} class="text-emerald-200/90 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">{j.anchor}</a>
+												) : (
+													<span class="text-emerald-200/80">{j.anchor}</span>
+												)}
 											</p>
 										) : null}
 									</div>
@@ -827,17 +838,31 @@ const nextSteps: NextStep[] = [
 					<h2
 						class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
 					>
-						An agentic engineer is not<br />
-						<span class="font-light italic text-slate-400">“the AI person.”</span>
+						Agentic engineers own every layer.
+						<span class="font-light italic text-slate-400">AADM gives them the map.</span>
 					</h2>
 					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
-						There is a temptation to file this role next to the models — one band, one specialism, someone else's problem
-						the rest of the time. That misreads it. The whole point is that an agent's change can land in any of twenty-two
-						layers, so someone has to hold the shape of all of them. <span class="text-slate-200">UDALI</span> is the
-						vocabulary for doing that out loud.
+						This is the role that keeps an agent's work coherent. An agent's change can land in any of twenty-two layers,
+						so someone has to hold the shape of all of them. When that work happens inside a customer's environment, that
+						person is a forward deployed engineer. <span class="text-slate-200">UDALI</span> is the shared vocabulary, and the
+						AADM MCP puts the same map in front of the agent on every turn, so engineer and agent work from one picture.
 					</p>
 
-					<div class="mt-16">
+					<div id="udali" class="mt-16 scroll-mt-24">
+						<figure class="mb-16">
+							<img
+								src="/images/udali-layers.svg"
+								alt="UDALI: 22 layers in five bands. Unifier L1–L3, Designer L4–L8, Adapter L9–L12, Logician L13–L16, Integrator L17–L22."
+								width="880"
+								height="1000"
+								loading="lazy"
+								class="mx-auto h-auto w-full max-w-3xl border border-white/10"
+							/>
+							<figcaption class="mx-auto mt-4 max-w-3xl text-sm text-slate-400">
+								All 22 UDALI layers by band.{" "}
+								<a href="/images/udali-layers.png" class="text-emerald-200 underline decoration-emerald-300/40 underline-offset-4 hover:decoration-emerald-300">Download the PNG</a>
+							</figcaption>
+						</figure>
 						<UdaliSpan />
 					</div>
 
@@ -955,20 +980,23 @@ const nextSteps: NextStep[] = [
 							<p
 								class="font-display text-balance text-[clamp(1.5rem,3.6vw,2.6rem)] font-bold leading-[1.1] tracking-tight text-white"
 							>
-								This is not a pitch
-								<span class="font-light italic text-slate-400"> for AI.</span>
+								This is about engineering well.<br />
+								<span class="font-light italic text-slate-400">AI just raised the stakes.</span>
 							</p>
 							<p class="mt-8 text-[1rem] leading-[1.75] text-slate-300">
-								You do not need to be convinced that models are useful; you have already formed a view, probably an
-								evidence-based one. The argument here is narrower and it is about leverage. You spent twenty years learning
-								how software should be built. Agentic engineering is how that knowledge stops being applied one pull request
-								at a time and starts being
-								<span class="text-white"> encoded into architecture, constraints, tools, and harnesses</span> that let
-								machines execute repeatedly without abandoning engineering discipline.
+								AI compresses coding. A change that took a week now takes an afternoon, so the parts that were never about
+								typing carry all the weight: where a boundary belongs, who is allowed to act, how a release is proven. You spent
+								years learning how software should be built. Agentic engineering is how that knowledge stops being applied one
+								pull request at a time and gets
+								<span class="text-white"> encoded into architecture, constraints, tools, and harnesses</span> that machines can
+								run again and again without dropping the discipline.
 							</p>
 							<p class="mt-6 text-[0.98rem] leading-[1.7] text-slate-400">
-								AADM is one way to do that. It is a standard and a context service — deliberately not an enforcement
-								product. Being clear about that boundary is the only way the rest of it stays credible.
+								Engineers and forward deployed engineers need two things to do this well:
+								<span class="text-slate-200">structure</span>, so every change lands in a named layer with a named owner, and
+								<span class="text-slate-200">visibility</span>, so they can see what an agent did, why, and what proves it. AADM
+								gives them both as a standard and a context service, deliberately not an enforcement product. Your code, tests,
+								and CI still prove the result. Being clear about that boundary is what keeps the rest credible.
 							</p>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
@@ -1078,7 +1106,7 @@ const nextSteps: NextStep[] = [
 							href={urlMcpMarketing}
 							class="group inline-flex items-center gap-3 bg-white px-8 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200 focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
-							<span>Connect production agents</span>
+							<span>See how the MCP works</span>
 							<svg
 								width="16"
 								height="10"

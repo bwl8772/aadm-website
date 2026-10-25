@@ -2,6 +2,8 @@
 /**
  * The two agent loops an agentic engineer owns: the development loop that
  * builds the system, and the runtime loop that runs inside it.
+ * The dashed frame shows forward deployed work: same engineer, same two loops,
+ * inside a customer's environment, with a named acceptor and a handover.
  */
 
 type Loop = {
@@ -96,6 +98,11 @@ const loops: Loop[] = [
 		></span>
 	</div>
 
+	<!-- Forward deployed boundary: optional mode, so dashed and amber. -->
+	<div class="relative border border-dashed border-amber-300/40 p-3 pt-7 sm:p-4 sm:pt-8">
+		<p class="font-mono-cta absolute left-4 top-1.5 text-[13px] text-amber-200 sm:top-2">
+			Customer environment, when forward deployed
+		</p>
 	<div class="grid grid-cols-1 gap-px bg-white/[0.08] lg:grid-cols-2">
 		{
 			loops.map((loop) => {
@@ -163,10 +170,26 @@ const loops: Loop[] = [
 			})
 		}
 	</div>
+		<div class="mt-4 flex flex-col gap-3 border-t border-dashed border-amber-300/30 pt-4 text-sm sm:flex-row sm:items-center sm:justify-between">
+			<span class="text-slate-300">A named person on the customer side accepts the result.</span>
+			<span class="inline-flex items-center gap-2 font-medium text-amber-200">
+				Handover: their team owns both loops
+				<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+					<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" />
+				</svg>
+			</span>
+		</div>
+	</div>
 </div>
 
 <p class="mt-10 max-w-3xl border-l border-emerald-300/40 pl-5 text-sm leading-relaxed text-slate-400">
 	The two loops are not independent. The development loop decides what the runtime loop is allowed to do — which tools
 	exist, where authorization sits, what gets logged, what a bad decision can reach. Govern the first one badly and you
 	have shipped an ungovernable second one.
+</p>
+
+<p class="mt-6 max-w-3xl border-l border-amber-300/40 pl-5 text-sm leading-relaxed text-slate-400">
+	<span class="font-medium text-slate-200">Forward deployed is the same engineer in someone else's environment.</span> Both
+	loops run inside the customer's systems, a named person on their side accepts the result, and ownership of both loops
+	transfers at the end. The AADM MCP's FDE engagement recon checks that contract, its gates, and the handover.
 </p>
