@@ -68,10 +68,31 @@ const resolvedOgDescription = ogDescription ?? description;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark" data-theme="dark">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<script is:inline>
+			(() => {
+				const key = "aadm-theme";
+				const stored = localStorage.getItem(key);
+				const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+				const theme =
+					stored === "light" || stored === "dark"
+						? stored
+						: stored === "system"
+							? systemDark
+								? "dark"
+								: "light"
+							: "dark";
+				const root = document.documentElement;
+				root.classList.toggle("dark", theme === "dark");
+				root.dataset.theme = theme;
+				root.style.colorScheme = theme;
+				const meta = document.querySelector('meta[name="theme-color"]');
+				if (meta) meta.setAttribute("content", theme === "dark" ? "#05040a" : "#f6f4fb");
+			})();
+		</script>
 		<link rel="icon" href="/favicon.ico" sizes="48x48" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -112,7 +133,7 @@ const resolvedOgDescription = ogDescription ?? description;
 	<body>
 		<a
 			href="#main"
-			class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-none focus:bg-emerald-300 focus:px-4 focus:py-2 focus:font-semibold focus:text-slate-950"
+			class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-none focus:bg-primary focus:px-4 focus:py-2 focus:font-semibold focus:text-primary-foreground"
 			>Skip to content</a
 		>
 		<!--
@@ -137,6 +158,32 @@ const resolvedOgDescription = ogDescription ?? description;
 				}
 				if (last) last.data = last.data.replace(/\s+(\S+)\s*$/, "\u00a0$1");
 			}
+		</script>
+		<script is:inline>
+			(function bindThemeToggle() {
+				const key = "aadm-theme";
+				function apply(theme) {
+					const root = document.documentElement;
+					root.classList.toggle("dark", theme === "dark");
+					root.dataset.theme = theme;
+					root.style.colorScheme = theme;
+					localStorage.setItem(key, theme);
+					const meta = document.querySelector('meta[name="theme-color"]');
+					if (meta) meta.setAttribute("content", theme === "dark" ? "#05040a" : "#f6f4fb");
+					for (const btn of document.querySelectorAll("[data-theme-toggle]")) {
+						btn.setAttribute(
+							"aria-label",
+							theme === "dark" ? "Switch to light theme" : "Switch to dark theme",
+						);
+					}
+				}
+				document.addEventListener("click", function (event) {
+					const btn = event.target instanceof Element ? event.target.closest("[data-theme-toggle]") : null;
+					if (!btn) return;
+					apply(document.documentElement.classList.contains("dark") ? "light" : "dark");
+				});
+				apply(document.documentElement.classList.contains("dark") ? "dark" : "light");
+			})();
 		</script>
 	</body>
 </html>

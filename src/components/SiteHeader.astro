@@ -1,5 +1,6 @@
 ---
 import { Show, SignOutButton } from "@clerk/astro/components";
+import ThemeToggle from "./ThemeToggle.astro";
 import { getAccountPortalUrls } from "../lib/account-portal-urls";
 import { CLERK_ACCOUNTS_SIGN_IN } from "../lib/clerk-portal-urls";
 
@@ -39,7 +40,7 @@ const mcpNavHref = mcpNavHrefProp ?? urlMcpMarketing;
  * interpolated names, which is why the old `ring-${color}` state never rendered.
  */
 const ringActive = (_color: string) =>
-	"!border-white !bg-white !text-slate-950 hover:!bg-white";
+	"!border-foreground !bg-foreground !text-background hover:!bg-foreground";
 
 const standardChip = activeNav === "standard" ? ringActive("emerald-300") : "";
 const aboutChip = activeNav === "about" ? ringActive("emerald-300") : "";
@@ -58,12 +59,12 @@ const memberChip = activeNav === "member" ? ringActive("emerald-300") : "";
  */
 const chipSizing = "sm:px-3 sm:py-2 sm:text-sm md:px-3 2xl:px-4";
 
-const ghostChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-white/15 bg-transparent px-2.5 py-1.5 text-xs font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.04] ${chipSizing}`;
+const ghostChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-border bg-transparent px-2.5 py-1.5 text-xs font-semibold text-foreground transition hover:border-foreground/30 hover:bg-accent ${chipSizing}`;
 
-const secondaryGhostChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-white/10 bg-transparent px-2.5 py-1.5 text-xs font-medium text-slate-300 transition hover:border-white/25 hover:bg-white/[0.04] hover:text-white ${chipSizing}`;
+const secondaryGhostChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-border bg-transparent px-2.5 py-1.5 text-xs font-medium text-text-secondary transition hover:border-foreground/25 hover:bg-accent hover:text-foreground ${chipSizing}`;
 
-const baseChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-white/15 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.04] hover:text-white ${chipSizing}`;
-const joinChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-emerald-300/30 bg-emerald-950/30 px-2.5 py-1.5 text-xs font-semibold text-emerald-100 transition hover:border-emerald-300/60 hover:bg-emerald-900/40 ${chipSizing}`;
+const baseChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-border px-2.5 py-1.5 text-xs font-semibold text-foreground transition hover:border-foreground/30 hover:bg-accent hover:text-foreground ${chipSizing}`;
+const joinChipClasses = `shrink-0 whitespace-nowrap rounded-none border border-brand-mcp-border bg-brand-mcp-bg px-2.5 py-1.5 text-xs font-semibold text-brand-mcp transition hover:border-brand-mcp ${chipSizing}`;
 
 const { signInUrl, signUpUrl, memberAreaUrl } = getAccountPortalUrls(
 	import.meta.env,
@@ -86,7 +87,7 @@ const navItems: NavItem[] = [
 		ariaLabel: "About — agentic engineering, the discipline behind AADM",
 		chip: aboutChip,
 		className:
-			"border border-white/10 bg-transparent text-slate-300 hover:border-white/25 hover:bg-white/[0.04] hover:text-white",
+			"border border-border bg-transparent text-text-secondary hover:border-foreground/25 hover:bg-accent hover:text-foreground",
 	},
 	{
 		key: "why",
@@ -95,7 +96,7 @@ const navItems: NavItem[] = [
 		ariaLabel: "Why AADM — governance vs raw agent loops",
 		chip: whyChip,
 		className:
-			"border border-amber-300/30 bg-transparent text-amber-100 hover:border-amber-300/60 hover:bg-amber-500/[0.06]",
+			"border border-brand-warn-border bg-transparent text-brand-warn hover:border-brand-warn hover:bg-brand-warn-bg",
 	},
 	{
 		key: "standard",
@@ -104,7 +105,7 @@ const navItems: NavItem[] = [
 		ariaLabel: "Open AADM standard — read and adopt",
 		chip: standardChip,
 		className:
-			"border border-white/15 bg-transparent text-white hover:border-white/30 hover:bg-white/[0.04]",
+			"border border-border bg-transparent text-foreground hover:border-foreground/30 hover:bg-accent",
 	},
 	{
 		key: "mcp",
@@ -113,7 +114,7 @@ const navItems: NavItem[] = [
 		ariaLabel: "MCP marketing — overview and access (aadm.io/mcp)",
 		chip: mcpChip,
 		className:
-			"border border-emerald-300/40 bg-emerald-950/20 text-emerald-100 hover:border-emerald-300/70 hover:bg-emerald-900/30",
+			"border border-brand-mcp-border bg-brand-mcp-bg text-brand-mcp hover:border-brand-mcp",
 	},
 	{
 		key: "ides",
@@ -122,7 +123,7 @@ const navItems: NavItem[] = [
 		ariaLabel: "IDE clients that connect to AADM MCP",
 		chip: idesChip,
 		className:
-			"border border-white/10 bg-transparent text-slate-300 hover:border-white/25 hover:bg-white/[0.04] hover:text-white",
+			"border border-border bg-transparent text-text-secondary hover:border-foreground/25 hover:bg-accent hover:text-foreground",
 	},
 	{
 		key: "tools",
@@ -131,7 +132,7 @@ const navItems: NavItem[] = [
 		ariaLabel: "AADM MCP typed tools catalog",
 		chip: toolsChip,
 		className:
-			"border border-white/10 bg-transparent text-slate-300 hover:border-white/25 hover:bg-white/[0.04] hover:text-white",
+			"border border-border bg-transparent text-text-secondary hover:border-foreground/25 hover:bg-accent hover:text-foreground",
 	},
 	{
 		key: "stories",
@@ -140,7 +141,7 @@ const navItems: NavItem[] = [
 		ariaLabel: "AADM stories — patterns from the field",
 		chip: storiesChip,
 		className:
-			"border border-white/10 bg-transparent text-slate-300 hover:border-white/25 hover:bg-white/[0.04] hover:text-white",
+			"border border-border bg-transparent text-text-secondary hover:border-foreground/25 hover:bg-accent hover:text-foreground",
 	},
 	{
 		key: "enterprise",
@@ -149,7 +150,7 @@ const navItems: NavItem[] = [
 		ariaLabel: "AADM for the enterprise",
 		chip: enterpriseChip,
 		className:
-			"border border-white/10 bg-transparent text-slate-300 hover:border-white/25 hover:bg-white/[0.04] hover:text-white",
+			"border border-border bg-transparent text-text-secondary hover:border-foreground/25 hover:bg-accent hover:text-foreground",
 	},
 ];
 
@@ -163,11 +164,11 @@ const desktopChipClass = (item: NavItem) =>
 			: secondaryGhostChipClasses;
 
 const mobileLinkClass =
-	"block min-h-[3rem] border-b border-white/[0.06] px-5 py-4 font-display text-base font-semibold tracking-tight text-white transition hover:bg-white/[0.04] focus:outline-none focus-visible:bg-white/[0.06] focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-inset";
+	"block min-h-[3rem] border-b border-border px-5 py-4 font-display text-base font-semibold tracking-tight text-foreground transition hover:bg-accent focus:outline-none focus-visible:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset";
 ---
 
 <header
-	class="site-header sticky top-0 z-40 border-b border-white/[0.08] bg-surface-deep/95 backdrop-blur-md pt-[env(safe-area-inset-top,0px)]"
+	class="site-header sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-md pt-[env(safe-area-inset-top,0px)]"
 	data-site-header
 >
 	<div class="mx-auto flex min-h-14 max-w-7xl items-center gap-3 px-3 py-2 sm:h-16 sm:gap-4 sm:px-6 sm:py-0 lg:px-8">
@@ -175,7 +176,7 @@ const mobileLinkClass =
 			href="/"
 			aria-label="AADM — home"
 			aria-current={activeNav === "home" ? "page" : undefined}
-			class="relative z-10 shrink-0 rounded font-display text-base font-bold tracking-tight text-white transition hover:text-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 sm:text-lg"
+			class="relative z-10 shrink-0 rounded font-display text-base font-bold tracking-tight text-foreground transition hover:text-brand-mcp focus:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:text-lg"
 		>
 			<span class="inline-flex items-center gap-2"><img src="/favicon.svg" alt="" width="28" height="28" class="h-6 w-6 sm:h-7 sm:w-7" />AADM</span>
 		</a>
@@ -220,7 +221,7 @@ const mobileLinkClass =
 					aria-current={activeNav === "member" ? "page" : undefined}
 					class:list={[
 						baseChipClasses,
-						"inline-flex items-center justify-center border-emerald-300/30 bg-emerald-950/20 hover:bg-emerald-900/30",
+						"inline-flex items-center justify-center border-brand-mcp-border bg-brand-mcp-bg text-brand-mcp",
 						memberChip,
 					]}
 					title="Member area — API keys, profile, MCP OAuth"
@@ -228,16 +229,18 @@ const mobileLinkClass =
 					Member
 				</a>
 			</Show>
+			<ThemeToggle class="hidden xl:inline-flex" />
 		</nav>
 
 		<!-- Compact: MCP chip + hamburger until xl -->
 		<div class="relative z-50 ml-auto flex items-center gap-2 xl:hidden">
+			<ThemeToggle />
 			<a
 				href={mcpNavHref}
 				aria-label="Hosted MCP — overview and access"
 				aria-current={activeNav === "mcp" ? "page" : undefined}
 				class:list={[
-					"inline-flex min-h-11 shrink-0 items-center rounded-none border border-emerald-300/40 bg-emerald-950/20 px-3 py-2 text-xs font-semibold text-emerald-100 transition hover:bg-emerald-900/30",
+					"inline-flex min-h-11 shrink-0 items-center rounded-none border border-brand-mcp-border bg-brand-mcp-bg px-3 py-2 text-xs font-semibold text-brand-mcp transition hover:border-brand-mcp",
 					mcpChip,
 				]}
 			>
@@ -245,7 +248,7 @@ const mobileLinkClass =
 			</a>
 			<button
 				type="button"
-				class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-none border border-white/15 bg-surface-deep text-white transition hover:border-white/30 hover:bg-white/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+				class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-none border border-border bg-background text-foreground transition hover:border-foreground/30 hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 				aria-label="Open navigation menu"
 				aria-expanded="false"
 				aria-controls="site-mobile-menu"
@@ -294,25 +297,25 @@ const mobileLinkClass =
 	inert
 >
 	<div
-		class="absolute inset-0 bg-black/70 backdrop-blur-sm"
+		class="absolute inset-0 bg-overlay backdrop-blur-sm"
 		data-menu-backdrop
 		aria-hidden="true"
 	></div>
 	<div
-		class="site-mobile-menu-panel absolute inset-y-0 right-0 flex w-[min(100%,20rem)] flex-col border-l border-white/[0.08] bg-surface-deep shadow-2xl pb-[env(safe-area-inset-bottom,0px)]"
+		class="site-mobile-menu-panel absolute inset-y-0 right-0 flex w-[min(100%,20rem)] flex-col border-l border-border bg-background shadow-2xl pb-[env(safe-area-inset-bottom,0px)]"
 		role="dialog"
 		aria-modal="true"
 		aria-label="Site navigation"
 	>
 		<div
-			class="flex items-center justify-between border-b border-white/[0.08] px-5 pb-4 pt-[max(1rem,env(safe-area-inset-top,0px))]"
+			class="flex items-center justify-between border-b border-border px-5 pb-4 pt-[max(1rem,env(safe-area-inset-top,0px))]"
 		>
-			<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-slate-400">
+			<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 				Navigation
 			</p>
 			<button
 				type="button"
-				class="inline-flex h-11 w-11 items-center justify-center rounded-none border border-white/15 text-white transition hover:border-white/30 hover:bg-white/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+				class="inline-flex h-11 w-11 items-center justify-center rounded-none border border-border text-foreground transition hover:border-foreground/30 hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 				aria-label="Close navigation menu"
 				data-menu-close
 			>
@@ -335,7 +338,7 @@ const mobileLinkClass =
 						aria-current={activeNav === item.key ? "page" : undefined}
 						class:list={[
 							mobileLinkClass,
-							activeNav === item.key ? "bg-white/[0.04] text-emerald-200" : "",
+							activeNav === item.key ? "bg-accent text-brand-mcp" : "",
 						]}
 						data-mobile-nav-link
 					>
@@ -355,7 +358,7 @@ const mobileLinkClass =
 				aria-current={activeNav === "stacks" ? "page" : undefined}
 				class:list={[
 					mobileLinkClass,
-					activeNav === "stacks" ? "bg-white/[0.04] text-emerald-200" : "",
+					activeNav === "stacks" ? "bg-accent text-brand-mcp" : "",
 				]}
 				data-mobile-nav-link
 			>
@@ -363,7 +366,7 @@ const mobileLinkClass =
 			</a>
 		</nav>
 
-		<div class="border-t border-white/[0.08] p-5">
+		<div class="border-t border-border p-5">
 			{/*
 			  Auth actions pinned under the drawer (best practice):
 			  signed-out → Sign in + Create account; signed-in → Member + Log out.
@@ -372,14 +375,14 @@ const mobileLinkClass =
 				<div class="flex flex-col gap-2">
 					<a
 						href={signInUrl}
-						class="block min-h-11 rounded-none border border-white/15 px-4 py-3 text-center text-sm font-semibold leading-none text-white transition hover:border-white/30 hover:bg-white/[0.04]"
+						class="block min-h-11 rounded-none border border-border px-4 py-3 text-center text-sm font-semibold leading-none text-foreground transition hover:border-foreground/30 hover:bg-accent"
 						data-mobile-nav-link
 					>
 						Sign in
 					</a>
 					<a
 						href={signUpUrl}
-						class="block min-h-11 rounded-none border border-emerald-300/30 bg-emerald-950/30 px-4 py-3 text-center text-sm font-semibold leading-none text-emerald-100 transition hover:border-emerald-300/60 hover:bg-emerald-900/40"
+						class="block min-h-11 rounded-none border border-brand-mcp-border bg-brand-mcp-bg px-4 py-3 text-center text-sm font-semibold leading-none text-brand-mcp transition hover:border-brand-mcp"
 						data-mobile-nav-link
 					>
 						Create account
@@ -392,8 +395,8 @@ const mobileLinkClass =
 						href={memberAreaUrl}
 						aria-current={activeNav === "member" ? "page" : undefined}
 						class:list={[
-							"block min-h-11 rounded-none border border-emerald-300/30 bg-emerald-950/20 px-4 py-3 text-center text-sm font-semibold leading-none text-emerald-100 transition hover:bg-emerald-900/30",
-							activeNav === "member" ? "bg-emerald-900/40 text-emerald-100" : "",
+							"block min-h-11 rounded-none border border-brand-mcp-border bg-brand-mcp-bg px-4 py-3 text-center text-sm font-semibold leading-none text-brand-mcp transition hover:border-brand-mcp",
+							activeNav === "member" ? "bg-brand-mcp-bg text-brand-mcp" : "",
 						]}
 						title="Member area — API keys, profile, MCP OAuth"
 						data-mobile-nav-link
@@ -403,7 +406,7 @@ const mobileLinkClass =
 					<SignOutButton redirectUrl={CLERK_ACCOUNTS_SIGN_IN} asChild>
 						<button
 							type="button"
-							class="block min-h-11 w-full rounded-none border border-white/15 px-4 py-3 text-center text-sm font-semibold leading-none text-slate-300 transition hover:border-white/30 hover:bg-white/[0.04] hover:text-white"
+							class="block min-h-11 w-full rounded-none border border-border px-4 py-3 text-center text-sm font-semibold leading-none text-text-secondary transition hover:border-foreground/30 hover:bg-accent hover:text-foreground"
 							data-mobile-nav-link
 						>
 							Log out
