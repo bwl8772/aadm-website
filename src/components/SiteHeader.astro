@@ -10,6 +10,7 @@ type ActiveNav =
 	| "why"
 	| "tools"
 	| "ides"
+	| "stacks"
 	| "enterprise"
 	| "standard"
 	| "stories"
@@ -342,6 +343,24 @@ const mobileLinkClass =
 					</a>
 				))
 			}
+			<!--
+			  Mobile-only: the desktop chip row is already sized to just clear 1280px
+			  (see chipSizing comment above) — a 9th chip breaks that. The mobile
+			  drawer has room, so "Compatible stacks" lives here plus in the footer
+			  and on /ides, not as a desktop nav chip.
+			-->
+			<a
+				href="/stacks"
+				aria-label="Compatible stacks — frameworks, languages, and clouds AADM supports"
+				aria-current={activeNav === "stacks" ? "page" : undefined}
+				class:list={[
+					mobileLinkClass,
+					activeNav === "stacks" ? "bg-white/[0.04] text-emerald-200" : "",
+				]}
+				data-mobile-nav-link
+			>
+				Compatible stacks
+			</a>
 		</nav>
 
 		<div class="border-t border-white/[0.08] p-5">
