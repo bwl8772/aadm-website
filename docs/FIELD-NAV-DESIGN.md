@@ -1,11 +1,22 @@
-# Field sign-in → workspace nav — design (FIELD-NAV-1)
+# Field sign-in → engagement list — design (FIELD-NAV-1)
 
 Design pass only. No code changes. Written for PRD F5-a1 / batch F5-l, slice 1 of 3. Slices 2
-(FIELD-NAV-2: plan gate + list) and 3 (FIELD-NAV-3: workspace nav + Map) build from this doc after
+(FIELD-NAV-2: plan gate + list) and 3 (FIELD-NAV-3: open an engagement) build from this doc after
 Brian approves it and `.tmp/field-nav-mock.html`.
 
-AADM Field turns a rough idea into signed requirements and a roadmap an AI coder can run. It is
-not a compliance or monitoring dashboard — nothing here tracks uptime, audits, or server health.
+Product vision and in-engagement IA: `docs/FIELD-VISION.md`. Record shapes: `docs/FIELD-CONTRACTS.md`.
+This file is the **entry path only** (sign-in, plan gate, list, create, open). It is not the
+homepage hierarchy or the engagement workspace.
+
+AADM Field is the system of record for decisions, evidence, customer commitments, and delivery
+plans. It is not a compliance or monitoring dashboard — nothing here tracks uptime, audits, or
+server health.
+
+**Nouns:** UI copy says **engagement**. Auth and tenancy keep **workspace** (INVARIANTS TEN-06).
+The earlier three in-engagement tabs (Requirements gathering, Roadmap and delivery, Map) and the
+Overview route are superseded by `docs/FIELD-VISION.md`: My Field + Engagement Workbench.
+FIELD-NAV-3 lands on the workbench (not an overview). Artifact Studio is a query mode on the
+same engagement route.
 
 ## Confirm-first results
 
@@ -45,9 +56,9 @@ Neither tool reported a do-not-edit or halt condition.
 |---|---|---|---|
 | (a) | Sign in | *(none while syncing — see state table)* | `#state-signin-idle`, `#state-signin-syncing` |
 | (b) | No Field plan | Add AADM Field / See plans | `#state-plan-code`, `#state-plan-free` |
-| (c) | Workspace list | Create workspace | `#state-list-ready`, `#state-list-empty`, `#state-list-error` |
-| (d) | Create workspace | Create | `#state-create-dialog` |
-| (e) | Inside a workspace | *(navigation — see state table)* | `#state-workspace-nav`, `#state-workspace-notfound` |
+| (c) | Engagement list | Create engagement | `#state-list-ready`, `#state-list-empty`, `#state-list-error` |
+| (d) | Create engagement | Create | `#state-create-dialog` |
+| (e) | Inside an engagement | *(opens the workbench)* | `#state-workspace-nav`, `#state-workspace-notfound` |
 | (f) | Customer view-only entry | Review and co-sign | `#state-viewer` |
 
 Hats (product owner, architect, lead, planner, builder, owner) are steps a workspace moves
@@ -57,18 +68,17 @@ only other role, and it changes presentation only (no edit controls, no extra sc
 ## Nav tree & routes
 
 ```
-/field/main                              Workspace list (or plan gate, or sync shell)
-/field/main/w/{workspaceId}/requirements  Requirements gathering  (default on open)
-/field/main/w/{workspaceId}/roadmap       Roadmap and delivery
-/field/main/w/{workspaceId}/map           Map
+/field/main                                              My Field (or plan gate, or sync shell)
+/field/main/e/{engagementId}                             Engagement Workbench
+/field/main/e/{engagementId}?agent=&artifact=&action=    Deep link from a My Field row
+/field/main/e/{engagementId}?artifact={id}               Artifact Studio mode
 ```
 
-"Create workspace" is a modal over `/field/main`, not its own route. All four paths above already
-fall under `${FIELD_HOME_PATH}(.*)` in `src/lib/routes.ts:10` — no routing change needed for this
-batch. The in-workspace nav bar (`#state-workspace-nav`) renders three items — **Requirements
-gathering**, **Roadmap and delivery**, **Map** — plus an **All workspaces** breadcrumb back to the
-list. Nav items are flat, not numbered: Requirements gathering and Roadmap and delivery read as a
-sequence, but Map doesn't fit that order, so no item gets a step number.
+Two application routes. Studio is a mode, not a third app. "Create engagement" is a modal
+over `/field/main`. All paths already fall under `${FIELD_HOME_PATH}(.*)` in
+`src/lib/routes.ts:10`.
+
+The list breadcrumb is **My Field**. Do not ship an Overview page.
 
 ## State table
 
@@ -82,14 +92,14 @@ seam (or later, aadm-backend) returns; nothing below is inferred from absence or
 | (a) | Syncing | Returned from Account Portal, satellite handshake pending | *(none — resolves automatically; "Finishing authentication…")* |
 | (b) | No plan — Code-only | `entitlement_required`, `plan: "mcp"` | Add AADM Field |
 | (b) | No plan — Free | `entitlement_required`, `plan: "free"` | See plans |
-| (c) | Workspaces | `ready`, `workspaces.length > 0` | Create workspace (per-card "Open" is a row action, not the state's primary) |
-| (c) | No workspace yet | `ready_empty`, `workspaces.length === 0` | Create workspace |
+| (c) | Engagements | `ready`, `engagements.length > 0` | Create engagement (per-card "Open" is a row action, not the state's primary) |
+| (c) | No engagement yet | `ready_empty`, `engagements.length === 0` | Create engagement |
 | (c) | Can't load | `storage_unavailable` | Try again |
-| (d) | Dialog open | User clicked "Create workspace" | Create |
+| (d) | Dialog open | User clicked "Create engagement" | Create |
 | (d) | Name rejected | `rejected` (e.g. blank or duplicate name) | Create (inline message, field stays editable) |
-| (e) | Workspace opened | `getWorkspace` succeeds, role is an FDE hat | *(navigation — lands on Requirements gathering)* |
-| (e) | Workspace not found | `not_found` — no such workspace for this user | All workspaces |
-| (f) | Viewer entry | `getWorkspace` succeeds, role is `viewer` | Review and co-sign |
+| (e) | Engagement opened | `getEngagementWorkbench` succeeds, role is an FDE hat | *(workbench — selected agent from the query, or Business Discovery)* |
+| (e) | Engagement not found | `not_found` — no such engagement for this user | My Field |
+| (f) | Viewer entry | `getEngagementWorkbench` succeeds, role is `viewer` | Review and co-sign |
 
 `indeterminate`, `conflict`, `forbidden`, `rate_limited`, and `internal_error` are real TEN-07
 families but have no call row in this batch's 5 moves — they're out of scope until FIELD-NAV-2/3
@@ -104,12 +114,12 @@ Copied verbatim from the brief, including as-given text — see Open questions f
 |---|---|
 | Sign in (syncing) | "Finishing authentication…" |
 | No plan | "AADM Field is a separate plan" · "Turn a rough idea into signed reqements and a roadmap your AI coder can run." · "Add AADM Field" (Code-only) · "See plans" (Free) · "Learn more" |
-| List | "Your workspaces" · "Open" · "Create workspace" |
-| Empty | "No workspace yet" · "Create one for each customer or product you're shaping. You'll start with an idea in Requirements gathering." · "Create workspace" |
-| Dialog | "Create workspace" · "Workspace name" · "Create" · "Cancel" |
-| Nav | "All workspaces" · "Requirements gathering" · "Roadmap and delivery" · "Map" |
+| List | "Your engagements" · "Open" · "Create engagement" |
+| Empty | "No engagement yet" · "Create one for each customer effort you are shaping. You'll start in the workbench." · "Create engagement" |
+| Dialog | "Create engagement" · "Engagement name" · "Create" · "Cancel" |
+| Nav | "My Field" · workbench agents · artifacts |
 | Viewer | "View only" · "Review and co-sign" · "View progress" |
-| Errors | "We can't load your workspaces right now." · "Try again" · "Workspace not found" · "It doesn't exist or you don't have access." |
+| Errors | "We can't load your engagements right now." · "Try again" · "Engagement not found" · "It doesn't exist or you don't have access." |
 
 "Sample data" is new copy (not in the brief's string list) for the fixture-seam disclosure — see
 below.
@@ -120,9 +130,9 @@ One proposed server-only module, `src/lib/field-backend.ts` (not created this sl
 
 ```ts
 getFieldAccess(userId): Promise<{ plan: "free" | "mcp" | "fde" | "mcp_fde"; hasFieldEntitlement: boolean; source: "fixture" }>
-listWorkspaces(userId): Promise<{ workspaces: { id, name, updatedAt }[]; source: "fixture" }>
-createWorkspace(userId, name): Promise<{ workspace: { id, name }; source: "fixture" }>
-getWorkspace(userId, workspaceId): Promise<{ workspace: { id, name, role }; source: "fixture" } | { notFound: true }>
+getFieldHome(userId): Promise<{ continue, waiting_on_you, customer_commitments, engagements, source: "fixture" }>
+createEngagement(userId, name): Promise<{ engagement: { id, name }; source: "fixture" }>
+getEngagementWorkbench(userId, engagementId, q): Promise<{ context_bar, agent_id, artifacts, source: "fixture" } | { notFound: true }>
 ```
 
 Until aadm-backend exists, every function returns fixture data tagged `source: "fixture"`. Pages
@@ -156,10 +166,9 @@ screenshots; dark is the default with no param. Screenshots:
 1. **"reqements" typo.** The brief's no-plan copy reads "signed reqements" — copied verbatim into
    the doc and mock per "use exactly." Recommend fixing to "signed requirements" before FIELD-NAV-2
    ships it.
-2. **"Workspace" vs. "engagement."** `.tmp/field-main-mock.html` (an earlier, uncommitted mock
-   already in this repo) uses "engagement" throughout — "Your engagements," "No engagement yet,"
-   `engagement-card`. This slice's brief says "workspace" throughout, which is what's used here and
-   in the new mock. Which term is canonical before FIELD-NAV-2 writes real copy?
+2. **"Workspace" vs. "engagement."** **Closed.** UI noun is **engagement**. Tenant/auth noun
+   stays **workspace**. See `docs/FIELD-VISION.md` §3. Update `field-nav-mock.html` copy before
+   FIELD-NAV-2 ships it.
 3. **Does a viewer need the Field plan?** The brief treats entitlement (screen b) as gating
    workspace *creation* for the FDE, and viewer as a role on one workspace (screen f). Proposed
    default: a viewer invited to a specific workspace bypasses the plan gate entirely — entitlement
