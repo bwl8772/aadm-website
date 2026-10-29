@@ -22,7 +22,7 @@
       },
       {
        "id": "DM0-a3",
-       "status": "here",
+       "status": "done",
        "title": "ADR 004 addendum, a named doc slice in aadm-mcp"
       }
      ]
@@ -59,7 +59,7 @@
      "cards": [
       {
        "id": "DM0-j1",
-       "status": "todo",
+       "status": "done",
        "title": "Adds the 11 rules of §A17 to aadm-mcp docs/ARCHITECTURE_INVARIANTS.md (IDN-06 in Identity"
       },
       {
@@ -82,12 +82,12 @@
      "cards": [
       {
        "id": "DM0-b1",
-       "status": "todo",
-       "title": "A second entry point for aadm-backend in the same image: it registers only the 8 FDE tools (…"
+       "status": "done",
+       "title": "The backend start mode (AADM_START_MODE=backend) of the same image, aadm-backend: a private…"
       },
       {
        "id": "DM0-b2",
-       "status": "todo",
+       "status": "here",
        "title": "Front-door forwarding (D30): with the backend URL set (CFG-TECH-03), every save tool and the…"
       },
       {
@@ -1230,11 +1230,11 @@
    ]
   }
  ],
- "you_are_here": "DM0-a3",
+ "you_are_here": "DM0-b2",
  "counts": {
   "stages": 14,
   "batches": 55,
   "slices": 160,
-  "done": 7
+  "done": 10
  }
 }

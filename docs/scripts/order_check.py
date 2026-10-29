@@ -69,6 +69,7 @@ def refs_in(text):
 # forward mentions that are explicit in the text (a slice says a later slice will extend, read or replace it)
 ACCEPTED = {
  ("DM0-b1","DM0-b2"): "names the seam DM0-b2 uses next",
+ ("DM0-b1","F1-a3"): "v0.19: empty verb registry that F1-a3 fills (stated)",
  ("DM0-b4","DM0-d2"): "reports unset until DM0-d2 makes the setting required (stated)",
  ("DM0-d2","DM2-a3"): "refusal bodies stay as today until DM2-a3 (stated)",
  ("DM0-d2","DM2-a4"): "history note: the boot half of v0.14's DM2-a4",
