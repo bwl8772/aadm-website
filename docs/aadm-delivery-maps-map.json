@@ -87,12 +87,12 @@
       },
       {
        "id": "DM0-b2",
-       "status": "here",
-       "title": "Front-door forwarding (D30): with the backend URL set (CFG-TECH-03), every save tool and the…"
+       "status": "done",
+       "title": "NEW src/backend-client.ts: forwardVerb(name, input, ctx) posts to the backend's /internal/ve…"
       },
       {
        "id": "DM0-b3",
-       "status": "todo",
+       "status": "here",
        "title": "Railway: a second service, aadm-backend, from the same image, on the private network only, w…"
       }
      ]
@@ -1230,11 +1230,11 @@
    ]
   }
  ],
- "you_are_here": "DM0-b2",
+ "you_are_here": "DM0-b3",
  "counts": {
   "stages": 14,
   "batches": 55,
   "slices": 160,
-  "done": 10
+  "done": 11
  }
 }
