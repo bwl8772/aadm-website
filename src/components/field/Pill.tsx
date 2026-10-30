@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
-import type { LensStatus, ToneKey } from "../field-types";
+import type { LensStatus, ToneKey } from "./field-types";
 
 export type PillTone = ToneKey;
 
 const toneClass: Record<PillTone, string> = {
 	neutral: "bg-muted text-foreground",
-	warn: "bg-brand-warn-bg text-brand-warn",
-	ok: "bg-brand-mcp-bg text-brand-mcp",
+	warning: "bg-brand-warn-bg text-brand-warn",
+	success: "bg-brand-mcp-bg text-brand-mcp",
 	danger: "bg-destructive/10 text-destructive",
 	info: "bg-accent-blue/10 text-accent-blue",
 };
@@ -29,34 +29,32 @@ export function Pill({
 	);
 }
 
-const lensDot: Record<LensStatus, string> = {
-	on_track: "bg-brand-mcp",
-	in_progress: "bg-accent-blue",
-	needs_action: "bg-brand-warn",
-	needs_decision: "bg-brand-warn",
-	not_started: "bg-text-muted",
+const toneDot: Record<PillTone, string> = {
+	neutral: "bg-text-muted",
+	warning: "bg-brand-warn",
+	success: "bg-brand-mcp",
+	danger: "bg-destructive",
+	info: "bg-accent-blue",
 };
 
+/** A lens chip. Label and tone come from the server; the tone sets both chip and dot. */
 export function LensPill({
-	name,
-	status,
-	note,
+	label,
+	state,
+	tone,
 }: {
-	name: string;
-	status: LensStatus;
-	note?: string;
+	label: string;
+	state: LensStatus;
+	tone: PillTone;
 }) {
-	const tone: PillTone =
-		status === "needs_action" || status === "needs_decision"
-			? "warn"
-			: "neutral";
 	return (
 		<Pill tone={tone} round>
 			<span
-				className={`h-2 w-2 rounded-full ${lensDot[status]}`}
+				className={`h-2 w-2 rounded-full ${toneDot[tone]}`}
+				data-lens-state={state}
 				aria-hidden="true"
 			/>
-			{note ? `${name} · ${note}` : name}
+			{label}
 		</Pill>
 	);
 }

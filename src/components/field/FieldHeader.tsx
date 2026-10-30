@@ -1,5 +1,6 @@
 import { FIELD_HOME_PATH } from "../../lib/field-area";
 import AccountMenu from "./AccountMenu";
+import Button from "./Button";
 
 const tab =
 	"shrink-0 whitespace-nowrap rounded-md px-4 py-2 font-medium transition";
@@ -15,9 +16,16 @@ const tabs = [
 
 interface Props {
 	active?: "home" | "engagements";
+	viewerInitials?: string;
+	/** Server says whether Capture is available. */
+	captureAvailable?: boolean;
 }
 
-export default function FieldHeader({ active = "home" }: Props) {
+export default function FieldHeader({
+	active = "home",
+	viewerInitials,
+	captureAvailable = false,
+}: Props) {
 	return (
 		<header
 			className="sticky top-0 z-40 border-b border-border bg-surface-card pt-[env(safe-area-inset-top,0px)]"
@@ -54,7 +62,8 @@ export default function FieldHeader({ active = "home" }: Props) {
 							className="w-[min(30vw,21rem)] rounded-md border border-border bg-surface-card px-3.5 py-2.5 text-sm text-foreground placeholder:text-text-muted focus:border-accent-blue focus:outline-none"
 						/>
 					</label>
-					<AccountMenu />
+					{captureAvailable ? <Button variant="primary">Capture</Button> : null}
+					<AccountMenu initials={viewerInitials} />
 				</div>
 			</div>
 		</header>

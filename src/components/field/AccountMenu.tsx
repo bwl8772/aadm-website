@@ -22,7 +22,12 @@ const accountItems = [
 ] as const;
 
 /** Avatar button + account menu, shared by every Field screen header. */
-export default function AccountMenu() {
+export default function AccountMenu({
+	initials: viewerInitials,
+}: {
+	/** Server-sent initials (MyFieldView.viewer); falls back to the Clerk user. */
+	initials?: string;
+} = {}) {
 	const [open, setOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null);
 
@@ -47,6 +52,7 @@ export default function AccountMenu() {
 	const [user, setUser] = useState($userStore.get());
 	useEffect(() => $userStore.subscribe(setUser), []);
 	const initials =
+		viewerInitials ||
 		[user?.firstName?.[0], user?.lastName?.[0]]
 			.filter(Boolean)
 			.join("")

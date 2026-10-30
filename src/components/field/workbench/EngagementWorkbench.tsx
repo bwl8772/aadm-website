@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { FIELD_HOME_PATH } from "../../../lib/field-area";
+import Button from "../Button";
+import Composer from "../Composer";
 import type { WorkbenchModel } from "../field-types";
+import PromptBubble from "../PromptBubble";
+import ScreenHeader from "../ScreenHeader";
 import AgentRail from "./AgentRail";
-import ArtifactRail from "./ArtifactRail";
-import Composer from "./Composer";
 import ContextBar from "./ContextBar";
 import DraftCard from "./DraftCard";
-import WorkbenchHeader from "./WorkbenchHeader";
+import SidePanel from "./SidePanel";
 
 /** Engagement Workbench: agents (left) · canvas (middle) · saved artifacts (right). Renders the model it is given. */
 export default function EngagementWorkbench({
@@ -27,9 +30,19 @@ export default function EngagementWorkbench({
 			data-field-screen="workbench"
 			className="flex min-h-screen flex-col bg-surface-deep"
 		>
-			<WorkbenchHeader customer={model.customer} name={model.name} />
+			<ScreenHeader
+				crumbs={[
+					{ label: "My Field", href: FIELD_HOME_PATH },
+					{ label: model.customer },
+					{ label: model.name },
+				]}
+			>
+				<Button className="hidden sm:inline-flex">Brief</Button>
+				<Button className="hidden sm:inline-flex">Open in Claude</Button>
+				<Button className="hidden sm:inline-flex">Share in Slack</Button>
+			</ScreenHeader>
 			<ContextBar context={model.context} />
-			<div className="grid flex-1 grid-cols-1 lg:grid-cols-[17rem_minmax(0,1fr)_19rem] xl:grid-cols-[18rem_minmax(0,1fr)_21rem]">
+			<div className="grid flex-1 grid-cols-1 lg:grid-cols-[17rem_minmax(0,1fr)_21rem] xl:grid-cols-[18rem_minmax(0,1fr)_23rem]">
 				<AgentRail
 					groups={model.agent_groups}
 					activeId={activeId}
@@ -48,31 +61,23 @@ export default function EngagementWorkbench({
 						) : null}
 					</div>
 					<div className="flex flex-1 flex-col gap-6 px-6 py-7 sm:px-10">
-						{prompt ? (
-							<div className="ml-auto max-w-3xl rounded-xl bg-foreground px-5 py-4 text-background">
-								<p>{prompt.text}</p>
-								{prompt.attachments.length > 0 ? (
-									<ul className="mt-3 flex flex-wrap gap-2">
-										{prompt.attachments.map((f) => (
-											<li
-												key={f}
-												className="rounded-md bg-background/15 px-2.5 py-1 text-sm font-medium"
-											>
-												{f}
-											</li>
-										))}
-									</ul>
-								) : null}
-							</div>
-						) : null}
+						{prompt ? <PromptBubble {...prompt} /> : null}
 						{draft ? <DraftCard draft={draft} /> : null}
 						<div className="mt-auto">
-							<Composer />
+							<Composer
+								placeholder="Ask, review, decide, create..."
+								attachLabel="Attach evidence"
+								agentLabel="Switch agent"
+								note="Drafts stay in the canvas until you save"
+							/>
 						</div>
 					</div>
 				</main>
 
-				<ArtifactRail artifacts={model.artifacts} />
+				<SidePanel
+					artifacts={model.artifacts}
+					inventories={model.inventories}
+				/>
 			</div>
 		</div>
 	);
