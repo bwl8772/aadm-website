@@ -10,6 +10,8 @@
 | **CNAME** | Do not repoint `accounts.aadm.io` |
 | **Satellite** | **Off** — `aadm.io` is the Clerk **primary** domain; Account Portal shares cookies |
 
+Frontend invariants (BACK-, ARCH-, IDN-, TEN-, AUTHZ- IDs): `docs/INVARIANTS.md`. Every page and endpoint obeys them.
+
 Auth links: `src/lib/clerk-portal-urls.ts` · Member page: `src/pages/member/[[...rest]].astro`
 
 ## Commands

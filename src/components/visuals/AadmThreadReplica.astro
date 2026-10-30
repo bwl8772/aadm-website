@@ -376,6 +376,103 @@ const scenarios: Scenario[] = [
 			},
 		],
 	},
+
+	// Real session: apply_* tools refused after confirm; declarations were bare objects.
+	{
+		name: "After confirm",
+		steps: [
+			{
+				kind: "user",
+				text: "apply_initiative keeps coming back VALIDATION_FAILED after I confirm. Check the agentic tools — nouns, verbs, the Zod the model sees. And it has to work for a FastAPI/Pydantic host, not just our parsers.",
+			},
+			{ kind: "think", label: "Thought for 3s", ms: 2000 },
+			{
+				kind: "agent",
+				text: "I won't guess the shape. I'll dump the exact declarations the model gets, then run them through AADM before I touch a writer.",
+			},
+			{
+				kind: "tool",
+				icon: "run",
+				text: "Ran node dump apply_metric · apply_proof · apply_evidence · apply_initiative declarations",
+			},
+			{
+				kind: "aadm",
+				tool: "llm_tool_schema_compat",
+				status: "2 schemas · not valid",
+				lines: [
+					"apply_metric.subjectRef is required and typed object — no properties. The model has to guess.",
+					"apply_initiative.frameworkLayerIds is optional on the wire. targetOutcomeRefs.items is a bare object; the mix lives in prose.",
+					"A Pydantic BaseModel generated from this JSON Schema would be Extra-empty. Same refusal Zod already gives, just later.",
+				],
+				chips: ["AUTH-21", "AUTH-12", "2 blocking"],
+			},
+			{
+				kind: "aadm",
+				tool: "agent_op_contract_check",
+				status: "incomplete · writers",
+				lines: [
+					"apply_initiative has no idempotency key.",
+					"apply_metric has no idempotency key.",
+					"generate_picture has no contract ref and no idempotency key. Agents propose. People confirm.",
+				],
+				chips: ["AO-02", "AUTH-44", "AUTH-25"],
+			},
+			{
+				kind: "tool",
+				icon: "read",
+				text: "Read document-tool-schema.mjs + tool-manifest.mjs + creator-dispatch.mjs",
+			},
+			{
+				kind: "agent",
+				text: "There's the defect. The declaration invites a guess. The person confirms. Then TransformationSubjectRefSchema refuses it. And frameworkLayerIds: the apply handler requires at least one layer, but the tool told the model it was optional.",
+			},
+			{
+				kind: "aadm",
+				tool: "debug_defect",
+				status: "Classified · declaration drift",
+				lines: [
+					"Root cause: what the declaration offers is not what the contract accepts.",
+					"Fix the offered shape — kind + id on subjectRef, source + the matching ids on an outcome ref, frameworkLayerIds required and enumerated.",
+					"Name keyFrom on every writer. Dispatch already claims turnKey:toolId; the manifest just never said so.",
+				],
+				chips: ["Classified", "AUTH-21", "1 family · tests"],
+			},
+			{
+				kind: "tool",
+				icon: "edit",
+				text: "Edited document-tool-schema.mjs  (SUBJECT_REF + OUTCOME_REF_ITEM + required frameworkLayerIds)",
+			},
+			{
+				kind: "tool",
+				icon: "edit",
+				text: "Edited tools.mjs + tool-manifest.mjs  (writers must name keyFrom)",
+			},
+			{
+				kind: "tool",
+				icon: "run",
+				text: "Ran agent-tool-declaration.test + tool-manifest.test  ✓ a filled subjectRef parses · a write without keyFrom fails the canon",
+			},
+			{
+				kind: "agent",
+				text: "The model is now shown the shape the server will accept. Zod and Pydantic read the same JSON Schema. A retried turn is one write, because the dispatch claim is on the manifest.",
+			},
+			{ kind: "user", text: "And generate_picture?" },
+			{ kind: "think", label: "Thought for 1s", ms: 1100 },
+			{
+				kind: "aadm",
+				tool: "predone_review",
+				status: "Ready with residual",
+				lines: [
+					"Ship the apply_* declaration fix.",
+					"Residual: generate_picture draws anew on every call. Idempotency is the dispatch claim only — same brief twice is two images. Logged, not hidden.",
+				],
+			},
+			{
+				kind: "agent",
+				text: "Shipped the apply family. Picture stays keyed on the turn, not the brief. That's honest.",
+			},
+		],
+	},
 ];
 
 const toolIcon = {
@@ -387,7 +484,7 @@ const toolIcon = {
 
 <figure class="aadm-replica relative mx-auto w-full max-w-3xl">
 	<p class="sr-only">
-		Illustration of a live editor agent session with three scenarios, selectable with the Previous and Next
+		Illustration of a live editor agent session with four scenarios, selectable with the Previous and Next
 		buttons in the header. First, a developer reports a checkout error; the agent calls AADM, which holds the
 		fix until the failure is reproduced, classifies the root cause from evidence, requires one test, and marks
 		the release ready with one residual risk logged. Second, a five-hour integration suite shows about ninety
@@ -399,7 +496,12 @@ const toolIcon = {
 		without scanning the repo, the agent walks one user journey and submits the map, three findings come back
 		with controls and owners, and the agent says plainly that source reading found the bugs while AADM named
 		the map and gave the meeting a shared agenda and stop rules, in fifteen minutes instead of the three weeks
-		a formal audit would take.
+		a formal audit would take. Fourth, apply tools fail validation after the person confirms; AADM checks the
+		exact declarations the model sees, finds required subjectRef and outcome-ref fields typed as empty
+		objects and an optional frameworkLayerIds the server actually requires, plus writers with no
+		idempotency key; the agent aligns the offered JSON Schema with the contract so Zod and Pydantic accept
+		the same shape, names keyFrom on each writer, and ships with a residual that generate_picture is
+		keyed on the turn only.
 	</p>
 	<div class="overflow-hidden rounded-xl border border-border bg-card shadow-[0_40px_120px_-40px_rgba(16,185,129,0.25)]">
 		<div class="flex items-center gap-3 border-b border-border bg-muted px-4 py-2.5">
