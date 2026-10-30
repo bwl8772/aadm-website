@@ -1,0 +1,46 @@
+export default function ThemeToggle() {
+	return (
+		<button
+			type="button"
+			className="inline-flex h-9 w-9 items-center justify-center rounded-none border border-border bg-transparent text-foreground transition hover:bg-accent hover:text-accent-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+			data-theme-toggle
+			aria-label="Switch to light theme"
+		>
+			<svg
+				data-theme-icon="sun"
+				className="hidden h-4 w-4 dark:block"
+				viewBox="0 0 20 20"
+				fill="none"
+				aria-hidden="true"
+			>
+				<circle
+					cx="10"
+					cy="10"
+					r="3.25"
+					stroke="currentColor"
+					strokeWidth="1.5"
+				/>
+				<path
+					d="M10 2.5v1.5M10 16v1.5M2.5 10H4M16 10h1.5M4.4 4.4l1.1 1.1M14.5 14.5l1.1 1.1M15.6 4.4l-1.1 1.1M5.5 14.5l-1.1 1.1"
+					stroke="currentColor"
+					strokeWidth="1.5"
+					strokeLinecap="square"
+				/>
+			</svg>
+			<svg
+				data-theme-icon="moon"
+				className="block h-4 w-4 dark:hidden"
+				viewBox="0 0 20 20"
+				fill="none"
+				aria-hidden="true"
+			>
+				<path
+					d="M15.6 12.4A6.2 6.2 0 1 1 7.6 4.4 5.1 5.1 0 0 0 15.6 12.4Z"
+					stroke="currentColor"
+					strokeWidth="1.5"
+					strokeLinejoin="round"
+				/>
+			</svg>
+		</button>
+	);
+}
