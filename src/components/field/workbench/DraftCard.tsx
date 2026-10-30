@@ -4,9 +4,24 @@ import { Pill } from "../home/Pill";
 const outline =
 	"whitespace-nowrap rounded-md border border-border bg-surface-card px-4 py-2 font-semibold text-foreground transition hover:border-foreground/30 hover:bg-muted";
 
-function Heading({ tone, children }: { tone: "ok" | "warn" | "info" | "muted"; children: string }) {
-	const color = { ok: "text-brand-mcp", warn: "text-brand-warn", info: "text-accent-blue", muted: "text-text-muted" }[tone];
-	return <h3 className={`text-xs font-bold uppercase tracking-[0.12em] ${color}`}>{children}</h3>;
+function Heading({
+	tone,
+	children,
+}: {
+	tone: "ok" | "warn" | "info" | "muted";
+	children: string;
+}) {
+	const color = {
+		ok: "text-brand-mcp",
+		warn: "text-brand-warn",
+		info: "text-accent-blue",
+		muted: "text-text-muted",
+	}[tone];
+	return (
+		<h3 className={`text-xs font-bold uppercase tracking-[0.12em] ${color}`}>
+			{children}
+		</h3>
+	);
 }
 
 function AskList({ items }: { items: WorkbenchQuestion[] }) {
@@ -76,7 +91,10 @@ export default function DraftCard({ draft }: { draft: WorkbenchDraft }) {
 				<button type="button" className={outline}>
 					Edit draft
 				</button>
-				<button type="button" className="ml-auto rounded-md px-4 py-2 font-medium text-text-secondary hover:bg-muted hover:text-foreground">
+				<button
+					type="button"
+					className="ml-auto rounded-md px-4 py-2 font-medium text-text-secondary hover:bg-muted hover:text-foreground"
+				>
 					Discard
 				</button>
 			</footer>

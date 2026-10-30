@@ -1,7 +1,11 @@
 import type { WorkbenchModel } from "../field-types";
 import { LensPill } from "../home/Pill";
 
-export default function ContextBar({ context }: { context: WorkbenchModel["context"] }) {
+export default function ContextBar({
+	context,
+}: {
+	context: WorkbenchModel["context"];
+}) {
 	const facts: [string, string][] = [
 		["Outcome", context.outcome],
 		["Delivery", context.delivery],
@@ -15,7 +19,9 @@ export default function ContextBar({ context }: { context: WorkbenchModel["conte
 				{facts.map(([k, v]) => (
 					<div key={k} className="border-r border-border px-5 py-1 first:pl-0">
 						<dt className="text-sm text-text-muted">{k}</dt>
-						<dd className="mt-0.5 text-sm font-semibold text-foreground">{v}</dd>
+						<dd className="mt-0.5 text-sm font-semibold text-foreground">
+							{v}
+						</dd>
 					</div>
 				))}
 			</dl>

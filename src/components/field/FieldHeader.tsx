@@ -1,11 +1,16 @@
 import { FIELD_HOME_PATH } from "../../lib/field-area";
 import AccountMenu from "./AccountMenu";
 
-const tab = "shrink-0 whitespace-nowrap rounded-md px-4 py-2 font-medium transition";
+const tab =
+	"shrink-0 whitespace-nowrap rounded-md px-4 py-2 font-medium transition";
 
 const tabs = [
 	{ key: "home", href: FIELD_HOME_PATH, label: "My Field" },
-	{ key: "engagements", href: `${FIELD_HOME_PATH}#engagements`, label: "Engagements" },
+	{
+		key: "engagements",
+		href: `${FIELD_HOME_PATH}#engagements`,
+		label: "Engagements",
+	},
 ] as const;
 
 interface Props {

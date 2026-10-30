@@ -9,10 +9,20 @@ import { z } from "astro/zod";
 
 const id = z.uuid();
 
-export const LensStatusSchema = z.enum(["on_track", "in_progress", "needs_action", "needs_decision", "not_started"]);
+export const LensStatusSchema = z.enum([
+	"on_track",
+	"in_progress",
+	"needs_action",
+	"needs_decision",
+	"not_started",
+]);
 export const ToneSchema = z.enum(["neutral", "warn", "ok", "danger", "info"]);
 
-const LensSchema = z.object({ name: z.string(), status: LensStatusSchema, note: z.string().optional() });
+const LensSchema = z.object({
+	name: z.string(),
+	status: LensStatusSchema,
+	note: z.string().optional(),
+});
 
 /* ---- My Field (`/field/main`) ---- */
 
@@ -34,7 +44,9 @@ export const FieldEngagementSchema = z.object({
 	href: z.string().optional(),
 	customer: z.string(),
 	name: z.string(),
-	status: z.object({ label: z.string(), tone: z.enum(["ok", "blocked"]) }).optional(),
+	status: z
+		.object({ label: z.string(), tone: z.enum(["ok", "blocked"]) })
+		.optional(),
 	summary: z.string().optional(),
 	detail: z
 		.object({
@@ -77,7 +89,9 @@ export const WorkbenchAgentGroupSchema = z.object({
 		z.object({
 			agent_id: z.string(),
 			name: z.string(),
-			status: z.object({ label: z.string(), tone: z.enum(["neutral", "warn"]) }).optional(),
+			status: z
+				.object({ label: z.string(), tone: z.enum(["neutral", "warn"]) })
+				.optional(),
 		}),
 	),
 });
@@ -120,7 +134,9 @@ export const WorkbenchModelSchema = z.object({
 	active_agent_id: z.string(),
 	active_agent_purpose: z.string(),
 	canvas: z.object({
-		prompt: z.object({ text: z.string(), attachments: z.array(z.string()) }).nullable(),
+		prompt: z
+			.object({ text: z.string(), attachments: z.array(z.string()) })
+			.nullable(),
 		draft: WorkbenchDraftSchema.nullable(),
 	}),
 	artifacts: z.array(WorkbenchArtifactSchema),

@@ -4,7 +4,13 @@ import AccountMenu from "../AccountMenu";
 const ghostButton =
 	"hidden whitespace-nowrap rounded-md border border-border bg-surface-card px-4 py-2 font-semibold text-foreground transition hover:border-foreground/30 hover:bg-muted sm:inline-flex";
 
-export default function WorkbenchHeader({ customer, name }: { customer: string; name: string }) {
+export default function WorkbenchHeader({
+	customer,
+	name,
+}: {
+	customer: string;
+	name: string;
+}) {
 	return (
 		<header className="sticky top-0 z-40 border-b border-border bg-surface-card pt-[env(safe-area-inset-top,0px)]">
 			<div className="flex min-h-14 items-center gap-4 px-4 py-2 sm:h-16 sm:gap-6 sm:px-7 sm:py-0">

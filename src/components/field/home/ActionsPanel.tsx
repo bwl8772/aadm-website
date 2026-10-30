@@ -12,17 +12,28 @@ interface Props {
 export default function ActionsPanel({ actions, counts }: Props) {
 	const [tab, setTab] = useState<Tab>("me");
 	const rows = actions.filter((a) =>
-		tab === "all" ? true : tab === "me" ? a.owner_kind === "engineer" : a.owner_kind === "customer",
+		tab === "all"
+			? true
+			: tab === "me"
+				? a.owner_kind === "engineer"
+				: a.owner_kind === "customer",
 	);
 	const tabs: { key: Tab; label: string }[] = [
 		{ key: "me", label: `Waiting on me · ${counts.waiting_on_me}` },
-		{ key: "customer", label: `Waiting on customer · ${counts.waiting_on_customer}` },
+		{
+			key: "customer",
+			label: `Waiting on customer · ${counts.waiting_on_customer}`,
+		},
 		{ key: "all", label: `All · ${counts.all}` },
 	];
 
 	return (
 		<div className="overflow-hidden rounded-xl border border-border bg-surface-card">
-			<div className="flex flex-wrap gap-2 p-5" role="tablist" aria-label="Filter actions">
+			<div
+				className="flex flex-wrap gap-2 p-5"
+				role="tablist"
+				aria-label="Filter actions"
+			>
 				{tabs.map((t) => (
 					<button
 						key={t.key}
@@ -53,13 +64,19 @@ export default function ActionsPanel({ actions, counts }: Props) {
 					<tbody>
 						{rows.map((a) => (
 							<tr key={a.action_id} className="border-t border-border">
-								<td className="px-5 py-4 font-medium text-foreground">{a.label}</td>
-								<td className="max-w-[15rem] px-3 py-4 text-text-secondary">{a.engagement}</td>
+								<td className="px-5 py-4 font-medium text-foreground">
+									{a.label}
+								</td>
+								<td className="max-w-[15rem] px-3 py-4 text-text-secondary">
+									{a.engagement}
+								</td>
 								<td className="px-3 py-4">
 									<Pill>{a.specialist}</Pill>
 								</td>
 								<td className="px-3 py-4 text-foreground">{a.owner_name}</td>
-								<td className={`px-3 py-4 ${a.late ? "font-medium text-destructive" : "text-text-secondary"}`}>
+								<td
+									className={`px-3 py-4 ${a.late ? "font-medium text-destructive" : "text-text-secondary"}`}
+								>
 									{a.waiting_label}
 								</td>
 								<td className="px-5 py-4 text-right">

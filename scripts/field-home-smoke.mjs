@@ -41,7 +41,11 @@ try {
 	const anon = await browser.newContext();
 	const gate = await assertHandsOffToSignIn(anon.request, base, "/field/main");
 	log("Unsigned /field/main", gate);
-	const wb = await assertHandsOffToSignIn(anon.request, base, "/field/main/e/00000000-0000-4000-8000-000000000000");
+	const wb = await assertHandsOffToSignIn(
+		anon.request,
+		base,
+		"/field/main/e/00000000-0000-4000-8000-000000000000",
+	);
 	log("Unsigned /field/main/e/{id}", wb);
 	await anon.close();
 
@@ -63,7 +67,9 @@ try {
 		await page.waitForTimeout(1200);
 
 		// Stable marker, not copy: survives heading/text changes.
-		await page.locator('[data-field-screen="home"]').waitFor({ state: "visible", timeout: 20000 });
+		await page
+			.locator('[data-field-screen="home"]')
+			.waitFor({ state: "visible", timeout: 20000 });
 		assert(
 			(await page.locator(".member-nav-tabs").count()) === 0,
 			"signed-in /field/main must not add a MemberNavTabs tab",

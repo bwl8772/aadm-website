@@ -1,14 +1,21 @@
 import type { FieldEngagement } from "../field-types";
 import { LensPill, Pill } from "./Pill";
 
-export default function EngagementCard({ engagement: e }: { engagement: FieldEngagement }) {
+export default function EngagementCard({
+	engagement: e,
+}: {
+	engagement: FieldEngagement;
+}) {
 	return (
 		<article className="rounded-xl border border-border bg-surface-card p-6">
 			<div className="flex items-start justify-between gap-3">
 				<div>
 					<h3 className="text-lg font-semibold text-foreground">
 						{e.href ? (
-							<a href={e.href} className="hover:text-accent-blue hover:underline">
+							<a
+								href={e.href}
+								className="hover:text-accent-blue hover:underline"
+							>
 								{e.customer}
 							</a>
 						) : (
@@ -17,10 +24,16 @@ export default function EngagementCard({ engagement: e }: { engagement: FieldEng
 					</h3>
 					<p className="mt-0.5 text-text-secondary">{e.name}</p>
 				</div>
-				{e.status ? <Pill tone={e.status.tone === "blocked" ? "danger" : "ok"}>{e.status.label}</Pill> : null}
+				{e.status ? (
+					<Pill tone={e.status.tone === "blocked" ? "danger" : "ok"}>
+						{e.status.label}
+					</Pill>
+				) : null}
 			</div>
 
-			{e.summary ? <p className="mt-4 text-sm text-text-secondary">{e.summary}</p> : null}
+			{e.summary ? (
+				<p className="mt-4 text-sm text-text-secondary">{e.summary}</p>
+			) : null}
 
 			{e.detail ? (
 				<>
@@ -45,7 +58,9 @@ export default function EngagementCard({ engagement: e }: { engagement: FieldEng
 						))}
 					</ul>
 					{e.detail.drift ? (
-						<p className="mt-5 rounded-md bg-brand-warn-bg px-3.5 py-2.5 text-sm text-brand-warn">{e.detail.drift}</p>
+						<p className="mt-5 rounded-md bg-brand-warn-bg px-3.5 py-2.5 text-sm text-brand-warn">
+							{e.detail.drift}
+						</p>
 					) : null}
 				</>
 			) : null}

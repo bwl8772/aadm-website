@@ -1,8 +1,12 @@
 import FieldHeader from "./FieldHeader";
-import type { MyFieldModel } from "./field-types";
 import FieldHome from "./FieldHome";
+import type { MyFieldModel } from "./field-types";
 
-export default function FieldApp({ model = null }: { model?: MyFieldModel | null }) {
+export default function FieldApp({
+	model = null,
+}: {
+	model?: MyFieldModel | null;
+}) {
 	return (
 		<>
 			<FieldHeader active="home" />

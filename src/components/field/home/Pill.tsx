@@ -11,7 +11,15 @@ const toneClass: Record<PillTone, string> = {
 	info: "bg-accent-blue/10 text-accent-blue",
 };
 
-export function Pill({ tone = "neutral", round = false, children }: { tone?: PillTone; round?: boolean; children: ReactNode }) {
+export function Pill({
+	tone = "neutral",
+	round = false,
+	children,
+}: {
+	tone?: PillTone;
+	round?: boolean;
+	children: ReactNode;
+}) {
 	return (
 		<span
 			className={`inline-flex items-center gap-2 whitespace-nowrap px-2.5 py-1 text-sm font-medium ${round ? "rounded-full" : "rounded-md"} ${toneClass[tone]}`}
@@ -29,11 +37,25 @@ const lensDot: Record<LensStatus, string> = {
 	not_started: "bg-text-muted",
 };
 
-export function LensPill({ name, status, note }: { name: string; status: LensStatus; note?: string }) {
-	const tone: PillTone = status === "needs_action" || status === "needs_decision" ? "warn" : "neutral";
+export function LensPill({
+	name,
+	status,
+	note,
+}: {
+	name: string;
+	status: LensStatus;
+	note?: string;
+}) {
+	const tone: PillTone =
+		status === "needs_action" || status === "needs_decision"
+			? "warn"
+			: "neutral";
 	return (
 		<Pill tone={tone} round>
-			<span className={`h-2 w-2 rounded-full ${lensDot[status]}`} aria-hidden="true" />
+			<span
+				className={`h-2 w-2 rounded-full ${lensDot[status]}`}
+				aria-hidden="true"
+			/>
 			{note ? `${name} · ${note}` : name}
 		</Pill>
 	);

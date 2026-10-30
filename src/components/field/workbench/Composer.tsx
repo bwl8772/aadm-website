@@ -3,7 +3,10 @@ const outline =
 
 export default function Composer() {
 	return (
-		<form className="rounded-xl border border-border bg-surface-card p-5" onSubmit={(e) => e.preventDefault()}>
+		<form
+			className="rounded-xl border border-border bg-surface-card p-5"
+			onSubmit={(e) => e.preventDefault()}
+		>
 			<label>
 				<span className="sr-only">Message the agent</span>
 				<textarea
@@ -19,7 +22,9 @@ export default function Composer() {
 				<button type="button" className={outline}>
 					Switch agent
 				</button>
-				<p className="ml-auto text-sm text-text-muted">Drafts stay in the canvas until you save</p>
+				<p className="ml-auto text-sm text-text-muted">
+					Drafts stay in the canvas until you save
+				</p>
 			</div>
 		</form>
 	);

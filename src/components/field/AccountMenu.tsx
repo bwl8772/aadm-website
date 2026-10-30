@@ -47,7 +47,10 @@ export default function AccountMenu() {
 	const [user, setUser] = useState($userStore.get());
 	useEffect(() => $userStore.subscribe(setUser), []);
 	const initials =
-		[user?.firstName?.[0], user?.lastName?.[0]].filter(Boolean).join("").toUpperCase() ||
+		[user?.firstName?.[0], user?.lastName?.[0]]
+			.filter(Boolean)
+			.join("")
+			.toUpperCase() ||
 		user?.primaryEmailAddress?.emailAddress?.[0]?.toUpperCase() ||
 		"";
 
