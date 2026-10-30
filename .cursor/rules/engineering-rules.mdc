@@ -1,0 +1,26 @@
+---
+description: aadm-website engineering contract — render only, Clerk hosts login, Field is React on /field/main
+alwaysApply: true
+---
+
+# Engineering rules (always on)
+
+**Full contract:** [`docs/ENGINEERING_RULES.md`](docs/ENGINEERING_RULES.md)
+**Invariants:** [`docs/INVARIANTS.md`](docs/INVARIANTS.md)
+**Auth:** [`docs/CLERK-AUTH.md`](docs/CLERK-AUTH.md)
+
+This repo is aadm.io. Marketing and member chrome are Astro. Field after login is a React island at `/field/main` on the same deploy. The website never invents domain truth.
+
+## Non-negotiables
+
+- Backend (and Clerk session) are authoritative. No client-invented success, workspace, or version.
+- No domain logic in Astro pages or the Field React shell. Call the backend; render parsed replies.
+- Sign-in is `accounts.aadm.io` only. Satellite off. Do not embed Clerk `<SignIn>` / `<SignUp>`. Do not repoint the CNAME.
+- No secrets in the browser bundle. `PUBLIC_*` only. Member credentials stay on `/member`.
+- IDs are server UUIDs from replies. Never mint or derive them.
+- TEN-07 families are distinct screens. Field is not a dashboard (FLD-01–04).
+
+## Before merging
+
+1. Read the matching heading in `docs/ENGINEERING_RULES.md` and the invariant ID in `docs/INVARIANTS.md`.
+2. Auth changes: read `docs/CLERK-AUTH.md` first.
