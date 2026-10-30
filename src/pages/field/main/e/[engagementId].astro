@@ -1,7 +1,11 @@
 ---
 export const prerender = false;
 
-import { WorkbenchModelSchema } from "../../../../components/field/field-types";
+import {
+	StudioModelSchema,
+	WorkbenchModelSchema,
+} from "../../../../components/field/field-types";
+import ArtifactStudio from "../../../../components/field/studio/ArtifactStudio";
 import EngagementWorkbench from "../../../../components/field/workbench/EngagementWorkbench";
 import MemberSatelliteSyncPage from "../../../../components/MemberSatelliteSyncPage.astro";
 import Layout from "../../../../layouts/Layout.astro";
@@ -13,11 +17,24 @@ const syncPending = Astro.locals.satelliteSyncPending === true;
 const { engagementId = "" } = Astro.params;
 
 /** Example data only when PUBLIC_FIELD_FIXTURES=1; otherwise no data until the backend read model is wired. */
-const fixtures = fieldFixture("workbench") as Record<string, unknown> | null;
-const raw = fixtures?.[engagementId] ?? null;
-const parsed = raw ? WorkbenchModelSchema.safeParse(raw) : null;
+/** `?artifact={id}` opens Artifact Studio on the same route (FIELD-VISION §5). */
+const artifactId = Astro.url.searchParams.get("artifact");
+const workbenchHref = `/field/main/e/${engagementId}`;
+const raw = artifactId
+	? ((fieldFixture("studio") as Record<string, unknown> | null)?.[artifactId] ??
+		null)
+	: ((fieldFixture("workbench") as Record<string, unknown> | null)?.[
+			engagementId
+		] ?? null);
+const studioParsed =
+	raw && artifactId ? StudioModelSchema.safeParse(raw) : null;
+const workbenchParsed =
+	raw && !artifactId ? WorkbenchModelSchema.safeParse(raw) : null;
+const parsed = studioParsed ?? workbenchParsed;
 /** RES-05: a malformed model is a visible error, never "not found". */
-const model = parsed?.success ? parsed.data : null;
+const studio = studioParsed?.success ? studioParsed.data : null;
+const workbench = workbenchParsed?.success ? workbenchParsed.data : null;
+const model = studio ?? workbench;
 const modelError = parsed && !parsed.success;
 ---
 
@@ -36,7 +53,11 @@ const modelError = parsed && !parsed.success;
 					<p class="mt-3 text-text-secondary">Engagement data did not match its contract.</p>
 				</main>
 			) : model ? (
-				<EngagementWorkbench client:load model={model} />
+				studio ? (
+					<ArtifactStudio client:load model={studio} workbenchHref={workbenchHref} />
+				) : workbench ? (
+					<EngagementWorkbench client:load model={workbench} />
+				) : null
 			) : (
 				<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
 					<h1 class="text-2xl font-bold text-foreground">No such engagement for you</h1>

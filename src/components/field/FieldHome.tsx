@@ -1,24 +1,25 @@
-import type { MyFieldModel } from "./field-types";
+import type { MyFieldView } from "./field-types";
 import ActionsPanel from "./home/ActionsPanel";
 import ContinueCard from "./home/ContinueCard";
 import EngagementCard from "./home/EngagementCard";
 
-/** Renders the My Field read model it is given. `null` = no data source wired yet. */
-export default function FieldHome({ model }: { model: MyFieldModel | null }) {
-	if (!model) {
+/** Renders a MyFieldView exactly as sent (docs/contracts/FIELD-MY-FIELD.md). */
+export default function FieldHome({ view }: { view: MyFieldView }) {
+	const empty =
+		view.actions.items.length === 0 && view.engagements.length === 0;
+
+	if (empty) {
 		return (
 			<div className="min-w-0" data-field-screen="home">
 				<h1 className="text-3xl font-bold tracking-tight text-foreground">
-					Where to act
+					{view.empty_state.heading}
 				</h1>
 				<p className="mt-4 max-w-2xl text-text-secondary">
-					Your engagements will show here.
+					{view.empty_state.line}
 				</p>
 			</div>
 		);
 	}
-
-	const { continue_action, actions, counts, engagements } = model;
 
 	return (
 		<div
@@ -30,18 +31,15 @@ export default function FieldHome({ model }: { model: MyFieldModel | null }) {
 					<h1 className="text-3xl font-bold tracking-tight text-foreground">
 						Where to act
 					</h1>
-					<p className="text-text-secondary">
-						{counts.engagements} engagements · {counts.open_actions} open
-						actions
-					</p>
+					<p className="text-text-secondary">{view.summary_label}</p>
 				</div>
-				{continue_action ? (
+				{view.continue ? (
 					<div className="mt-6">
-						<ContinueCard {...continue_action} />
+						<ContinueCard item={view.continue} />
 					</div>
 				) : null}
 				<div className="mt-6">
-					<ActionsPanel actions={actions} counts={counts} />
+					<ActionsPanel filters={view.filters} actions={view.actions} />
 				</div>
 			</section>
 
@@ -50,20 +48,15 @@ export default function FieldHome({ model }: { model: MyFieldModel | null }) {
 				className="min-w-0 scroll-mt-24"
 				aria-labelledby="field-engagements-heading"
 			>
-				<div className="flex items-baseline justify-between">
-					<h2
-						id="field-engagements-heading"
-						className="text-lg font-semibold text-foreground"
-					>
-						Engagements
-					</h2>
-					<a href="#engagements" className="text-accent-blue hover:underline">
-						See all
-					</a>
-				</div>
+				<h2
+					id="field-engagements-heading"
+					className="text-lg font-semibold text-foreground"
+				>
+					Engagements
+				</h2>
 				<div className="mt-4 flex flex-col gap-5">
-					{engagements.map((e) => (
-						<EngagementCard key={e.engagement_id} engagement={e} />
+					{view.engagements.map((c) => (
+						<EngagementCard key={c.engagement_id} card={c} />
 					))}
 				</div>
 			</aside>

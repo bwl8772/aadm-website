@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { WorkbenchArtifact } from "../field-types";
-import { Pill } from "../home/Pill";
+import { Pill } from "../Pill";
 
 type Filter = "all" | "internal" | "customer";
 
@@ -10,7 +10,8 @@ const filters: { key: Filter; label: string }[] = [
 	{ key: "customer", label: "Customer-visible" },
 ];
 
-export default function ArtifactRail({
+/** Saved artifacts for the engagement, filterable by visibility. */
+export default function ArtifactList({
 	artifacts,
 }: {
 	artifacts: WorkbenchArtifact[];
@@ -21,16 +22,10 @@ export default function ArtifactRail({
 	);
 
 	return (
-		<aside
-			aria-labelledby="wb-artifacts-heading"
-			className="min-w-0 border-l border-border bg-surface-card px-5 py-6"
-		>
-			<div className="flex items-baseline justify-between gap-3">
-				<h2 id="wb-artifacts-heading" className="font-semibold text-foreground">
-					Artifacts
-				</h2>
-				<p className="text-sm text-text-secondary">Saved to engagement</p>
-			</div>
+		<div>
+			<p className="text-sm text-text-secondary">
+				Deliverables saved to the engagement
+			</p>
 			<div
 				className="mt-3 flex flex-wrap gap-2"
 				role="tablist"
@@ -56,7 +51,18 @@ export default function ArtifactRail({
 						className="rounded-xl border border-border bg-surface-card p-4"
 					>
 						<div className="flex items-baseline justify-between gap-3">
-							<h3 className="font-semibold text-foreground">{a.title}</h3>
+							<h3 className="font-semibold text-foreground">
+								{a.href ? (
+									<a
+										href={a.href}
+										className="hover:text-accent-blue hover:underline"
+									>
+										{a.title}
+									</a>
+								) : (
+									a.title
+								)}
+							</h3>
 							<span className="shrink-0 font-mono text-sm text-text-secondary">
 								{a.version_label}
 							</span>
@@ -68,6 +74,6 @@ export default function ArtifactRail({
 					</li>
 				))}
 			</ul>
-		</aside>
+		</div>
 	);
 }

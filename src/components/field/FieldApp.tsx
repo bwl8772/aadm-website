@@ -1,20 +1,36 @@
 import FieldHeader from "./FieldHeader";
 import FieldHome from "./FieldHome";
-import type { MyFieldModel } from "./field-types";
+import type { MyFieldView } from "./field-types";
 
-export default function FieldApp({
-	model = null,
-}: {
-	model?: MyFieldModel | null;
-}) {
+/**
+ * My Field shell. `view` is the parsed MyFieldView; `null` means the backend
+ * could not be reached (contract state "Unavailable").
+ */
+export default function FieldApp({ view }: { view: MyFieldView | null }) {
 	return (
 		<>
-			<FieldHeader active="home" />
+			<FieldHeader
+				active="home"
+				viewerInitials={view?.viewer.initials}
+				captureAvailable={view?.capture.available ?? false}
+			/>
 			<main
 				id="main"
 				className="min-h-screen w-full min-w-0 bg-surface-deep px-4 py-8 sm:px-7 sm:py-10"
 			>
-				<FieldHome model={model} />
+				{view ? (
+					<FieldHome view={view} />
+				) : (
+					<div data-field-screen="home" data-field-state="unavailable">
+						<h1 className="text-2xl font-bold text-foreground">
+							My Field is unavailable
+						</h1>
+						<p className="mt-3 text-text-secondary">
+							The Field service did not answer. No commands can be sent until it
+							does.
+						</p>
+					</div>
+				)}
 			</main>
 		</>
 	);
