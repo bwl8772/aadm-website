@@ -595,7 +595,7 @@
 					"type": "string",
 					"pattern": "^[a-z0-9-]+$",
 					"maxLength": 64,
-					"description": "Crosswalk slug (nextjs, nestjs, lua-roblox, unity, …)"
+					"description": "Crosswalk slug (expo, nextjs, nestjs, lua-roblox, unity, …)"
 				},
 				"stack_manifest": {
 					"type": "object",
@@ -617,6 +617,7 @@
 						"web",
 						"mobile_native",
 						"mobile_cross",
+						"universal",
 						"web_ssr",
 						"desktop",
 						"other"
@@ -633,6 +634,10 @@
 						"testing-library-generic",
 						"cypress-ct",
 						"playwright-ct",
+						"vitest-rntl",
+						"jest-rntl",
+						"maestro",
+						"detox",
 						"none",
 						"other"
 					]
