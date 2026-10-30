@@ -21,7 +21,13 @@ const navigate = (
 	label: string,
 	href: string,
 	emphasis: FieldActionLink["emphasis"] = "secondary",
-): FieldActionLink => ({ label, kind: "navigate", href, enabled: true, emphasis });
+): FieldActionLink => ({
+	label,
+	kind: "navigate",
+	href,
+	enabled: true,
+	emphasis,
+});
 
 const command = (
 	label: string,
@@ -75,7 +81,8 @@ const agentSeeds: AgentSeed[] = [
 		group: "Outcomes",
 		agent_id: "outcome-architect",
 		label: "Outcome Architect",
-		description: "Turn the discovery brief into a measurable outcome definition.",
+		description:
+			"Turn the discovery brief into a measurable outcome definition.",
 		status_text: "v1.2 awaiting approval",
 		status_tone: "warning",
 	},
@@ -429,7 +436,10 @@ function view(query: Record<string, string>): WorkbenchView {
 		},
 		artifacts: {
 			items: artifacts,
-			filters: artifactFilters.map((f) => ({ ...f, selected: f.id === filter })),
+			filters: artifactFilters.map((f) => ({
+				...f,
+				selected: f.id === filter,
+			})),
 		},
 		land: {
 			items: inventories,
@@ -457,24 +467,31 @@ const system = { kind: "system" as const, label: "Field" };
 
 function composer(agentId: string, agentLabel: string): Stream["composer"] {
 	return {
-		send: command("Send", "canvas.send", { kind: "agent", id: agentId }, {
-			emphasis: "primary",
-		}),
+		send: command(
+			"Send",
+			"canvas.send",
+			{ kind: "agent", id: agentId },
+			{
+				emphasis: "primary",
+			},
+		),
 		placeholder: `Ask ${agentLabel} to review, draft or decide…`,
 		note: "Drafts stay in the canvas until you save",
 	};
 }
 
 function stream(agentId: string): Stream {
-	const agent = agentSeeds.find((a) => a.agent_id === agentId) ?? agentSeeds[0];
-	const author = { kind: "agent" as const, label: agent.label };
+	const agentLabel =
+		agentSeeds.find((a) => a.agent_id === agentId)?.label ??
+		"Business Discovery";
+	const author = { kind: "agent" as const, label: agentLabel };
 	if (agentId !== "business-discovery") {
 		return {
 			agent_id: agentId,
 			entries: [],
 			next_cursor: null,
 			run: null,
-			composer: composer(agentId, agent.label),
+			composer: composer(agentId, agentLabel),
 		};
 	}
 	return {
@@ -607,14 +624,24 @@ function stream(agentId: string): Stream {
 					{ id: "all_three", label: "All three" },
 				],
 				actions: [
-					command("One clinic", "decision.record", {
-						kind: "decision",
-						id: DECISION_1,
-					}, { input: { option_id: "one_clinic" } }),
-					command("All three", "decision.record", {
-						kind: "decision",
-						id: DECISION_1,
-					}, { input: { option_id: "all_three" } }),
+					command(
+						"One clinic",
+						"decision.record",
+						{
+							kind: "decision",
+							id: DECISION_1,
+						},
+						{ input: { option_id: "one_clinic" } },
+					),
+					command(
+						"All three",
+						"decision.record",
+						{
+							kind: "decision",
+							id: DECISION_1,
+						},
+						{ input: { option_id: "all_three" } },
+					),
 				],
 			},
 			{
@@ -627,7 +654,7 @@ function stream(agentId: string): Stream {
 		],
 		next_cursor: null,
 		run: null,
-		composer: composer(agentId, agent.label),
+		composer: composer(agentId, agentLabel),
 	};
 }
 

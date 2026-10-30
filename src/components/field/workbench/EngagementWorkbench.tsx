@@ -1,6 +1,6 @@
 import ActionControl from "../ActionControl";
-import CanvasStream from "../canvas/CanvasStream";
 import Composer from "../Composer";
+import CanvasStream from "../canvas/CanvasStream";
 import { CommandScopeProvider, useViewInvalidated } from "../commands";
 import type { Stream, WorkbenchView } from "../field-types";
 import NextStepBanner from "../NextStepBanner";

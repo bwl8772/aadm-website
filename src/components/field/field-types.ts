@@ -68,7 +68,10 @@ export const ActionSchema = z
 		message: "navigate needs href; command needs command",
 	});
 
-const CrumbSchema = z.object({ label: z.string(), href: z.string().optional() });
+const CrumbSchema = z.object({
+	label: z.string(),
+	href: z.string().optional(),
+});
 
 /* ---- Problem and command reply (every contract §"errors"; PRD §A7) ---- */
 
@@ -274,7 +277,17 @@ export const UnknownEntrySchema = EntryBase.extend({
 	label: z.string(),
 });
 
-export const StreamEntrySchema = z.union([KnownEntrySchema, UnknownEntrySchema]);
+export const StreamEntrySchema = z.union([
+	KnownEntrySchema,
+	UnknownEntrySchema,
+]);
+
+/** True when this build knows how to draw the entry; otherwise show its `label`. */
+export function isKnownEntry(
+	entry: z.infer<typeof StreamEntrySchema>,
+): entry is z.infer<typeof KnownEntrySchema> {
+	return KnownEntrySchema.safeParse(entry).success;
+}
 
 export const StreamSchema = z.object({
 	agent_id: z.string(),
@@ -348,7 +361,11 @@ export const WorkbenchViewSchema = z.object({
 	/** Open in Claude, Share in Slack — carrying this engagement's identity. */
 	client_links: z.array(ActionSchema),
 	context_bar: z.array(
-		z.object({ label: z.string(), value: z.string(), tone: ToneSchema.optional() }),
+		z.object({
+			label: z.string(),
+			value: z.string(),
+			tone: ToneSchema.optional(),
+		}),
 	),
 	/** All five lenses, each with a link to its detail. */
 	lenses: z.array(
@@ -388,7 +405,10 @@ export const WorkbenchViewSchema = z.object({
 		/** Import file, New inventory — as the server offers them. */
 		actions: z.array(ActionSchema),
 	}),
-	uploads: z.object({ accept: z.array(z.string()), max_bytes: z.number().int() }),
+	uploads: z.object({
+		accept: z.array(z.string()),
+		max_bytes: z.number().int(),
+	}),
 });
 
 /* ---- Artifact Studio (`…?artifact={artifactId}&view=`) — FIELD-STUDIO.md §2–3 ---- */
@@ -527,7 +547,11 @@ export const KnownBlockSchema = z.discriminatedUnion("kind", [
 	BlockBase.extend({
 		kind: z.literal("review"),
 		items: z.array(
-			z.object({ target: z.string(), verdict: z.string(), comment: z.string() }),
+			z.object({
+				target: z.string(),
+				verdict: z.string(),
+				comment: z.string(),
+			}),
 		),
 	}),
 	BlockBase.extend({
@@ -547,6 +571,13 @@ export const UnknownBlockSchema = BlockBase.extend({
 });
 
 export const BlockSchema = z.union([KnownBlockSchema, UnknownBlockSchema]);
+
+/** True when this build knows how to draw the block; otherwise show its `fallback_text`. */
+export function isKnownBlock(
+	block: z.infer<typeof BlockSchema>,
+): block is z.infer<typeof KnownBlockSchema> {
+	return KnownBlockSchema.safeParse(block).success;
+}
 
 const PartySchema = z.object({
 	kind: z.enum(["person", "agent"]),
@@ -599,7 +630,9 @@ export const MapNodeSchema = z.object({
 
 export const ArtifactMapSchema = z.object({
 	nodes: z.array(MapNodeSchema),
-	edges: z.array(z.object({ from: z.string(), to: z.string(), label: z.string() })),
+	edges: z.array(
+		z.object({ from: z.string(), to: z.string(), label: z.string() }),
+	),
 	layout_hint: z.literal("columns_by_role"),
 });
 
@@ -633,7 +666,11 @@ export const StudioViewSchema = z.object({
 	context_label: z.string(),
 	rail: z.object({
 		pinned: z.array(
-			z.object({ collection_id: id, label: z.string(), count: z.number().int() }),
+			z.object({
+				collection_id: id,
+				label: z.string(),
+				count: z.number().int(),
+			}),
 		),
 		sections: z.array(StudioSectionSchema),
 		can_edit_layout: z.boolean(),
@@ -647,7 +684,10 @@ export const StudioViewSchema = z.object({
 	built: ArtifactVersionSchema.nullable(),
 	map: ArtifactMapSchema.nullable(),
 	empty_state: z.object({ heading: z.string(), line: z.string() }).nullable(),
-	uploads: z.object({ accept: z.array(z.string()), max_bytes: z.number().int() }),
+	uploads: z.object({
+		accept: z.array(z.string()),
+		max_bytes: z.number().int(),
+	}),
 });
 
 /* ---- Workspace (`/field/main/w/{workspaceId}`) — FIELD-WORKSPACE.md §2 ---- */
@@ -745,6 +785,7 @@ export type StudioSection = z.infer<typeof StudioSectionSchema>;
 export type StudioOutput = z.infer<typeof StudioOutputSchema>;
 export type ShareOption = z.infer<typeof ShareOptionSchema>;
 export type Block = z.infer<typeof BlockSchema>;
+export type KnownBlock = z.infer<typeof KnownBlockSchema>;
 export type ArtifactVersion = z.infer<typeof ArtifactVersionSchema>;
 export type MapNode = z.infer<typeof MapNodeSchema>;
 export type ArtifactMap = z.infer<typeof ArtifactMapSchema>;

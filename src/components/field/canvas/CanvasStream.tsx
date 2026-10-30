@@ -1,5 +1,12 @@
+import type { ReactNode } from "react";
 import ActionControl from "../ActionControl";
-import type { Stream, StreamEntry } from "../field-types";
+import {
+	type FieldActionLink,
+	isKnownEntry,
+	type KnownEntry,
+	type Stream,
+	type StreamEntry,
+} from "../field-types";
 import PromptBubble from "../PromptBubble";
 import DraftCard from "../workbench/DraftCard";
 
@@ -24,7 +31,7 @@ function Check() {
 	);
 }
 
-function SystemLine({ children }: { children: React.ReactNode }) {
+function SystemLine({ children }: { children: ReactNode }) {
 	return (
 		<p className="flex items-center gap-2 text-sm text-text-secondary">
 			<Check />
@@ -33,7 +40,7 @@ function SystemLine({ children }: { children: React.ReactNode }) {
 	);
 }
 
-function Actions({ actions }: { actions: StreamEntry extends infer E ? E extends { actions: infer A } ? A : never : never }) {
+function Actions({ actions }: { actions: FieldActionLink[] }) {
 	if (actions.length === 0) return null;
 	return (
 		<div className="mt-3 flex flex-wrap gap-2">
@@ -50,6 +57,17 @@ function Actions({ actions }: { actions: StreamEntry extends infer E ? E extends
 
 /** One entry, drawn by its type. An unknown type is a plain line with its label. */
 function Entry({ entry }: { entry: StreamEntry }) {
+	if (!isKnownEntry(entry)) {
+		return (
+			<p className="text-sm text-text-secondary" data-entry-type={entry.type}>
+				{entry.label}
+			</p>
+		);
+	}
+	return <KnownEntryView entry={entry} />;
+}
+
+function KnownEntryView({ entry }: { entry: KnownEntry }) {
 	switch (entry.type) {
 		case "message":
 			return entry.author.kind === "engineer" ? (
@@ -99,16 +117,20 @@ function Entry({ entry }: { entry: StreamEntry }) {
 						<Check />
 					) : entry.status === "running" ? (
 						<span
+							role="img"
 							className="h-3.5 w-3.5 shrink-0 animate-pulse rounded-full bg-accent-blue"
 							aria-label="Running"
 						/>
 					) : (
 						<span
+							role="img"
 							className="h-3.5 w-3.5 shrink-0 rounded-full bg-destructive"
 							aria-label="Failed"
 						/>
 					)}
-					<code className="font-mono text-text-secondary">{entry.tool_label}</code>
+					<code className="font-mono text-text-secondary">
+						{entry.tool_label}
+					</code>
 					<span className="text-foreground">{entry.target_label}</span>
 					{entry.failure_reason ? (
 						<span className="text-destructive">{entry.failure_reason}</span>
@@ -125,7 +147,9 @@ function Entry({ entry }: { entry: StreamEntry }) {
 				>
 					<h3 className={`${label} text-brand-warn`}>Unresolved question</h3>
 					<p className="mt-2 text-foreground">{entry.text}</p>
-					<p className="mt-1 text-sm text-text-muted">{entry.recipient_label}</p>
+					<p className="mt-1 text-sm text-text-muted">
+						{entry.recipient_label}
+					</p>
 					<Actions actions={entry.actions} />
 				</section>
 			);
@@ -144,7 +168,10 @@ function Entry({ entry }: { entry: StreamEntry }) {
 			return (
 				<SystemLine>
 					Saved{" "}
-					<a href={entry.href} className="font-medium text-foreground underline">
+					<a
+						href={entry.href}
+						className="font-medium text-foreground underline"
+					>
 						{entry.title} {entry.version_label}
 					</a>
 				</SystemLine>
@@ -161,11 +188,7 @@ function Entry({ entry }: { entry: StreamEntry }) {
 				</p>
 			);
 		default:
-			return (
-				<p className="text-sm text-text-secondary" data-entry-type={entry.type}>
-					{entry.label}
-				</p>
-			);
+			return null;
 	}
 }
 

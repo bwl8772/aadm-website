@@ -75,7 +75,8 @@ function CommandButton({
 					className="max-w-xs text-xs text-destructive"
 					data-problem-code={problem.code}
 				>
-					<span className="font-semibold">{problem.title}</span> {problem.detail}
+					<span className="font-semibold">{problem.title}</span>{" "}
+					{problem.detail}
 					{problem.request_id ? (
 						<span className="block font-mono text-text-muted">
 							request_id {problem.request_id}

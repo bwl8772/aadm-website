@@ -3,13 +3,20 @@ import type { WorkbenchView } from "../field-types";
 import { Pill } from "../Pill";
 
 /** "Lay of the land": the server's inventory types in its order, with the actions it offers. */
-export default function InventoryList({ land }: { land: WorkbenchView["land"] }) {
+export default function InventoryList({
+	land,
+}: {
+	land: WorkbenchView["land"];
+}) {
 	return (
 		<div>
 			{land.actions.length > 0 ? (
 				<div className="flex flex-wrap gap-3">
 					{land.actions.map((a) => (
-						<ActionControl key={`${a.command ?? a.href}:${a.label}`} action={a} />
+						<ActionControl
+							key={`${a.command ?? a.href}:${a.label}`}
+							action={a}
+						/>
 					))}
 				</div>
 			) : null}

@@ -1,0 +1,71 @@
+---
+export const prerender = false;
+
+import { WorkspaceViewSchema } from "../../../../components/field/field-types";
+import SessionWatch from "../../../../components/field/SessionWatch";
+import WorkspaceScreen from "../../../../components/field/workspace/WorkspaceScreen";
+import SessionGatePage from "../../../../components/SessionGatePage.astro";
+import Layout from "../../../../layouts/Layout.astro";
+import { getSignInUrlForRequest } from "../../../../lib/clerk-portal-urls";
+import { FIELD_HOME_PATH } from "../../../../lib/field-area";
+import { fieldFixture, queryRecord } from "../../../../lib/field-fixtures";
+
+const { userId } = Astro.locals.auth();
+const gate = Astro.locals.sessionGate;
+const signInUrl = getSignInUrlForRequest(Astro.request, import.meta.env);
+const { workspaceId = "" } = Astro.params;
+
+/**
+ * Stand-in for `GET /api/v1/workspaces/{workspaceId}` (docs/contracts/FIELD-WORKSPACE.md §2).
+ * Example data only when PUBLIC_FIELD_FIXTURES=1; `?filter=` is a new read.
+ * The workspace id in the URL is never trusted alone (ARCH-01): the backend
+ * answers 404 for a non-member, and so does this page when it has no view.
+ */
+const raw =
+	(
+		fieldFixture("workspace", queryRecord(Astro.url)) as Record<
+			string,
+			unknown
+		> | null
+	)?.[workspaceId] ?? null;
+const parsed = raw ? WorkspaceViewSchema.safeParse(raw) : null;
+/** RES-05: a malformed model is a visible error, never "not found". */
+const view = parsed?.success ? parsed.data : null;
+const modelError = parsed && !parsed.success;
+---
+
+<Layout
+	title={view ? `${view.workspace.name} — AADM Field` : "Workspace — AADM Field"}
+	description="AADM Field workspace."
+	footerVariant="default"
+	showHeader={false}
+	showFooter={false}
+>
+	{
+		userId ? (
+			modelError ? (
+				<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
+					<h1 class="text-2xl font-bold text-foreground">Something broke on our side</h1>
+					<p class="mt-3 text-text-secondary">Workspace data did not match its contract.</p>
+					<p class="mt-3 font-mono text-xs text-text-muted">request_id {Astro.locals.requestId}</p>
+				</main>
+			) : view ? (
+				<>
+					<WorkspaceScreen client:load view={view} />
+					<SessionWatch client:load signInUrl={signInUrl} />
+				</>
+			) : (
+				<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
+					<h1 class="text-2xl font-bold text-foreground">No such workspace for you</h1>
+					<p class="mt-3 text-text-secondary">
+						<a href={FIELD_HOME_PATH} class="text-accent-blue hover:underline">Back to My Field</a>
+					</p>
+				</main>
+			)
+		) : gate ? (
+			<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
+				<SessionGatePage gate={gate} />
+			</main>
+		) : null
+	}
+</Layout>

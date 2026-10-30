@@ -16,7 +16,11 @@ const itemClass = (selected: boolean) =>
  * Selecting an agent follows its `open` action (a new read); the server says
  * which one is selected.
  */
-export default function AgentRail({ groups }: { groups: WorkbenchAgentGroup[] }) {
+export default function AgentRail({
+	groups,
+}: {
+	groups: WorkbenchAgentGroup[];
+}) {
 	return (
 		<nav
 			aria-label="Agents"

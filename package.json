@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "check": "node scripts/migration-guard.mjs && astro check && astro build",
+    "check": "node scripts/migration-guard.mjs && node --test scripts/field-contract.test.mjs && astro check && astro build",
     "test:migration-guard": "node scripts/migration-guard.mjs",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -22,7 +22,8 @@
     "test:member-tabs": "node scripts/member-tabs-smoke.mjs",
     "test:mobile-nav": "node scripts/mobile-nav-smoke.mjs",
     "test:theme-contrast": "node scripts/theme-light-contrast-guard.mjs",
-    "fix:theme-contrast": "node scripts/theme-light-contrast-guard.mjs --fix"
+    "fix:theme-contrast": "node scripts/theme-light-contrast-guard.mjs --fix",
+    "test:field-contracts": "node --test scripts/field-contract.test.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^10.0.6",

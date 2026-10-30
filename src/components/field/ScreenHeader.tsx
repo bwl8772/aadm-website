@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { FIELD_HOME_PATH } from "../../lib/field-area";
 import AccountMenu from "./AccountMenu";
+import type { WorkspaceSwitcher as Switcher } from "./field-types";
+import WorkspaceSwitcher from "./WorkspaceSwitcher";
 
 export interface Crumb {
 	label: string;
@@ -10,9 +12,14 @@ export interface Crumb {
 /** Field screen header: brand · breadcrumb · actions · avatar. Last crumb is the current page. */
 export default function ScreenHeader({
 	crumbs,
+	switcher,
+	viewerInitials,
 	children,
 }: {
 	crumbs: Crumb[];
+	/** The viewer's workspaces, when the screen has them (Workspace screen). */
+	switcher?: Switcher;
+	viewerInitials?: string;
 	children?: ReactNode;
 }) {
 	return (
@@ -24,12 +31,16 @@ export default function ScreenHeader({
 				>
 					AADM Field
 				</a>
+				{switcher ? <WorkspaceSwitcher items={switcher} /> : null}
 				<nav aria-label="Breadcrumb" className="min-w-0 truncate">
 					<ol className="flex items-center gap-2 text-text-secondary">
 						{crumbs.map((c, i) => {
 							const last = i === crumbs.length - 1;
 							return (
-								<li key={c.label} className="flex items-center gap-2">
+								<li
+									key={`${c.href ?? "current"}:${c.label}`}
+									className="flex items-center gap-2"
+								>
 									{i > 0 ? <span aria-hidden="true">/</span> : null}
 									{last ? (
 										<span
@@ -52,7 +63,7 @@ export default function ScreenHeader({
 				</nav>
 				<div className="ml-auto flex items-center gap-3">
 					{children}
-					<AccountMenu />
+					<AccountMenu initials={viewerInitials} />
 				</div>
 			</div>
 		</header>

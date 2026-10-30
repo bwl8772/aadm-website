@@ -34,7 +34,10 @@ export default function DraftCard({ draft }: { draft: DraftEntry }) {
 			{draft.actions.length > 0 ? (
 				<footer className="flex flex-wrap items-center gap-3 border-t border-border px-6 py-4">
 					{draft.actions.map((a) => (
-						<ActionControl key={`${a.command ?? a.href}:${a.label}`} action={a} />
+						<ActionControl
+							key={`${a.command ?? a.href}:${a.label}`}
+							action={a}
+						/>
 					))}
 				</footer>
 			) : null}

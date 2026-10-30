@@ -1,5 +1,9 @@
 import type { APIRoute } from "astro";
-import { eventsPath, FIELD_API_VERSION, fieldApiUrl } from "../../../lib/field-api";
+import {
+	eventsPath,
+	FIELD_API_VERSION,
+	fieldApiUrl,
+} from "../../../lib/field-api";
 import { logServer, releaseId } from "../../../lib/server-log";
 
 export const prerender = false;

@@ -1,7 +1,11 @@
 import { useState } from "react";
 import Button from "./Button";
-import { sendFieldCommand, stashNextStep, rereadView } from "./commands";
-import { useCommandScope } from "./commands";
+import {
+	rereadView,
+	sendFieldCommand,
+	stashNextStep,
+	useCommandScope,
+} from "./commands";
 import type { FieldActionLink, Problem } from "./field-types";
 
 interface Props {
@@ -65,14 +69,19 @@ export default function Composer({ send, placeholder, note, uploads }: Props) {
 				{uploads.accept.length > 0 ? (
 					<Button disabled>Attach evidence</Button>
 				) : null}
-				<Button variant="primary" disabled={!canSend} title={send.disabled_reason}>
+				<Button
+					variant="primary"
+					disabled={!canSend}
+					title={send.disabled_reason}
+				>
 					{pending ? "Sending…" : send.label}
 				</Button>
 				<p className="ml-auto text-sm text-text-muted">{note}</p>
 			</div>
 			{problem ? (
 				<p role="alert" className="mt-3 text-sm text-destructive">
-					<span className="font-semibold">{problem.title}</span> {problem.detail}
+					<span className="font-semibold">{problem.title}</span>{" "}
+					{problem.detail}
 					{problem.request_id ? (
 						<span className="block font-mono text-text-muted">
 							request_id {problem.request_id}

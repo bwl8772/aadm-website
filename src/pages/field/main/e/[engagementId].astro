@@ -2,8 +2,9 @@
 export const prerender = false;
 
 import {
-	StudioModelSchema,
-	WorkbenchModelSchema,
+	StreamSchema,
+	StudioViewSchema,
+	WorkbenchViewSchema,
 } from "../../../../components/field/field-types";
 import SessionWatch from "../../../../components/field/SessionWatch";
 import ArtifactStudio from "../../../../components/field/studio/ArtifactStudio";
@@ -12,37 +13,51 @@ import SessionGatePage from "../../../../components/SessionGatePage.astro";
 import Layout from "../../../../layouts/Layout.astro";
 import { getSignInUrlForRequest } from "../../../../lib/clerk-portal-urls";
 import { FIELD_HOME_PATH } from "../../../../lib/field-area";
-import { fieldFixture } from "../../../../lib/field-fixtures";
+import { fieldFixture, queryRecord } from "../../../../lib/field-fixtures";
 
 const { userId } = Astro.locals.auth();
 const gate = Astro.locals.sessionGate;
 const signInUrl = getSignInUrlForRequest(Astro.request, import.meta.env);
 const { engagementId = "" } = Astro.params;
+const query = queryRecord(Astro.url);
 
-/** Example data only when PUBLIC_FIELD_FIXTURES=1; otherwise no data until the backend read model is wired. */
-/** `?artifact={id}` opens Artifact Studio on the same route (FIELD-VISION §5). */
-const artifactId = Astro.url.searchParams.get("artifact");
-const workbenchHref = `/field/main/e/${engagementId}`;
-const raw = artifactId
-	? ((fieldFixture("studio") as Record<string, unknown> | null)?.[artifactId] ??
-		null)
-	: ((fieldFixture("workbench") as Record<string, unknown> | null)?.[
-			engagementId
-		] ?? null);
-const studioParsed =
-	raw && artifactId ? StudioModelSchema.safeParse(raw) : null;
-const workbenchParsed =
-	raw && !artifactId ? WorkbenchModelSchema.safeParse(raw) : null;
-const parsed = studioParsed ?? workbenchParsed;
+/**
+ * Stand-ins for the reads in docs/contracts/FIELD-WORKBENCH.md §2–3 and
+ * FIELD-STUDIO.md §2–3. Example data only when PUBLIC_FIELD_FIXTURES=1; the
+ * fixture plays the backend for `?agent=`, `?panel=`, `?filter=`, `?artifact=`
+ * and `?view=`. No backend yet → `null` = no such engagement for you.
+ * `?artifact={id}` opens Artifact Studio on the same route (FIELD-VISION §5).
+ */
+const isStudio = "artifact" in query;
+type Record_ = Record<string, unknown> | null;
+const raw = isStudio
+	? ((fieldFixture("studio", query) as Record_)?.[engagementId] ?? null)
+	: ((fieldFixture("workbench", query) as Record_)?.[engagementId] ?? null);
+
+const studioParsed = isStudio && raw ? StudioViewSchema.safeParse(raw) : null;
+const wbRaw =
+	!isStudio && raw ? (raw as { view?: unknown; stream?: unknown }) : null;
+const workbenchParsed = wbRaw
+	? WorkbenchViewSchema.safeParse(wbRaw.view)
+	: null;
+/** The stream is its own read; a bad one leaves the rest of the page usable (§5). */
+const streamParsed = wbRaw ? StreamSchema.safeParse(wbRaw.stream) : null;
+
 /** RES-05: a malformed model is a visible error, never "not found". */
 const studio = studioParsed?.success ? studioParsed.data : null;
 const workbench = workbenchParsed?.success ? workbenchParsed.data : null;
+const stream = streamParsed?.success ? streamParsed.data : null;
 const model = studio ?? workbench;
-const modelError = parsed && !parsed.success;
+const modelError =
+	(studioParsed && !studioParsed.success) ||
+	(workbenchParsed && !workbenchParsed.success);
+const title = model
+	? `${model.engagement.customer_label} · ${model.engagement.engagement_label} — AADM Field`
+	: "Engagement — AADM Field";
 ---
 
 <Layout
-	title={model ? `${model.customer} · ${model.name} — AADM Field` : "Engagement — AADM Field"}
+	title={title}
 	description="AADM Field engagement workbench."
 	footerVariant="default"
 	showHeader={false}
@@ -54,13 +69,14 @@ const modelError = parsed && !parsed.success;
 				<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
 					<h1 class="text-2xl font-bold text-foreground">Something broke on our side</h1>
 					<p class="mt-3 text-text-secondary">Engagement data did not match its contract.</p>
+					<p class="mt-3 font-mono text-xs text-text-muted">request_id {Astro.locals.requestId}</p>
 				</main>
 			) : model ? (
 				<>
 					{studio ? (
-						<ArtifactStudio client:load model={studio} workbenchHref={workbenchHref} />
+						<ArtifactStudio client:load view={studio} />
 					) : workbench ? (
-						<EngagementWorkbench client:load model={workbench} />
+						<EngagementWorkbench client:load view={workbench} stream={stream} />
 					) : null}
 					<SessionWatch client:load signInUrl={signInUrl} />
 				</>

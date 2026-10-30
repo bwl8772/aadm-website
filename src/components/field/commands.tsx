@@ -9,8 +9,8 @@ import {
 } from "react";
 import {
 	type CommandReply,
-	type CommandRequest,
 	CommandReplySchema,
+	type CommandRequest,
 	type FieldActionLink,
 	type Problem,
 	ProblemSchema,
@@ -51,6 +51,10 @@ export function CommandScopeProvider({
 			{children}
 		</CommandScopeContext.Provider>
 	);
+}
+
+export function useCommandScope(): CommandScope {
+	return useContext(CommandScopeContext);
 }
 
 export type CommandOutcome =
@@ -197,7 +201,10 @@ export function useCommand(action: FieldActionLink) {
 				rereadView();
 				return;
 			}
-			if (outcome.problem.code === "STALE_VIEW" || outcome.problem.code === "STALE_VERSION") {
+			if (
+				outcome.problem.code === "STALE_VIEW" ||
+				outcome.problem.code === "STALE_VERSION"
+			) {
 				// Contract "Stale": re-read, then the person sees what changed.
 				rereadView();
 				return;

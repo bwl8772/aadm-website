@@ -1,14 +1,14 @@
 import { useState } from "react";
+import ActionControl from "../ActionControl";
 import Button from "../Button";
-import type { StudioModel } from "../field-types";
+import type { FieldActionLink, StudioView, ToneKey } from "../field-types";
 
-type ItemStatus =
-	StudioModel["sections"][number]["collections"][number]["items"][number]["status"];
-
-const statusDot: Record<ItemStatus, string> = {
-	draft: "bg-text-muted",
-	review: "bg-accent-blue",
-	approved: "bg-brand-mcp",
+const statusDot: Record<ToneKey, string> = {
+	neutral: "bg-text-muted",
+	info: "bg-accent-blue",
+	success: "bg-brand-mcp",
+	warning: "bg-brand-warn",
+	danger: "bg-destructive",
 };
 
 const groupLabel =
@@ -49,27 +49,37 @@ function Chevron({ open }: { open: boolean }) {
 	);
 }
 
+/** `artifact.create` for one of the server's `create_types` (FIELD-STUDIO.md §4). */
+function createAction(type: { id: string; label: string }): FieldActionLink {
+	return {
+		label: type.label,
+		kind: "command",
+		command: "artifact.create",
+		input: { type: type.id },
+		enabled: true,
+		emphasis: "secondary",
+	};
+}
+
 /**
- * Studio left rail: pinned collections, sections of collections, connected systems.
- * Open/closed is local view state; pinning and editing are not wired yet.
+ * Studio left rail: pinned collections, then sections of collections, in
+ * server order. Expanded state is presentation, seeded by `default_expanded`;
+ * the edit control appears only when the server says `can_edit_layout`.
  */
 export default function CollectionsRail({
-	pinned,
-	sections,
-	connected,
+	rail,
 }: {
-	pinned: StudioModel["pinned"];
-	sections: StudioModel["sections"];
-	connected: string[];
+	rail: StudioView["rail"];
 }) {
 	const [open, setOpen] = useState<Record<string, boolean>>(() =>
 		Object.fromEntries(
-			sections.flatMap((s) => [
-				[s.section_id, s.expanded],
-				...s.collections.map((c) => [c.collection_id, c.expanded]),
+			rail.sections.flatMap((s) => [
+				[s.section_id, s.default_expanded],
+				...s.collections.map((c) => [c.collection_id, c.default_expanded]),
 			]),
 		),
 	);
+	const [createOpen, setCreateOpen] = useState(false);
 	const toggle = (key: string) => setOpen((o) => ({ ...o, [key]: !o[key] }));
 
 	return (
@@ -80,17 +90,46 @@ export default function CollectionsRail({
 			<div className="flex-1 px-3 py-5">
 				<div className="flex items-center justify-between px-2">
 					<h2 className="font-semibold text-foreground">Collections</h2>
-					<Button size="sm">Edit</Button>
+					{rail.can_edit_layout ? (
+						<Button size="sm" disabled title="Layout editing arrives in F8.">
+							Edit
+						</Button>
+					) : null}
 				</div>
-				<Button variant="primary" className="mt-4 w-full">
-					New artifact
-				</Button>
+				{rail.create_types.length > 0 ? (
+					<div className="relative mt-4">
+						<Button
+							variant="primary"
+							className="w-full"
+							expanded={createOpen}
+							onClick={() => setCreateOpen((v) => !v)}
+						>
+							New artifact ▾
+						</Button>
+						{createOpen ? (
+							<div
+								role="menu"
+								aria-label="Artifact type"
+								className="absolute left-0 right-0 z-20 mt-2 flex flex-col gap-1 rounded-md border border-border bg-surface-card p-2 shadow-lg"
+							>
+								{rail.create_types.map((t) => (
+									<ActionControl
+										key={t.id}
+										action={createAction(t)}
+										size="sm"
+										className="w-full justify-start"
+									/>
+								))}
+							</div>
+						) : null}
+					</div>
+				) : null}
 
-				{pinned.length > 0 ? (
+				{rail.pinned.length > 0 ? (
 					<>
 						<p className={`mt-6 px-2 ${groupLabel}`}>Pinned</p>
 						<ul className="mt-2">
-							{pinned.map((p) => (
+							{rail.pinned.map((p) => (
 								<li key={p.collection_id}>
 									<button
 										type="button"
@@ -111,7 +150,7 @@ export default function CollectionsRail({
 					</>
 				) : null}
 
-				{sections.map((s) => (
+				{rail.sections.map((s) => (
 					<div key={s.section_id} className="mt-5">
 						<button
 							type="button"
@@ -119,21 +158,18 @@ export default function CollectionsRail({
 							onClick={() => toggle(s.section_id)}
 							className={`flex w-full items-center gap-2 px-2 py-1 ${groupLabel}`}
 						>
-							<Chevron open={open[s.section_id]} />
+							<Chevron open={!!open[s.section_id]} />
 							<span className="flex-1 text-left">{s.label}</span>
-							<span className="font-normal normal-case tracking-normal">
-								{s.count}
-							</span>
 						</button>
 						{open[s.section_id] ? (
 							<ul className="mt-1">
 								{s.collections.map((c) => {
-									const current = c.items.some((it) => it.current);
+									const holdsOpen = c.items.some((it) => it.is_open);
 									const more = c.count - c.items.length;
 									return (
 										<li key={c.collection_id}>
 											<div
-												className={`flex items-center gap-2 rounded-md px-2 ${current ? "bg-accent-blue/10 text-accent-blue" : "text-foreground hover:bg-muted"}`}
+												className={`flex items-center gap-2 rounded-md px-2 ${holdsOpen ? "bg-accent-blue/10 text-accent-blue" : "text-foreground hover:bg-muted"}`}
 											>
 												<button
 													type="button"
@@ -141,7 +177,7 @@ export default function CollectionsRail({
 													onClick={() => toggle(c.collection_id)}
 													className="flex flex-1 items-center gap-2 py-2 text-left"
 												>
-													<Chevron open={open[c.collection_id]} />
+													<Chevron open={!!open[c.collection_id]} />
 													<span className="flex-1 font-medium">{c.label}</span>
 													<span className="text-sm text-text-secondary">
 														{c.count}
@@ -152,16 +188,20 @@ export default function CollectionsRail({
 											{open[c.collection_id] ? (
 												<ul className="ml-6 mt-1">
 													{c.items.map((it) => (
-														<li
-															key={it.item_id}
-															aria-current={it.current ? "page" : undefined}
-															className={`flex items-center gap-2 rounded-md px-2 py-1.5 ${it.current ? "bg-accent-blue/10 font-medium text-accent-blue" : "text-text-secondary"}`}
-														>
-															<span
-																className={`h-2 w-2 shrink-0 rounded-full ${statusDot[it.status]}`}
-																aria-hidden="true"
-															/>
-															{it.label}
+														<li key={it.item_id}>
+															<a
+																href={it.href}
+																aria-current={it.is_open ? "page" : undefined}
+																title={`${it.type_label} · ${it.state_label}`}
+																className={`flex items-center gap-2 rounded-md px-2 py-1.5 ${it.is_open ? "bg-accent-blue/10 font-medium text-accent-blue" : "text-text-secondary hover:bg-muted hover:text-foreground"}`}
+															>
+																<span
+																	className={`h-2 w-2 shrink-0 rounded-full ${statusDot[it.tone]}`}
+																	data-artifact-state={it.state}
+																	aria-hidden="true"
+																/>
+																{it.title}
+															</a>
 														</li>
 													))}
 													{more > 0 ? (
@@ -169,9 +209,11 @@ export default function CollectionsRail({
 															{more} more
 														</li>
 													) : null}
-													<li className="px-2 py-1.5 text-sm font-medium text-accent-blue">
-														+ New in {c.label}
-													</li>
+													{c.add_action ? (
+														<li className="px-2 py-1">
+															<ActionControl action={c.add_action} size="sm" />
+														</li>
+													) : null}
 												</ul>
 											) : null}
 										</li>
@@ -181,20 +223,6 @@ export default function CollectionsRail({
 						) : null}
 					</div>
 				))}
-			</div>
-
-			<div className="border-t border-border px-5 py-4">
-				<p className={groupLabel}>Connected</p>
-				<ul className="mt-3 flex flex-wrap gap-2">
-					{connected.map((c) => (
-						<li
-							key={c}
-							className="rounded-full bg-muted px-3 py-1 text-sm text-foreground"
-						>
-							{c}
-						</li>
-					))}
-				</ul>
 			</div>
 		</nav>
 	);
