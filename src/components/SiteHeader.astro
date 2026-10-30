@@ -1,7 +1,7 @@
 ---
-import { Show, SignOutButton } from "@clerk/astro/components";
+import { Show } from "@clerk/astro/components";
 import { getAccountPortalUrls } from "../lib/account-portal-urls";
-import { CLERK_ACCOUNTS_SIGN_IN } from "../lib/clerk-portal-urls";
+import { LOGOUT_PATH } from "../lib/clerk-portal-urls";
 import ThemeToggle from "./ThemeToggle.astro";
 
 type ActiveNav =
@@ -415,15 +415,13 @@ const mobileLinkClass =
 					>
 						Member area
 					</a>
-					<SignOutButton redirectUrl={CLERK_ACCOUNTS_SIGN_IN} asChild>
-						<button
-							type="button"
-							class="block min-h-11 w-full rounded-none border border-border px-4 py-3 text-center text-sm font-semibold leading-none text-text-secondary transition hover:border-foreground/30 hover:bg-accent hover:text-foreground"
-							data-mobile-nav-link
-						>
-							Log out
-						</button>
-					</SignOutButton>
+					<a
+						href={LOGOUT_PATH}
+						class="block min-h-11 w-full rounded-none border border-border px-4 py-3 text-center text-sm font-semibold leading-none text-text-secondary transition hover:border-foreground/30 hover:bg-accent hover:text-foreground"
+						data-mobile-nav-link
+					>
+						Log out
+					</a>
 				</div>
 			</Show>
 		</div>

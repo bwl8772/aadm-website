@@ -1,7 +1,6 @@
 ---
-import { SignOutButton } from "@clerk/astro/components";
 import Layout from "../layouts/Layout.astro";
-import { CLERK_ACCOUNTS_SIGN_IN } from "../lib/clerk-portal-urls";
+import { LOGOUT_PATH } from "../lib/clerk-portal-urls";
 
 interface Props {
 	title?: string;
@@ -26,14 +25,13 @@ const {
 					is at <strong class="text-text-secondary">accounts.aadm.io</strong>.
 				</p>
 			</div>
-			<SignOutButton redirectUrl={CLERK_ACCOUNTS_SIGN_IN} asChild>
-				<button
-					type="button"
-					class="shrink-0 rounded-none border border-border bg-muted px-5 py-2.5 text-sm font-semibold text-foreground hover:bg-accent"
-				>
-					Log out
-				</button>
-			</SignOutButton>
+			{/* Plain link so sign-out works before clerk-js loads; /logout revokes server-side. */}
+			<a
+				href={LOGOUT_PATH}
+				class="shrink-0 rounded-none border border-border bg-muted px-5 py-2.5 text-sm font-semibold text-foreground hover:bg-accent"
+			>
+				Log out
+			</a>
 		</div>
 		<div class="min-w-0">
 			<slot />

@@ -1,12 +1,38 @@
 ---
 /**
- * Clerk / UserButton may navigate here to complete sign-out.
- * Satellite: also clears primary-domain session by redirecting to Account Portal sign-in.
+ * Sign-out, both sides. The server revokes the Clerk session first — only for
+ * same-origin navigations, so a cross-site link or image cannot sign a member
+ * out — then clerk-js clears its client state and sends the browser to the
+ * Account Portal. If clerk-js never loads, the browser still leaves for the
+ * Portal; the revoked session expires within the token lifetime.
  */
 export const prerender = false;
 
+import { clerkClient } from "@clerk/astro/server";
 import Layout from "../layouts/Layout.astro";
-import { CLERK_ACCOUNTS_SIGN_IN } from "../lib/clerk-portal-urls";
+import { CLERK_ACCOUNTS_SIGN_IN, LOGOUT_PATH } from "../lib/clerk-portal-urls";
+import { logServer } from "../lib/server-log";
+
+const site = Astro.request.headers.get("sec-fetch-site");
+const sameOrigin = site === null || site === "same-origin" || site === "none";
+const { sessionId, userId } = Astro.locals.auth();
+const requestId = crypto.randomUUID();
+let revoked = false;
+if (sameOrigin && sessionId) {
+	try {
+		await clerkClient(Astro).sessions.revokeSession(sessionId);
+		revoked = true;
+	} catch {
+		logServer({
+			level: "warn",
+			route: LOGOUT_PATH,
+			request_id: requestId,
+			code: "revoke_failed",
+			actor_id: userId ?? null,
+		});
+	}
+}
+Astro.response.headers.set("Cache-Control", "no-store");
 ---
 
 <Layout
@@ -15,7 +41,7 @@ import { CLERK_ACCOUNTS_SIGN_IN } from "../lib/clerk-portal-urls";
 	showFooter={false}
 	headerActiveNav={null}
 >
-	<main id="main" class="mx-auto max-w-6xl px-4 py-28 sm:py-32 text-center">
+	<main id="main" class="mx-auto max-w-6xl px-4 py-28 sm:py-32 text-center" data-signout-revoked={revoked}>
 		<p class="text-muted-foreground">Signing you out…</p>
 	</main>
 </Layout>

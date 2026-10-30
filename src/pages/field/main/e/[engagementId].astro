@@ -5,15 +5,18 @@ import {
 	StudioModelSchema,
 	WorkbenchModelSchema,
 } from "../../../../components/field/field-types";
+import SessionWatch from "../../../../components/field/SessionWatch";
 import ArtifactStudio from "../../../../components/field/studio/ArtifactStudio";
 import EngagementWorkbench from "../../../../components/field/workbench/EngagementWorkbench";
-import MemberSatelliteSyncPage from "../../../../components/MemberSatelliteSyncPage.astro";
+import SessionGatePage from "../../../../components/SessionGatePage.astro";
 import Layout from "../../../../layouts/Layout.astro";
+import { getSignInUrlForRequest } from "../../../../lib/clerk-portal-urls";
 import { FIELD_HOME_PATH } from "../../../../lib/field-area";
 import { fieldFixture } from "../../../../lib/field-fixtures";
 
 const { userId } = Astro.locals.auth();
-const syncPending = Astro.locals.satelliteSyncPending === true;
+const gate = Astro.locals.sessionGate;
+const signInUrl = getSignInUrlForRequest(Astro.request, import.meta.env);
 const { engagementId = "" } = Astro.params;
 
 /** Example data only when PUBLIC_FIELD_FIXTURES=1; otherwise no data until the backend read model is wired. */
@@ -53,11 +56,14 @@ const modelError = parsed && !parsed.success;
 					<p class="mt-3 text-text-secondary">Engagement data did not match its contract.</p>
 				</main>
 			) : model ? (
-				studio ? (
-					<ArtifactStudio client:load model={studio} workbenchHref={workbenchHref} />
-				) : workbench ? (
-					<EngagementWorkbench client:load model={workbench} />
-				) : null
+				<>
+					{studio ? (
+						<ArtifactStudio client:load model={studio} workbenchHref={workbenchHref} />
+					) : workbench ? (
+						<EngagementWorkbench client:load model={workbench} />
+					) : null}
+					<SessionWatch client:load signInUrl={signInUrl} />
+				</>
 			) : (
 				<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
 					<h1 class="text-2xl font-bold text-foreground">No such engagement for you</h1>
@@ -66,9 +72,9 @@ const modelError = parsed && !parsed.success;
 					</p>
 				</main>
 			)
-		) : syncPending ? (
+		) : gate ? (
 			<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
-				<MemberSatelliteSyncPage returnPath={FIELD_HOME_PATH} />
+				<SessionGatePage gate={gate} />
 			</main>
 		) : null
 	}

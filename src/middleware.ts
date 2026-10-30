@@ -1,9 +1,14 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/astro/server";
-import { redirectAuthPathToAccounts } from "./lib/clerk-auth-policy";
+import {
+	AUTH_BOUNCE_COOKIE,
+	AUTH_BOUNCE_TTL_S,
+	decideUnsigned,
+	readBounceCount,
+	redirectAuthPathToAccounts,
+} from "./lib/clerk-auth-policy";
 import {
 	getClerkIntegrationOptions,
 	getSignInUrlForRequest,
-	isSatelliteHandshakePending,
 	redirectSatelliteFapiPath,
 } from "./lib/clerk-portal-urls";
 import {
@@ -12,16 +17,25 @@ import {
 	MEMBER_BEARER_SEGMENT,
 } from "./lib/member-area";
 import { clerkPrivateRoutePatternsFromEnv } from "./lib/routes";
+import { logServer } from "./lib/server-log";
 
 /**
  * Clerk middleware + marketing-host guard.
  *
- * POLICY (docs/CLERK-AUTH.md): Sign-in on accounts.aadm.io; member UI on aadm.io/member.
- * Auth paths on aadm.io redirect to accounts.aadm.io — no embedded SignIn on marketing host.
+ * POLICY (docs/CLERK-AUTH.md): sign-in on accounts.aadm.io; member UI on
+ * aadm.io/member; Field on aadm.io/field/main. Auth paths on aadm.io redirect
+ * to accounts.aadm.io — no embedded SignIn on the marketing host.
  *
- * Unsigned private routes go to accounts.aadm.io immediately. The sync shell
- * is only for `__clerk_synced=false` (return from Account Portal).
- * Satellite FAPI: clerk-js sync hits `/v1/*` on aadm.io; we 302 to clerk.aadm.io.
+ * Private routes (src/lib/routes.ts) when unsigned — `decideUnsigned`:
+ * - no Clerk cookies            → 302 to the Account Portal, back here after sign-in
+ * - cookies we could not verify → 200 SessionGatePage "recover" (no private content);
+ *                                  clerk-js reconciles once, then reloads or signs in
+ * - second pass within a minute → 200 SessionGatePage "stop" with the request id
+ * Clerk's own handshake (expired token → 307 to the Frontend API) runs inside
+ * clerkMiddleware before this handler and is untouched. Every private response
+ * is `Cache-Control: no-store` (XO-05) and writes one JSON log line (OBS-01).
+ *
+ * Satellite FAPI (off today): clerk-js sync hits `/v1/*` on aadm.io; 302 to clerk.aadm.io.
  *
  * @see https://clerk.com/docs/reference/astro/clerk-middleware
  */
@@ -30,7 +44,12 @@ const isPrivateRoute = createRouteMatcher([
 ]);
 const clerkOptions = getClerkIntegrationOptions(import.meta.env);
 
-export const onRequest = clerkMiddleware((auth, context, next) => {
+function noStore(res: Response): Response {
+	res.headers.set("Cache-Control", "no-store");
+	return res;
+}
+
+export const onRequest = clerkMiddleware(async (auth, context, next) => {
 	const fapiRedirect = redirectSatelliteFapiPath(
 		context.request,
 		import.meta.env,
@@ -51,28 +70,84 @@ export const onRequest = clerkMiddleware((auth, context, next) => {
 		return next();
 	}
 
-	const { isAuthenticated } = auth();
+	const started = Date.now();
+	const requestId = crypto.randomUUID();
+	context.locals.requestId = requestId;
+	const url = new URL(context.request.url);
+	const route = url.pathname;
+	const log = (
+		level: "info" | "warn" | "error",
+		code: string,
+		actorId: string | null,
+		extra: Record<string, unknown> = {},
+	) =>
+		logServer({
+			level,
+			route,
+			request_id: requestId,
+			code,
+			actor_id: actorId,
+			latency_ms: Date.now() - started,
+			...extra,
+		});
+	const bounces = readBounceCount(context.request.headers.get("cookie"));
+
+	const { isAuthenticated, userId } = auth();
 	if (!isAuthenticated) {
-		// Handshake only: returning from Account Portal with __clerk_synced=false.
-		// A first visit has no session to sync — send them to sign-in now.
-		if (isSatelliteHandshakePending(context.request)) {
-			context.locals.satelliteSyncPending = true;
-			return next();
+		const reason = context.locals.authReason ?? null;
+		const decision = decideUnsigned(reason, bounces);
+		if (decision === "sign_in") {
+			log("info", "unauthenticated", null, { clerk_reason: reason });
+			return noStore(
+				context.redirect(
+					getSignInUrlForRequest(context.request, import.meta.env),
+				),
+			);
 		}
-		return context.redirect(
-			getSignInUrlForRequest(context.request, import.meta.env),
+		if (decision === "recover") {
+			context.cookies.set(AUTH_BOUNCE_COOKIE, String(bounces + 1), {
+				path: "/",
+				maxAge: AUTH_BOUNCE_TTL_S,
+				httpOnly: true,
+				sameSite: "lax",
+				secure: url.protocol === "https:",
+			});
+		} else {
+			context.cookies.delete(AUTH_BOUNCE_COOKIE, { path: "/" });
+		}
+		context.locals.sessionGate = {
+			state: decision,
+			request_id: requestId,
+			reason,
+		};
+		log(
+			decision === "stop" ? "error" : "warn",
+			decision === "stop" ? "auth_unconfirmed" : "auth_recover",
+			null,
+			{ clerk_reason: reason, bounces },
 		);
+		return noStore(await next());
+	}
+
+	if (bounces > 0) {
+		context.cookies.delete(AUTH_BOUNCE_COOKIE, { path: "/" });
 	}
 
 	// Legacy fifth tab: /member/bearer → API keys (bearer how-to + Clerk key UI).
 	// Bare /member → API keys (Astro tabs; default panel).
-	const path = new URL(context.request.url).pathname.replace(/\/+$/, "") || "/";
+	const path = route.replace(/\/+$/, "") || "/";
 	if (path === MEMBER_AREA_PATH) {
-		return context.redirect(`${MEMBER_AREA_PATH}/${MEMBER_API_KEYS_SEGMENT}`);
+		return noStore(
+			context.redirect(`${MEMBER_AREA_PATH}/${MEMBER_API_KEYS_SEGMENT}`),
+		);
 	}
 	if (path === `${MEMBER_AREA_PATH}/${MEMBER_BEARER_SEGMENT}`) {
-		return context.redirect(`${MEMBER_AREA_PATH}/${MEMBER_API_KEYS_SEGMENT}`);
+		return noStore(
+			context.redirect(`${MEMBER_AREA_PATH}/${MEMBER_API_KEYS_SEGMENT}`),
+		);
 	}
 
-	return next();
+	const res = noStore(await next());
+	log("info", "ok", userId ?? null);
+	return res;
 }, clerkOptions);

@@ -80,3 +80,41 @@ export function redirectAuthPathToAccounts(
 	const target = new URL(url.pathname + url.search, accountsOriginFromEnv(env));
 	return Response.redirect(target, 307);
 }
+
+/* ---- Unsigned private routes: what the browser gets ---- */
+
+/** `@clerk/backend` AuthErrorReason.SessionTokenAndUATMissing — the browser sent no Clerk cookies. */
+export const CLERK_REASON_NO_COOKIES = "session-token-and-uat-missing";
+
+/** Counts recovery passes for a minute so an unverifiable session cannot loop. */
+export const AUTH_BOUNCE_COOKIE = "aadm_auth_bounce";
+export const AUTH_BOUNCE_MAX = 2;
+export const AUTH_BOUNCE_TTL_S = 60;
+
+export type UnsignedDecision = "sign_in" | "recover" | "stop";
+
+/**
+ * Decision table for an unsigned request to a private route.
+ * - No Clerk cookies → the Account Portal (`sign_in`).
+ * - Cookies the server could not verify (bad secret key, exhausted handshake,
+ *   foreign `azp`, bad signature) → one recovery page where clerk-js reconciles
+ *   (`recover`). Sending these to the Portal is the redirect loop: the Portal
+ *   still holds the client and bounces straight back.
+ * - AUTH_BOUNCE_MAX recovery passes inside AUTH_BOUNCE_TTL_S → a visible error
+ *   with the request id (`stop`), never another bounce (ARCH-25, RES-04).
+ */
+export function decideUnsigned(
+	reason: string | null | undefined,
+	bounces: number,
+): UnsignedDecision {
+	if (!reason || reason === CLERK_REASON_NO_COOKIES) return "sign_in";
+	return bounces >= AUTH_BOUNCE_MAX ? "stop" : "recover";
+}
+
+export function readBounceCount(cookieHeader: string | null): number {
+	const match = cookieHeader?.match(
+		new RegExp(`(?:^|;\\s*)${AUTH_BOUNCE_COOKIE}=(\\d+)`),
+	);
+	const count = match ? Number(match[1]) : 0;
+	return Number.isFinite(count) ? count : 0;
+}

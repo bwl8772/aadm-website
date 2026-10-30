@@ -119,6 +119,21 @@ export default defineConfig({
 		}),
 		react(),
 	],
+	security: {
+		// XO-04: same-origin only.
+		checkOrigin: true,
+		// Trust X-Forwarded-Host only for our own hosts, so Astro.url is the real
+		// origin behind Railway + Cloudflare instead of localhost:8080.
+		allowedDomains: [
+			{ hostname: new URL(marketingOrigin).hostname, protocol: "https" },
+			{
+				hostname: `www.${new URL(marketingOrigin).hostname}`,
+				protocol: "https",
+			},
+			{ hostname: "localhost" },
+			{ hostname: "127.0.0.1" },
+		],
+	},
 	vite: {
 		plugins: [tailwindcss()],
 	},

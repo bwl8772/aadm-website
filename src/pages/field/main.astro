@@ -3,9 +3,10 @@ export const prerender = false;
 
 import FieldApp from "../../components/field/FieldApp";
 import { MyFieldViewSchema } from "../../components/field/field-types";
-import MemberSatelliteSyncPage from "../../components/MemberSatelliteSyncPage.astro";
+import SessionWatch from "../../components/field/SessionWatch";
+import SessionGatePage from "../../components/SessionGatePage.astro";
 import Layout from "../../layouts/Layout.astro";
-import { FIELD_HOME_PATH } from "../../lib/field-area";
+import { getSignInUrlForRequest } from "../../lib/clerk-portal-urls";
 import { fieldFixture } from "../../lib/field-fixtures";
 
 const { userId } = Astro.locals.auth();
@@ -21,7 +22,10 @@ const parsed = raw ? MyFieldViewSchema.safeParse(raw) : null;
 /** RES-05: a malformed model is a visible error, never an empty state. */
 const model = parsed?.success ? parsed.data : null;
 const modelError = parsed && !parsed.success;
-const syncPending = Astro.locals.satelliteSyncPending === true;
+/** Unsigned with unverifiable cookies: the middleware asks for the session gate instead of content. */
+const gate = Astro.locals.sessionGate;
+/** Where the React island sends the browser if the session disappears under it. */
+const signInUrl = getSignInUrlForRequest(Astro.request, import.meta.env);
 ---
 
 <Layout
@@ -34,16 +38,19 @@ const syncPending = Astro.locals.satelliteSyncPending === true;
 	{
 		userId ? (
 			modelError ? (
+				<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
+					<h1 class="text-2xl font-bold text-foreground">Something broke on our side</h1>
+					<p class="mt-3 text-text-secondary">My Field data did not match its contract.</p>
+				</main>
+			) : (
+				<>
+					<FieldApp client:load view={model} />
+					<SessionWatch client:load signInUrl={signInUrl} />
+				</>
+			)
+		) : gate ? (
 			<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
-				<h1 class="text-2xl font-bold text-foreground">Something broke on our side</h1>
-				<p class="mt-3 text-text-secondary">My Field data did not match its contract.</p>
-			</main>
-		) : (
-			<FieldApp client:load view={model} />
-		)
-		) : syncPending ? (
-			<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
-				<MemberSatelliteSyncPage returnPath={FIELD_HOME_PATH} />
+				<SessionGatePage gate={gate} />
 			</main>
 		) : null
 	}

@@ -6,14 +6,14 @@ GOAL: Use the Claude design skill (`frontend-design`, enabled in `.claude/settin
 SCOPE
 - NEW `docs/FIELD-NAV-DESIGN.md` (the only committed file): the screen list, nav tree, routes, a state table (state → server condition → the one primary action), the exact strings below, the fixture seam, and open questions.
 - `.tmp/field-nav-mock.html` (one self-contained file, inline CSS, no network) plus screenshots in `.tmp/`. These are never staged.
-- REUSE (read only, do not edit): `src/pages/field/main.astro`, `src/components/MemberSatelliteSyncPage.astro`, `src/layouts/Layout.astro`, `src/lib/field-area.ts`, `src/lib/routes.ts`, `src/lib/clerk-portal-urls.ts`, `src/styles/theme.css`, `docs/INVARIANTS.md`, `docs/CLERK-AUTH.md`.
+- REUSE (read only, do not edit): `src/pages/field/main.astro`, `src/components/SessionGatePage.astro`, `src/layouts/Layout.astro`, `src/lib/field-area.ts`, `src/lib/routes.ts`, `src/lib/clerk-portal-urls.ts`, `src/styles/theme.css`, `docs/INVARIANTS.md`, `docs/CLERK-AUTH.md`.
 
 DO NOT CHANGE: anything under `src/`, `astro.config.mjs`, `package.json`, `AGENTS.md`, `docs/INVARIANTS.md`, `docs/CLERK-AUTH.md`, `scripts/`.
 
 CONFIRM FIRST (run `git merge-base --is-ancestor 9ca4603 HEAD`; check each fact in your checkout; stop and report only if one differs)
 1. `docs/CLERK-AUTH.md:11` says there is exactly one login flow (accounts.aadm.io), and `:111` forbids `<SignIn>`/`<SignUp>` on aadm.io. So "Sign in" is a hop to the Account Portal, never an embedded form.
 2. `src/lib/routes.ts:10` protects only `/member(.*)` and `${FIELD_HOME_PATH}(.*)`, where `src/lib/field-area.ts:2` sets `/field/main`. So every in-workspace route nests under `/field/main/…`, e.g. `/field/main/w/{id}/requirements`, and routes.ts needs no change.
-3. `src/pages/field/main.astro:8-31` renders `Layout` with `MemberSatelliteSyncPage returnPath={FIELD_HOME_PATH}` while unsigned, plus one placeholder line when signed in.
+3. `src/pages/field/main.astro:8-31` renders `Layout` with `SessionGatePage gate={Astro.locals.sessionGate}` while unsigned, plus one placeholder line when signed in.
 4. `rg -n "fde_tools|mcp_fde|entitlement" src` returns 0 hits, so no plan check exists yet. Plans are free, mcp, fde and mcp_fde; Field needs fde or mcp_fde. The plan source is unchecked (PRD DM6-p2).
 
 DESIGN STEPS

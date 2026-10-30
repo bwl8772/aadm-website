@@ -4,8 +4,11 @@
  * - Loads `/`, captures hrefs/buttons signed-out users see.
  * - Clicks Sign in (Account Portal link) to confirm navigation to Clerk-hosted sign-in.
  * - Loads `/mcp`, confirms Get access / Sign in CTAs are anchors with expected ids/text.
- * - Asserts unsigned `/member` redirects to Account Portal (or handshake sync shell).
- * - Forged `__clerk_synced=false` must show the sync shell and not expose credentials.
+ * - Asserts unsigned `/member` redirects to Account Portal (or the session gate).
+ * - Unverifiable Clerk cookies must get the 200 recovery gate (never a bounce to
+ *   the Portal — that was the redirect loop), set `aadm_auth_bounce`, and leak no
+ *   credentials; the pass after the limit must show the stop page with a request id.
+ * - `/health` reports the release and Clerk key state without values.
  *
  * Run: BASE_URL=http://127.0.0.1:4321 npm run test:clerk-smoke
  *      BASE_URL=https://aadm.io npm run test:clerk-smoke
@@ -178,35 +181,83 @@ try {
 		);
 	}
 
-	// Forged satellite sync param — SSR must show sync shell only (no credentials).
-	// Use API request so Clerk client JS does not navigate to accounts (422 on localhost).
-	const syncReq = await context.request.get(
-		`${base}/member?__clerk_synced=false`,
-	);
-	const syncHtml = await syncReq.text();
-	const syncStatus = syncReq.status();
+	// Unverifiable Clerk cookies (client says signed in, token is junk) — SSR must
+	// serve the recovery gate: 200, no credentials, bounce cookie set, and no 302
+	// to the Portal (that bounce is the redirect loop). API request so clerk-js
+	// does not run.
 	// Do not match MemberShell marketing copy ("Connectors OAuth") — only real
 	// credential chrome / profile mounts.
-	const leaksCredentials =
-		/data-copy-oauth-id=/i.test(syncHtml) ||
-		/clerk-user-profile/i.test(syncHtml) ||
-		/data-member-area-root/i.test(syncHtml) ||
-		/data-cred-panel=/i.test(syncHtml) ||
-		/id="(?:api-keys-guide-heading|oauth-heading)"/i.test(syncHtml);
-	log("/member?__clerk_synced=false (unsigned sync shell)", {
-		httpStatus: syncStatus,
-		hasSyncShell: /Syncing your session/i.test(syncHtml),
-		leaksCredentials,
+	const leaks = (html) =>
+		/data-copy-oauth-id=/i.test(html) ||
+		/clerk-user-profile/i.test(html) ||
+		/data-member-area-root/i.test(html) ||
+		/data-cred-panel=/i.test(html) ||
+		/id="(?:api-keys-guide-heading|oauth-heading)"/i.test(html);
+	const forgedCookies = "__client_uat=1700000000; __session=not-a-jwt";
+	const recoverReq = await context.request.get(`${base}/member`, {
+		headers: { cookie: forgedCookies, accept: "text/html" },
+		maxRedirects: 0,
 	});
-	if (leaksCredentials) {
+	const recoverHtml = await recoverReq.text();
+	const recoverSetCookie = recoverReq.headers()["set-cookie"] || "";
+	const recoverGate = recoverHtml.match(/data-session-gate="([^"]+)"/)?.[1];
+	log("/member with unverifiable cookies (recovery gate)", {
+		httpStatus: recoverReq.status(),
+		gate: recoverGate ?? null,
+		bounceCookieSet: /aadm_auth_bounce=1/.test(recoverSetCookie),
+		leaksCredentials: leaks(recoverHtml),
+	});
+	if (leaks(recoverHtml)) {
 		throw new Error(
-			"Unsigned /member?__clerk_synced=false leaked member credentials or UserProfile UI",
+			"/member with unverifiable cookies leaked member credentials or UserProfile UI",
 		);
 	}
-	if (!/Syncing your session/i.test(syncHtml)) {
+	if (recoverReq.status() !== 200 || recoverGate !== "recover") {
 		throw new Error(
-			"Unsigned /member?__clerk_synced=false did not render satellite sync shell",
+			`unverifiable cookies must get the 200 recovery gate, got ${recoverReq.status()} gate=${recoverGate}`,
 		);
+	}
+	if (!/aadm_auth_bounce=1/.test(recoverSetCookie)) {
+		throw new Error("recovery gate must set aadm_auth_bounce=1");
+	}
+
+	// Past the bounce limit — a visible stop page with a request id, never a loop.
+	const stopReq = await context.request.get(`${base}/member`, {
+		headers: {
+			cookie: `${forgedCookies}; aadm_auth_bounce=2`,
+			accept: "text/html",
+		},
+		maxRedirects: 0,
+	});
+	const stopHtml = await stopReq.text();
+	const stopGate = stopHtml.match(/data-session-gate="([^"]+)"/)?.[1];
+	const stopRequestId = stopHtml.match(/data-request-id>([0-9a-f-]{36})</)?.[1];
+	log("/member past the bounce limit (stop page)", {
+		httpStatus: stopReq.status(),
+		gate: stopGate ?? null,
+		requestId: stopRequestId ?? null,
+		leaksCredentials: leaks(stopHtml),
+	});
+	if (leaks(stopHtml)) {
+		throw new Error("stop page leaked member credentials or UserProfile UI");
+	}
+	if (stopReq.status() !== 200 || stopGate !== "stop" || !stopRequestId) {
+		throw new Error(
+			`bounce limit must show the stop page with a request id, got ${stopReq.status()} gate=${stopGate}`,
+		);
+	}
+
+	// /health: release + Clerk key state (never values).
+	const healthReq = await context.request.get(`${base}/health`);
+	const health = await healthReq.json();
+	log("/health", { httpStatus: healthReq.status(), ...health });
+	if (
+		!health.release ||
+		!health.clerk ||
+		!["ok", "degraded"].includes(health.status) ||
+		(health.status === "ok") !== (healthReq.status() === 200)
+	) {
+		throw new Error("/health must report release, clerk key state and 200/503");
 	}
 } catch (err) {
 	console.error("Smoke failed:", err);

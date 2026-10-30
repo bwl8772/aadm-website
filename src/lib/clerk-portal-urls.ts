@@ -14,6 +14,8 @@ import { trim } from "./site-urls";
  */
 export const CLERK_ACCOUNTS_SIGN_IN = "https://accounts.aadm.io/sign-in";
 export const CLERK_ACCOUNTS_SIGN_UP = "https://accounts.aadm.io/sign-up";
+/** Same-origin sign-out page: revokes the session on the server, then clerk-js clears the client. */
+export const LOGOUT_PATH = "/logout";
 /**
  * Clerk Frontend API CNAME (DNS) for aadm.io satellite — Dashboard "proxy URL" /
  * FAPI host. Not the same as clerk-js `proxyUrl` (path-based app proxy).
@@ -197,19 +199,7 @@ export function isClerkSatelliteFromEnv(env: ImportMetaEnv): boolean {
 /** Matches Clerk `ClerkSyncStatus.NeedsSync` — session not yet on the satellite host. */
 export const CLERK_SYNC_NEEDS_SYNC = "false";
 
-/** True when user just returned from Account Portal and satellite handshake must run. */
-export function isSatelliteHandshakePending(request: Request): boolean {
-	try {
-		return (
-			new URL(request.url).searchParams.get("__clerk_synced") ===
-			CLERK_SYNC_NEEDS_SYNC
-		);
-	} catch {
-		return false;
-	}
-}
-
-/** Path (+ query) to send back to Account Portal — strips the handshake flag. */
+/** Path (+ query) to send back to Account Portal — strips the satellite handshake flag if present. */
 export function returnPathForAccountPortal(request: Request): string {
 	try {
 		const url = new URL(request.url);

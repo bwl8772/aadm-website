@@ -29,7 +29,7 @@ Checked against `9ca4603` (ancestor of `HEAD`, clean tree):
    `src/lib/field-area.ts:2` sets `FIELD_HOME_PATH = "/field/main"`. All in-workspace routes below
    nest under `/field/main/…`; `routes.ts` needs no change.
 3. **Confirmed.** `src/pages/field/main.astro:8-31` — signed-in renders an `<h1>` + one placeholder
-   line; unsigned-and-sync-pending renders `MemberSatelliteSyncPage returnPath={FIELD_HOME_PATH}`;
+   line; unsigned-and-sync-pending renders `SessionGatePage gate={Astro.locals.sessionGate}`;
    unsigned-and-not-sync-pending renders nothing.
 4. **Confirmed.** `rg -n "fde_tools|mcp_fde|entitlement" src` → 0 hits. No plan check exists yet.
    Plans are `free`, `mcp`, `fde`, `mcp_fde`; Field needs `fde` or `mcp_fde`. The plan source is
@@ -40,8 +40,8 @@ Checked against `9ca4603` (ancestor of `HEAD`, clean tree):
 - **`ux_surface_pass`** → `READY_FOR_CHAIN`. PRD/spec material detected, review mode (not a
   from-scratch interview); recommended `user_flow` next with the stated goal.
 - **`user_flow`** → `READY_FOR_UX_IMPLEMENTATION`, confirming Blueprint's prior run. 5 moves, one
-  call row each: **Sign in** (existing — Clerk Account Portal via `MemberSatelliteSyncPage`,
-  `src/components/MemberSatelliteSyncPage.astro:1`); **Land by plan**, **View workspace list**,
+  call row each: **Sign in** (existing — Clerk Account Portal via `SessionGatePage`,
+  `src/components/SessionGatePage.astro:1`); **Land by plan**, **View workspace list**,
   **Create workspace**, **Open workspace** (all new — fixture-backed `src/lib/field-backend.ts`,
   proposed). `open_workspace` is the move that reaches the user's goal (`reaches_goal: true`).
   Verdict × zone matrix: one `primary_panel` zone owns `unauthenticated`, `entitlement_required`,
@@ -150,7 +150,7 @@ hid them.
 
 `theme.css` tokens only (`--surface-card`, `--border-subtle`, `--accent-violet`, etc.), dark by
 default, square corners matching `SiteHeader`'s chip style. One exception: the syncing screen
-reuses `MemberSatelliteSyncPage` unchanged, which currently ships `rounded-2xl` — see Open
+reuses `SessionGatePage` unchanged, which currently ships `rounded-2xl` — see Open
 questions. The product header ("AADM Field" + a user menu with Account / Sign out) is new chrome
 distinct from the marketing `SiteHeader` above it; no `MemberNavTabs`.
 
@@ -177,7 +177,7 @@ screenshots; dark is the default with no param. Screenshots:
 4. **Create workspace: route or modal-only?** Designed as a modal with no dedicated URL (per the
    mock). If the dialog needs to be linkable or survive a refresh, it needs a route or query param
    — flagging so FIELD-NAV-2 doesn't have to guess.
-5. **`MemberSatelliteSyncPage`'s rounded corners.** Reused unchanged per REUSE scope, but it's the
+5. **`SessionGatePage`'s rounded corners.** Reused unchanged per REUSE scope, but it's the
    one surface in this batch that doesn't match the new square-corner convention. Worth a follow-up
    slice to square it off, or intentional as-is?
 6. **Plan source.** PRD DM6-p2 marks the plan source unchecked. `getFieldAccess` is designed

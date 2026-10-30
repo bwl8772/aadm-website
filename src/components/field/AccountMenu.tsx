@@ -1,7 +1,6 @@
 import { $userStore } from "@clerk/astro/client";
-import { SignOutButton } from "@clerk/astro/react";
 import { useEffect, useRef, useState } from "react";
-import { CLERK_ACCOUNTS_SIGN_IN } from "../../lib/clerk-portal-urls";
+import { LOGOUT_PATH } from "../../lib/clerk-portal-urls";
 import {
 	MEMBER_ACCOUNT_SEGMENT,
 	MEMBER_API_KEYS_SEGMENT,
@@ -93,15 +92,14 @@ export default function AccountMenu({
 						Theme
 						<ThemeToggle />
 					</div>
-					<SignOutButton redirectUrl={CLERK_ACCOUNTS_SIGN_IN}>
-						<button
-							type="button"
-							className="block w-full px-3 py-2 text-left text-sm text-text-secondary hover:bg-muted hover:text-foreground"
-							role="menuitem"
-						>
-							Sign out
-						</button>
-					</SignOutButton>
+					{/* A plain link: sign-out works even if clerk-js has not loaded (see /logout). */}
+					<a
+						href={LOGOUT_PATH}
+						className="block px-3 py-2 text-sm text-text-secondary hover:bg-muted hover:text-foreground"
+						role="menuitem"
+					>
+						Sign out
+					</a>
 				</div>
 			) : null}
 		</div>

@@ -1,19 +1,15 @@
 ---
 /**
  * Renders member credentials only when SSR auth is present.
- * Unsigned /member shows the sync shell so clerk-js can attach the session — no UserProfile or secrets.
+ * Unsigned /member with unverifiable cookies shows the session gate (recover or
+ * stop) — no UserProfile, no secrets. Without cookies the middleware has
+ * already redirected to the Account Portal.
  */
-import MemberSatelliteSyncPage from "./MemberSatelliteSyncPage.astro";
 import MemberUserProfilePage from "./MemberUserProfilePage.astro";
+import SessionGatePage from "./SessionGatePage.astro";
 
 const { userId } = Astro.locals.auth();
-const syncPending = Astro.locals.satelliteSyncPending === true;
+const gate = Astro.locals.sessionGate;
 ---
 
-{
-	userId ? (
-		<MemberUserProfilePage />
-	) : syncPending ? (
-		<MemberSatelliteSyncPage />
-	) : null
-}
+{userId ? <MemberUserProfilePage /> : gate ? <SessionGatePage gate={gate} /> : null}

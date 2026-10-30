@@ -56,7 +56,7 @@
 
 | Variable | Purpose |
 |----------|---------|
-| `PUBLIC_CLERK_PUBLISHABLE_KEY` / `CLERK_SECRET_KEY` | Session + protected `/member` |
+| `PUBLIC_CLERK_PUBLISHABLE_KEY` / `CLERK_SECRET_KEY` | Session + protected `/member`, `/field/main`. **Same instance** (both `_live_` or both `_test_`); `/health` 503s otherwise and the release is held. |
 | `PUBLIC_CLERK_SIGN_IN_URL` | `https://accounts.aadm.io/sign-in` |
 | `PUBLIC_CLERK_SIGN_UP_URL` | `https://accounts.aadm.io/sign-up` |
 | `PUBLIC_CLERK_AUTHORIZED_PARTIES` | `https://aadm.io`, `https://www.aadm.io` |
@@ -82,26 +82,50 @@ Credential sign-in links use `redirect_url=https://aadm.io/member` (no `__clerk_
 | `src/components/MemberNavTabs.astro` | Top tablist (API keys · Connectors OAuth · Profile · Security) |
 | `src/components/MemberUserProfilePage.astro` | Route switch: Astro OAuth / `<APIKeys />` / navbar-hidden `<UserProfile>` |
 | `src/lib/member-clerk-appearance.ts` | Hide Clerk sidenav for content-only widgets |
-| `src/components/MemberSatelliteSyncPage.astro` | Sync-only shell when `__clerk_synced=false` (no credentials) |
+| `src/components/SessionGatePage.astro` | Served instead of private content when the server cannot verify the browser's Clerk cookies: `recover` (clerk-js reconciles once) or `stop` (visible error + request id). No credentials. |
 | `src/lib/routes.ts` | `/member(.*)` and `/field/main(.*)` protected |
-| `src/lib/clerk-portal-urls.ts` | Portal + member URLs |
-| `src/middleware.ts` | Unsigned private routes → Account Portal; handshake param → sync shell; `/member` → `/member/api-keys` |
-| `src/components/SiteHeader.astro` | **Member** → `/member` |
+| `src/lib/clerk-portal-urls.ts` | Portal + member URLs, `/logout` |
+| `src/lib/clerk-auth-policy.ts` | `decideUnsigned` table (sign_in / recover / stop) + bounce cookie |
+| `src/middleware.ts` | Private routes: unsigned → decision table; `Cache-Control: no-store`; one JSON log line per request; `/member` → `/member/api-keys` |
+| `src/lib/clerk-health.ts` + `src/pages/health.ts` | Clerk key presence / instance parity / Backend-API probe; **503 blocks the Railway release** |
+| `src/pages/logout.astro` | Same-origin sign-out: server revokes the session, then clerk-js clears the client |
+| `src/components/field/SessionWatch.tsx` | Field island: leaves for sign-in when clerk-js reports no user under a server-rendered signed-in page |
+| `src/components/SiteHeader.astro` | **Member** → `/member`; **Log out** → `/logout` |
 
 ---
 
-## Redirect loop (`accounts.aadm.io` ↔ `aadm.io/member`)
+## Handshake, recovery and loop stop
 
-`accounts.aadm.io` and `aadm.io` share the **same** registrable domain. Clerk production cookies are scoped for that apex — you do **not** need satellite mode.
+The hand-off is: `aadm.io` (Astro SSR) → `accounts.aadm.io` (Clerk Account Portal, Clerk-hosted) → back to `aadm.io/member` or `/field/main` (React islands). Both hosts share the apex cookie (`__session`, `__client_uat`), so **no satellite mode**. What each side does:
 
-If you still see a loop:
+| Request to a private route | Server (`src/middleware.ts`) | Browser |
+|---|---|---|
+| Valid session | Page, `Cache-Control: no-store`, log `ok` | Islands hydrate; `SessionWatch` leaves for sign-in if clerk-js later reports no user |
+| Expired token (`__client_uat` newer than `__session`) | `clerkMiddleware` handshake: 307 to the Frontend API, back with a fresh cookie | transparent |
+| No Clerk cookies | 302 to `accounts.aadm.io/sign-in?redirect_url=<this page>` | Portal, then back |
+| Cookies the server cannot verify (wrong/missing `CLERK_SECRET_KEY`, bad signature, foreign `azp`, handshake gave up) | 200 `SessionGatePage` **recover**, cookie `aadm_auth_bounce=1` (60 s), log `auth_recover` | clerk-js loads once: user present → reload; none → Portal |
+| Same, second time inside 60 s | 200 `SessionGatePage` **stop** with the request id, log `auth_unconfirmed` (error) | Visible error, "Sign in again" link. No script, no bounce |
 
-1. **Railway** — `PUBLIC_CLERK_IS_SATELLITE=false` (or unset), unset `PUBLIC_CLERK_PROXY_URL` / `PUBLIC_CLERK_DOMAIN` · rebuild  
-2. **DNS** — `accounts.aadm.io` and `clerk.aadm.io` CNAMEs verified (gray cloud)  
-3. **Authorized parties** — include `https://aadm.io` and `https://www.aadm.io`  
-4. Confirm Dashboard **Domains** lists `aadm.io` as **primary** (not a satellite)
+Why the table exists: before Oct 2026 every unsigned reason became a Portal redirect. With cookies the server could not verify, the Portal still saw a live client and bounced straight back — a `aadm.io ↔ accounts.aadm.io` loop with no JS and no log line. That is what an invalid or missing `CLERK_SECRET_KEY` on Railway (Oct 24, 2026) looked like to users.
+
+**Keys.** `/health` returns 503 (`clerk.ok=false`) when a key is missing, pk/sk are from different instances (`pk_live` with `sk_test`), or Clerk's Backend API rejects the secret key. Railway polls `/health` before cutover, so such a release never goes live. **Rotate pk and sk together**, redeploy, then check `/health` shows `secret_key_check: "valid"`.
+
+**Reading the logs.** Each private-route request writes one JSON line: `request_id`, `route`, `code` (`ok` · `unauthenticated` · `auth_recover` · `auth_unconfirmed`), `clerk_reason` (Clerk's auth reason code), `actor_id` (user id, never an email), `latency_ms`, `release`. A user's stop page shows the same `request_id`.
+
+**Sign-out** is a same-origin navigation to `/logout`: the server revokes the session (so the other host's copy dies too), then clerk-js clears the client and goes to the Portal. Plain links, so it works before clerk-js loads.
+
+If you still see a loop after a deploy:
+
+1. `https://aadm.io/health` → `clerk.ok` must be `true`; otherwise fix the Railway keys first  
+2. **Railway** — `PUBLIC_CLERK_IS_SATELLITE=false` (or unset), unset `PUBLIC_CLERK_PROXY_URL` / `PUBLIC_CLERK_DOMAIN` · rebuild  
+3. **DNS** — `accounts.aadm.io` and `clerk.aadm.io` CNAMEs verified (gray cloud)  
+4. **Authorized parties** — include `https://aadm.io` and `https://www.aadm.io`  
+5. Confirm Dashboard **Domains** lists `aadm.io` as **primary** (not a satellite)  
+6. Find the user's `request_id` in the Railway logs and read `clerk_reason`
 
 **Cloudflare (your current DNS is correct):** `accounts` and `clerk` gray-clouded; `aadm.io` proxied to Railway is fine. Zone-level **Bot Fight** can still interfere — add a skip rule for `accounts.aadm.io` if challenges persist.
+
+**Astro.** `security.allowedDomains` (astro.config.mjs) lists `aadm.io`, `www.aadm.io`, `localhost`, so `Astro.url` is the public origin behind Railway + Cloudflare and `checkOrigin` rejects cross-site form posts.
 
 ---
 

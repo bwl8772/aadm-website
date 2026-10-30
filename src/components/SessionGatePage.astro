@@ -1,0 +1,114 @@
+---
+/**
+ * Served in place of private content when the server could not confirm the
+ * sign-in (`Astro.locals.sessionGate`, set in src/middleware.ts — see
+ * docs/CLERK-AUTH.md "Handshake, recovery and loop stop").
+ *
+ * - recover: the browser holds Clerk cookies the server could not verify.
+ *   clerk-js reconciles once: a live session reloads this URL (clerk-js has
+ *   refreshed the cookie by then); no session goes to the Account Portal.
+ * - stop: the second pass inside a minute. A visible error with the request id
+ *   and a sign-in link — never another bounce (ARCH-25, RES-04).
+ *
+ * Renders no member or Field content. Markers: `data-session-gate`,
+ * `data-sign-in-url` (scripts/lib/auth-gate.mjs), `data-request-id`.
+ */
+import {
+	getSignInUrlForRequest,
+	marketingOriginFromEnv,
+} from "../lib/clerk-portal-urls";
+
+interface Props {
+	gate: NonNullable<App.Locals["sessionGate"]>;
+}
+
+const { gate } = Astro.props;
+/** Back to this exact path after sign-in. */
+const signInUrl = getSignInUrlForRequest(Astro.request, import.meta.env);
+const homeUrl = marketingOriginFromEnv(import.meta.env);
+const state = gate.state;
+const loadTimeoutMs = 4_000;
+---
+
+<div
+	class="rounded-2xl border border-border-subtle bg-surface-card/40 p-8 text-center sm:p-12"
+	aria-live="polite"
+	data-sign-in-url={signInUrl}
+	data-session-gate={state}
+>
+	{
+		state === "recover" ? (
+			<>
+				<p class="font-display text-lg font-semibold text-foreground">Confirming your sign-in</p>
+				<p class="mt-2 text-sm text-muted-foreground">
+					Checking your session with{" "}
+					<strong class="text-text-secondary">accounts.aadm.io</strong>. This takes a moment.
+				</p>
+				<p class="mt-6 text-xs text-muted-foreground" id="session-gate-status">
+					Finishing authentication…
+				</p>
+			</>
+		) : (
+			<>
+				<p class="font-display text-lg font-semibold text-foreground">
+					We couldn't confirm your sign-in
+				</p>
+				<p class="mt-2 text-sm text-muted-foreground">
+					Your browser has a session that aadm.io could not verify. Sign in again; if this keeps
+					happening, send us the request id below.
+				</p>
+				<p class="mt-6 font-mono text-xs text-muted-foreground">
+					request_id <span data-request-id>{gate.request_id}</span>
+				</p>
+				<p class="mt-6 flex flex-wrap justify-center gap-4 text-sm">
+					<a href={signInUrl} class="font-semibold text-accent-blue hover:underline">
+						Sign in again
+					</a>
+					<a href={homeUrl} class="text-text-secondary hover:text-foreground">
+						Back to aadm.io
+					</a>
+				</p>
+			</>
+		)
+	}
+	<a class="sr-only" href={signInUrl} data-sync-sign-in>Sign in</a>
+</div>
+
+<script is:inline define:vars={{ signInUrl, state, loadTimeoutMs }}>
+	// One reconciliation pass, no polling loop: the server counts passes with a
+	// short-lived cookie and shows the stop page on the second one.
+	async function reconcile() {
+		if (state !== "recover") return;
+		const statusEl = document.getElementById("session-gate-status");
+		const deadline = Date.now() + loadTimeoutMs;
+		let clerk = window.Clerk;
+		while (!clerk && Date.now() < deadline) {
+			await new Promise((resolve) => setTimeout(resolve, 100));
+			clerk = window.Clerk;
+		}
+		try {
+			if (clerk && typeof clerk.load === "function") {
+				await Promise.race([
+					clerk.load(),
+					new Promise((_, reject) =>
+						setTimeout(() => reject(new Error("load-timeout")), Math.max(250, deadline - Date.now())),
+					),
+				]);
+			}
+		} catch {
+			/* fall through: treat as no session */
+		}
+		if (clerk && clerk.user) {
+			window.location.reload();
+			return;
+		}
+		if (statusEl) statusEl.textContent = "Redirecting to sign-in…";
+		window.location.replace(signInUrl);
+	}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", () => void reconcile(), { once: true });
+	} else {
+		void reconcile();
+	}
+</script>
