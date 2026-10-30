@@ -11,6 +11,7 @@
  *      BASE_URL=https://aadm.io npm run test:clerk-smoke
  */
 import { chromium } from "playwright";
+import { assertHandsOffToSignIn } from "./lib/auth-gate.mjs";
 
 const base = (process.env.BASE_URL || "http://127.0.0.1:4321").replace(
 	/\/$/,
@@ -112,6 +113,7 @@ try {
 
 	// Unsigned /member goes to Account Portal immediately (no 20s sync wait).
 	navigations.length = 0;
+	console.log("\n=== Unsigned /member hand-off ===", await assertHandsOffToSignIn(context.request, base, "/member", "/member"));
 	await page.goto(`${base}/member`, {
 		waitUntil: "domcontentloaded",
 		timeout: timeoutMs,
@@ -121,10 +123,9 @@ try {
 	const syncShell = await page.locator("[data-sign-in-url]").count();
 	const hasSyncCopy = await page.getByText("Syncing your session").count();
 	const signInHref =
-		(await page.locator("[data-sync-sign-in]").getAttribute("href")) ||
-		(await page
-			.locator("[data-sign-in-url]")
-			.getAttribute("data-sign-in-url")) ||
+		(syncShell > 0 && (await page.locator("[data-sync-sign-in]").first().getAttribute("href"))) ||
+		(syncShell > 0 &&
+			(await page.locator("[data-sign-in-url]").first().getAttribute("data-sign-in-url"))) ||
 		"";
 	const credUi = await page
 		.locator(

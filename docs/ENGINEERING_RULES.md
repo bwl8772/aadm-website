@@ -59,3 +59,5 @@ FLD-01 to FLD-04, OBS-04. Field helps a person decide the next move or get it do
 ## Tests name the failure
 
 `npm run test:clerk-smoke` must fail if unsigned `/member` leaks credentials or skips the Account Portal. `npm run test:field-home` must fail if unsigned `/field/main` shows Field content or marketing chrome, or if signed-in Field is missing the Field header.
+
+Hand-off checks use `scripts/lib/auth-gate.mjs` only: one HTTP request, accepts a 302 to the Account Portal or the sync shell, and asserts `redirect_url` returns to the same path. Screen checks use `[data-field-screen]` markers, never heading copy. `npm run test:smoke-guard` fails on the old patterns.

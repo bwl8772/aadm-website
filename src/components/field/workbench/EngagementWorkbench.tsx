@@ -15,7 +15,7 @@ export default function EngagementWorkbench({ model }: { model: WorkbenchModel }
 	const { prompt, draft } = isInitialAgent ? model.canvas : { prompt: null, draft: null };
 
 	return (
-		<div className="flex min-h-screen flex-col bg-surface-deep">
+		<div data-field-screen="workbench" className="flex min-h-screen flex-col bg-surface-deep">
 			<WorkbenchHeader customer={model.customer} name={model.name} />
 			<ContextBar context={model.context} />
 			<div className="grid flex-1 grid-cols-1 lg:grid-cols-[17rem_minmax(0,1fr)_19rem] xl:grid-cols-[18rem_minmax(0,1fr)_21rem]">

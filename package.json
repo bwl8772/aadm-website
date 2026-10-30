@@ -16,6 +16,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "test:clerk-smoke": "node scripts/clerk-nav-smoke.mjs",
+    "test:smoke-guard": "node scripts/smoke-pattern-guard.mjs",
     "test:field-home": "node scripts/field-home-smoke.mjs",
     "test:member-tabs": "node scripts/member-tabs-smoke.mjs",
     "test:mobile-nav": "node scripts/mobile-nav-smoke.mjs",
