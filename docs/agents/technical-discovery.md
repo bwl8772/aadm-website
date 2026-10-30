@@ -53,7 +53,7 @@ Open technical questions (from the assessment's Questions section) when any; els
 ## 6. Rules that bind
 
 - Readiness means customer adoption readiness, never infrastructure ops (FIELD-CONTRACTS.md §3; FLD-01 to FLD-04).
-- Inventories are not artifacts; their save path is `inventory.build` (no verb yet, FIELD-WORKBENCH.md §7).
+- Inventories are not artifacts; their save path is `inventory.build` (no verb yet, FIELD-WORKBENCH.md §7). They are one output of Terrain work (PRD §13b); Terrain is broader, and a row cites its `TF-` fact once Terrain exists (§8 q1).
 - What the agent proposes (assessment, inventory rows, unknowns) is shown exactly as the backend returned it (one voice, RC-GUIDANCE-01; `aadm://doctrine/guidance-feedback-seam`).
 - Relationship rows are write-once attachments on the Requirements version (D51).
 - The approve Decision binds to one version and its content hash and is taken on a website page in a signed-in human session; a new version voids it (CAP-03, ARCH-14 in `docs/INVARIANTS.md`; FIX-03, FIX-04 in the PRD).
@@ -69,5 +69,5 @@ Proof: checks 1 to 4 are agent-worker tests in aadm-mcp (backend mode) and are n
 
 ## 8. Open questions
 
-1. Does Terrain (PRD §13, later stage) replace the inventories, or feed them?
-2. Who owns inventory rows the customer corrects: a new inventory version, or an Evidence row?
+1. ~~Does Terrain (PRD §13, later stage) replace the inventories, or feed them?~~ Answered (Brian, Oct 30, 2026): Terrain feeds the inventories. Terrain (§13b: the profile, `TF-` facts with source and verified date, the gap list) is broader than the inventories; the inventories are one output of Terrain work. When Terrain exists, an inventory row cites the `TF-` fact it came from and inherits its stale flag (CFG-STALE-01). Until then, this agent's inventory proposals are the first Terrain work on the engagement.
+2. Who owns inventory rows the customer corrects: a new inventory version, or an Evidence row? Decide before code: `interrogate_plan` (hosted, Oct 30, 2026) raised a `split_brain` risk flag on this doc; one inventory row must have one writer and one store (`aadm://doctrine/data-model-cutover-discipline`).

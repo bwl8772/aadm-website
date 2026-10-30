@@ -11,7 +11,7 @@ Oct 30, 2026. Working list for the Field web shell (`src/components/field/`, `sr
 - [ ] `FIELD-VISION.md` points at `.tmp/field-*-mock.html`; the real mock sources are the Desktop PNGs and zips. Fix the pointer.
 - [ ] Migrations safe to re-run: add to F1-a1's done-check (one transaction per file, `IF NOT EXISTS`, refuse an edited file, run twice gives the same schema). None exist yet in either repo. `npm run check` already runs `scripts/migration-guard.mjs`, which fails a migration that bumps a version counter without a content guard; it also needs to run in aadm-mcp, where the migrations will live.
 - [ ] PRD §20 v0.20 items: Clerk org ↔ workspace, model key per engagement or workspace, Slack channel for a multi-workspace engagement, restating TEN-06 and ARCH-01 in aadm-mcp.
-- [ ] Open questions in `contracts/FIELD-ARTIFACTS.md` §4 (4), `contracts/FIELD-AGENT-TOOLS.md` §8 (5) and each `agents/*.md` §8 need Brian's answers; the first two decide whether agent definitions and the doctrine's recon artifacts become PRD nouns.
+- [ ] Open questions in `contracts/FIELD-ARTIFACTS.md` §4 (4), `contracts/FIELD-AGENT-TOOLS.md` §8 (5) and each `agents/*.md` §8 need Brian's answers; the first two decide whether agent definitions and the doctrine's recon artifacts become PRD nouns. Answered Oct 30, 2026: Terrain feeds the inventories (technical-discovery §8 q1).
 
 ### Contracts not yet in code
 - [ ] States: Loading skeleton and Forbidden. The Unavailable text on My Field is still written by the client.

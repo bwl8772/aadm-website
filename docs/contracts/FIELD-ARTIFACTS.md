@@ -31,7 +31,7 @@ Stages are the doctrine's five (`aadm://doctrine/fde-engagement`): decidability 
 | `engagement_verdict` | Engagement verdict | doctrine | (none) | transfer | governance | evidence-reviewer | eval_owner | confirm | customer |
 | `use_case` | Use case | PRD §13o | Idea → Vision (`UC-n`) | decidability | strategy | business-discovery | sponsor (+ eval_owner co-sign) | sign | customer |
 | `discovery_brief` | Discovery brief | contracts §9 | Idea | decidability | strategy | business-discovery | engineer | approve | internal |
-| `technical_assessment` | Technical assessment | contracts §9 | (none; Terrain later) | decidability | readiness | technical-discovery | engineer | approve | internal |
+| `technical_assessment` | Technical assessment | contracts §9 | (none; fed by Terrain, §13b) | decidability | readiness | technical-discovery | engineer | approve | internal |
 | `outcome_definition` | Outcome definition | contracts §2 | Vision | contract | strategy | outcome-architect | eval_owner | sign | customer |
 | `architecture_decision` | Architecture decision | contracts §9 | (none) | contract | plan | solution-architect | engineer | approve | internal |
 | `cornerstone` | Cornerstone (requirements) | contracts §9 | Requirements | contract | plan | cornerstone | sponsor (+ customer co-sign, C1) | sign | customer |
@@ -47,7 +47,7 @@ Stages are the doctrine's five (`aadm://doctrine/fde-engagement`): decidability 
 
 Mock labels that map onto a register type, so the fixtures stop inventing types: "Tech stack inventory" → `technical_assessment`; "Recommendation" and "Architecture diagram" → `architecture_decision`; "Process doc" → `adoption_package`; "Acceptance evidence" → `acceptance_evidence`.
 
-Not artifacts: the lay-of-the-land **inventories** (tech stack, people, processes, AI tools, data sources, integrations, risks) are a separate record with no PRD noun yet (FIELD-WORKBENCH.md §7). They feed `technical_assessment` and `discovery_brief` and are not versioned artifacts in this register.
+Not artifacts: the lay-of-the-land **inventories** (tech stack, people, processes, AI tools, data sources, integrations, risks) are a separate record with no PRD noun yet (FIELD-WORKBENCH.md §7). They feed `technical_assessment` and `discovery_brief` and are not versioned artifacts in this register. They are one output of **Terrain** work (PRD §13b; Brian, Oct 30, 2026): Terrain is broader (the profile, `TF-` facts with source and verified date, the gap list) and feeds the inventories; an inventory row cites its `TF-` fact once Terrain exists.
 
 ## 3. Progress
 

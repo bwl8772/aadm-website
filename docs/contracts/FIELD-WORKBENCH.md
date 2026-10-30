@@ -224,7 +224,7 @@ A **Workspace** groups many **Engagements**; one engagement is one customer effo
 | Canvas `decision_request` | A **Decision** a person must make (sign off, go, confirm) |
 | Canvas `question` | An open question on the **Vision** or **Requirements** version |
 | `artifacts` | The engagement's versioned nouns: Vision, Requirements, Roadmap, Prompts, Runs, Evidence, Verdicts, Maps |
-| `land` inventories | No noun yet. Later stage (see "Not in the PRD yet") |
+| `land` inventories | No noun yet. One output of Terrain work (§13b, stage T); Terrain is broader and feeds them (Brian, Oct 30, 2026). See "Not in the PRD yet" |
 | Uploads | Evidence (kind `file`) or the body of an Idea; stored before any agent sees them |
 
 ### Commands to verbs
