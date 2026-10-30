@@ -1,8 +1,6 @@
+import Button from "../Button";
 import type { WorkbenchDraft, WorkbenchQuestion } from "../field-types";
-import { Pill } from "../home/Pill";
-
-const outline =
-	"whitespace-nowrap rounded-md border border-border bg-surface-card px-4 py-2 font-semibold text-foreground transition hover:border-foreground/30 hover:bg-muted";
+import { Pill } from "../Pill";
 
 function Heading({
 	tone,
@@ -30,9 +28,7 @@ function AskList({ items }: { items: WorkbenchQuestion[] }) {
 			{items.map((q) => (
 				<li key={q.text} className="flex items-center justify-between gap-4">
 					<span className="text-foreground">{q.text}</span>
-					<button type="button" className={outline}>
-						{q.verb}
-					</button>
+					<Button>{q.verb}</Button>
 				</li>
 			))}
 		</ul>
@@ -82,21 +78,11 @@ export default function DraftCard({ draft }: { draft: WorkbenchDraft }) {
 				</div>
 			</div>
 			<footer className="flex flex-wrap items-center gap-3 border-t border-border px-6 py-4">
-				<button
-					type="button"
-					className="rounded-md bg-accent-blue px-5 py-2.5 font-semibold text-text-inverse transition hover:bg-accent-blue-dim"
-				>
-					{draft.save_label}
-				</button>
-				<button type="button" className={outline}>
-					Edit draft
-				</button>
-				<button
-					type="button"
-					className="ml-auto rounded-md px-4 py-2 font-medium text-text-secondary hover:bg-muted hover:text-foreground"
-				>
+				<Button variant="primary">{draft.save_label}</Button>
+				<Button>Edit draft</Button>
+				<Button variant="ghost" className="ml-auto">
 					Discard
-				</button>
+				</Button>
 			</footer>
 		</article>
 	);

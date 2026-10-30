@@ -1,8 +1,19 @@
 import { useState } from "react";
+import Button from "../Button";
 import type { FieldAction } from "../field-types";
-import { Pill } from "./Pill";
+import { Pill } from "../Pill";
 
 type Tab = "me" | "customer" | "all";
+
+const waitTone: Record<FieldAction["waiting_tone"], string> = {
+	neutral: "text-text-secondary",
+	warn: "font-medium text-brand-warn",
+	danger: "font-medium text-destructive",
+};
+const blockTone: Record<NonNullable<FieldAction["blocks"]>["tone"], string> = {
+	warn: "text-brand-warn",
+	danger: "text-destructive",
+};
 
 interface Props {
 	actions: FieldAction[];
@@ -64,8 +75,17 @@ export default function ActionsPanel({ actions, counts }: Props) {
 					<tbody>
 						{rows.map((a) => (
 							<tr key={a.action_id} className="border-t border-border">
-								<td className="px-5 py-4 font-medium text-foreground">
-									{a.label}
+								<td className="px-5 py-4">
+									<span className="block font-medium text-foreground">
+										{a.label}
+									</span>
+									{a.blocks ? (
+										<span
+											className={`mt-0.5 block text-sm ${blockTone[a.blocks.tone]}`}
+										>
+											{a.blocks.label}
+										</span>
+									) : null}
 								</td>
 								<td className="max-w-[15rem] px-3 py-4 text-text-secondary">
 									{a.engagement}
@@ -74,18 +94,13 @@ export default function ActionsPanel({ actions, counts }: Props) {
 									<Pill>{a.specialist}</Pill>
 								</td>
 								<td className="px-3 py-4 text-foreground">{a.owner_name}</td>
-								<td
-									className={`px-3 py-4 ${a.late ? "font-medium text-destructive" : "text-text-secondary"}`}
-								>
+								<td className={`px-3 py-4 ${waitTone[a.waiting_tone]}`}>
 									{a.waiting_label}
 								</td>
 								<td className="px-5 py-4 text-right">
-									<button
-										type="button"
-										className="w-28 rounded-md border border-border bg-surface-card px-4 py-2 font-semibold text-foreground transition hover:border-foreground/30 hover:bg-muted"
-									>
+									<Button href={a.href} className="w-28">
 										{a.verb}
-									</button>
+									</Button>
 								</td>
 							</tr>
 						))}

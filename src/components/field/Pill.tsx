@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { LensStatus, ToneKey } from "../field-types";
+import type { LensStatus, ToneKey } from "./field-types";
 
 export type PillTone = ToneKey;
 

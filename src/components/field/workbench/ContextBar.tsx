@@ -1,5 +1,5 @@
 import type { WorkbenchModel } from "../field-types";
-import { LensPill } from "../home/Pill";
+import { LensPill } from "../Pill";
 
 export default function ContextBar({
 	context,

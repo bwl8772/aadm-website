@@ -6,6 +6,10 @@ interface Props {
 	onSelect: (agentId: string) => void;
 }
 
+const itemClass = (active: boolean) =>
+	`block w-full rounded-md px-3 py-2 text-left transition ${active ? "bg-accent-blue/10" : "hover:bg-muted"}`;
+
+/** Workbench left rail: specialist agents grouped by area. An agent with `href` navigates; else it selects in place. */
 export default function AgentRail({ groups, activeId, onSelect }: Props) {
 	return (
 		<nav
@@ -28,25 +32,46 @@ export default function AgentRail({ groups, activeId, onSelect }: Props) {
 							const active = a.agent_id === activeId;
 							return (
 								<li key={a.agent_id}>
-									<button
-										type="button"
-										aria-current={active ? "true" : undefined}
-										onClick={() => onSelect(a.agent_id)}
-										className={`w-full rounded-md px-3 py-2 text-left transition ${active ? "bg-accent-blue/10" : "hover:bg-muted"}`}
-									>
-										<span
-											className={`block font-medium ${active ? "text-accent-blue" : "text-foreground"}`}
+									{a.href ? (
+										<a
+											href={a.href}
+											aria-current={active ? "page" : undefined}
+											className={itemClass(active)}
 										>
-											{a.name}
-										</span>
-										{a.status ? (
 											<span
-												className={`mt-0.5 block text-sm ${a.status.tone === "warn" ? "font-medium text-brand-warn" : active ? "text-accent-blue" : "text-text-secondary"}`}
+												className={`block font-medium ${active ? "text-accent-blue" : "text-foreground"}`}
 											>
-												{a.status.label}
+												{a.name}
 											</span>
-										) : null}
-									</button>
+											{a.status ? (
+												<span
+													className={`mt-0.5 block text-sm ${a.status.tone === "warn" ? "font-medium text-brand-warn" : active ? "text-accent-blue" : "text-text-secondary"}`}
+												>
+													{a.status.label}
+												</span>
+											) : null}
+										</a>
+									) : (
+										<button
+											type="button"
+											aria-current={active ? "true" : undefined}
+											onClick={() => onSelect(a.agent_id)}
+											className={itemClass(active)}
+										>
+											<span
+												className={`block font-medium ${active ? "text-accent-blue" : "text-foreground"}`}
+											>
+												{a.name}
+											</span>
+											{a.status ? (
+												<span
+													className={`mt-0.5 block text-sm ${a.status.tone === "warn" ? "font-medium text-brand-warn" : active ? "text-accent-blue" : "text-text-secondary"}`}
+												>
+													{a.status.label}
+												</span>
+											) : null}
+										</button>
+									)}
 								</li>
 							);
 						})}

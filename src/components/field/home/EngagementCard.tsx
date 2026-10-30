@@ -1,20 +1,27 @@
 import type { FieldEngagement } from "../field-types";
-import { LensPill, Pill } from "./Pill";
+import { LensPill, Pill } from "../Pill";
 
 export default function EngagementCard({
 	engagement: e,
 }: {
 	engagement: FieldEngagement;
 }) {
+	const landscape = e.landscape_label ? (
+		<div className="mt-4 flex items-center justify-between border-t border-border pt-3 text-sm">
+			<span className="text-text-muted">Lay of the land</span>
+			<span className="font-semibold text-foreground">{e.landscape_label}</span>
+		</div>
+	) : null;
+
 	return (
-		<article className="rounded-xl border border-border bg-surface-card p-6">
+		<article className="relative rounded-xl border border-border bg-surface-card p-6 transition hover:border-foreground/25">
 			<div className="flex items-start justify-between gap-3">
 				<div>
 					<h3 className="text-lg font-semibold text-foreground">
 						{e.href ? (
 							<a
 								href={e.href}
-								className="hover:text-accent-blue hover:underline"
+								className="after:absolute after:inset-0 hover:text-accent-blue"
 							>
 								{e.customer}
 							</a>
@@ -35,6 +42,8 @@ export default function EngagementCard({
 				<p className="mt-4 text-sm text-text-secondary">{e.summary}</p>
 			) : null}
 
+			{e.detail ? null : landscape}
+
 			{e.detail ? (
 				<>
 					<dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-4 text-sm">
@@ -50,6 +59,7 @@ export default function EngagementCard({
 							</div>
 						))}
 					</dl>
+					{landscape}
 					<ul className="mt-5 flex flex-wrap gap-2">
 						{e.detail.lenses.map((l) => (
 							<li key={l.name}>

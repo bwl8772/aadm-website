@@ -1,5 +1,6 @@
+import Button from "../Button";
 import type { ContinueAction } from "../field-types";
-import { Pill } from "./Pill";
+import { Pill } from "../Pill";
 
 type Props = ContinueAction;
 
@@ -9,6 +10,7 @@ export default function ContinueCard({
 	specialist,
 	blocks,
 	verb,
+	href,
 }: Props) {
 	return (
 		<article className="flex flex-col gap-5 rounded-xl border border-accent-blue/30 bg-surface-card p-6 sm:flex-row sm:items-center sm:justify-between">
@@ -25,12 +27,9 @@ export default function ContinueCard({
 					{blocks ? <Pill tone="warn">{blocks}</Pill> : null}
 				</div>
 			</div>
-			<button
-				type="button"
-				className="shrink-0 rounded-md bg-accent-blue px-5 py-3 font-semibold text-text-inverse transition hover:bg-accent-blue-dim focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-			>
+			<Button variant="primary" size="lg" href={href}>
 				{verb}
-			</button>
+			</Button>
 		</article>
 	);
 }
