@@ -1,1240 +1,1240 @@
 {
- "version": "v0.19",
- "stages": [
-  {
-   "id": "0",
-   "result": "The ground rules are written down and checked",
-   "check": "C0",
-   "batches": [
-    {
-     "id": "DM0-a",
-     "title": "The last open fact is confirmed and the ADR is written",
-     "cards": [
-      {
-       "id": "DM0-a1",
-       "status": "done",
-       "title": "Brian answered: Clerk Organizations are off for aadm.io"
-      },
-      {
-       "id": "DM0-a2",
-       "status": "done",
-       "title": "ADR 004 docs/adr/004-mcp-may-call-aadm-plans-api.md records the private plans API behind por…"
-      },
-      {
-       "id": "DM0-a3",
-       "status": "done",
-       "title": "ADR 004 addendum, a named doc slice in aadm-mcp"
-      }
-     ]
-    },
-    {
-     "id": "DM0-i",
-     "title": "The architecture rules are written into both repos",
-     "cards": [
-      {
-       "id": "DM0-i1",
-       "status": "done",
-       "title": "docs/ARCHITECTURE_INVARIANTS.md (52 lines, 40 rules: BACK-01, DEPLOY-01, CONTRACT-01, MODEL-…"
-      },
-      {
-       "id": "DM0-i2",
-       "status": "done",
-       "title": "docs/INVARIANTS.md (26 lines, 19 bullets): the rules that bind the website"
-      },
-      {
-       "id": "DM0-i3",
-       "status": "done",
-       "title": "Adds 80 tagged Day 0 and Day 1 rules to docs/ARCHITECTURE_INVARIANTS.md in sections CAP, CTX…"
-      },
-      {
-       "id": "DM0-i4",
-       "status": "done",
-       "title": "Adds the 24 website rules, with the same IDs, to docs/INVARIANTS.md"
-      }
-     ]
-    },
-    {
-     "id": "DM0-j",
-     "title": "The scope lock and the trace rules are written into both repos",
-     "cards": [
-      {
-       "id": "DM0-j1",
-       "status": "done",
-       "title": "Adds the 11 rules of §A17 to aadm-mcp docs/ARCHITECTURE_INVARIANTS.md (IDN-06 in Identity"
-      },
-      {
-       "id": "DM0-j2",
-       "status": "done",
-       "title": "Adds IDN-06, ART-02, OBS-01, OBS-04 and FLD-01 to FLD-04 to docs/INVARIANTS.md with the same…"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "V",
-   "result": "The loop runs end to end on Blueprint's own roadmap (the thin vertical; v0.17, D53; cut to the loop in v0.18, D54)",
-   "check": "CV",
-   "batches": [
-    {
-     "id": "DM0-b",
-     "title": "The backend runs as two containers, core and backend",
-     "cards": [
-      {
-       "id": "DM0-b1",
-       "status": "done",
-       "title": "The backend start mode (AADM_START_MODE=backend) of the same image, aadm-backend: a private…"
-      },
-      {
-       "id": "DM0-b2",
-       "status": "done",
-       "title": "NEW src/backend-client.ts: forwardVerb(name, input, ctx) posts to the backend's /internal/ve…"
-      },
-      {
-       "id": "DM0-b3",
-       "status": "here",
-       "title": "Railway: a second service, aadm-backend, from the same image, on the private network only, w…"
-      }
-     ]
-    },
-    {
-     "id": "V-a",
-     "title": "The storage ports and the batching standard exist",
-     "cards": [
-      {
-       "id": "DM1-c2",
-       "status": "todo",
-       "title": "PlanStore and BlobStore ports with a repository layer, a plain-Postgres implementation (stan…"
-      },
-      {
-       "id": "DM0-c2",
-       "status": "todo",
-       "title": "aadm-mcp resources/doctrine/batching-standard.md (Part 2: Limits, Plan rules, Prompt rules…"
-      }
-     ]
-    },
-    {
-     "id": "F1-a",
-     "title": "The 14 nouns and 12 verbs exist, and the agent worker thinks",
-     "cards": [
-      {
-       "id": "F1-a1",
-       "status": "todo",
-       "title": "The artifact store"
-      },
-      {
-       "id": "F1-a2",
-       "status": "todo",
-       "title": "Minimal workspace and members"
-      },
-      {
-       "id": "F1-a3",
-       "status": "todo",
-       "title": "The command API"
-      },
-      {
-       "id": "F1-a4",
-       "status": "todo",
-       "title": "The agent worker"
-      }
-     ]
-    },
-    {
-     "id": "F2-a",
-     "title": "Every judgment comes from core, and Blueprint's roadmap and prompts come in",
-     "cards": [
-      {
-       "id": "DM1-e4",
-       "status": "todo",
-       "title": "Judgment registry: one module in the shared aadm-mcp image that calls a stateless core tool'…"
-      },
-      {
-       "id": "F2-a1",
-       "status": "todo",
-       "title": "Import a delivery map"
-      },
-      {
-       "id": "F2-a2",
-       "status": "todo",
-       "title": "Import the prompt library"
-      }
-     ]
-    },
-    {
-     "id": "F2-b",
-     "title": "The agent batches the roadmap, and every slice gets one linted prompt that names its evidence",
-     "cards": [
-      {
-       "id": "F2-b0",
-       "status": "todo",
-       "title": "batch"
-      },
-      {
-       "id": "F2-b1",
-       "status": "todo",
-       "title": "write prompt"
-      },
-      {
-       "id": "F2-b2",
-       "status": "todo",
-       "title": "Required evidence per prompt"
-      }
-     ]
-    },
-    {
-     "id": "F2-c",
-     "title": "A person says go; the coder pulls and reports back",
-     "cards": [
-      {
-       "id": "F2-c1",
-       "status": "todo",
-       "title": "go"
-      },
-      {
-       "id": "F2-c2",
-       "status": "todo",
-       "title": "field_next_slice"
-      },
-      {
-       "id": "F2-c3",
-       "status": "todo",
-       "title": "submit report"
-      }
-     ]
-    },
-    {
-     "id": "F2-d",
-     "title": "Reports are judged and the map draws",
-     "cards": [
-      {
-       "id": "F2-d1",
-       "status": "todo",
-       "title": "judge"
-      },
-      {
-       "id": "F2-e1",
-       "status": "todo",
-       "title": "render map"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "F3",
-   "result": "Ideas become signed requirements",
-   "check": "CF3",
-   "batches": [
-    {
-     "id": "F3-a",
-     "title": "An idea becomes a vision and requirements, round by round",
-     "cards": [
-      {
-       "id": "F3-a1",
-       "status": "todo",
-       "title": "capture idea and iterate"
-      },
-      {
-       "id": "F3-a2",
-       "status": "todo",
-       "title": "Vision and Requirements shapes"
-      }
-     ]
-    },
-    {
-     "id": "F3-b",
-     "title": "Requirements are challenged, signed and handed to the roadmap",
-     "cards": [
-      {
-       "id": "F3-b1",
-       "status": "todo",
-       "title": "challenge"
-      },
-      {
-       "id": "F3-b2",
-       "status": "todo",
-       "title": "sign off"
-      },
-      {
-       "id": "F3-b3",
-       "status": "todo",
-       "title": "Handoff"
-      },
-      {
-       "id": "F3-b4",
-       "status": "todo",
-       "title": "Acceptance fixture: the Steve and Charles contract proves the loop"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "F4",
-   "result": "Field runs in Slack (v0.17, D53: Slack stays thin; the 8 Slack slices of F4-a to F4-c are the cap; v0.18: F4-g is the core guard that lands before the public relay, not a Slack slice)",
-   "check": "CF4",
-   "batches": [
-    {
-     "id": "F4-g",
-     "title": "Core never runs open before Slack reaches it",
-     "cards": [
-      {
-       "id": "DM0-b4",
-       "status": "todo",
-       "title": "Core reports its release and API version, and the core → backend hop has a contract window"
-      },
-      {
-       "id": "DM0-d1",
-       "status": "todo",
-       "title": "Request IDs, JSON logs and metrics"
-      },
-      {
-       "id": "DM0-d2",
-       "status": "todo",
-       "title": "Startup settings are checked, and core never runs open in production"
-      },
-      {
-       "id": "DM0-d3",
-       "status": "todo",
-       "title": "CORS on /mcp only for named origins"
-      }
-     ]
-    },
-    {
-     "id": "F4-a",
-     "title": "The Slack app is installed, verified and bound",
-     "cards": [
-      {
-       "id": "F4-a1",
-       "status": "todo",
-       "title": "Slack app, install and OAuth"
-      },
-      {
-       "id": "F4-a2",
-       "status": "todo",
-       "title": "Events and interactivity relay"
-      },
-      {
-       "id": "F4-a3",
-       "status": "todo",
-       "title": "Channel binding and user linking"
-      }
-     ]
-    },
-    {
-     "id": "F4-b",
-     "title": "The loop runs in threads, and only people decide",
-     "cards": [
-      {
-       "id": "F4-b1",
-       "status": "todo",
-       "title": "Thread mapping"
-      },
-      {
-       "id": "F4-b2",
-       "status": "todo",
-       "title": "Iterate and challenge in Slack"
-      },
-      {
-       "id": "F4-b3",
-       "status": "todo",
-       "title": "Decisions from Slack"
-      }
-     ]
-    },
-    {
-     "id": "F4-c",
-     "title": "Reports come in and maps and prompts go out",
-     "cards": [
-      {
-       "id": "F4-c1",
-       "status": "todo",
-       "title": "Reports in Slack"
-      },
-      {
-       "id": "F4-c2",
-       "status": "todo",
-       "title": "Posting back"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "H",
-   "result": "Hardened before anyone else depends on it (v0.17, D53)",
-   "check": "CH",
-   "batches": [
-    {
-     "id": "DM0-c",
-     "title": "The batching standard is an AADM standard",
-     "cards": [
-      {
-       "id": "DM0-c1",
-       "status": "todo",
-       "title": "aadm-standard standards/batching-standard.md (Part 1 of aadm-batching-standard-draft.md), pl…"
-      },
-      {
-       "id": "DM0-c3",
-       "status": "todo",
-       "title": "The delivery_map tool says batch and stays compatible one version back"
-      }
-     ]
-    },
-    {
-     "id": "DM0-e",
-     "title": "Every change is checked before it deploys",
-     "cards": [
-      {
-       "id": "DM0-e1",
-       "status": "todo",
-       "title": "aadm-mcp CI. Repo aadm-mcp"
-      },
-      {
-       "id": "DM0-e2",
-       "status": "todo",
-       "title": "aadm-website CI. Repo aadm-website"
-      }
-     ]
-    },
-    {
-     "id": "DM1-c",
-     "title": "The storage seam keeps Supabase out of the contracts",
-     "cards": [
-      {
-       "id": "DM1-c1",
-       "status": "todo",
-       "title": "Named doc slice: docs/data-inventory.md (§13a.1) plus a data_class label on every table, and…"
-      },
-      {
-       "id": "DM1-c3",
-       "status": "todo",
-       "title": "Model guard: a check fails the build if an LLM SDK appears in either repo's dependencies or…"
-      },
-      {
-       "id": "DM1-c4",
-       "status": "todo",
-       "title": "Portable SQL migrations: db/migrations/NNNN_name.sql plus a small runner recording schema_mi…"
-      }
-     ]
-    },
-    {
-     "id": "DM1-e",
-     "title": "Any Postgres works, and only the backend touches it",
-     "cards": [
-      {
-       "id": "DM1-e1",
-       "status": "todo",
-       "title": "Portability contract: the same contract suite runs against Supabase and a plain Postgres con…"
-      },
-      {
-       "id": "DM1-e2",
-       "status": "todo",
-       "title": "App-layer tenancy holds without RLS: the isolation suite runs on a Postgres with RLS disable…"
-      },
-      {
-       "id": "DM1-e3",
-       "status": "todo",
-       "title": "Core saves nothing, proved: a build check fails if PlanStore, BlobStore, a Postgres driver o…"
-      },
-      {
-       "id": "DM1-e5",
-       "status": "todo",
-       "title": "Every tool declares its plan tag: code, field or shared (plus a free flag), where it is regi…"
-      }
-     ]
-    },
-    {
-     "id": "F1-r",
-     "title": "Every refusal has one result code, and org keys are bound safely",
-     "cards": [
-      {
-       "id": "DM2-a3",
-       "status": "todo",
-       "title": "One result-code contract for core and backend"
-      },
-      {
-       "id": "DM2-a4",
-       "status": "todo",
-       "title": "Org-owned API keys are refused"
-      }
-     ]
-    },
-    {
-     "id": "H-a",
-     "title": "Nothing crosses workspaces, a workspace can leave whole, and the second fixture comes in",
-     "cards": [
-      {
-       "id": "F1-b2",
-       "status": "todo",
-       "title": "Workspace export and import"
-      },
-      {
-       "id": "F2-a3",
-       "status": "todo",
-       "title": "Second fixture"
-      },
-      {
-       "id": "F1-b1",
-       "status": "todo",
-       "title": "Tenancy and secrets suite"
-      }
-     ]
-    },
-    {
-     "id": "H-b",
-     "title": "The roadmap replans itself, and every judgment and map matches core",
-     "cards": [
-      {
-       "id": "F2-d2",
-       "status": "todo",
-       "title": "replan"
-      },
-      {
-       "id": "DM6-g6",
-       "status": "todo",
-       "title": "Field judgments equal the core judges' output"
-      },
-      {
-       "id": "F2-e2",
-       "status": "todo",
-       "title": "Map parity"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "F5",
-   "result": "The web shell browses the same workspace: map, evidence and co-sign (v0.17, D53: editing moved to F8)",
-   "check": "CF5",
-   "batches": [
-    {
-     "id": "DM5-d",
-     "title": "The website's settings and errors are checked in code",
-     "cards": [
-      {
-       "id": "DM5-d1",
-       "status": "todo",
-       "title": "The website's settings schema"
-      },
-      {
-       "id": "DM5-d2",
-       "status": "todo",
-       "title": "Website request IDs and error reporting"
-      }
-     ]
-    },
-    {
-     "id": "F5-a",
-     "title": "Workspaces open into two areas you can browse",
-     "cards": [
-      {
-       "id": "F5-a1",
-       "status": "todo",
-       "title": "Shell navigation"
-      },
-      {
-       "id": "F5-a2",
-       "status": "todo",
-       "title": "Requirements area views"
-      },
-      {
-       "id": "F5-a3",
-       "status": "todo",
-       "title": "Roadmap area views"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "F6",
-   "result": "Safe to depend on",
-   "check": "CF6",
-   "batches": [
-    {
-     "id": "DM7-c",
-     "title": "Operators can stop and recover the service",
-     "cards": [
-      {
-       "id": "DM7-c1",
-       "status": "todo",
-       "title": "/ready and the operator switches"
-      },
-      {
-       "id": "DM7-c2",
-       "status": "todo",
-       "title": "Recovery runbooks and a backup restore drill"
-      }
-     ]
-    },
-    {
-     "id": "F6-r",
-     "title": "Old data is cleaned up safely and hosts can be switched",
-     "cards": [
-      {
-       "id": "DM7-a2",
-       "status": "todo",
-       "title": "Retention jobs, run by aadm-backend (D30"
-      },
-      {
-       "id": "DM7-a4",
-       "status": "todo",
-       "title": "Migrate-between-hosts runbook check: export from Supabase, import into a plain Postgres, run…"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "F8",
-   "result": "The web shell edits everything, and people buy, invite and land (later; v0.17, D53)",
-   "check": "CF8",
-   "batches": [
-    {
-     "id": "F5-b",
-     "title": "Everything can be edited on the web, through the same verbs",
-     "cards": [
-      {
-       "id": "F5-b1",
-       "status": "todo",
-       "title": "Full editing: requirements"
-      },
-      {
-       "id": "F5-b2",
-       "status": "todo",
-       "title": "Full editing: roadmap"
-      },
-      {
-       "id": "F5-b3",
-       "status": "todo",
-       "title": "Full editing: prompts"
-      },
-      {
-       "id": "F5-b4",
-       "status": "todo",
-       "title": "Shell parity and guard"
-      }
-     ]
-    },
-    {
-     "id": "F5-s",
-     "title": "People can be invited to a workspace, each user's plan is known, and last opened is remembered",
-     "cards": [
-      {
-       "id": "DM6-a2",
-       "status": "todo",
-       "title": "Our own invite flow: the workspace_invite table (RLS and an explicit grant to aadm_app), cre…"
-      },
-      {
-       "id": "DM6-a3",
-       "status": "todo",
-       "title": "Members page: change role and remove a member"
-      },
-      {
-       "id": "DM6-c3",
-       "status": "todo",
-       "title": "The fde_tools check, the billing webhooks and the entitlement table, in the backend"
-      },
-      {
-       "id": "DM6-a5",
-       "status": "todo",
-       "title": "Per-member last_opened_at on workspace_member (§8): an additive nullable column through DM1-…"
-      }
-     ]
-    },
-    {
-     "id": "DM6-p",
-     "title": "AADM Field is a product you can buy and use",
-     "cards": [
-      {
-       "id": "DM6-p1",
-       "status": "todo",
-       "title": "Clerk Billing and Stripe setup for AADM Field (D36)"
-      },
-      {
-       "id": "DM6-p2",
-       "status": "todo",
-       "title": "Code and/or Field entitlements as separate subscriptions (D36): a pure matrix from features…"
-      },
-      {
-       "id": "DM6-p3",
-       "status": "todo",
-       "title": "MCP tools by subscription on the shared endpoint (D36, FIX-32): aadm-core filters tools/list…"
-      },
-      {
-       "id": "DM6-p4",
-       "status": "todo",
-       "title": "Tool lists by subscription, proved"
-      }
-     ]
-    },
-    {
-     "id": "F5-l",
-     "title": "Preferences are remembered, and Field users sign in and land in the right place",
-     "cards": [
-      {
-       "id": "DM6-a4",
-       "status": "todo",
-       "title": "User preferences in aadm-backend (moved from F7-p to F5-l in v0.16.1, because DM6-h2 and DM6…"
-      },
-      {
-       "id": "DM6-h1",
-       "status": "todo",
-       "title": "Sign-in lands you by plan: the DM6-p2 matrix read in the post-sign-in hop (only the bare-/me…"
-      },
-      {
-       "id": "DM6-h2",
-       "status": "todo",
-       "title": "Trial users pick where to start, and it sticks: the chooser \"What do you want to do first?\"…"
-      },
-      {
-       "id": "DM6-h3",
-       "status": "todo",
-       "title": "Free users get a pick-a-plan page: the member-area plan page (path confirmed here"
-      }
-     ]
-    },
-    {
-     "id": "F5-x",
-     "title": "Code-only users see an offer; trials and the AI coder card work",
-     "cards": [
-      {
-       "id": "DM5-a4",
-       "status": "todo",
-       "title": "The AADM Field page on aadm.io (§7 item 15"
-      },
-      {
-       "id": "DM6-h4",
-       "status": "todo",
-       "title": "Code-only and Free see an offer, not an error, at /field/main: the in-place offer \"Add AADM…"
-      },
-      {
-       "id": "DM6-h8",
-       "status": "todo",
-       "title": "Trial badge and plan changes show within the cache window: the \"Trial: {n} days left\" badge…"
-      },
-      {
-       "id": "DM6-h9",
-       "status": "todo",
-       "title": "A one-time \"Connect your AI coder\" card: the card linking to /member/mcp-oauth, with Dismiss…"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "F7",
-   "result": "Workspaces have settings, preferences and handover (later; plumbing)",
-   "check": "CF7",
-   "batches": [
-    {
-     "id": "F7-s",
-     "title": "Workspace settings have one home",
-     "cards": [
-      {
-       "id": "DM1-f1",
-       "status": "todo",
-       "title": "workspace_policy and append-only workspace_policy_event tables behind PlanStore, the presets…"
-      },
-      {
-       "id": "DM1-f2",
-       "status": "todo",
-       "title": "Change rules: an owner may tighten any \"Owner (tighten)\" setting"
-      },
-      {
-       "id": "DM5-a3",
-       "status": "todo",
-       "title": "The workspace Settings page in the member area: one section per area of §5, each row showing…"
-      }
-     ]
-    },
-    {
-     "id": "DM6-b",
-     "title": "Sharing and handover",
-     "cards": [
-      {
-       "id": "DM6-b1",
-       "status": "todo",
-       "title": "Read-only share links"
-      },
-      {
-       "id": "DM6-b2",
-       "status": "todo",
-       "title": "Engagement transfer package"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "T",
-   "result": "The stack is known: Terrain (later)",
-   "check": "CT",
-   "batches": [
-    {
-     "id": "DM1-d",
-     "title": "Terrain facts have a home",
-     "cards": [
-      {
-       "id": "DM1-d1",
-       "status": "todo",
-       "title": "terrain_profile and terrain_fact tables behind PlanStore, with RLS and explicit grants to aa…"
-      },
-      {
-       "id": "DM1-d2",
-       "status": "todo",
-       "title": "terrain_fact_event, append-only, and slice.terrain_fact_ids[]. Done: events can't be edited"
-      }
-     ]
-    },
-    {
-     "id": "DM2-t",
-     "title": "Terrain facts can be saved and cited",
-     "cards": [
-      {
-       "id": "DM2-t1",
-       "status": "todo",
-       "title": "MCP tools terrain_fact_save (evidence allowlist schema, §13a.2) and terrain_get"
-      },
-      {
-       "id": "DM2-t2",
-       "status": "todo",
-       "title": "Freshness and gaps in terrain_get, deterministic"
-      }
-     ]
-    },
-    {
-     "id": "DMT-a",
-     "title": "The crawl stays inside the customer's walls",
-     "cards": [
-      {
-       "id": "DMT-a1",
-       "status": "todo",
-       "title": "Repo crawl to Terrain: AADM collection guidance for the host coder, which runs repo_architec…"
-      },
-      {
-       "id": "DMT-a2",
-       "status": "todo",
-       "title": "Host-side import guides for OpenAPI, Terraform JSON, CMDB CSV and docs"
-      }
-     ]
-    },
-    {
-     "id": "DMT-b",
-     "title": "Interview, gaps and freshness",
-     "cards": [
-      {
-       "id": "DMT-b1",
-       "status": "todo",
-       "title": "Guided Terrain interview (D11 default: extend audit_interview with a terrain bank)"
-      },
-      {
-       "id": "DMT-b2",
-       "status": "todo",
-       "title": "Terrain view in the member area: sections, sources, ages, stale flags, gap list, UDALI map…"
-      },
-      {
-       "id": "DMT-b3",
-       "status": "todo",
-       "title": "Terrain sections 13 Experience, 14 Observability and 15 Quality (optional), with allowlist k…"
-      },
-      {
-       "id": "DMT-b4",
-       "status": "todo",
-       "title": "Terrain section 16, Extension points (§13l.1): - the section in terrain_get and in the Terra…"
-      }
-     ]
-    },
-    {
-     "id": "DMT-c",
-     "title": "The UDALI transpose: three views of one Terrain map",
-     "cards": [
-      {
-       "id": "DMT-c1",
-       "status": "todo",
-       "title": "Crosswalk view: crosswalk_term facts, plus vocabulary_crosswalk extended with an optional pe…"
-      },
-      {
-       "id": "DMT-c2",
-       "status": "todo",
-       "title": "Systems × UDALI-band matrix over stored udali_placement facts"
-      },
-      {
-       "id": "DMT-c3",
-       "status": "todo",
-       "title": "Current-vs-target gap view: target from the latest signed cornerstone's UDALI-T items"
-      }
-     ]
-    },
-    {
-     "id": "DMT-d",
-     "title": "Terrain holds platform configuration",
-     "cards": [
-      {
-       "id": "DMT-d1",
-       "status": "todo",
-       "title": "The platform_ allowlist kinds (§13a.2) and Terrain section 17, saved through terrain_fact_sa…"
-      },
-      {
-       "id": "DMT-d2",
-       "status": "todo",
-       "title": "Host-side configuration guide: AADM collection guidance for the customer's coder or FDE to e…"
-      },
-      {
-       "id": "DMT-d3",
-       "status": "todo",
-       "title": "Terrain view, Platform configuration section (§7 item 14)"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "6A",
-   "result": "FDEs know each customer's modes, rules, people and configuration (later)",
-   "check": "C6A",
-   "batches": [
-    {
-     "id": "DM2-m",
-     "title": "Every plan says how it lands: in the code or plugged in beside it",
-     "cards": [
-      {
-       "id": "DM2-m1",
-       "status": "todo",
-       "title": "Delivery mode and host contract in Cornerstone: - cornerstone_version.delivery_mode (require…"
-      },
-      {
-       "id": "DM2-m2",
-       "status": "todo",
-       "title": "delivery_map_save applies the mode"
-      }
-     ]
-    },
-    {
-     "id": "DM6-c",
-     "title": "Governance and stakeholders are mapped",
-     "cards": [
-      {
-       "id": "DM6-c1",
-       "status": "todo",
-       "title": "Governance, standards and best practices map: governance_item and governance_event tables, g…"
-      },
-      {
-       "id": "DM6-c2",
-       "status": "todo",
-       "title": "Stakeholder map: a stakeholder table (RACI per phase, influence, interest, cadence, last tou…"
-      }
-     ]
-    },
-    {
-     "id": "DM6-s",
-     "title": "The Speed Layer canvas shows where the customer is and is going",
-     "cards": [
-      {
-       "id": "DM6-s1",
-       "status": "todo",
-       "title": "speed_layer_assess in aadm-backend: the 30 Figure 17 boxes seeded from speed-layer-framework…"
-      },
-      {
-       "id": "DM6-s2",
-       "status": "todo",
-       "title": "Speed Layer view in Strategy: the canvas laid out as Figure 17 with current → future chips…"
-      }
-     ]
-    },
-    {
-     "id": "DM6-w",
-     "title": "Configuration work is planned, applied and verified",
-     "cards": [
-      {
-       "id": "DM6-w1",
-       "status": "todo",
-       "title": "Speed Layer tie-in: the T7 and T8 boxes and the \"Enterprise architecture\" aspect take curren…"
-      },
-      {
-       "id": "DM6-w2",
-       "status": "todo",
-       "title": "Configuration targets: PC- items in Cornerstone (C3) for configure_only, and the configurati…"
-      },
-      {
-       "id": "DM6-w3",
-       "status": "todo",
-       "title": "config_plan and config_diff, stateless in aadm-core, listed for Field plans only"
-      },
-      {
-       "id": "DM6-w4",
-       "status": "todo",
-       "title": "Configuration slices: config_change on slice, config_verify (stateless), and the done and ro…"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "6B",
-   "result": "Readiness, risk, pilots and measures are tracked (later)",
-   "check": "C6B",
-   "batches": [
-    {
-     "id": "DM6-d",
-     "title": "Readiness is assessed before work starts",
-     "cards": [
-      {
-       "id": "DM6-d1",
-       "status": "todo",
-       "title": "Register and access tables (risk, risk_event, access_item, access_event, readiness_check_res…"
-      },
-      {
-       "id": "DM6-d2",
-       "status": "todo",
-       "title": "readiness_assess: runs the checks Q1–Q7, R1–R7, A1–A7, G1–G12 and S1 on stored data and turn…"
-      },
-      {
-       "id": "DM6-d3",
-       "status": "todo",
-       "title": "Interview banks: audit_interview gains a readiness bank (governance G1–G9 and access questio…"
-      },
-      {
-       "id": "DM6-d4",
-       "status": "todo",
-       "title": "plug_in readiness checks in readiness_assess: Q8 host version drift, Q9 rate limits, A8 scop…"
-      }
-     ]
-    },
-    {
-     "id": "DM6-e",
-     "title": "Risks are owned, gated and reassessed",
-     "cards": [
-      {
-       "id": "DM6-e1",
-       "status": "todo",
-       "title": "Gates: cornerstone Sign, Go on cutover/rollout slices, and slice start on access (§13h.8"
-      },
-      {
-       "id": "DM6-e2",
-       "status": "todo",
-       "title": "Mitigation evidence and reassessment: link each risk to its evidence tool (§13h.7)"
-      },
-      {
-       "id": "DM6-e3",
-       "status": "todo",
-       "title": "The Readiness and risk view: four gap panels plus the register, merged with Terrain's gap li…"
-      }
-     ]
-    },
-    {
-     "id": "DM6-f",
-     "title": "Pilots are small, measured and decided",
-     "cards": [
-      {
-       "id": "DM6-f1",
-       "status": "todo",
-       "title": "Use cases: use_case table and use_case_save/list with V, F, K, priority and (v0.8) the requi…"
-      },
-      {
-       "id": "DM6-f2",
-       "status": "todo",
-       "title": "Pilot charter and start gate: pilot and pilot_amendment tables, pilot_save, the pilot limits…"
-      },
-      {
-       "id": "DM6-f3",
-       "status": "todo",
-       "title": "Feedback loop: pilot_feedback (channel, short summary per FIX-07, triage result, changed ref…"
-      },
-      {
-       "id": "DM6-f4",
-       "status": "todo",
-       "title": "Go/No-Go: the recommendation per §13i.4, the decision record with the values used, the co-si…"
-      }
-     ]
-    },
-    {
-     "id": "DM7-b",
-     "title": "Outcomes are checked after go-live",
-     "cards": [
-      {
-       "id": "DM7-b1",
-       "status": "todo",
-       "title": "Measure checks: an append-only outcome_measure_check (measure, value, checked_by, at, on_tar…"
-      },
-      {
-       "id": "DM7-b2",
-       "status": "todo",
-       "title": "Off-target feedback: an off-target result returns a lessons_register candidate for the host…"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "6C",
-   "result": "Firms run many engagements: the Firm layer (later)",
-   "check": "C6C",
-   "batches": [
-    {
-     "id": "DMF-a",
-     "title": "A firm sits above its customer workspaces, and customers stay sealed",
-     "cards": [
-      {
-       "id": "DMF-a1",
-       "status": "todo",
-       "title": "firm, firm_member, firm_policy and firm_policy_event through DM1-c4 migrations and PlanStore…"
-      },
-      {
-       "id": "DMF-a2",
-       "status": "todo",
-       "title": "Consent and the rollup: firm_workspace_link with a people-only consent route (CFG-FIRM-02)…"
-      },
-      {
-       "id": "DMF-a3",
-       "status": "todo",
-       "title": "Tenancy proof: tenant_isolation_check plus a seeded leak suite of 3 customers across 2 firms…"
-      }
-     ]
-    },
-    {
-     "id": "DMF-b",
-     "title": "The portfolio shows every engagement at a glance",
-     "cards": [
-      {
-       "id": "DMF-b1",
-       "status": "todo",
-       "title": "portfolio_get in aadm-backend, through firm_rollup only, with filters"
-      },
-      {
-       "id": "DMF-b2",
-       "status": "todo",
-       "title": "Portfolio page (§7 item 13)"
-      }
-     ]
-    },
-    {
-     "id": "DMF-c",
-     "title": "Proven patterns become firm playbooks",
-     "cards": [
-      {
-       "id": "DMF-c1",
-       "status": "todo",
-       "title": "playbook and playbook_version, playbook_propose, the strip check (FIX-30) and versioning"
-      },
-      {
-       "id": "DMF-c2",
-       "status": "todo",
-       "title": "Promotion approval as a people-only web route (CFG-FIRM-05, CFG-FIRM-06) and the playbook li…"
-      },
-      {
-       "id": "DMF-c3",
-       "status": "todo",
-       "title": "playbook_apply and playbook_use: start an engagement from a playbook version as drafts that…"
-      }
-     ]
-    },
-    {
-     "id": "DMF-d",
-     "title": "Staffing, capacity and quality across FDEs",
-     "cards": [
-      {
-       "id": "DMF-d1",
-       "status": "todo",
-       "title": "firm_assignment and firm_capacity, and a pure utilization function (CFG-FIRM-13, CFG-FIRM-14…"
-      },
-      {
-       "id": "DMF-d2",
-       "status": "todo",
-       "title": "Quality metrics, a pure function from rollup counts only: ON PLAN rate, rework, readiness pa…"
-      },
-      {
-       "id": "DMF-d3",
-       "status": "todo",
-       "title": "People page (§7 item 13)"
-      }
-     ]
-    },
-    {
-     "id": "DMF-e",
-     "title": "A firm can brand its engagement workspaces",
-     "cards": [
-      {
-       "id": "DMF-e1",
-       "status": "todo",
-       "title": "firm_brand (display name, logo through BlobStore, colors"
-      },
-      {
-       "id": "DMF-e2",
-       "status": "todo",
-       "title": "Brand on exports and renders: the transfer package cover and the map render header per CFG-F…"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "8",
-   "result": "Customers keep their data (later)",
-   "check": "C8",
-   "batches": [
-    {
-     "id": "DM8-a",
-     "title": "Bring your own storage (mode b)",
-     "cards": [
-      {
-       "id": "DM8-a1",
-       "status": "todo",
-       "title": "Per-workspace data-plane settings (workspace_data_plane), owner only"
-      },
-      {
-       "id": "DM8-a2",
-       "status": "todo",
-       "title": "The first customer adapter (D9) with federated, short-lived credentials"
-      },
-      {
-       "id": "DM8-a3",
-       "status": "todo",
-       "title": "Control-plane split, customer-managed keys and counts-only telemetry"
-      },
-      {
-       "id": "DM8-a4",
-       "status": "todo",
-       "title": "Export and delete through the adapter"
-      }
-     ]
-    },
-    {
-     "id": "DM8-b",
-     "title": "Self-hosted data plane (mode c)",
-     "cards": [
-      {
-       "id": "DM8-b1",
-       "status": "todo",
-       "title": "The same aadm-mcp image in the customer's cloud, started in both modes: aadm-core (front doo…"
-      },
-      {
-       "id": "DM8-b2",
-       "status": "todo",
-       "title": "Sign-in through the customer's IdP over OIDC, using user_issuer + user_subject, mapped to an…"
-      },
-      {
-       "id": "DM8-b3",
-       "status": "todo",
-       "title": "License check, update channel and egress allowlist"
-      },
-      {
-       "id": "DM8-b4",
-       "status": "todo",
-       "title": "Mode (c) proof, plus an in-plane Terrain crawler job"
-      }
-     ]
-    }
-   ]
-  }
- ],
- "you_are_here": "DM0-b3",
- "counts": {
-  "stages": 14,
-  "batches": 55,
-  "slices": 160,
-  "done": 11
- }
+	"version": "v0.19",
+	"stages": [
+		{
+			"id": "0",
+			"result": "The ground rules are written down and checked",
+			"check": "C0",
+			"batches": [
+				{
+					"id": "DM0-a",
+					"title": "The last open fact is confirmed and the ADR is written",
+					"cards": [
+						{
+							"id": "DM0-a1",
+							"status": "done",
+							"title": "Brian answered: Clerk Organizations are off for aadm.io"
+						},
+						{
+							"id": "DM0-a2",
+							"status": "done",
+							"title": "ADR 004 docs/adr/004-mcp-may-call-aadm-plans-api.md records the private plans API behind por…"
+						},
+						{
+							"id": "DM0-a3",
+							"status": "done",
+							"title": "ADR 004 addendum, a named doc slice in aadm-mcp"
+						}
+					]
+				},
+				{
+					"id": "DM0-i",
+					"title": "The architecture rules are written into both repos",
+					"cards": [
+						{
+							"id": "DM0-i1",
+							"status": "done",
+							"title": "docs/ARCHITECTURE_INVARIANTS.md (52 lines, 40 rules: BACK-01, DEPLOY-01, CONTRACT-01, MODEL-…"
+						},
+						{
+							"id": "DM0-i2",
+							"status": "done",
+							"title": "docs/INVARIANTS.md (26 lines, 19 bullets): the rules that bind the website"
+						},
+						{
+							"id": "DM0-i3",
+							"status": "done",
+							"title": "Adds 80 tagged Day 0 and Day 1 rules to docs/ARCHITECTURE_INVARIANTS.md in sections CAP, CTX…"
+						},
+						{
+							"id": "DM0-i4",
+							"status": "done",
+							"title": "Adds the 24 website rules, with the same IDs, to docs/INVARIANTS.md"
+						}
+					]
+				},
+				{
+					"id": "DM0-j",
+					"title": "The scope lock and the trace rules are written into both repos",
+					"cards": [
+						{
+							"id": "DM0-j1",
+							"status": "done",
+							"title": "Adds the 11 rules of §A17 to aadm-mcp docs/ARCHITECTURE_INVARIANTS.md (IDN-06 in Identity"
+						},
+						{
+							"id": "DM0-j2",
+							"status": "done",
+							"title": "Adds IDN-06, ART-02, OBS-01, OBS-04 and FLD-01 to FLD-04 to docs/INVARIANTS.md with the same…"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "V",
+			"result": "The loop runs end to end on Blueprint's own roadmap (the thin vertical; v0.17, D53; cut to the loop in v0.18, D54)",
+			"check": "CV",
+			"batches": [
+				{
+					"id": "DM0-b",
+					"title": "The backend runs as two containers, core and backend",
+					"cards": [
+						{
+							"id": "DM0-b1",
+							"status": "done",
+							"title": "The backend start mode (AADM_START_MODE=backend) of the same image, aadm-backend: a private…"
+						},
+						{
+							"id": "DM0-b2",
+							"status": "done",
+							"title": "NEW src/backend-client.ts: forwardVerb(name, input, ctx) posts to the backend's /internal/ve…"
+						},
+						{
+							"id": "DM0-b3",
+							"status": "here",
+							"title": "Railway: a second service, aadm-backend, from the same image, on the private network only, w…"
+						}
+					]
+				},
+				{
+					"id": "V-a",
+					"title": "The storage ports and the batching standard exist",
+					"cards": [
+						{
+							"id": "DM1-c2",
+							"status": "todo",
+							"title": "PlanStore and BlobStore ports with a repository layer, a plain-Postgres implementation (stan…"
+						},
+						{
+							"id": "DM0-c2",
+							"status": "todo",
+							"title": "aadm-mcp resources/doctrine/batching-standard.md (Part 2: Limits, Plan rules, Prompt rules…"
+						}
+					]
+				},
+				{
+					"id": "F1-a",
+					"title": "The 14 nouns and 12 verbs exist, and the agent worker thinks",
+					"cards": [
+						{
+							"id": "F1-a1",
+							"status": "todo",
+							"title": "The artifact store"
+						},
+						{
+							"id": "F1-a2",
+							"status": "todo",
+							"title": "Minimal workspace and members"
+						},
+						{
+							"id": "F1-a3",
+							"status": "todo",
+							"title": "The command API"
+						},
+						{
+							"id": "F1-a4",
+							"status": "todo",
+							"title": "The agent worker"
+						}
+					]
+				},
+				{
+					"id": "F2-a",
+					"title": "Every judgment comes from core, and Blueprint's roadmap and prompts come in",
+					"cards": [
+						{
+							"id": "DM1-e4",
+							"status": "todo",
+							"title": "Judgment registry: one module in the shared aadm-mcp image that calls a stateless core tool'…"
+						},
+						{
+							"id": "F2-a1",
+							"status": "todo",
+							"title": "Import a delivery map"
+						},
+						{
+							"id": "F2-a2",
+							"status": "todo",
+							"title": "Import the prompt library"
+						}
+					]
+				},
+				{
+					"id": "F2-b",
+					"title": "The agent batches the roadmap, and every slice gets one linted prompt that names its evidence",
+					"cards": [
+						{
+							"id": "F2-b0",
+							"status": "todo",
+							"title": "batch"
+						},
+						{
+							"id": "F2-b1",
+							"status": "todo",
+							"title": "write prompt"
+						},
+						{
+							"id": "F2-b2",
+							"status": "todo",
+							"title": "Required evidence per prompt"
+						}
+					]
+				},
+				{
+					"id": "F2-c",
+					"title": "A person says go; the coder pulls and reports back",
+					"cards": [
+						{
+							"id": "F2-c1",
+							"status": "todo",
+							"title": "go"
+						},
+						{
+							"id": "F2-c2",
+							"status": "todo",
+							"title": "field_next_slice"
+						},
+						{
+							"id": "F2-c3",
+							"status": "todo",
+							"title": "submit report"
+						}
+					]
+				},
+				{
+					"id": "F2-d",
+					"title": "Reports are judged and the map draws",
+					"cards": [
+						{
+							"id": "F2-d1",
+							"status": "todo",
+							"title": "judge"
+						},
+						{
+							"id": "F2-e1",
+							"status": "todo",
+							"title": "render map"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "F3",
+			"result": "Ideas become signed requirements",
+			"check": "CF3",
+			"batches": [
+				{
+					"id": "F3-a",
+					"title": "An idea becomes a vision and requirements, round by round",
+					"cards": [
+						{
+							"id": "F3-a1",
+							"status": "todo",
+							"title": "capture idea and iterate"
+						},
+						{
+							"id": "F3-a2",
+							"status": "todo",
+							"title": "Vision and Requirements shapes"
+						}
+					]
+				},
+				{
+					"id": "F3-b",
+					"title": "Requirements are challenged, signed and handed to the roadmap",
+					"cards": [
+						{
+							"id": "F3-b1",
+							"status": "todo",
+							"title": "challenge"
+						},
+						{
+							"id": "F3-b2",
+							"status": "todo",
+							"title": "sign off"
+						},
+						{
+							"id": "F3-b3",
+							"status": "todo",
+							"title": "Handoff"
+						},
+						{
+							"id": "F3-b4",
+							"status": "todo",
+							"title": "Acceptance fixture: the Steve and Charles contract proves the loop"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "F4",
+			"result": "Field runs in Slack (v0.17, D53: Slack stays thin; the 8 Slack slices of F4-a to F4-c are the cap; v0.18: F4-g is the core guard that lands before the public relay, not a Slack slice)",
+			"check": "CF4",
+			"batches": [
+				{
+					"id": "F4-g",
+					"title": "Core never runs open before Slack reaches it",
+					"cards": [
+						{
+							"id": "DM0-b4",
+							"status": "todo",
+							"title": "Core reports its release and API version, and the core → backend hop has a contract window"
+						},
+						{
+							"id": "DM0-d1",
+							"status": "todo",
+							"title": "Request IDs, JSON logs and metrics"
+						},
+						{
+							"id": "DM0-d2",
+							"status": "todo",
+							"title": "Startup settings are checked, and core never runs open in production"
+						},
+						{
+							"id": "DM0-d3",
+							"status": "todo",
+							"title": "CORS on /mcp only for named origins"
+						}
+					]
+				},
+				{
+					"id": "F4-a",
+					"title": "The Slack app is installed, verified and bound",
+					"cards": [
+						{
+							"id": "F4-a1",
+							"status": "todo",
+							"title": "Slack app, install and OAuth"
+						},
+						{
+							"id": "F4-a2",
+							"status": "todo",
+							"title": "Events and interactivity relay"
+						},
+						{
+							"id": "F4-a3",
+							"status": "todo",
+							"title": "Channel binding and user linking"
+						}
+					]
+				},
+				{
+					"id": "F4-b",
+					"title": "The loop runs in threads, and only people decide",
+					"cards": [
+						{
+							"id": "F4-b1",
+							"status": "todo",
+							"title": "Thread mapping"
+						},
+						{
+							"id": "F4-b2",
+							"status": "todo",
+							"title": "Iterate and challenge in Slack"
+						},
+						{
+							"id": "F4-b3",
+							"status": "todo",
+							"title": "Decisions from Slack"
+						}
+					]
+				},
+				{
+					"id": "F4-c",
+					"title": "Reports come in and maps and prompts go out",
+					"cards": [
+						{
+							"id": "F4-c1",
+							"status": "todo",
+							"title": "Reports in Slack"
+						},
+						{
+							"id": "F4-c2",
+							"status": "todo",
+							"title": "Posting back"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "H",
+			"result": "Hardened before anyone else depends on it (v0.17, D53)",
+			"check": "CH",
+			"batches": [
+				{
+					"id": "DM0-c",
+					"title": "The batching standard is an AADM standard",
+					"cards": [
+						{
+							"id": "DM0-c1",
+							"status": "todo",
+							"title": "aadm-standard standards/batching-standard.md (Part 1 of aadm-batching-standard-draft.md), pl…"
+						},
+						{
+							"id": "DM0-c3",
+							"status": "todo",
+							"title": "The delivery_map tool says batch and stays compatible one version back"
+						}
+					]
+				},
+				{
+					"id": "DM0-e",
+					"title": "Every change is checked before it deploys",
+					"cards": [
+						{
+							"id": "DM0-e1",
+							"status": "todo",
+							"title": "aadm-mcp CI. Repo aadm-mcp"
+						},
+						{
+							"id": "DM0-e2",
+							"status": "todo",
+							"title": "aadm-website CI. Repo aadm-website"
+						}
+					]
+				},
+				{
+					"id": "DM1-c",
+					"title": "The storage seam keeps Supabase out of the contracts",
+					"cards": [
+						{
+							"id": "DM1-c1",
+							"status": "todo",
+							"title": "Named doc slice: docs/data-inventory.md (§13a.1) plus a data_class label on every table, and…"
+						},
+						{
+							"id": "DM1-c3",
+							"status": "todo",
+							"title": "Model guard: a check fails the build if an LLM SDK appears in either repo's dependencies or…"
+						},
+						{
+							"id": "DM1-c4",
+							"status": "todo",
+							"title": "Portable SQL migrations: db/migrations/NNNN_name.sql plus a small runner recording schema_mi…"
+						}
+					]
+				},
+				{
+					"id": "DM1-e",
+					"title": "Any Postgres works, and only the backend touches it",
+					"cards": [
+						{
+							"id": "DM1-e1",
+							"status": "todo",
+							"title": "Portability contract: the same contract suite runs against Supabase and a plain Postgres con…"
+						},
+						{
+							"id": "DM1-e2",
+							"status": "todo",
+							"title": "App-layer tenancy holds without RLS: the isolation suite runs on a Postgres with RLS disable…"
+						},
+						{
+							"id": "DM1-e3",
+							"status": "todo",
+							"title": "Core saves nothing, proved: a build check fails if PlanStore, BlobStore, a Postgres driver o…"
+						},
+						{
+							"id": "DM1-e5",
+							"status": "todo",
+							"title": "Every tool declares its plan tag: code, field or shared (plus a free flag), where it is regi…"
+						}
+					]
+				},
+				{
+					"id": "F1-r",
+					"title": "Every refusal has one result code, and org keys are bound safely",
+					"cards": [
+						{
+							"id": "DM2-a3",
+							"status": "todo",
+							"title": "One result-code contract for core and backend"
+						},
+						{
+							"id": "DM2-a4",
+							"status": "todo",
+							"title": "Org-owned API keys are refused"
+						}
+					]
+				},
+				{
+					"id": "H-a",
+					"title": "Nothing crosses workspaces, a workspace can leave whole, and the second fixture comes in",
+					"cards": [
+						{
+							"id": "F1-b2",
+							"status": "todo",
+							"title": "Workspace export and import"
+						},
+						{
+							"id": "F2-a3",
+							"status": "todo",
+							"title": "Second fixture"
+						},
+						{
+							"id": "F1-b1",
+							"status": "todo",
+							"title": "Tenancy and secrets suite"
+						}
+					]
+				},
+				{
+					"id": "H-b",
+					"title": "The roadmap replans itself, and every judgment and map matches core",
+					"cards": [
+						{
+							"id": "F2-d2",
+							"status": "todo",
+							"title": "replan"
+						},
+						{
+							"id": "DM6-g6",
+							"status": "todo",
+							"title": "Field judgments equal the core judges' output"
+						},
+						{
+							"id": "F2-e2",
+							"status": "todo",
+							"title": "Map parity"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "F5",
+			"result": "The web shell browses the same workspace: map, evidence and co-sign (v0.17, D53: editing moved to F8)",
+			"check": "CF5",
+			"batches": [
+				{
+					"id": "DM5-d",
+					"title": "The website's settings and errors are checked in code",
+					"cards": [
+						{
+							"id": "DM5-d1",
+							"status": "todo",
+							"title": "The website's settings schema"
+						},
+						{
+							"id": "DM5-d2",
+							"status": "todo",
+							"title": "Website request IDs and error reporting"
+						}
+					]
+				},
+				{
+					"id": "F5-a",
+					"title": "Workspaces open into two areas you can browse",
+					"cards": [
+						{
+							"id": "F5-a1",
+							"status": "todo",
+							"title": "Shell navigation"
+						},
+						{
+							"id": "F5-a2",
+							"status": "todo",
+							"title": "Requirements area views"
+						},
+						{
+							"id": "F5-a3",
+							"status": "todo",
+							"title": "Roadmap area views"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "F6",
+			"result": "Safe to depend on",
+			"check": "CF6",
+			"batches": [
+				{
+					"id": "DM7-c",
+					"title": "Operators can stop and recover the service",
+					"cards": [
+						{
+							"id": "DM7-c1",
+							"status": "todo",
+							"title": "/ready and the operator switches"
+						},
+						{
+							"id": "DM7-c2",
+							"status": "todo",
+							"title": "Recovery runbooks and a backup restore drill"
+						}
+					]
+				},
+				{
+					"id": "F6-r",
+					"title": "Old data is cleaned up safely and hosts can be switched",
+					"cards": [
+						{
+							"id": "DM7-a2",
+							"status": "todo",
+							"title": "Retention jobs, run by aadm-backend (D30"
+						},
+						{
+							"id": "DM7-a4",
+							"status": "todo",
+							"title": "Migrate-between-hosts runbook check: export from Supabase, import into a plain Postgres, run…"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "F8",
+			"result": "The web shell edits everything, and people buy, invite and land (later; v0.17, D53)",
+			"check": "CF8",
+			"batches": [
+				{
+					"id": "F5-b",
+					"title": "Everything can be edited on the web, through the same verbs",
+					"cards": [
+						{
+							"id": "F5-b1",
+							"status": "todo",
+							"title": "Full editing: requirements"
+						},
+						{
+							"id": "F5-b2",
+							"status": "todo",
+							"title": "Full editing: roadmap"
+						},
+						{
+							"id": "F5-b3",
+							"status": "todo",
+							"title": "Full editing: prompts"
+						},
+						{
+							"id": "F5-b4",
+							"status": "todo",
+							"title": "Shell parity and guard"
+						}
+					]
+				},
+				{
+					"id": "F5-s",
+					"title": "People can be invited to a workspace, each user's plan is known, and last opened is remembered",
+					"cards": [
+						{
+							"id": "DM6-a2",
+							"status": "todo",
+							"title": "Our own invite flow: the workspace_invite table (RLS and an explicit grant to aadm_app), cre…"
+						},
+						{
+							"id": "DM6-a3",
+							"status": "todo",
+							"title": "Members page: change role and remove a member"
+						},
+						{
+							"id": "DM6-c3",
+							"status": "todo",
+							"title": "The fde_tools check, the billing webhooks and the entitlement table, in the backend"
+						},
+						{
+							"id": "DM6-a5",
+							"status": "todo",
+							"title": "Per-member last_opened_at on workspace_member (§8): an additive nullable column through DM1-…"
+						}
+					]
+				},
+				{
+					"id": "DM6-p",
+					"title": "AADM Field is a product you can buy and use",
+					"cards": [
+						{
+							"id": "DM6-p1",
+							"status": "todo",
+							"title": "Clerk Billing and Stripe setup for AADM Field (D36)"
+						},
+						{
+							"id": "DM6-p2",
+							"status": "todo",
+							"title": "Code and/or Field entitlements as separate subscriptions (D36): a pure matrix from features…"
+						},
+						{
+							"id": "DM6-p3",
+							"status": "todo",
+							"title": "MCP tools by subscription on the shared endpoint (D36, FIX-32): aadm-core filters tools/list…"
+						},
+						{
+							"id": "DM6-p4",
+							"status": "todo",
+							"title": "Tool lists by subscription, proved"
+						}
+					]
+				},
+				{
+					"id": "F5-l",
+					"title": "Preferences are remembered, and Field users sign in and land in the right place",
+					"cards": [
+						{
+							"id": "DM6-a4",
+							"status": "todo",
+							"title": "User preferences in aadm-backend (moved from F7-p to F5-l in v0.16.1, because DM6-h2 and DM6…"
+						},
+						{
+							"id": "DM6-h1",
+							"status": "todo",
+							"title": "Sign-in lands you by plan: the DM6-p2 matrix read in the post-sign-in hop (only the bare-/me…"
+						},
+						{
+							"id": "DM6-h2",
+							"status": "todo",
+							"title": "Trial users pick where to start, and it sticks: the chooser \"What do you want to do first?\"…"
+						},
+						{
+							"id": "DM6-h3",
+							"status": "todo",
+							"title": "Free users get a pick-a-plan page: the member-area plan page (path confirmed here"
+						}
+					]
+				},
+				{
+					"id": "F5-x",
+					"title": "Code-only users see an offer; trials and the AI coder card work",
+					"cards": [
+						{
+							"id": "DM5-a4",
+							"status": "todo",
+							"title": "The AADM Field page on aadm.io (§7 item 15"
+						},
+						{
+							"id": "DM6-h4",
+							"status": "todo",
+							"title": "Code-only and Free see an offer, not an error, at /field/main: the in-place offer \"Add AADM…"
+						},
+						{
+							"id": "DM6-h8",
+							"status": "todo",
+							"title": "Trial badge and plan changes show within the cache window: the \"Trial: {n} days left\" badge…"
+						},
+						{
+							"id": "DM6-h9",
+							"status": "todo",
+							"title": "A one-time \"Connect your AI coder\" card: the card linking to /member/mcp-oauth, with Dismiss…"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "F7",
+			"result": "Workspaces have settings, preferences and handover (later; plumbing)",
+			"check": "CF7",
+			"batches": [
+				{
+					"id": "F7-s",
+					"title": "Workspace settings have one home",
+					"cards": [
+						{
+							"id": "DM1-f1",
+							"status": "todo",
+							"title": "workspace_policy and append-only workspace_policy_event tables behind PlanStore, the presets…"
+						},
+						{
+							"id": "DM1-f2",
+							"status": "todo",
+							"title": "Change rules: an owner may tighten any \"Owner (tighten)\" setting"
+						},
+						{
+							"id": "DM5-a3",
+							"status": "todo",
+							"title": "The workspace Settings page in the member area: one section per area of §5, each row showing…"
+						}
+					]
+				},
+				{
+					"id": "DM6-b",
+					"title": "Sharing and handover",
+					"cards": [
+						{
+							"id": "DM6-b1",
+							"status": "todo",
+							"title": "Read-only share links"
+						},
+						{
+							"id": "DM6-b2",
+							"status": "todo",
+							"title": "Engagement transfer package"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "T",
+			"result": "The stack is known: Terrain (later)",
+			"check": "CT",
+			"batches": [
+				{
+					"id": "DM1-d",
+					"title": "Terrain facts have a home",
+					"cards": [
+						{
+							"id": "DM1-d1",
+							"status": "todo",
+							"title": "terrain_profile and terrain_fact tables behind PlanStore, with RLS and explicit grants to aa…"
+						},
+						{
+							"id": "DM1-d2",
+							"status": "todo",
+							"title": "terrain_fact_event, append-only, and slice.terrain_fact_ids[]. Done: events can't be edited"
+						}
+					]
+				},
+				{
+					"id": "DM2-t",
+					"title": "Terrain facts can be saved and cited",
+					"cards": [
+						{
+							"id": "DM2-t1",
+							"status": "todo",
+							"title": "MCP tools terrain_fact_save (evidence allowlist schema, §13a.2) and terrain_get"
+						},
+						{
+							"id": "DM2-t2",
+							"status": "todo",
+							"title": "Freshness and gaps in terrain_get, deterministic"
+						}
+					]
+				},
+				{
+					"id": "DMT-a",
+					"title": "The crawl stays inside the customer's walls",
+					"cards": [
+						{
+							"id": "DMT-a1",
+							"status": "todo",
+							"title": "Repo crawl to Terrain: AADM collection guidance for the host coder, which runs repo_architec…"
+						},
+						{
+							"id": "DMT-a2",
+							"status": "todo",
+							"title": "Host-side import guides for OpenAPI, Terraform JSON, CMDB CSV and docs"
+						}
+					]
+				},
+				{
+					"id": "DMT-b",
+					"title": "Interview, gaps and freshness",
+					"cards": [
+						{
+							"id": "DMT-b1",
+							"status": "todo",
+							"title": "Guided Terrain interview (D11 default: extend audit_interview with a terrain bank)"
+						},
+						{
+							"id": "DMT-b2",
+							"status": "todo",
+							"title": "Terrain view in the member area: sections, sources, ages, stale flags, gap list, UDALI map…"
+						},
+						{
+							"id": "DMT-b3",
+							"status": "todo",
+							"title": "Terrain sections 13 Experience, 14 Observability and 15 Quality (optional), with allowlist k…"
+						},
+						{
+							"id": "DMT-b4",
+							"status": "todo",
+							"title": "Terrain section 16, Extension points (§13l.1): - the section in terrain_get and in the Terra…"
+						}
+					]
+				},
+				{
+					"id": "DMT-c",
+					"title": "The UDALI transpose: three views of one Terrain map",
+					"cards": [
+						{
+							"id": "DMT-c1",
+							"status": "todo",
+							"title": "Crosswalk view: crosswalk_term facts, plus vocabulary_crosswalk extended with an optional pe…"
+						},
+						{
+							"id": "DMT-c2",
+							"status": "todo",
+							"title": "Systems × UDALI-band matrix over stored udali_placement facts"
+						},
+						{
+							"id": "DMT-c3",
+							"status": "todo",
+							"title": "Current-vs-target gap view: target from the latest signed cornerstone's UDALI-T items"
+						}
+					]
+				},
+				{
+					"id": "DMT-d",
+					"title": "Terrain holds platform configuration",
+					"cards": [
+						{
+							"id": "DMT-d1",
+							"status": "todo",
+							"title": "The platform_ allowlist kinds (§13a.2) and Terrain section 17, saved through terrain_fact_sa…"
+						},
+						{
+							"id": "DMT-d2",
+							"status": "todo",
+							"title": "Host-side configuration guide: AADM collection guidance for the customer's coder or FDE to e…"
+						},
+						{
+							"id": "DMT-d3",
+							"status": "todo",
+							"title": "Terrain view, Platform configuration section (§7 item 14)"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "6A",
+			"result": "FDEs know each customer's modes, rules, people and configuration (later)",
+			"check": "C6A",
+			"batches": [
+				{
+					"id": "DM2-m",
+					"title": "Every plan says how it lands: in the code or plugged in beside it",
+					"cards": [
+						{
+							"id": "DM2-m1",
+							"status": "todo",
+							"title": "Delivery mode and host contract in Cornerstone: - cornerstone_version.delivery_mode (require…"
+						},
+						{
+							"id": "DM2-m2",
+							"status": "todo",
+							"title": "delivery_map_save applies the mode"
+						}
+					]
+				},
+				{
+					"id": "DM6-c",
+					"title": "Governance and stakeholders are mapped",
+					"cards": [
+						{
+							"id": "DM6-c1",
+							"status": "todo",
+							"title": "Governance, standards and best practices map: governance_item and governance_event tables, g…"
+						},
+						{
+							"id": "DM6-c2",
+							"status": "todo",
+							"title": "Stakeholder map: a stakeholder table (RACI per phase, influence, interest, cadence, last tou…"
+						}
+					]
+				},
+				{
+					"id": "DM6-s",
+					"title": "The Speed Layer canvas shows where the customer is and is going",
+					"cards": [
+						{
+							"id": "DM6-s1",
+							"status": "todo",
+							"title": "speed_layer_assess in aadm-backend: the 30 Figure 17 boxes seeded from speed-layer-framework…"
+						},
+						{
+							"id": "DM6-s2",
+							"status": "todo",
+							"title": "Speed Layer view in Strategy: the canvas laid out as Figure 17 with current → future chips…"
+						}
+					]
+				},
+				{
+					"id": "DM6-w",
+					"title": "Configuration work is planned, applied and verified",
+					"cards": [
+						{
+							"id": "DM6-w1",
+							"status": "todo",
+							"title": "Speed Layer tie-in: the T7 and T8 boxes and the \"Enterprise architecture\" aspect take curren…"
+						},
+						{
+							"id": "DM6-w2",
+							"status": "todo",
+							"title": "Configuration targets: PC- items in Cornerstone (C3) for configure_only, and the configurati…"
+						},
+						{
+							"id": "DM6-w3",
+							"status": "todo",
+							"title": "config_plan and config_diff, stateless in aadm-core, listed for Field plans only"
+						},
+						{
+							"id": "DM6-w4",
+							"status": "todo",
+							"title": "Configuration slices: config_change on slice, config_verify (stateless), and the done and ro…"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "6B",
+			"result": "Readiness, risk, pilots and measures are tracked (later)",
+			"check": "C6B",
+			"batches": [
+				{
+					"id": "DM6-d",
+					"title": "Readiness is assessed before work starts",
+					"cards": [
+						{
+							"id": "DM6-d1",
+							"status": "todo",
+							"title": "Register and access tables (risk, risk_event, access_item, access_event, readiness_check_res…"
+						},
+						{
+							"id": "DM6-d2",
+							"status": "todo",
+							"title": "readiness_assess: runs the checks Q1–Q7, R1–R7, A1–A7, G1–G12 and S1 on stored data and turn…"
+						},
+						{
+							"id": "DM6-d3",
+							"status": "todo",
+							"title": "Interview banks: audit_interview gains a readiness bank (governance G1–G9 and access questio…"
+						},
+						{
+							"id": "DM6-d4",
+							"status": "todo",
+							"title": "plug_in readiness checks in readiness_assess: Q8 host version drift, Q9 rate limits, A8 scop…"
+						}
+					]
+				},
+				{
+					"id": "DM6-e",
+					"title": "Risks are owned, gated and reassessed",
+					"cards": [
+						{
+							"id": "DM6-e1",
+							"status": "todo",
+							"title": "Gates: cornerstone Sign, Go on cutover/rollout slices, and slice start on access (§13h.8"
+						},
+						{
+							"id": "DM6-e2",
+							"status": "todo",
+							"title": "Mitigation evidence and reassessment: link each risk to its evidence tool (§13h.7)"
+						},
+						{
+							"id": "DM6-e3",
+							"status": "todo",
+							"title": "The Readiness and risk view: four gap panels plus the register, merged with Terrain's gap li…"
+						}
+					]
+				},
+				{
+					"id": "DM6-f",
+					"title": "Pilots are small, measured and decided",
+					"cards": [
+						{
+							"id": "DM6-f1",
+							"status": "todo",
+							"title": "Use cases: use_case table and use_case_save/list with V, F, K, priority and (v0.8) the requi…"
+						},
+						{
+							"id": "DM6-f2",
+							"status": "todo",
+							"title": "Pilot charter and start gate: pilot and pilot_amendment tables, pilot_save, the pilot limits…"
+						},
+						{
+							"id": "DM6-f3",
+							"status": "todo",
+							"title": "Feedback loop: pilot_feedback (channel, short summary per FIX-07, triage result, changed ref…"
+						},
+						{
+							"id": "DM6-f4",
+							"status": "todo",
+							"title": "Go/No-Go: the recommendation per §13i.4, the decision record with the values used, the co-si…"
+						}
+					]
+				},
+				{
+					"id": "DM7-b",
+					"title": "Outcomes are checked after go-live",
+					"cards": [
+						{
+							"id": "DM7-b1",
+							"status": "todo",
+							"title": "Measure checks: an append-only outcome_measure_check (measure, value, checked_by, at, on_tar…"
+						},
+						{
+							"id": "DM7-b2",
+							"status": "todo",
+							"title": "Off-target feedback: an off-target result returns a lessons_register candidate for the host…"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "6C",
+			"result": "Firms run many engagements: the Firm layer (later)",
+			"check": "C6C",
+			"batches": [
+				{
+					"id": "DMF-a",
+					"title": "A firm sits above its customer workspaces, and customers stay sealed",
+					"cards": [
+						{
+							"id": "DMF-a1",
+							"status": "todo",
+							"title": "firm, firm_member, firm_policy and firm_policy_event through DM1-c4 migrations and PlanStore…"
+						},
+						{
+							"id": "DMF-a2",
+							"status": "todo",
+							"title": "Consent and the rollup: firm_workspace_link with a people-only consent route (CFG-FIRM-02)…"
+						},
+						{
+							"id": "DMF-a3",
+							"status": "todo",
+							"title": "Tenancy proof: tenant_isolation_check plus a seeded leak suite of 3 customers across 2 firms…"
+						}
+					]
+				},
+				{
+					"id": "DMF-b",
+					"title": "The portfolio shows every engagement at a glance",
+					"cards": [
+						{
+							"id": "DMF-b1",
+							"status": "todo",
+							"title": "portfolio_get in aadm-backend, through firm_rollup only, with filters"
+						},
+						{
+							"id": "DMF-b2",
+							"status": "todo",
+							"title": "Portfolio page (§7 item 13)"
+						}
+					]
+				},
+				{
+					"id": "DMF-c",
+					"title": "Proven patterns become firm playbooks",
+					"cards": [
+						{
+							"id": "DMF-c1",
+							"status": "todo",
+							"title": "playbook and playbook_version, playbook_propose, the strip check (FIX-30) and versioning"
+						},
+						{
+							"id": "DMF-c2",
+							"status": "todo",
+							"title": "Promotion approval as a people-only web route (CFG-FIRM-05, CFG-FIRM-06) and the playbook li…"
+						},
+						{
+							"id": "DMF-c3",
+							"status": "todo",
+							"title": "playbook_apply and playbook_use: start an engagement from a playbook version as drafts that…"
+						}
+					]
+				},
+				{
+					"id": "DMF-d",
+					"title": "Staffing, capacity and quality across FDEs",
+					"cards": [
+						{
+							"id": "DMF-d1",
+							"status": "todo",
+							"title": "firm_assignment and firm_capacity, and a pure utilization function (CFG-FIRM-13, CFG-FIRM-14…"
+						},
+						{
+							"id": "DMF-d2",
+							"status": "todo",
+							"title": "Quality metrics, a pure function from rollup counts only: ON PLAN rate, rework, readiness pa…"
+						},
+						{
+							"id": "DMF-d3",
+							"status": "todo",
+							"title": "People page (§7 item 13)"
+						}
+					]
+				},
+				{
+					"id": "DMF-e",
+					"title": "A firm can brand its engagement workspaces",
+					"cards": [
+						{
+							"id": "DMF-e1",
+							"status": "todo",
+							"title": "firm_brand (display name, logo through BlobStore, colors"
+						},
+						{
+							"id": "DMF-e2",
+							"status": "todo",
+							"title": "Brand on exports and renders: the transfer package cover and the map render header per CFG-F…"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "8",
+			"result": "Customers keep their data (later)",
+			"check": "C8",
+			"batches": [
+				{
+					"id": "DM8-a",
+					"title": "Bring your own storage (mode b)",
+					"cards": [
+						{
+							"id": "DM8-a1",
+							"status": "todo",
+							"title": "Per-workspace data-plane settings (workspace_data_plane), owner only"
+						},
+						{
+							"id": "DM8-a2",
+							"status": "todo",
+							"title": "The first customer adapter (D9) with federated, short-lived credentials"
+						},
+						{
+							"id": "DM8-a3",
+							"status": "todo",
+							"title": "Control-plane split, customer-managed keys and counts-only telemetry"
+						},
+						{
+							"id": "DM8-a4",
+							"status": "todo",
+							"title": "Export and delete through the adapter"
+						}
+					]
+				},
+				{
+					"id": "DM8-b",
+					"title": "Self-hosted data plane (mode c)",
+					"cards": [
+						{
+							"id": "DM8-b1",
+							"status": "todo",
+							"title": "The same aadm-mcp image in the customer's cloud, started in both modes: aadm-core (front doo…"
+						},
+						{
+							"id": "DM8-b2",
+							"status": "todo",
+							"title": "Sign-in through the customer's IdP over OIDC, using user_issuer + user_subject, mapped to an…"
+						},
+						{
+							"id": "DM8-b3",
+							"status": "todo",
+							"title": "License check, update channel and egress allowlist"
+						},
+						{
+							"id": "DM8-b4",
+							"status": "todo",
+							"title": "Mode (c) proof, plus an in-plane Terrain crawler job"
+						}
+					]
+				}
+			]
+		}
+	],
+	"you_are_here": "DM0-b3",
+	"counts": {
+		"stages": 14,
+		"batches": 55,
+		"slices": 160,
+		"done": 11
+	}
 }

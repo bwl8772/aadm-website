@@ -47,6 +47,23 @@ const stackGroups: StackGroup[] = [
 		],
 	},
 	{
+		title: "Mobile / universal",
+		tagline: "One TypeScript tree, native binaries",
+		tone: "emerald",
+		items: [
+			{
+				name: "Expo",
+				covers:
+					"Expo Router, EAS Build / Submit / Update, CNG, Expo Go vs dev client, Metro",
+			},
+			{
+				name: "React Native (bare)",
+				covers:
+					"Pressable, Platform.OS, AsyncStorage, RNTL — not Expo Router / EAS",
+			},
+		],
+	},
+	{
 		title: "Backend",
 		tagline: "Server frameworks",
 		tone: "violet",
@@ -144,6 +161,7 @@ const platforms = [
 	"Web",
 	"Mobile — native",
 	"Mobile — cross-platform",
+	"Universal — iOS, Android, and web",
 	"Server-rendered web",
 	"Desktop",
 	"Other — CLI, API, embedded",
@@ -155,8 +173,8 @@ const openGaps = [
 		b: "Laravel, Symfony. PHP is a recognized language — there's no idiom dictionary for it yet.",
 	},
 	{
-		t: "Mobile frameworks",
-		b: "React Native, Flutter, SwiftUI, Jetpack Compose. Mobile is a recognized platform — there's no idiom dictionary for it yet.",
+		t: "Other mobile UI kits",
+		b: "Flutter, SwiftUI, Jetpack Compose. Expo and React Native now have idiom dictionaries; these do not yet.",
 	},
 	{
 		t: "Cloud SDKs and infra idioms",
@@ -169,7 +187,7 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 
 <Layout
 	title="AADM — compatible tech stacks"
-	description="AADM never names a cloud. Named idiom support across 19 frontend, backend, and game-engine stacks — and the same doctrine, AUTH controls, and workflows for everything else."
+	description="AADM never names a cloud. Named idiom support across 21 frontend, backend, mobile, and game-engine stacks — and the same doctrine, AUTH controls, and workflows for everything else."
 	headerActiveNav="stacks"
 >
 	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-text-primary">
@@ -261,7 +279,7 @@ const totalStacks = stackGroups.reduce((n, g) => n + g.items.length, 0);
 						Your framework's own words, <span class="font-light italic text-muted-foreground">turned into citations.</span>
 					</h2>
 					<p class="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
-						Paste <code class="font-mono-cta text-brand-mcp">useEffect</code>, <code class="font-mono-cta text-brand-mcp">ngOnInit</code>, or
+						Paste <code class="font-mono-cta text-brand-mcp">useEffect</code>, <code class="font-mono-cta text-brand-mcp">Expo Router</code>, <code class="font-mono-cta text-brand-mcp">ngOnInit</code>, or
 						<code class="font-mono-cta text-brand-mcp"> RemoteEvent</code> and the MCP returns the matching stack role, AUTH control, and
 						UDALI band — a deterministic keyword lookup, never a guess. Stack identity itself is only ever set by evidence
 						you provide (a <code class="font-mono-cta text-brand-mcp">framework_hint</code> or your own
