@@ -9,13 +9,12 @@ Oct 30, 2026. Working list for the Field web shell (`src/components/field/`, `sr
 - [ ] The PRD copy on the Desktop is v0.16; the repo copy (v0.20) is current. Retire or refresh the Desktop copy.
 - [ ] `FIELD-CONTRACTS.md` §11 read models (`getFieldHome` with `critical_path`, `waiting_on_you`, `customer_commitments`) no longer match `MyFieldView`. Update or mark superseded by `contracts/`.
 - [ ] `FIELD-VISION.md` points at `.tmp/field-*-mock.html`; the real mock sources are the Desktop PNGs and zips. Fix the pointer.
-- [ ] Migrations safe to re-run: add to F1-a1's done-check (one transaction per file, `IF NOT EXISTS`, refuse an edited file, run twice gives the same schema). None exist yet in either repo.
+- [ ] Migrations safe to re-run: add to F1-a1's done-check (one transaction per file, `IF NOT EXISTS`, refuse an edited file, run twice gives the same schema). None exist yet in either repo. `npm run check` already runs `scripts/migration-guard.mjs`, which fails a migration that bumps a version counter without a content guard; it also needs to run in aadm-mcp, where the migrations will live.
 - [ ] PRD §20 v0.20 items: Clerk org ↔ workspace, model key per engagement or workspace, Slack channel for a multi-workspace engagement, restating TEN-06 and ARCH-01 in aadm-mcp.
 
 ### Contracts not yet in code
 - [ ] Workbench schemas and fixture to `FIELD-WORKBENCH.md`: separate stream read, typed entries, the shared Action shape, all five lenses with links, `panels`, `uploads`.
 - [ ] Studio schemas and fixture to `FIELD-STUDIO.md`: typed blocks with `fallback_text`, `content_hash`, `versions`, `header_actions`, flat `share_options`, map `nodes` and `edges`.
-- [ ] `MyFieldViewSchema`: add `workspace_labels` to action rows and engagement cards (Workspace decision 10).
 - [ ] Workspace screen: schema, fixture, `src/pages/field/main/w/[workspaceId].astro`, switcher in the header.
 - [ ] Commands: one client helper that sends the PRD §A7 envelope to `POST /api/v1/commands`; wire `ActionControl` to it. Nudge, Capture and every command button are no-ops today.
 - [ ] Live updates: subscribe to `view.invalidated` and re-read.
@@ -54,4 +53,3 @@ Duplicate labels will collide and labels can change. Use server ids:
 ### Other
 - [ ] `ActionControl` renders commands as disabled-looking no-ops with no feedback; after wiring, show pending and the server's error.
 - [ ] `studio/BuiltView.tsx:69` renders every artifact in a monospace block; blocks should choose their own component per `kind`.
-- [ ] `Pill.tsx:32` colours the lens dot from `state` while the pill uses the server's `tone`; use `tone` for both so one value sets the colour.
