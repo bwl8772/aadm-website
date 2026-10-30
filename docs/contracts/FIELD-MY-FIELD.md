@@ -181,7 +181,7 @@ How this screen maps to `docs/PRD-aadm-delivery-maps.md` (v0.19): the nouns of ย
 | **Workspace** | A group of engagements the user belongs to (their firm, team or practice). Tenant boundary for auth and Clerk membership | ยงA3 Workspace is "one customer or project"; needs a PRD change |
 | **Engagement** | One customer effort inside a workspace. Owns the Idea, Vision, Requirements, Roadmap and everything below | Not one of the 14 nouns; **proposed 15th noun**, needs a PRD decision |
 
-A user can have many engagements in one workspace. My Field spans every engagement the user can see, across every workspace. A **Workspace overview** screen (the engagements in one workspace, as a collection) is not designed yet.
+A user can have many engagements in one workspace, and one engagement can be linked to several workspaces. Every user has **My Workspace**. My Field spans every engagement the user can see, across every workspace, and each action row and engagement card carries the server's `workspace_labels` (decision 10 in [`FIELD-WORKSPACE.md`](FIELD-WORKSPACE.md)). The Workspace screen is specified in that contract.
 
 ### Fields to nouns
 

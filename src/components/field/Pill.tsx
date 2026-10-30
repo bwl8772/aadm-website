@@ -29,16 +29,15 @@ export function Pill({
 	);
 }
 
-const lensDot: Record<LensStatus, string> = {
-	on_track: "bg-brand-mcp",
-	in_progress: "bg-accent-blue",
-	needs_action: "bg-brand-warn",
-	needs_decision: "bg-brand-warn",
-	blocked: "bg-destructive",
-	not_started: "bg-text-muted",
+const toneDot: Record<PillTone, string> = {
+	neutral: "bg-text-muted",
+	warning: "bg-brand-warn",
+	success: "bg-brand-mcp",
+	danger: "bg-destructive",
+	info: "bg-accent-blue",
 };
 
-/** A lens chip. Label and tone come from the server; the dot follows the state enum. */
+/** A lens chip. Label and tone come from the server; the tone sets both chip and dot. */
 export function LensPill({
 	label,
 	state,
@@ -51,7 +50,8 @@ export function LensPill({
 	return (
 		<Pill tone={tone} round>
 			<span
-				className={`h-2 w-2 rounded-full ${lensDot[state]}`}
+				className={`h-2 w-2 rounded-full ${toneDot[tone]}`}
+				data-lens-state={state}
 				aria-hidden="true"
 			/>
 			{label}

@@ -66,6 +66,9 @@ export default function ActionsPanel({
 								</td>
 								<td className="max-w-[15rem] px-3 py-4 text-text-secondary">
 									{a.engagement_label}
+									<span className="mt-0.5 block text-sm text-text-muted">
+										{a.workspace_labels.join(" · ")}
+									</span>
 								</td>
 								<td className="px-3 py-4">
 									<Pill>{a.specialist_label}</Pill>

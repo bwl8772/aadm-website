@@ -69,6 +69,8 @@ export const ActionRowSchema = z.object({
 	engagement_label: z.string(),
 	specialist_label: z.string(),
 	owner_label: z.string(),
+	/** Server labels for every workspace this engagement sits in. */
+	workspace_labels: z.array(z.string()).min(1),
 	waiting_label: z.string(),
 	waiting_tone: ToneSchema,
 	cta: ActionSchema,
@@ -78,6 +80,7 @@ export const EngagementCardSchema = z.object({
 	engagement_id: id,
 	customer_label: z.string(),
 	engagement_label: z.string(),
+	workspace_labels: z.array(z.string()).min(1),
 	status: LabelToneSchema.optional(),
 	/** Shown when the server has no `facts` for the card. */
 	summary: z.string().optional(),

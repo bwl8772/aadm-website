@@ -24,6 +24,9 @@ export default function EngagementCard({ card }: { card: EngagementCardView }) {
 						)}
 					</h3>
 					<p className="mt-0.5 text-text-secondary">{card.engagement_label}</p>
+					<p className="mt-0.5 text-sm text-text-muted">
+						{card.workspace_labels.join(" · ")}
+					</p>
 				</div>
 				{card.status ? (
 					<Pill tone={card.status.tone}>{card.status.label}</Pill>
