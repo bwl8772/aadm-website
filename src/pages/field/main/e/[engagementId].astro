@@ -1,0 +1,54 @@
+---
+export const prerender = false;
+
+import { WorkbenchModelSchema } from "../../../../components/field/field-types";
+import EngagementWorkbench from "../../../../components/field/workbench/EngagementWorkbench";
+import MemberSatelliteSyncPage from "../../../../components/MemberSatelliteSyncPage.astro";
+import Layout from "../../../../layouts/Layout.astro";
+import { FIELD_HOME_PATH } from "../../../../lib/field-area";
+import { fieldFixture } from "../../../../lib/field-fixtures";
+
+const { userId } = Astro.locals.auth();
+const syncPending = Astro.locals.satelliteSyncPending === true;
+const { engagementId = "" } = Astro.params;
+
+/** Example data only when PUBLIC_FIELD_FIXTURES=1; otherwise no data until the backend read model is wired. */
+const fixtures = fieldFixture("workbench") as Record<string, unknown> | null;
+const raw = fixtures?.[engagementId] ?? null;
+const parsed = raw ? WorkbenchModelSchema.safeParse(raw) : null;
+/** RES-05: a malformed model is a visible error, never "not found". */
+const model = parsed?.success ? parsed.data : null;
+const modelError = parsed && !parsed.success;
+---
+
+<Layout
+	title={model ? `${model.customer} · ${model.name} — AADM Field` : "Engagement — AADM Field"}
+	description="AADM Field engagement workbench."
+	footerVariant="default"
+	showHeader={false}
+	showFooter={false}
+>
+	{
+		userId ? (
+			modelError ? (
+				<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
+					<h1 class="text-2xl font-bold text-foreground">Something broke on our side</h1>
+					<p class="mt-3 text-text-secondary">Engagement data did not match its contract.</p>
+				</main>
+			) : model ? (
+				<EngagementWorkbench client:load model={model} />
+			) : (
+				<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
+					<h1 class="text-2xl font-bold text-foreground">No such engagement for you</h1>
+					<p class="mt-3 text-text-secondary">
+						<a href={FIELD_HOME_PATH} class="text-accent-blue hover:underline">Back to My Field</a>
+					</p>
+				</main>
+			)
+		) : syncPending ? (
+			<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
+				<MemberSatelliteSyncPage returnPath={FIELD_HOME_PATH} />
+			</main>
+		) : null
+	}
+</Layout>

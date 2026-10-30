@@ -17,6 +17,7 @@ type HeaderNav =
 	| "standard"
 	| "stories"
 	| "member"
+	| "field"
 	| null;
 
 interface Props {
@@ -30,6 +31,8 @@ interface Props {
 	footerVariant?: "default" | "mcp";
 	/** Set to false to suppress the footer on this page. */
 	showFooter?: boolean;
+	/** Set to false when the page supplies its own chrome (Field header). */
+	showHeader?: boolean;
 	/** Override OG title (defaults to `title`). */
 	ogTitle?: string;
 	/** Override OG description (defaults to `description`). */
@@ -47,6 +50,7 @@ const {
 	headerMcpNavHref,
 	footerVariant = "default",
 	showFooter = true,
+	showHeader = true,
 	ogTitle,
 	ogDescription,
 	ogImage = "/og-default.png",
@@ -139,11 +143,15 @@ const resolvedOgDescription = ogDescription ?? description;
 		<!--
 			Header auth: sign-in on accounts.aadm.io; Member → /member — see docs/CLERK-AUTH.md
 		-->
-		<SiteHeader
-			urlMcpMarketing={urlMcpMarketing}
-			activeNav={headerActiveNav}
-			mcpNavHref={headerMcpNavHref}
-		/>
+		{
+			showHeader && (
+				<SiteHeader
+					urlMcpMarketing={urlMcpMarketing}
+					activeNav={headerActiveNav}
+					mcpNavHref={headerMcpNavHref}
+				/>
+			)
+		}
 		<slot />
 		{showFooter && <SiteFooter variant={footerVariant} />}
 		<script is:inline>

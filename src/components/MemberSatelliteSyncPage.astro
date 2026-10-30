@@ -13,8 +13,8 @@ const { returnPath } = Astro.props;
 const signInUrl = returnPath
 	? getAccountPortalUrls(import.meta.env, returnPath).signInUrl
 	: getMemberSignInUrl(import.meta.env);
-/** Milliseconds before redirecting to sign-in if handshake never completes. */
-const syncTimeoutMs = 20_000;
+/** Handshake wait only. First visits never reach this page (middleware redirects). */
+const syncTimeoutMs = 4_000;
 ---
 
 <div
@@ -39,36 +39,44 @@ const syncTimeoutMs = 20_000;
 		const deadline = Date.now() + syncTimeoutMs;
 
 		while (Date.now() < deadline) {
-			await new Promise((resolve) => setTimeout(resolve, 400));
 			try {
 				const clerk = window.Clerk;
-				if (!clerk) continue;
-				if (typeof clerk.load === "function") {
-					await clerk.load();
-				}
-				if (clerk.user) {
-					const url = new URL(window.location.href);
-					url.searchParams.delete("__clerk_synced");
-					window.location.replace(url.toString());
-					return;
+				if (clerk) {
+					if (typeof clerk.load === "function") {
+						const remaining = Math.max(250, deadline - Date.now());
+						await Promise.race([
+							clerk.load(),
+							new Promise((_, reject) =>
+								setTimeout(() => reject(new Error("load-timeout")), remaining),
+							),
+						]).catch(() => {});
+					}
+					if (clerk.user) {
+						const url = new URL(window.location.href);
+						url.searchParams.delete("__clerk_synced");
+						window.location.replace(url.toString());
+						return;
+					}
+					// clerk-js is up and there is no session — do not keep polling.
+					break;
 				}
 			} catch {
 				/* retry until timeout */
 			}
+			await new Promise((resolve) => setTimeout(resolve, 200));
 		}
 
 		if (statusEl) {
-			statusEl.textContent =
-				"Session sync timed out. Redirecting to sign-in…";
+			statusEl.textContent = "Redirecting to sign-in…";
 		}
 		window.location.replace(signInUrl);
 	}
 
-	if (document.readyState === "complete") {
-		void waitForSatelliteSync();
-	} else {
-		window.addEventListener("load", () => void waitForSatelliteSync(), {
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", () => void waitForSatelliteSync(), {
 			once: true,
 		});
+	} else {
+		void waitForSatelliteSync();
 	}
 </script>
