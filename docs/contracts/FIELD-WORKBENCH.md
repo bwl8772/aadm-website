@@ -198,3 +198,62 @@ Errors use the same problem format as every Field page: `code`, `title`, `detail
 1. Can two engineers run the same agent on one engagement at the same time, or is a run exclusive?
 2. Should inventory imports always land as drafts, or can a trusted connector write rows directly?
 3. Which customer contacts can receive questions sent from the canvas?
+
+## 7. PRD binding
+
+How this screen maps to `docs/PRD-aadm-delivery-maps.md` (v0.19): the nouns of §A3, the verbs of §A4 and the envelope of §A7. Where this contract and the PRD disagree, the PRD wins until the PRD is changed.
+
+### Hierarchy
+
+A **Workspace** groups many **Engagements**; one engagement is one customer effort. The Workbench is one engagement. Engagement is a **proposed 15th noun** and needs a PRD decision; today §A3 calls one customer or project a Workspace. The breadcrumb becomes Workspace → Engagement once the Workspace overview screen exists.
+
+### Regions to nouns
+
+| This contract | PRD noun or source |
+|---|---|
+| `context_bar` outcome | **Vision** (outcome, users, measures) |
+| `context_bar` delivery position, next milestone | **Roadmap** (You are here), **Stage**, **Batch** |
+| `context_bar` blockers, waiting on | Open **Decisions** and slices that block others |
+| `lenses` | Read models over Requirements, Roadmap, Decision and Verdict state. Not stored |
+| `agent_groups` | The agents behind the verbs, one per hat (§A2): Product owner, Architect, Lead, Planner, Builder, Owner. Each specialist names the verbs it may call |
+| Canvas `message`, `thinking`, `tool_call` | The saved round of an **iterate** (§A8: what the agent was asked and answered) |
+| Canvas `draft` | The agent's proposed version N+1 of a noun. Not saved until the verb's write returns it in `saved[]` |
+| Canvas `saved` | The §A7 reply's `saved[]` entry |
+| Canvas `decision_request` | A **Decision** a person must make (sign off, go, confirm) |
+| Canvas `question` | An open question on the **Vision** or **Requirements** version |
+| `artifacts` | The engagement's versioned nouns: Vision, Requirements, Roadmap, Prompts, Runs, Evidence, Verdicts, Maps |
+| `land` inventories | No noun yet. Later stage (see "Not in the PRD yet") |
+| Uploads | Evidence (kind `file`) or the body of an Idea; stored before any agent sees them |
+
+### Commands to verbs
+
+Every command uses the §A7 envelope (`verb`, `workspace_id`, `actor`, `client: "web"`, `source_ref`, `target {kind, id, expected_version}`, `input`, `idempotency_key`, `request_id`, `api_version`). The reply is `{result, saved[], next_step, needs_decision?}`.
+
+| This contract | PRD verb |
+|---|---|
+| `canvas.send` | **iterate** (Vision, Requirements), **challenge**, **batch**, **write prompt** or **judge**, by the selected agent; the agent worker makes the model call (§A6) |
+| `canvas.cancel` | New verb; stops a run, saves nothing new |
+| `draft.save` | The write of the verb that made the draft: version N+1 with `expected_version` |
+| `draft.discard` | New verb; nothing is written to the record |
+| `question.send` | New verb; writes a `workspace_event` and notifies the contact |
+| `decision.record` | **sign off**, **go** or verdict confirm: a person-only **Decision** on one version and hash |
+| `inventory.build`, `inventory.import` | No verb yet. Later stage |
+| `client.open_in_claude` | MCP client handoff (§A6); same workspace and engagement identity |
+| `client.share_in_slack` | Slack client (§A6, Stage F4); posts a link to the record |
+
+Events: `artifact.saved`, `decision.recorded`, `run.judged` and `map.rendered` (§A7) drive `view.invalidated`. The error table in §5 maps onto the D44 result families.
+
+### Rules from the PRD that bind this screen
+
+- **People-only Decisions.** An agent can iterate, challenge, batch, write prompts and suggest a verdict. It never signs off, says go or confirms.
+- **Every write is version N+1** with `expected_version`. Nothing is edited in place.
+- **CTX-06.** The agent worker hop carries `request_id`, and the saved round records it.
+- **FLD-02.** The context bar and lens chips sit beside the work, not ahead of it.
+
+### Stage
+
+The agents and the loop arrive in **Stage V** (F1-a4 agent worker, F2-b to F2-d). The web shell browses in **F5** and edits in **F8**. This screen is built ahead of that order on removable fixtures.
+
+### Not in the PRD yet
+
+Engagement as a noun, lenses as a stored concept, lay-of-the-land inventories, `canvas.cancel`, `draft.discard`, `question.send`.

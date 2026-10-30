@@ -169,3 +169,59 @@ Every state the page can be in has a defined source and display; the server supp
 1. Does snooze belong on My Field, or only in the workbench?
 2. Which channel does a nudge use for customer owners: email, Slack, or the engagement's chosen channel?
 3. Should Capture propose a specialist automatically, or only an engagement?
+
+## 6. PRD binding
+
+How this screen maps to `docs/PRD-aadm-delivery-maps.md` (v0.19): the nouns of §A3, the verbs of §A4 and the envelope of §A7. Where this contract and the PRD disagree, the PRD wins until the PRD is changed.
+
+### Hierarchy: workspace, then engagement
+
+| Level | Meaning | PRD today |
+|---|---|---|
+| **Workspace** | A group of engagements the user belongs to (their firm, team or practice). Tenant boundary for auth and Clerk membership | §A3 Workspace is "one customer or project"; needs a PRD change |
+| **Engagement** | One customer effort inside a workspace. Owns the Idea, Vision, Requirements, Roadmap and everything below | Not one of the 14 nouns; **proposed 15th noun**, needs a PRD decision |
+
+A user can have many engagements in one workspace. My Field spans every engagement the user can see, across every workspace. A **Workspace overview** screen (the engagements in one workspace, as a collection) is not designed yet.
+
+### Fields to nouns
+
+| This contract | PRD noun or source |
+|---|---|
+| `continue` | The backend's `next_step` (§A7 reply) for the single most consequential open item |
+| Action row: "Sign v4", "Co-sign", "Go on prompt", "Confirm verdict" | A **Decision** waiting on a person (§A3), pointing at an exact version and hash |
+| Action row: "Review coder report" | A **Run** with **Evidence**, waiting for **judge** and its confirming Decision |
+| Action row: waiting on the customer | A co-sign Decision (§A4 verb 4, customer C1) not yet made |
+| `blocks_label` | Slices and batches on the **Roadmap** that depend on it |
+| Engagement card `facts` | **Vision** (outcome), **Roadmap** position (You are here), next milestone |
+| Engagement card `lenses` | Read models over Requirements, Roadmap, Decision and Verdict state. Not stored. Must pass FLD-02 (below) |
+| `land_label` | No noun yet. Later stage (see "Not in the PRD yet") |
+| `summary_label`, filter counts | Read models over versions (OBS-04). Must pass FLD-02 |
+| Every `href` | Opens the Workbench or Studio on the noun and version named |
+
+### Commands to verbs
+
+Every command uses the §A7 envelope: `{verb, workspace_id, actor, client: "web", source_ref, target {kind, id, expected_version}, input, idempotency_key, request_id, api_version}`. The reply is `{result, saved[], next_step, needs_decision?}` with the 10 result families of D44. The client then re-reads the view. The command names in §3 become verbs:
+
+| This contract | PRD |
+|---|---|
+| `action.nudge` | New verb (the set is open, §A4). No Decision; writes a `workspace_event` |
+| `action.snooze` | New verb, presentation only for one user. Candidate for later; see open question 1 |
+| `capture.create`, `capture.file` | Verb 1 **capture idea** (a file or note becomes an Idea, filed to an engagement) |
+| `view.invalidated` | Driven by the §A7 events `artifact.saved`, `decision.recorded`, `run.judged`, `map.rendered` |
+
+The error table in §4 maps onto the D44 result families; the problem format (`code`, `title`, `detail`, `retryable`) is how the web shell shows them.
+
+### Rules from the PRD that bind this screen
+
+- **FLD-02.** No screen leads with evidence, health colours or counts. Lens chips, the "Blocked" status and the summary counts sit below the action, never above it. Review before the first real release.
+- **Rule R6.** The screen answers "what should I do next". Nothing on it exists only to prove something to someone else.
+- **People-only Decisions.** Sign off, Go and confirming a verdict are never sent by an agent.
+- **IDN-06.** Every id is a server-made UUID. Fixture ids are stand-ins only.
+
+### Stage
+
+The web shell browses in **F5** and edits in **F8** (§A15). This screen is built ahead of that order on removable fixtures, so the backend contract can be settled early. It is not a ship claim.
+
+### Not in the PRD yet
+
+Engagement as a noun, the Workspace overview screen, lenses as a stored concept, lay-of-the-land inventories, nudge and snooze.
