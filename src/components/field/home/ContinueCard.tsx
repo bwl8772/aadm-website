@@ -1,17 +1,9 @@
-import Button from "../Button";
-import type { ContinueAction } from "../field-types";
+import ActionControl from "../ActionControl";
+import type { ContinueItem } from "../field-types";
 import { Pill } from "../Pill";
 
-type Props = ContinueAction;
-
-export default function ContinueCard({
-	label,
-	engagement,
-	specialist,
-	blocks,
-	verb,
-	href,
-}: Props) {
+/** The one most consequential item, as the server chose and worded it. */
+export default function ContinueCard({ item }: { item: ContinueItem }) {
 	return (
 		<article className="flex flex-col gap-5 rounded-xl border border-accent-blue/30 bg-surface-card p-6 sm:flex-row sm:items-center sm:justify-between">
 			<div className="min-w-0">
@@ -19,17 +11,19 @@ export default function ContinueCard({
 					Continue · most consequential
 				</p>
 				<h2 className="mt-2 text-xl font-bold text-foreground sm:text-2xl">
-					{label}
+					{item.title}
 				</h2>
 				<div className="mt-3 flex flex-wrap items-center gap-2 text-text-secondary">
-					<span>{engagement}</span>
-					<Pill>{specialist}</Pill>
-					{blocks ? <Pill tone="warn">{blocks}</Pill> : null}
+					<span>{item.engagement_label}</span>
+					<Pill>{item.specialist_label}</Pill>
+					{item.badges.map((b) => (
+						<Pill key={b.label} tone={b.tone}>
+							{b.label}
+						</Pill>
+					))}
 				</div>
 			</div>
-			<Button variant="primary" size="lg" href={href}>
-				{verb}
-			</Button>
+			<ActionControl action={item.primary} size="lg" />
 		</article>
 	);
 }

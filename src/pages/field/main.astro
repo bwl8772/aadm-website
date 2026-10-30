@@ -2,16 +2,22 @@
 export const prerender = false;
 
 import FieldApp from "../../components/field/FieldApp";
-import { MyFieldModelSchema } from "../../components/field/field-types";
+import { MyFieldViewSchema } from "../../components/field/field-types";
 import MemberSatelliteSyncPage from "../../components/MemberSatelliteSyncPage.astro";
 import Layout from "../../layouts/Layout.astro";
 import { FIELD_HOME_PATH } from "../../lib/field-area";
 import { fieldFixture } from "../../lib/field-fixtures";
 
 const { userId } = Astro.locals.auth();
-/** Example data only when PUBLIC_FIELD_FIXTURES=1; otherwise no data until the backend read model is wired. */
-const raw = fieldFixture("my-field");
-const parsed = raw ? MyFieldModelSchema.safeParse(raw) : null;
+/**
+ * Stand-in for GET /api/v1/field/home?filter= (docs/contracts/FIELD-MY-FIELD.md).
+ * Example views only when PUBLIC_FIELD_FIXTURES=1; one recorded view per filter id,
+ * so changing the filter is a new read. No backend yet → `null` = Unavailable.
+ */
+const filter = Astro.url.searchParams.get("filter") ?? "me";
+const views = fieldFixture("my-field") as Record<string, unknown> | null;
+const raw = views?.[filter] ?? null;
+const parsed = raw ? MyFieldViewSchema.safeParse(raw) : null;
 /** RES-05: a malformed model is a visible error, never an empty state. */
 const model = parsed?.success ? parsed.data : null;
 const modelError = parsed && !parsed.success;
@@ -33,7 +39,7 @@ const syncPending = Astro.locals.satelliteSyncPending === true;
 				<p class="mt-3 text-text-secondary">My Field data did not match its contract.</p>
 			</main>
 		) : (
-			<FieldApp client:load model={model} />
+			<FieldApp client:load view={model} />
 		)
 		) : syncPending ? (
 			<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">

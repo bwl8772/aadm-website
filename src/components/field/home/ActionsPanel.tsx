@@ -1,63 +1,40 @@
-import { useState } from "react";
-import Button from "../Button";
-import type { FieldAction } from "../field-types";
+import ActionControl from "../ActionControl";
+import type { MyFieldView, ToneKey } from "../field-types";
 import { Pill } from "../Pill";
 
-type Tab = "me" | "customer" | "all";
-
-const waitTone: Record<FieldAction["waiting_tone"], string> = {
+const toneText: Record<ToneKey, string> = {
 	neutral: "text-text-secondary",
-	warn: "font-medium text-brand-warn",
+	info: "text-accent-blue",
+	success: "text-brand-mcp",
+	warning: "font-medium text-brand-warn",
 	danger: "font-medium text-destructive",
 };
-const blockTone: Record<NonNullable<FieldAction["blocks"]>["tone"], string> = {
-	warn: "text-brand-warn",
-	danger: "text-destructive",
-};
 
-interface Props {
-	actions: FieldAction[];
-	counts: { waiting_on_me: number; waiting_on_customer: number; all: number };
-}
-
-export default function ActionsPanel({ actions, counts }: Props) {
-	const [tab, setTab] = useState<Tab>("me");
-	const rows = actions.filter((a) =>
-		tab === "all"
-			? true
-			: tab === "me"
-				? a.owner_kind === "engineer"
-				: a.owner_kind === "customer",
-	);
-	const tabs: { key: Tab; label: string }[] = [
-		{ key: "me", label: `Waiting on me · ${counts.waiting_on_me}` },
-		{
-			key: "customer",
-			label: `Waiting on customer · ${counts.waiting_on_customer}`,
-		},
-		{ key: "all", label: `All · ${counts.all}` },
-	];
-
+/**
+ * Filter tabs and action rows, exactly as the server ordered and counted them.
+ * A filter tab is a link: changing the filter is a new read, not a local filter.
+ */
+export default function ActionsPanel({
+	filters,
+	actions,
+}: {
+	filters: MyFieldView["filters"];
+	actions: MyFieldView["actions"];
+}) {
 	return (
 		<div className="overflow-hidden rounded-xl border border-border bg-surface-card">
-			<div
-				className="flex flex-wrap gap-2 p-5"
-				role="tablist"
-				aria-label="Filter actions"
-			>
-				{tabs.map((t) => (
-					<button
-						key={t.key}
-						type="button"
-						role="tab"
-						aria-selected={tab === t.key}
-						onClick={() => setTab(t.key)}
-						className={`rounded-md px-4 py-2 font-medium transition ${tab === t.key ? "bg-foreground text-background" : "text-text-secondary hover:bg-muted hover:text-foreground"}`}
+			<nav className="flex flex-wrap gap-2 p-5" aria-label="Filter actions">
+				{filters.map((f) => (
+					<a
+						key={f.id}
+						href={`?filter=${encodeURIComponent(f.id)}`}
+						aria-current={f.selected ? "page" : undefined}
+						className={`rounded-md px-4 py-2 font-medium transition ${f.selected ? "bg-foreground text-background" : "text-text-secondary hover:bg-muted hover:text-foreground"}`}
 					>
-						{t.label}
-					</button>
+						{f.label} · {f.count}
+					</a>
 				))}
-			</div>
+			</nav>
 			<div className="overflow-x-auto">
 				<table className="w-full min-w-[52rem] text-left">
 					<thead>
@@ -73,34 +50,32 @@ export default function ActionsPanel({ actions, counts }: Props) {
 						</tr>
 					</thead>
 					<tbody>
-						{rows.map((a) => (
-							<tr key={a.action_id} className="border-t border-border">
+						{actions.items.map((a) => (
+							<tr key={a.id} className="border-t border-border">
 								<td className="px-5 py-4">
 									<span className="block font-medium text-foreground">
-										{a.label}
+										{a.title}
 									</span>
-									{a.blocks ? (
+									{a.blocks_label ? (
 										<span
-											className={`mt-0.5 block text-sm ${blockTone[a.blocks.tone]}`}
+											className={`mt-0.5 block text-sm ${toneText[a.waiting_tone]}`}
 										>
-											{a.blocks.label}
+											{a.blocks_label}
 										</span>
 									) : null}
 								</td>
 								<td className="max-w-[15rem] px-3 py-4 text-text-secondary">
-									{a.engagement}
+									{a.engagement_label}
 								</td>
 								<td className="px-3 py-4">
-									<Pill>{a.specialist}</Pill>
+									<Pill>{a.specialist_label}</Pill>
 								</td>
-								<td className="px-3 py-4 text-foreground">{a.owner_name}</td>
-								<td className={`px-3 py-4 ${waitTone[a.waiting_tone]}`}>
+								<td className="px-3 py-4 text-foreground">{a.owner_label}</td>
+								<td className={`px-3 py-4 ${toneText[a.waiting_tone]}`}>
 									{a.waiting_label}
 								</td>
 								<td className="px-5 py-4 text-right">
-									<Button href={a.href} className="w-28">
-										{a.verb}
-									</Button>
+									<ActionControl action={a.cta} className="w-28" />
 								</td>
 							</tr>
 						))}

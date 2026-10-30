@@ -45,7 +45,7 @@ export default function AgentRail({ groups, activeId, onSelect }: Props) {
 											</span>
 											{a.status ? (
 												<span
-													className={`mt-0.5 block text-sm ${a.status.tone === "warn" ? "font-medium text-brand-warn" : active ? "text-accent-blue" : "text-text-secondary"}`}
+													className={`mt-0.5 block text-sm ${a.status.tone === "warning" ? "font-medium text-brand-warn" : active ? "text-accent-blue" : "text-text-secondary"}`}
 												>
 													{a.status.label}
 												</span>
@@ -65,7 +65,7 @@ export default function AgentRail({ groups, activeId, onSelect }: Props) {
 											</span>
 											{a.status ? (
 												<span
-													className={`mt-0.5 block text-sm ${a.status.tone === "warn" ? "font-medium text-brand-warn" : active ? "text-accent-blue" : "text-text-secondary"}`}
+													className={`mt-0.5 block text-sm ${a.status.tone === "warning" ? "font-medium text-brand-warn" : active ? "text-accent-blue" : "text-text-secondary"}`}
 												>
 													{a.status.label}
 												</span>

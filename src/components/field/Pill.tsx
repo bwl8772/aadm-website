@@ -5,8 +5,8 @@ export type PillTone = ToneKey;
 
 const toneClass: Record<PillTone, string> = {
 	neutral: "bg-muted text-foreground",
-	warn: "bg-brand-warn-bg text-brand-warn",
-	ok: "bg-brand-mcp-bg text-brand-mcp",
+	warning: "bg-brand-warn-bg text-brand-warn",
+	success: "bg-brand-mcp-bg text-brand-mcp",
 	danger: "bg-destructive/10 text-destructive",
 	info: "bg-accent-blue/10 text-accent-blue",
 };
@@ -34,29 +34,27 @@ const lensDot: Record<LensStatus, string> = {
 	in_progress: "bg-accent-blue",
 	needs_action: "bg-brand-warn",
 	needs_decision: "bg-brand-warn",
+	blocked: "bg-destructive",
 	not_started: "bg-text-muted",
 };
 
+/** A lens chip. Label and tone come from the server; the dot follows the state enum. */
 export function LensPill({
-	name,
-	status,
-	note,
+	label,
+	state,
+	tone,
 }: {
-	name: string;
-	status: LensStatus;
-	note?: string;
+	label: string;
+	state: LensStatus;
+	tone: PillTone;
 }) {
-	const tone: PillTone =
-		status === "needs_action" || status === "needs_decision"
-			? "warn"
-			: "neutral";
 	return (
 		<Pill tone={tone} round>
 			<span
-				className={`h-2 w-2 rounded-full ${lensDot[status]}`}
+				className={`h-2 w-2 rounded-full ${lensDot[state]}`}
 				aria-hidden="true"
 			/>
-			{note ? `${name} · ${note}` : name}
+			{label}
 		</Pill>
 	);
 }

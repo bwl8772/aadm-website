@@ -16,11 +16,11 @@ const acmeIntake: WorkbenchModel = {
 		waiting_on: "Customer · Cornerstone v2",
 		blockers: 1,
 		lenses: [
-			{ name: "Strategy", status: "on_track" },
-			{ name: "Plan", status: "in_progress" },
-			{ name: "Readiness", status: "needs_action" },
-			{ name: "Adopt", status: "not_started" },
-			{ name: "Governance", status: "needs_decision" },
+			{ name: "Strategy", status: "on_track", tone: "neutral" },
+			{ name: "Plan", status: "in_progress", tone: "neutral" },
+			{ name: "Readiness", status: "needs_action", tone: "warning" },
+			{ name: "Adopt", status: "not_started", tone: "neutral" },
+			{ name: "Governance", status: "needs_decision", tone: "warning" },
 		],
 	},
 	agent_groups: [

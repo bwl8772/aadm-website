@@ -12,7 +12,13 @@ const id = z.uuid();
 
 /* ---- Shared value lists (docs/contracts/FIELD-MY-FIELD.md) ---- */
 
-export const ToneSchema = z.enum(["neutral", "info", "success", "warning", "danger"]);
+export const ToneSchema = z.enum([
+	"neutral",
+	"info",
+	"success",
+	"warning",
+	"danger",
+]);
 export const LensStatusSchema = z.enum([
 	"on_track",
 	"in_progress",
@@ -78,7 +84,14 @@ export const EngagementCardSchema = z.object({
 	facts: z.array(z.object({ label: z.string(), value: z.string() })),
 	land_label: z.string().optional(),
 	/** Only lenses needing attention. */
-	lenses: z.array(z.object({ id: z.string(), label: z.string(), state: LensStatusSchema, tone: ToneSchema })),
+	lenses: z.array(
+		z.object({
+			id: z.string(),
+			label: z.string(),
+			state: LensStatusSchema,
+			tone: ToneSchema,
+		}),
+	),
 	drift: z.object({ text: z.string(), tone: ToneSchema }).optional(),
 	open: ActionSchema,
 });
@@ -89,10 +102,24 @@ export const MyFieldViewSchema = z.object({
 	viewer: z.object({ display_name: z.string(), initials: z.string() }),
 	summary_label: z.string(),
 	continue: ContinueItemSchema.nullable(),
-	filters: z.array(z.object({ id: z.string(), label: z.string(), count: z.number().int(), selected: z.boolean() })),
-	actions: z.object({ items: z.array(ActionRowSchema), next_cursor: z.string().nullable() }),
+	filters: z.array(
+		z.object({
+			id: z.string(),
+			label: z.string(),
+			count: z.number().int(),
+			selected: z.boolean(),
+		}),
+	),
+	actions: z.object({
+		items: z.array(ActionRowSchema),
+		next_cursor: z.string().nullable(),
+	}),
 	engagements: z.array(EngagementCardSchema),
-	capture: z.object({ available: z.boolean(), accept: z.array(z.string()), max_bytes: z.number().int() }),
+	capture: z.object({
+		available: z.boolean(),
+		accept: z.array(z.string()),
+		max_bytes: z.number().int(),
+	}),
 	empty_state: z.object({ heading: z.string(), line: z.string() }),
 });
 
@@ -159,7 +186,9 @@ export const WorkbenchModelSchema = z.object({
 		next_milestone: z.string(),
 		waiting_on: z.string(),
 		blockers: z.number().int(),
-		lenses: z.array(LensSchema.omit({ note: true })),
+		lenses: z.array(
+			LensSchema.omit({ note: true }).extend({ tone: ToneSchema }),
+		),
 	}),
 	agent_groups: z.array(WorkbenchAgentGroupSchema),
 	active_agent_id: z.string(),

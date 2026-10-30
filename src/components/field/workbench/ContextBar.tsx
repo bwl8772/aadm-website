@@ -28,7 +28,7 @@ export default function ContextBar({
 			<ul className="flex flex-wrap gap-2 sm:pl-5" aria-label="Lenses">
 				{context.lenses.map((l) => (
 					<li key={l.name}>
-						<LensPill name={l.name} status={l.status} />
+						<LensPill label={l.name} state={l.status} tone={l.tone} />
 					</li>
 				))}
 			</ul>
