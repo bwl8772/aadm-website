@@ -67,6 +67,9 @@ export default function EngagementWorkbench({
 									<CanvasStream
 										stream={stream}
 										starterPrompts={view.canvas.starter_prompts}
+										olderHref={(cursor) =>
+											`?agent=${encodeURIComponent(view.canvas.agent_id)}&cursor=${encodeURIComponent(cursor)}`
+										}
 									/>
 									<div className="mt-auto">
 										<Composer

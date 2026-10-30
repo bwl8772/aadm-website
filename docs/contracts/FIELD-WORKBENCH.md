@@ -46,7 +46,7 @@ One read returns the frame of the page; the canvas stream is read separately bec
 | `client_links` | Open in Claude and Share in Slack, each as an action carrying this engagement's identity |
 | `context_bar` | Ordered facts: outcome, delivery position, next milestone, waiting on, blockers. Each has label, value and optional tone |
 | `lenses` | All five lenses: id, label, state, tone, and a link to their detail |
-| `agent_groups` | Ordered groups, each with a label and ordered agents |
+| `agent_groups` | Ordered groups, each with `group_id`, a label and ordered agents |
 | `canvas` | The selected agent and the stream to read (see next section) |
 | `panels` | The two right-panel tabs with labels and counts, and which is selected |
 | `artifacts` | Ordered artifact rows, plus the visibility filters the server allows |
@@ -93,6 +93,8 @@ The list of inventory types is the server's. The page shows whatever types the s
 The canvas is an ordered stream of typed entries for one agent on one engagement; the page renders each entry by its type and never decides what an entry means.
 
 **Request.** `GET /api/v1/engagements/{engagementId}/agents/{agentId}/stream`, newest page first, with a `cursor` for older entries.
+
+**Response: `Stream`.** `agent_id`; `entries` in order; `next_cursor` (empty on the oldest page); `run` (the running `run_id` and its cancel action, or empty when nothing is running); and `composer`: the `canvas.send` action for this agent, the placeholder text and the note under the box. The page renders the composer from this, so an agent that may not be messaged simply gets a disabled send action with its reason.
 
 Every entry has: `entry_id`, `type`, `created_at_label` (server-formatted), `author` (the engineer, an agent, or the system), and the fields for its type below.
 

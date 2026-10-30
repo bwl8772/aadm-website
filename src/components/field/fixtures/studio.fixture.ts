@@ -643,9 +643,24 @@ function studioView(query: Record<string, string>): StudioView {
 					{ id: "map", label: "Map", enabled: true },
 				]
 			: [
-					{ id: "stream", label: "Stream", enabled: false, disabled_reason: "Open an artifact first" },
-					{ id: "built", label: "Built", enabled: false, disabled_reason: "Open an artifact first" },
-					{ id: "map", label: "Map", enabled: false, disabled_reason: "Open an artifact first" },
+					{
+						id: "stream",
+						label: "Stream",
+						enabled: false,
+						disabled_reason: "Open an artifact first",
+					},
+					{
+						id: "built",
+						label: "Built",
+						enabled: false,
+						disabled_reason: "Open an artifact first",
+					},
+					{
+						id: "map",
+						label: "Map",
+						enabled: false,
+						disabled_reason: "Open an artifact first",
+					},
 				],
 		active_view: activeView,
 		context_label: isKnown

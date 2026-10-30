@@ -92,7 +92,13 @@ export default function ArtifactStudio({ view }: { view: StudioView }) {
 								</div>
 							) : view.active_view === "stream" ? (
 								view.stream ? (
-									<CanvasStream stream={view.stream} starterPrompts={[]} />
+									<CanvasStream
+										stream={view.stream}
+										starterPrompts={[]}
+										olderHref={(cursor) =>
+											`${viewHref("stream")}&cursor=${encodeURIComponent(cursor)}`
+										}
+									/>
 								) : (
 									<RegionUnavailable what="stream" />
 								)

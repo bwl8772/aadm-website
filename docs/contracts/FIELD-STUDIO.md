@@ -37,7 +37,13 @@ One read builds the whole screen: `GET /api/v1/engagements/{engagementId}/studio
 |---|---|---|
 | `engagement` | id, name, customer | Header and breadcrumb |
 | `generated_at` | timestamp | Base for every command; a newer one replaces this view |
+| `schema_version`, `breadcrumbs` | text, label and link pairs | As in the other screens |
+| `state` | one of the §5 screen states | The server says which applies; the client never infers it |
 | `open_artifact_id` | id or empty | The artifact in the center; empty shows the empty state |
+| `context_label` | text | Beside the view tabs: agent and artifact in plain words |
+| `stream`, `built`, `map` | Stream, Built version, Map, each or empty | The center regions; each is its own read, so one failing leaves the others usable |
+| `empty_state` | heading and line, or empty | Shown when `open_artifact_id` is empty |
+| `uploads` | accepted types and size limit | For the Stream view's composer |
 | `views` | list of view tabs | Stream, Built, Map; each with `id`, `label`, `enabled`, `disabled_reason`, `count` |
 | `active_view` | `stream`, `built` or `map` | Server default when the URL does not say |
 | `rail` | Rail | Left column |

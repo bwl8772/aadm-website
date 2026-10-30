@@ -200,9 +200,12 @@ function KnownEntryView({ entry }: { entry: KnownEntry }) {
 export default function CanvasStream({
 	stream,
 	starterPrompts,
+	olderHref,
 }: {
 	stream: Stream;
 	starterPrompts: string[];
+	/** Link that re-reads with `stream.next_cursor`; the caller owns the rest of the query. */
+	olderHref?: (cursor: string) => string;
 }) {
 	if (stream.entries.length === 0) {
 		return (
@@ -224,6 +227,17 @@ export default function CanvasStream({
 	}
 	return (
 		<ol className="flex flex-col gap-5" aria-live="polite">
+			{stream.next_cursor && olderHref ? (
+				<li className="text-sm">
+					<a
+						href={olderHref(stream.next_cursor)}
+						rel="prev"
+						className="text-text-secondary hover:text-foreground hover:underline"
+					>
+						Older entries
+					</a>
+				</li>
+			) : null}
 			{stream.entries.map((e) => (
 				<li key={e.entry_id} className="flex flex-col">
 					<Entry entry={e} />

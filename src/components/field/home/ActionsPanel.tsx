@@ -85,6 +85,17 @@ export default function ActionsPanel({
 					</tbody>
 				</table>
 			</div>
+			{actions.next_cursor ? (
+				<p className="border-t border-border px-5 py-3 text-sm">
+					<a
+						href={`?filter=${encodeURIComponent(filters.find((f) => f.selected)?.id ?? "")}&cursor=${encodeURIComponent(actions.next_cursor)}`}
+						rel="next"
+						className="text-text-secondary hover:text-foreground hover:underline"
+					>
+						Older actions
+					</a>
+				</p>
+			) : null}
 		</div>
 	);
 }
