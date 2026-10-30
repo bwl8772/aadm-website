@@ -2,6 +2,8 @@
 /**
  * The two agent loops an agentic engineer owns: the development loop that
  * builds the system, and the runtime loop that runs inside it.
+ * The dashed frame shows forward deployed work: same engineer, same two loops,
+ * inside a customer's environment, with a named acceptor and a handover.
  */
 
 type Loop = {
@@ -19,14 +21,14 @@ const toneStyles: Record<
 	{ label: string; box: string; rule: string; dot: string; glow: string }
 > = {
 	violet: {
-		label: "text-violet-200",
+		label: "text-brand-violet",
 		box: "border-violet-400/25 bg-violet-950/[0.16]",
 		rule: "border-violet-400/40",
 		dot: "bg-violet-300",
 		glow: "bg-violet-500/[0.07]",
 	},
 	sky: {
-		label: "text-sky-200",
+		label: "text-brand-sky",
 		box: "border-sky-400/25 bg-sky-950/[0.16]",
 		rule: "border-sky-400/40",
 		dot: "bg-sky-300",
@@ -68,8 +70,8 @@ const loops: Loop[] = [
 	<!-- Shared origin -->
 	<div class="mx-auto max-w-md">
 		<div class="border border-white/25 bg-white/[0.05] px-6 py-5 text-center">
-			<p class="font-display text-[1.1rem] font-bold tracking-tight text-white">Agentic engineer</p>
-			<p class="mt-1.5 text-xs leading-relaxed text-slate-400">Owns the design of both loops</p>
+			<p class="font-display text-[1.1rem] font-bold tracking-tight text-foreground">Agentic engineer</p>
+			<p class="mt-1.5 text-xs leading-relaxed text-muted-foreground">Owns the design of both loops</p>
 		</div>
 	</div>
 
@@ -79,7 +81,7 @@ const loops: Loop[] = [
 		column whatever the container width.
 	-->
 	<div aria-hidden="true" class="flex h-11 justify-center lg:hidden">
-		<svg width="10" height="44" viewBox="0 0 10 44" fill="none" class="text-slate-600">
+		<svg width="10" height="44" viewBox="0 0 10 44" fill="none" class="text-muted-foreground">
 			<path d="M5 0v36M1 32l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="square"></path>
 		</svg>
 	</div>
@@ -96,6 +98,11 @@ const loops: Loop[] = [
 		></span>
 	</div>
 
+	<!-- Forward deployed boundary: optional mode, so dashed and amber. -->
+	<div class="relative border border-dashed border-brand-warn-border p-3 pt-7 sm:p-4 sm:pt-8">
+		<p class="font-mono-cta absolute left-4 top-1.5 text-[13px] text-brand-warn sm:top-2">
+			Customer environment, when forward deployed
+		</p>
 	<div class="grid grid-cols-1 gap-px bg-white/[0.08] lg:grid-cols-2">
 		{
 			loops.map((loop) => {
@@ -110,10 +117,10 @@ const loops: Loop[] = [
 							]}
 						/>
 
-						<p class:list={["font-mono-cta text-[10px] uppercase tracking-[0.28em]", t.label]}>
+						<p class:list={["font-mono-cta text-[13px] normal-case tracking-[0.01em]", t.label]}>
 							{loop.eyebrow}
 						</p>
-						<h3 class="font-display mt-3 text-[1.35rem] font-bold leading-tight tracking-tight text-white sm:text-[1.5rem]">
+						<h3 class="font-display mt-3 text-[1.35rem] font-bold leading-tight tracking-tight text-foreground sm:text-[1.5rem]">
 							{loop.title}
 						</h3>
 
@@ -122,13 +129,13 @@ const loops: Loop[] = [
 								<li>
 									<div class:list={["flex items-center gap-4 border px-4 py-3.5", t.box]}>
 										<span class:list={["block h-1.5 w-1.5 shrink-0 rounded-full", t.dot]} />
-										<span class="text-pretty text-[0.95rem] font-medium leading-snug text-slate-100">
+										<span class="text-pretty text-[0.95rem] font-medium leading-snug text-text-primary">
 											{step}
 										</span>
 									</div>
 									{stepIdx === loop.steps.length - 1 ? null : (
 										<div aria-hidden="true" class="flex h-5 items-center justify-center">
-											<svg width="10" height="20" viewBox="0 0 10 20" fill="none" class="text-slate-600">
+											<svg width="10" height="20" viewBox="0 0 10 20" fill="none" class="text-muted-foreground">
 												<path
 													d="M5 0v13M1 9l4 4 4-4"
 													stroke="currentColor"
@@ -144,18 +151,18 @@ const loops: Loop[] = [
 
 						<dl class:list={["mt-8 space-y-5 border-l pl-5", t.rule]}>
 							<div>
-								<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Governed by</dt>
-								<dd class="mt-2 text-sm leading-relaxed text-slate-300">{loop.governedBy}</dd>
+								<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Governed by</dt>
+								<dd class="mt-2 text-sm leading-relaxed text-text-secondary">{loop.governedBy}</dd>
 							</div>
 							<div>
-								<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Clock</dt>
-								<dd class="mt-2 text-sm font-medium leading-relaxed text-white">{loop.clock}</dd>
+								<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Clock</dt>
+								<dd class="mt-2 text-sm font-medium leading-relaxed text-foreground">{loop.clock}</dd>
 							</div>
 							<div>
-								<dt class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">
+								<dt class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
 									How it fails
 								</dt>
-								<dd class="mt-2 text-sm leading-relaxed text-slate-400">{loop.failure}</dd>
+								<dd class="mt-2 text-sm leading-relaxed text-muted-foreground">{loop.failure}</dd>
 							</div>
 						</dl>
 					</section>
@@ -163,10 +170,26 @@ const loops: Loop[] = [
 			})
 		}
 	</div>
+		<div class="mt-4 flex flex-col gap-3 border-t border-dashed border-brand-warn-border pt-4 text-sm sm:flex-row sm:items-center sm:justify-between">
+			<span class="text-text-secondary">A named person on the customer side accepts the result.</span>
+			<span class="inline-flex items-center gap-2 font-medium text-brand-warn">
+				Handover: their team owns both loops
+				<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+					<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" />
+				</svg>
+			</span>
+		</div>
+	</div>
 </div>
 
-<p class="mt-10 max-w-3xl border-l border-emerald-300/40 pl-5 text-sm leading-relaxed text-slate-400">
+<p class="mt-10 max-w-3xl border-l border-brand-mcp-border pl-5 text-sm leading-relaxed text-muted-foreground">
 	The two loops are not independent. The development loop decides what the runtime loop is allowed to do — which tools
 	exist, where authorization sits, what gets logged, what a bad decision can reach. Govern the first one badly and you
 	have shipped an ungovernable second one.
+</p>
+
+<p class="mt-6 max-w-3xl border-l border-brand-warn-border pl-5 text-sm leading-relaxed text-muted-foreground">
+	<span class="font-medium text-foreground">Forward deployed is the same engineer in someone else's environment.</span> Both
+	loops run inside the customer's systems, a named person on their side accepts the result, and ownership of both loops
+	transfers at the end. The AADM MCP's FDE engagement recon checks that contract, its gates, and the handover.
 </p>

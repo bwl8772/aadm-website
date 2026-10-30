@@ -56,7 +56,8 @@ export const MCP_SETUP_SUCCESS_PATH_V1 = {
 			sceneId: "3-two-ways",
 			title: "Two ways to connect",
 			path: "/mcp#two-ways",
-			intent: "Bearer (API key) vs OAuth — choose a path without inventing credentials.",
+			intent:
+				"Bearer (API key) vs OAuth — choose a path without inventing credentials.",
 			beats: [
 				{
 					id: "two-ways-heading",
@@ -70,7 +71,8 @@ export const MCP_SETUP_SUCCESS_PATH_V1 = {
 			sceneId: "4-bearer-path",
 			title: "Bearer path (public copy)",
 			path: "/mcp",
-			intent: "Explain ak_… Bearer for Cursor/Windsurf/curl — placeholders only.",
+			intent:
+				"Explain ak_… Bearer for Cursor/Windsurf/curl — placeholders only.",
 			beats: [
 				{
 					id: "bearer-heading",
@@ -82,8 +84,10 @@ export const MCP_SETUP_SUCCESS_PATH_V1 = {
 					id: "bearer-sign-in-read",
 					verb: "Reading",
 					affordance: "Sign in to AADM (Bearer section)",
-					locatorHint: "section[aria-labelledby='connect-bearer-heading'] a:has-text('Sign in to AADM')",
-					notes: "Do not click through to portal on this public tour unless chaining to member-credentials.",
+					locatorHint:
+						"section[aria-labelledby='connect-bearer-heading'] a:has-text('Sign in to AADM')",
+					notes:
+						"Do not click through to portal on this public tour unless chaining to member-credentials.",
 				},
 			],
 		},
@@ -111,7 +115,8 @@ export const MCP_SETUP_SUCCESS_PATH_V1 = {
 			sceneId: "6-credentials-cta",
 			title: "Toward member credentials",
 			path: "/mcp",
-			intent: "End on a clear Sign in / Get access affordance toward /member after auth.",
+			intent:
+				"End on a clear Sign in / Get access affordance toward /member after auth.",
 			beats: [
 				{
 					id: "get-access-read",

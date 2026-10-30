@@ -1,0 +1,160 @@
+/*
+ * Clerk widgets in the Astro member area follow AADM semantic tokens.
+ * Appearance JS also points at these vars so light/dark both work.
+ * Product mockups elsewhere may stay dark; member chrome must not.
+ */
+
+.member-area-card,
+.member-clerk-widget {
+	color-scheme: inherit;
+}
+
+.member-area-card
+	:is(
+		.cl-rootBox,
+		.cl-cardBox,
+		.cl-card,
+		.cl-scrollBox,
+		.cl-pageScrollBox,
+		.cl-main,
+		.cl-profilePage,
+		.cl-profileSection,
+		.cl-profileSectionContent,
+		.cl-apiKeysPage,
+		.cl-apiKeys,
+		.cl-navbar,
+		.cl-navbarMobileMenuButton
+	) {
+	background-color: transparent !important;
+	color: var(--foreground) !important;
+	box-shadow: none !important;
+}
+
+.member-area-card
+	:is(
+		.cl-headerTitle,
+		.cl-profileSectionTitleText,
+		.cl-formFieldLabel,
+		.cl-accordionTriggerButton,
+		.cl-menuButton__userButton,
+		.cl-userButtonPopoverActionButtonText,
+		.cl-identityPreviewText,
+		.cl-breadcrumbsItem,
+		.cl-breadcrumbsItemDivider,
+		.cl-tableHead
+	) {
+	color: var(--text-primary) !important;
+}
+
+.member-area-card
+	:is(
+		.cl-headerSubtitle,
+		.cl-profileSectionSubtitle,
+		.cl-formFieldInfoText,
+		.cl-formFieldSuccessText,
+		.cl-footerActionText,
+		.cl-internal-description,
+		.cl-formFieldHintText,
+		.cl-alternativeMethodsBlockButtonText,
+		.cl-userPreviewSecondaryIdentifier,
+		.cl-profileSectionItem,
+		.cl-menuList
+	) {
+	color: var(--muted-foreground) !important;
+}
+
+.member-area-card
+	:is(
+		.cl-formFieldInput,
+		.cl-input,
+		.cl-selectButton,
+		.cl-selectOptionsContainer,
+		.cl-otpCodeFieldInput,
+		.cl-fileDropAreaBox,
+		.cl-menuList,
+		.cl-popoverBox,
+		.cl-modalContent,
+		.cl-userButtonPopoverCard
+	) {
+	background-color: var(--surface-mid) !important;
+	color: var(--foreground) !important;
+	border-color: var(--border) !important;
+}
+
+.member-area-card :is(.cl-formButtonPrimary, .cl-button[data-variant="solid"]) {
+	background-color: var(--primary) !important;
+	color: var(--primary-foreground) !important;
+}
+
+.member-area-card
+	:is(
+		.cl-formButtonReset,
+		.cl-button[data-variant="outline"],
+		.cl-menuButton,
+		.cl-profileSectionPrimaryButton
+	) {
+	background-color: var(--muted) !important;
+	color: var(--foreground) !important;
+	border-color: var(--border) !important;
+}
+
+.member-area-card :is(.cl-badge, .cl-tag, .cl-activeDevice) {
+	background-color: var(--accent) !important;
+	color: var(--accent-foreground) !important;
+}
+
+.member-area-card
+	:is(.cl-alert, .cl-formFieldErrorText, .cl-formFieldWarningText) {
+	color: var(--destructive) !important;
+}
+
+.member-area-card :is(.cl-alert[data-color="warning"], .cl-alert__warning) {
+	color: var(--warning) !important;
+	background-color: color-mix(
+		in srgb,
+		var(--warning) 12%,
+		transparent
+	) !important;
+	border-color: color-mix(in srgb, var(--warning) 40%, transparent) !important;
+}
+
+.member-area-card :is(.cl-dividerLine, .cl-profileSection) {
+	border-color: var(--border) !important;
+}
+
+.member-area-card :is(.cl-dividerLine) {
+	background-color: var(--border) !important;
+}
+
+.member-area-card
+	:is(.cl-table, .cl-tableHead, .cl-tableBody, .cl-tableRow, .cl-tableCell) {
+	background-color: transparent !important;
+	color: var(--foreground) !important;
+	border-color: var(--border) !important;
+}
+
+.member-area-card
+	:is(.cl-navbarButton, .cl-menuItem, .cl-profileSectionItemButton) {
+	color: var(--foreground) !important;
+}
+
+.member-area-card
+	:is(.cl-navbarButton[data-active="true"], .cl-menuItem[data-active="true"]) {
+	background-color: var(--accent) !important;
+	color: var(--accent-foreground) !important;
+}
+
+.member-area-card
+	:is(
+		.cl-navbarButton:hover,
+		.cl-menuItem:hover,
+		.cl-profileSectionItemButton:hover
+	) {
+	background-color: var(--hover) !important;
+}
+
+.member-area-card a.cl-internal-b3fm6y,
+.member-area-card .cl-formFieldAction,
+.member-area-card .cl-footerActionLink {
+	color: var(--primary) !important;
+}

@@ -24,8 +24,8 @@ const guides = [
 		name: "Claude",
 		href: "/claude-code#connect-claude",
 		steps: [
-			"Prefer Connectors OAuth for Claude Code / claude.ai — copy the Client ID from that tab.",
-			"Paste the MCP server URL and Client ID when Claude asks; leave Client Secret blank.",
+			"Prefer Connectors OAuth for Claude Code / claude.ai — only the MCP URL is needed.",
+			"Paste the URL, leave the OAuth Client ID and Secret blank, then sign in on the AADM page that opens.",
 			"Fully quit Claude Desktop or start a new Claude Code session, then try standard_brief.",
 		],
 	},
@@ -43,8 +43,8 @@ const guides = [
 ---
 
 <div class="mt-6 border-t border-border-subtle pt-6">
-	<p class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Connection help</p>
-	<p class="mt-1 text-sm text-slate-400">
+	<p class="font-mono text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Connection help</p>
+	<p class="mt-1 text-sm text-muted-foreground">
 		Short steps for each host. Full guides open in a new tab when you need screenshots and copy-paste detail.
 	</p>
 
@@ -54,11 +54,11 @@ const guides = [
 				<article aria-labelledby={`${idPrefix}-${guide.name.toLowerCase().replace(/\s+/g, "-")}-heading`}>
 					<h3
 						id={`${idPrefix}-${guide.name.toLowerCase().replace(/\s+/g, "-")}-heading`}
-						class="font-display text-base font-bold text-slate-100"
+						class="font-display text-base font-bold text-text-primary"
 					>
 						Connecting to {guide.name}
 					</h3>
-					<ol class="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-slate-400">
+					<ol class="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-muted-foreground">
 						{guide.steps.map((step) => (
 							<li>{step}</li>
 						))}
@@ -66,7 +66,7 @@ const guides = [
 					<p class="mt-2 text-sm">
 						<a
 							href={guide.href}
-							class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-white"
+							class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-foreground"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
@@ -74,10 +74,10 @@ const guides = [
 						</a>
 						{"docsHref" in guide && guide.docsHref ? (
 							<>
-								<span class="text-slate-500"> · </span>
+								<span class="text-muted-foreground"> · </span>
 								<a
 									href={guide.docsHref}
-									class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-white"
+									class="font-semibold text-accent-violet underline decoration-accent-violet/40 underline-offset-2 hover:text-foreground"
 									target="_blank"
 									rel="noopener noreferrer"
 								>

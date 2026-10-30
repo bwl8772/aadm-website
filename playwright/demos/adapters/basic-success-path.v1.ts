@@ -35,7 +35,8 @@ export const BASIC_SUCCESS_PATH_V1 = {
 					id: "member-unsigned-read",
 					verb: "Reading",
 					affordance: "Sign-in gate or Account Portal redirect",
-					locatorHint: "URL leaves /member credentials UI OR Clerk sign-in chrome",
+					locatorHint:
+						"URL leaves /member credentials UI OR Clerk sign-in chrome",
 					notes: "No credential panes visible while signed out.",
 				},
 			],

@@ -30,11 +30,9 @@ export const DEMO_SIGNUP_FIXTURE_V1: DemoSignupFixtureV1 = {
 	firstName: process.env.DEMO_SIGNUP_FIRST_NAME?.trim() || "your",
 	lastName: process.env.DEMO_SIGNUP_LAST_NAME?.trim() || "name",
 	fullName:
-		process.env.DEMO_SIGNUP_FULL_NAME?.trim() ||
-		DEMO_SIGNUP_VIEWER_LABELS.name,
+		process.env.DEMO_SIGNUP_FULL_NAME?.trim() || DEMO_SIGNUP_VIEWER_LABELS.name,
 	email:
-		process.env.DEMO_SIGNUP_EMAIL?.trim() ||
-		"your.email+clerk_test@aadm.io",
+		process.env.DEMO_SIGNUP_EMAIL?.trim() || "your.email+clerk_test@aadm.io",
 	passwordEnvKey: "DEMO_SIGNUP_PASSWORD",
 	otpEnvKey: "DEMO_SIGNUP_OTP",
 };

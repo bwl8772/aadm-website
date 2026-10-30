@@ -49,6 +49,16 @@
 			}
 		},
 		{
+			"includes": ["src/styles/clerk-theme.css", "src/styles/theme-compat.css"],
+			"linter": {
+				"rules": {
+					"complexity": {
+						"noImportantStyles": "off"
+					}
+				}
+			}
+		},
+		{
 			"includes": ["package.json", "package-lock.json"],
 			"formatter": {
 				"indentStyle": "space",

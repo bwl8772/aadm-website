@@ -14,22 +14,22 @@ const {
 } = Astro.props;
 ---
 
-<Layout title={title} description={description} headerActiveNav={null} footerVariant="default" showFooter={false}>
-	<main id="main" class="mx-auto w-full min-w-0 max-w-6xl px-3 py-6 sm:px-6 sm:py-10">
-		<div class="mb-6 flex flex-wrap items-start justify-between gap-3 sm:gap-4">
+<Layout title={title} description={description} headerActiveNav="member" footerVariant="default" showFooter={false}>
+	<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
+		<div class="mb-10 flex flex-wrap items-start justify-between gap-4 border-b border-border pb-8 sm:gap-6">
 			<div class="min-w-0 flex-1 basis-[12rem]">
-				<h1 class="font-display text-2xl font-bold text-white sm:text-3xl">Member area</h1>
-				<p class="mt-2 text-sm leading-relaxed text-slate-400">
+				<h1 class="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Member area</h1>
+				<p class="mt-4 max-w-2xl text-base leading-7 text-text-secondary">
 					Two ways to connect AADM: a personal{" "}
-					<strong class="text-slate-300">bearer API key</strong> (Cursor, curl) or{" "}
-					<strong class="text-slate-300">Connectors OAuth</strong> (Claude Code / claude.ai). Sign-in
-					is at <strong class="text-slate-300">accounts.aadm.io</strong>.
+					<strong class="text-text-secondary">bearer API key</strong> (Cursor, curl) or{" "}
+					<strong class="text-text-secondary">Connectors OAuth</strong> (Claude Code / claude.ai). Sign-in
+					is at <strong class="text-text-secondary">accounts.aadm.io</strong>.
 				</p>
 			</div>
 			<SignOutButton redirectUrl={CLERK_ACCOUNTS_SIGN_IN} asChild>
 				<button
 					type="button"
-					class="shrink-0 rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10"
+					class="shrink-0 rounded-none border border-border bg-muted px-5 py-2.5 text-sm font-semibold text-foreground hover:bg-accent"
 				>
 					Log out
 				</button>

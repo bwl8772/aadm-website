@@ -13,56 +13,58 @@ const tagline =
 const year = new Date().getFullYear();
 ---
 
-<footer class="relative border-t border-white/[0.06] bg-surface-deep">
+<footer class="relative border-t border-border bg-background">
 	<div class="mx-auto max-w-7xl px-4 py-14 sm:px-8 sm:py-16">
 		<!-- Editorial top row -->
-		<div class="grid grid-cols-12 gap-6 border-b border-white/[0.06] pb-10">
+		<div class="grid grid-cols-12 gap-6 border-b border-border pb-10">
 			<div class="col-span-12 sm:col-span-4">
 				<a
 					href="/"
-					class="font-display inline-flex items-baseline gap-3 text-2xl font-black tracking-tight text-white transition hover:text-emerald-200"
+					class="font-display inline-flex items-baseline gap-3 text-2xl font-bold tracking-tight text-foreground transition hover:text-brand-mcp"
 				>
+					<img src="/favicon.svg" alt="" width="32" height="32" class="h-8 w-8 self-center" />
 					AADM
-					<span class="font-mono-cta text-[10px] font-medium uppercase tracking-[0.28em] text-slate-500">
+					<span class="font-mono-cta text-[13px] font-medium normal-case tracking-[0.01em] text-muted-foreground">
 						/ Agentic Authority Delivery Model
 					</span>
 				</a>
-				<p class="mt-4 max-w-xs text-sm leading-relaxed text-slate-400">
+				<p class="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
 					An operating model for agentic engineering: an open standard for governed agent-assisted delivery, plus a hosted MCP
 					that keeps your tooling versioned, online, and maintained.
 				</p>
 			</div>
 			<nav class="col-span-12 grid grid-cols-2 gap-x-6 gap-y-8 sm:col-span-8 sm:grid-cols-4" aria-label="Footer navigation">
 				<div>
-					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/85">Product</p>
+					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Product</p>
 					<ul class="mt-4 space-y-2.5 text-sm">
-						<li><a href="/mcp" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Hosted MCP</a></li>
-						<li><a href="/tools" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Tools catalog</a></li>
-						<li><a href="/ides" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">IDEs</a></li>
+						<li><a href="/mcp" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">Hosted MCP</a></li>
+						<li><a href="/tools" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">Tools catalog</a></li>
+						<li><a href="/ides" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">IDEs</a></li>
+						<li><a href="/stacks" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">Compatible stacks</a></li>
 					</ul>
 				</div>
 				<div>
-					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/85">Read</p>
+					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">Read</p>
 					<ul class="mt-4 space-y-2.5 text-sm">
-						<li><a href="/about" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Agentic engineering</a></li>
-						<li><a href="/why-aadm" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Why AADM</a></li>
-						<li><a href="/standard" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Open standard</a></li>
-						<li><a href="/case-studies" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Stories</a></li>
+						<li><a href="/about" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">Agentic engineering</a></li>
+						<li><a href="/why-aadm" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">Why AADM</a></li>
+						<li><a href="/standard" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">Open standard</a></li>
+						<li><a href="/case-studies" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">Stories</a></li>
 					</ul>
 				</div>
 				<div>
-					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-violet-200/85">Connect</p>
+					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-violet">Connect</p>
 					<ul class="mt-4 space-y-2.5 text-sm">
-						<li><a href="/cursor" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">AADM + Cursor</a></li>
-						<li><a href="/claude-code" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">AADM + Claude Code</a></li>
-						<li><a href="/governance" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Init your repo</a></li>
+						<li><a href="/cursor" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">AADM + Cursor</a></li>
+						<li><a href="/claude-code" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">AADM + Claude Code</a></li>
+						<li><a href="/governance" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">Init your repo</a></li>
 					</ul>
 				</div>
 				<div>
-					<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-sky-200/85">Buyer</p>
+					<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-sky">Buyer</p>
 					<ul class="mt-4 space-y-2.5 text-sm">
-						<li><a href="/enterprise" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Enterprise</a></li>
-						<li><a href="/mcp#two-ways" class="text-slate-300 underline-offset-[6px] transition hover:text-white hover:underline">Get access</a></li>
+						<li><a href="/enterprise" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">Enterprise</a></li>
+						<li><a href="/mcp#two-ways" class="text-text-secondary underline-offset-[6px] transition hover:text-foreground hover:underline">Get access</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -71,14 +73,14 @@ const year = new Date().getFullYear();
 		<!-- Colophon row -->
 		<div class="mt-10 grid grid-cols-12 gap-6">
 			<div class="col-span-12 lg:col-span-8">
-				<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">
-					<span class="text-amber-200/85">▸</span> Honest boundary
+				<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
+					<span class="text-brand-warn">▸</span> Honest boundary
 				</p>
-				<p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">{tagline}</p>
+				<p class="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">{tagline}</p>
 			</div>
 			<div class="col-span-12 lg:col-span-4 lg:text-right">
-				<p class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-600">
-					<span class="text-slate-500">© {year} AADM</span> · Streamable HTTP / MCP
+				<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
+					<span class="text-muted-foreground">© {year} AADM</span> · Streamable HTTP / MCP
 				</p>
 			</div>
 		</div>

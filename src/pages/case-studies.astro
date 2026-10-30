@@ -20,17 +20,25 @@ type Industry =
 	| "Regtech"
 	| "Logistics"
 	| "Healthcare"
-	| "HR tech";
+	| "HR tech"
+	| "SaaS"
+	| "Marketplace"
+	| "Proptech";
+
+type Tool = { id: string; label: string };
 
 type Vignette = {
 	id: string;
 	app: string;
 	industry: Industry;
 	title: string;
-	body: string;
+	situation: string;
+	decision: string;
+	actions: string;
+	impact: string;
 	hoursLow: number;
 	hoursHigh: number;
-	tools: string[];
+	tools: [Tool, Tool, Tool];
 	tone: "violet" | "amber" | "sky" | "emerald";
 };
 
@@ -39,59 +47,108 @@ const vignettes: Vignette[] = [
 		id: "01",
 		app: "StudioPublish",
 		industry: "Media",
-		title: "Two exits, not one Back",
-		body: "Producers drilling into an export sub-page kept landing in the wrong parent — campaign, QC queue, or library — because a single Back control ignored where they came from. ux_surface_pass, user_flow, and pressure_test modeled two intentional exits (return to origin vs return to hub) and named component tests before any header tweak shipped.",
+		title: "Two exits, not one Back button",
+		situation:
+			"Your producers open an export page from three places: a campaign, the review queue, or the library. One Back button sent them to the wrong place.",
+		decision:
+			"Patch the header button, or decide where each person actually needs to go.",
+		actions:
+			"The agent walked the screen from the producers' own words, mapped every way in and out, and stress-tested the plan before any code.",
+		impact:
+			"Two clear exits, back to where you were and back to the hub, with the tests named before anything shipped.",
 		hoursLow: 12,
 		hoursHigh: 18,
-		tools: ["ux_surface_pass", "user_flow", "pressure_test"],
+		tools: [
+			{ id: "ux_surface_pass", label: "Walk the screen as your user" },
+			{ id: "user_flow", label: "Map every move and the call behind it" },
+			{ id: "pressure_test", label: "Stress-test the plan" },
+		],
 		tone: "violet",
 	},
 	{
 		id: "02",
 		app: "Vertex Learning",
 		industry: "Edtech",
-		title: "Integration gap inventory",
-		body: "Product committed to a full publish loop across slide, voice, video, and LMS vendors, but engineering only had partial async jobs and fourteen scattered tickets. ux_surface_pass captured the ten-step author journey; signal_stack_outline and journey_attest tagged what was proven vs latent on operator monitoring — producing one attested requirements brief instead of repeated cross-team workshops.",
+		title: "Find the integration gaps",
+		situation:
+			"Product promised one publish flow across slides, voice, video and the LMS. Engineering had half-built background jobs and fourteen scattered tickets.",
+		decision:
+			"Keep holding cross-team workshops, or get one honest list of what works and what doesn't.",
+		actions:
+			"The agent traced the ten-step author journey and marked each step as proven, unproven or not built, including what operators could monitor.",
+		impact: "One signed-off requirements brief replaced the workshops.",
 		hoursLow: 20,
 		hoursHigh: 30,
-		tools: ["ux_surface_pass", "signal_stack_outline", "journey_attest"],
-		tone: "emerald",
+		tools: [
+			{ id: "ux_surface_pass", label: "Walk the screen as your user" },
+			{ id: "signal_stack_outline", label: "List what operators need to see" },
+			{ id: "journey_attest", label: "Mark each step proven or not" },
+		],
+		tone: "sky",
 	},
 	{
 		id: "03",
 		app: "Northstar Retail",
 		industry: "Retail",
-		title: "Slice the 4k monolith",
-		body: "One merchant-admin screen (~4k LOC) shared URL state and cross-deck cache invalidation across three in-page decks — a split-without-plan would have broken purge auth. route_lane and plan_delivery sequenced hook attribution first; fetch_auth pulled tenancy controls in; architecture_lens pressure-tested purge vs archive. Named slices shipped instead of delete-and-pray.",
+		title: "Split a 4,000-line screen safely",
+		situation:
+			"One merchant admin screen, about 4,000 lines, shared state and cache refreshes across three panels. A careless split would have broken who is allowed to purge data.",
+		decision:
+			"Rewrite it in one go, or split it in an order that keeps permissions intact.",
+		actions:
+			"The agent sequenced the split, pulled in the tenant permission rules that applied, and challenged the purge-versus-archive design before code moved.",
+		impact:
+			"Small, reviewable slices shipped one at a time. Nothing was deleted and hoped for.",
 		hoursLow: 30,
 		hoursHigh: 45,
-		tools: ["route_lane", "plan_delivery", "fetch_auth", "architecture_lens"],
+		tools: [
+			{ id: "plan_delivery", label: "Sequence the work" },
+			{ id: "fetch_auth", label: "Pull in the controls that apply" },
+			{ id: "architecture_lens", label: "Challenge the design" },
+		],
 		tone: "violet",
 	},
 	{
 		id: "04",
 		app: "Pulse Analytics",
 		industry: "Analytics",
-		title: "False-green dashboards",
-		body: "Tenant lifecycle tests passed while finance disputed usage percentages — client DTOs fabricated fields and mocks used the wrong metric name (unattributed_pct vs unattributed_usage_pct). prism_frame split integrity vs measurement; sentinel_closure forced explicit pass/fail on schema seams — surfacing false-green dashboards separate from delete proofs.",
+		title: "Green tests, wrong numbers",
+		situation:
+			"Every test passed, yet finance disputed the usage percentages. The client was inventing fields and the test mocks used the wrong metric name.",
+		decision:
+			"Trust the green dashboard, or check that the tests measure the real thing.",
+		actions:
+			"The agent separated \u201cis the data right\u201d from \u201cis it measured right,\u201d then forced an explicit pass or fail on each data contract.",
+		impact:
+			"The false-green tests were exposed and fixed on their own track, apart from the real data work.",
 		hoursLow: 16,
 		hoursHigh: 24,
-		tools: ["prism_frame", "sentinel_closure"],
-		tone: "emerald",
+		tools: [
+			{ id: "prism_frame", label: "Pin down the facts first" },
+			{ id: "sentinel_closure", label: "Force pass or fail at each boundary" },
+			{ id: "journey_attest", label: "Mark each step proven or not" },
+		],
+		tone: "amber",
 	},
 	{
 		id: "05",
 		app: "LedgerFlow",
 		industry: "Fintech",
 		title: "Billing cycle math",
-		body: "Month-end API credits overshot finance expectations because the usage query treated cycle end as inclusive when the contract said exclusive — and one webhook path skipped balance checks. debug_defect and prism_frame kept the thread evidence-first; journey_attest mapped reconcile nodes. Ledger fixes landed without dashboard band-aids or “upgrade the database” detours.",
+		situation:
+			"Month-end credits overshot because the query counted the last day of the cycle when the contract excluded it. One webhook path skipped balance checks entirely.",
+		decision:
+			"Patch the numbers on the dashboard, or fix the ledger at the source.",
+		actions:
+			"The agent stayed evidence-first: reproduce the overshoot, find the exact query, and map every place money gets reconciled.",
+		impact:
+			"The ledger was fixed at the source. No dashboard band-aids, no \u201cupgrade the database\u201d detour.",
 		hoursLow: 24,
 		hoursHigh: 40,
 		tools: [
-			"debug_defect",
-			"prism_frame",
-			"sentinel_closure",
-			"journey_attest",
+			{ id: "debug_defect", label: "Investigate before fixing" },
+			{ id: "prism_frame", label: "Pin down the facts first" },
+			{ id: "journey_attest", label: "Mark each step proven or not" },
 		],
 		tone: "amber",
 	},
@@ -99,207 +156,539 @@ const vignettes: Vignette[] = [
 		id: "06",
 		app: "Harbor Insurance",
 		industry: "Insurance",
-		title: "CORS preflight trap",
-		body: "Members saw empty account settings in production while Node integration tests passed — a custom client header was missing from the CORS allow-list. debug_defect chained DevTools proof → header setter → allow-list → contract test, halting timeout-padding guesses. Fix shipped in one attested path.",
+		title: "The missing CORS header",
+		situation:
+			"Members saw empty account settings in production while integration tests passed. A custom request header was missing from the server's allow-list.",
+		decision:
+			"Add timeouts and retries, or prove exactly where the request dies.",
+		actions:
+			"The agent followed the evidence in order: the browser's network trace, the code that sets the header, the allow-list, then a contract test. It blocked the timeout guesses.",
+		impact: "One fix, plus one test that keeps it fixed.",
 		hoursLow: 8,
 		hoursHigh: 14,
-		tools: ["debug_defect"],
+		tools: [
+			{ id: "debug_defect", label: "Investigate before fixing" },
+			{ id: "fix_pack", label: "Bundle the fix with its proof" },
+			{ id: "route_lane", label: "Pick the right workflow" },
+		],
 		tone: "amber",
 	},
 	{
 		id: "07",
 		app: "BridgeWorks",
 		industry: "Construction",
-		title: "Missing projection row",
-		body: "A new work package appeared in the spine but handoff preview returned 500 — partial projection lists skipped cold-start materialization. On-call proposed doubling query timeouts. triage_bug ruled out infra; digfind targeted materialization policy. Scoped fix, no rollback.",
+		title: "The missing row behind a 500",
+		situation:
+			"A new work package appeared, but its preview returned a server error. On-call wanted to double the query timeouts.",
+		decision: "Treat it as an infrastructure problem, or find the logic gap.",
+		actions:
+			"Triage ruled out infrastructure. A targeted search found the step that skipped building the data the first time it was needed.",
+		impact: "A scoped fix with no rollback and no timeout bump.",
 		hoursLow: 10,
 		hoursHigh: 16,
-		tools: ["triage_bug", "digfind"],
-		tone: "sky",
+		tools: [
+			{ id: "triage_bug", label: "Sort the problem" },
+			{ id: "digfind", label: "Dig for the real cause" },
+			{ id: "debug_defect", label: "Investigate before fixing" },
+		],
+		tone: "amber",
 	},
 	{
 		id: "08",
 		app: "Atlas Compliance",
 		industry: "Regtech",
-		title: "Alert noise, not incident",
-		body: "Monitoring fired 258 critical events in one day — all one self-healing backlog tick with duplicate worker emits and zero stale rows. Leadership wanted rollback. triage_bug and classify_bug downgraded to telemetry hygiene, not customer incident.",
+		title: "Noise, not an incident",
+		situation:
+			"Monitoring fired 258 critical alerts in one day. Leadership wanted to roll back the release.",
+		decision: "Roll back, or first check what the alerts really mean.",
+		actions:
+			"The agent sorted the alerts: one self-healing backlog, duplicate worker messages, and zero stale data.",
+		impact:
+			"No rollback. The fix was alert hygiene, and customers were never affected.",
 		hoursLow: 12,
 		hoursHigh: 20,
-		tools: ["triage_bug", "classify_bug"],
+		tools: [
+			{ id: "triage_bug", label: "Sort the problem" },
+			{ id: "classify_bug", label: "Name what kind of bug it is" },
+			{ id: "signal_stack_outline", label: "List what operators need to see" },
+		],
 		tone: "amber",
 	},
 	{
 		id: "09",
 		app: "FleetDispatch",
 		industry: "Logistics",
-		title: "Three IDs, silent FK failures",
-		body: "Mid-migration, org slug, depot UUID, and middleware scope coexisted while export routes still wrote slug into UUID FK columns. prism_frame documented partial ship; fetch_seam (SEAM-06) named contract drift; map_feature listed four product blockers. Cutover continued with a decision log — not depotId ?? orgSlug spread.",
+		title: "Three IDs, one column",
+		situation:
+			"Mid-migration, three kinds of ID existed at once. Export routes wrote the wrong one into database links, which failed silently.",
+		decision: "Paper over it with fallbacks in code, or stop and decide.",
+		actions:
+			"The agent wrote down what was partly shipped, named the broken contract, and listed the four decisions product still owed.",
+		impact:
+			"The migration continued with a decision log instead of fallback code spreading through the app.",
 		hoursLow: 25,
 		hoursHigh: 35,
-		tools: ["prism_frame", "route_lane", "fetch_seam", "map_feature"],
-		tone: "violet",
+		tools: [
+			{ id: "prism_frame", label: "Pin down the facts first" },
+			{ id: "fetch_seam", label: "Name the broken contract" },
+			{ id: "map_feature", label: "Map the feature and its blockers" },
+		],
+		tone: "sky",
 	},
 	{
 		id: "10",
 		app: "Meridian Health",
 		industry: "Healthcare",
-		title: "CI cites ghost tests",
-		body: "Proof-pack scripts referenced deleted 1,300-line monoliths while invariants register still claimed they ran — auditors assumed coverage that didn't exist. fix_pack required file-absence evidence before cutover; route_lane kept it Investigator hygiene. Registry matched disk.",
+		title: "Tests that no longer exist",
+		situation:
+			"CI scripts pointed at test files that had been deleted, and the registry still said they ran. Auditors assumed coverage that wasn't there.",
+		decision: "Keep shipping, or prove the registry matches the code.",
+		actions:
+			"The agent required proof that every referenced file exists before cutover, and kept the work scoped as cleanup rather than new features.",
+		impact:
+			"The registry matched the code again, and the audit claims were true.",
 		hoursLow: 14,
 		hoursHigh: 22,
-		tools: ["fix_pack", "route_lane"],
+		tools: [
+			{ id: "fix_pack", label: "Bundle the fix with its proof" },
+			{ id: "invariant_register", label: "Keep key rules true over time" },
+			{ id: "route_lane", label: "Pick the right workflow" },
+		],
 		tone: "emerald",
 	},
 	{
-		id: "0B",
+		id: "11",
 		app: "ClearPath Talent",
 		industry: "HR tech",
-		title: "Skills map demo widget",
-		body: "A static three-row chip map proved nothing; engineering proposed client-side D3 with invented weights while server constellation APIs already existed. ux_surface_pass and map_feature tied Expand, filters, and clustering to authoritative read models before wireframes.",
+		title: "A demo that proved nothing",
+		situation:
+			"A static skills map proved nothing. Engineering proposed a browser-side chart with made-up weights, even though server APIs already held the real data.",
+		decision: "Build the pretty demo, or wire it to real data.",
+		actions:
+			"The agent tied every control (expand, filter, cluster) to existing server data before any wireframe.",
+		impact: "The feature used real numbers from day one. No throwaway demo.",
 		hoursLow: 18,
 		hoursHigh: 28,
-		tools: ["ux_surface_pass", "map_feature", "user_flow"],
-		tone: "sky",
-	},
-	{
-		id: "11",
-		app: "StudioPublish",
-		industry: "Media",
-		title: "JSONB drift 500",
-		body: "Publish dashboard returned 500 when stored queue schema lagged reader expectations. Round 1 fixed the throw, but Round 2 found taxonomy saves not invalidating projections — UI would lie “ready” on stale verdicts. debug_defect plus journey_attest closed both classes in one train.",
-		hoursLow: 40,
-		hoursHigh: 60,
-		tools: ["debug_defect", "journey_attest", "prism_frame"],
-		tone: "amber",
+		tools: [
+			{ id: "ux_surface_pass", label: "Walk the screen as your user" },
+			{ id: "map_feature", label: "Map the feature and its blockers" },
+			{ id: "user_flow", label: "Map every move and the call behind it" },
+		],
+		tone: "violet",
 	},
 	{
 		id: "12",
-		app: "Atlas Compliance",
-		industry: "Regtech",
-		title: "Computing forever",
-		body: "Audit summaries hung for 20+ minutes — ten concurrent recompiles stampeded advisory locks at 8s pooler timeout while SQL ran in 5ms. Team wanted global timeout increases. debug_defect classified missing in-flight dedupe and listed forbidden fixes.",
-		hoursLow: 32,
-		hoursHigh: 48,
-		tools: ["debug_defect", "route_lane", "fetch_seam"],
+		app: "StudioPublish",
+		industry: "Media",
+		title: "A screen that said \u201cready\u201d too soon",
+		situation:
+			"The publish dashboard crashed when stored data lagged the code reading it. Fixing the crash revealed a second problem: saves didn't refresh status, so the screen could say \u201cready\u201d when it wasn't.",
+		decision: "Ship the crash fix alone, or close both problems.",
+		actions:
+			"The agent investigated the crash, then traced every step that should refresh after a save.",
+		impact:
+			"Both problems were fixed in one release, and the screen stopped lying.",
+		hoursLow: 40,
+		hoursHigh: 60,
+		tools: [
+			{ id: "debug_defect", label: "Investigate before fixing" },
+			{ id: "journey_attest", label: "Mark each step proven or not" },
+			{ id: "fix_pack", label: "Bundle the fix with its proof" },
+		],
 		tone: "amber",
 	},
 	{
 		id: "13",
-		app: "Vertex Learning",
-		industry: "Edtech",
-		title: "Empty after save",
-		body: "Lesson rows persisted with a success toast, but the plan panel stayed empty — the UI gated on a nullable hint while projections 500'd on cold miss. route_lane and fetch_seam rejected warm-all-first (60–90s hangs) and client-only fallback before multi-slice work.",
-		hoursLow: 35,
-		hoursHigh: 50,
-		tools: ["route_lane", "fetch_seam", "fetch_auth", "architecture_lens"],
-		tone: "sky",
-	},
-	{
-		id: "14",
-		app: "BridgeWorks",
-		industry: "Construction",
-		title: "Phantom 409",
-		body: "First brief save returned version mismatch — timestamp OCC tokens lost microsecond precision through JavaScript Date — and recovery copy sent users to re-import workflows. route_lane, coding_principles, and plan_delivery drove integer revision counters and lane-specific conflict codes in one attested cutover.",
-		hoursLow: 28,
-		hoursHigh: 40,
-		tools: ["route_lane", "coding_principles", "plan_delivery"],
-		tone: "violet",
-	},
-	{
-		id: "15",
-		app: "Harbor Insurance",
-		industry: "Insurance",
-		title: "Release transparency",
-		body: "Underwriters saw pass/fail gates with no artifact transparency; a seven-tile “what we're shipping” strip risked merge without proof. journey_attest returned ready_with_residual (21 nodes, 0 blocking); sentinel_closure signed horizontal seams. Shipped with residuals explicit.",
-		hoursLow: 24,
-		hoursHigh: 36,
-		tools: ["journey_attest", "sentinel_closure", "architecture_lens"],
-		tone: "emerald",
-	},
-	{
-		id: "16",
-		app: "ClearPath Talent",
-		industry: "HR tech",
-		title: "One assistant brain",
-		body: "Recruiting, onboarding, learning, and analytics each hardcoded different assistant actions — MCP and an assignment console would have added a fifth brain. map_feature, plan_delivery, and grill_questions locked one resolver, drop-reason codes, and CI guardrails before UI sprawl.",
-		hoursLow: 45,
-		hoursHigh: 70,
-		tools: ["map_feature", "plan_delivery", "grill_questions"],
-		tone: "violet",
-	},
-	{
-		id: "17",
-		app: "StudioPublish",
-		industry: "Media",
-		title: "Deletion test wins",
-		body: "A spec still required a four-verb dropdown while a per-slot rerun strip already shipped the same backend — building the menu would introduce a second client resolver with zero new capability. grill_questions and architecture_lens failed the menu on the deletion test; doc cleanup only.",
-		hoursLow: 30,
-		hoursHigh: 45,
-		tools: ["grill_questions", "architecture_lens"],
-		tone: "sky",
-	},
-	{
-		id: "18",
-		app: "Vertex Learning",
-		industry: "Edtech",
-		title: "Structure brain first",
-		body: "A headless cron worker was ready to wire Stage 2 outline generation beside the orchestrator — risk of divergent module plans and mismatched recipes. grill_questions audit_mode CONFIRM GO blocked Stage 2 until a pedagogy resolver landed.",
-		hoursLow: 16,
-		hoursHigh: 24,
-		tools: ["grill_questions", "route_lane", "architecture_lens"],
-		tone: "emerald",
-	},
-	{
-		id: "19",
 		app: "Atlas Compliance",
 		industry: "Regtech",
-		title: "Targeted test recovery",
-		body: "Remediation touched 50+ spec files; each guess triggered ~90-minute full CI. journey_attest smoke marked proven vs latent nodes; fix_pack anchored evidence per cluster. Recovery ran targeted bundles instead of shotgun CI.",
-		hoursLow: 50,
-		hoursHigh: 80,
-		tools: ["journey_attest", "fix_pack", "pressure_test"],
+		title: "Stuck on \u201ccomputing\u201d",
+		situation:
+			"Audit summaries hung for over 20 minutes while the query itself took 5 milliseconds. Ten requests were rebuilding the same thing at once and fighting over locks.",
+		decision: "Raise timeouts everywhere, or stop the duplicate work.",
+		actions:
+			"The agent named the cause, missing de-duplication, and listed the fixes that were off the table, including timeout increases.",
+		impact:
+			"One request builds and the rest wait. Summaries return in seconds.",
+		hoursLow: 32,
+		hoursHigh: 48,
+		tools: [
+			{ id: "debug_defect", label: "Investigate before fixing" },
+			{ id: "classify_bug", label: "Name what kind of bug it is" },
+			{ id: "coding_principles", label: "Apply the coding rules" },
+		],
 		tone: "amber",
 	},
 	{
+		id: "14",
+		app: "Vertex Learning",
+		industry: "Edtech",
+		title: "Saved, but empty",
+		situation:
+			"Lessons saved with a success message, but the plan panel stayed empty. The screen waited on an optional field while the data behind it failed on first load.",
+		decision:
+			"Pre-build everything (60 to 90 second hangs), or fake it in the browser.",
+		actions:
+			"The agent rejected both shortcuts and named the contract between saving and displaying.",
+		impact: "Fixed at the boundary, before more features were stacked on top.",
+		hoursLow: 35,
+		hoursHigh: 50,
+		tools: [
+			{ id: "route_lane", label: "Pick the right workflow" },
+			{ id: "fetch_seam", label: "Name the broken contract" },
+			{ id: "user_flow", label: "Map every move and the call behind it" },
+		],
+		tone: "sky",
+	},
+	{
+		id: "15",
+		app: "BridgeWorks",
+		industry: "Construction",
+		title: "The phantom conflict",
+		situation:
+			"The first save of a brief claimed someone else had changed it. Timestamps lost precision in JavaScript, so versions never matched, and the recovery message told users to re-import their work.",
+		decision: "Loosen the check, or change how versions are tracked.",
+		actions:
+			"The agent applied the coding rules and planned a move to whole-number revision counters with clear conflict messages.",
+		impact: "No more phantom conflicts, and real ones explain themselves.",
+		hoursLow: 28,
+		hoursHigh: 40,
+		tools: [
+			{ id: "route_lane", label: "Pick the right workflow" },
+			{ id: "coding_principles", label: "Apply the coding rules" },
+			{ id: "plan_delivery", label: "Sequence the work" },
+		],
+		tone: "violet",
+	},
+	{
+		id: "16",
+		app: "Harbor Insurance",
+		industry: "Insurance",
+		title: "Show what's shipping",
+		situation:
+			"Underwriters saw pass and fail gates with no proof behind them. A new \u201cwhat we're shipping\u201d panel was about to merge without evidence.",
+		decision: "Merge on trust, or attach the proof.",
+		actions:
+			"The agent checked every step of the release journey and signed off each boundary between teams.",
+		impact:
+			"Shipped with known gaps written down: nothing hidden, nothing blocking.",
+		hoursLow: 24,
+		hoursHigh: 36,
+		tools: [
+			{ id: "journey_attest", label: "Mark each step proven or not" },
+			{ id: "sentinel_closure", label: "Force pass or fail at each boundary" },
+			{ id: "repo_evidence_binder", label: "Attach proof to each claim" },
+		],
+		tone: "emerald",
+	},
+	{
+		id: "17",
+		app: "ClearPath Talent",
+		industry: "HR tech",
+		title: "One assistant, not five",
+		situation:
+			"Recruiting, onboarding, learning and analytics each hard-coded their own assistant actions. A new console was about to add a fifth.",
+		decision: "Add another one, or unify first.",
+		actions:
+			"The agent mapped the feature, planned one shared decision point, and questioned the plan until it held up.",
+		impact:
+			"One assistant logic, clear reasons when an action is dropped, and CI checks that keep it that way.",
+		hoursLow: 45,
+		hoursHigh: 70,
+		tools: [
+			{ id: "map_feature", label: "Map the feature and its blockers" },
+			{ id: "plan_delivery", label: "Sequence the work" },
+			{ id: "grill_questions", label: "Ask the hard questions" },
+		],
+		tone: "violet",
+	},
+	{
+		id: "18",
+		app: "StudioPublish",
+		industry: "Media",
+		title: "Don't build the menu",
+		situation:
+			"A spec still asked for a four-option dropdown, but a button strip already in production did the same thing on the same backend.",
+		decision: "Build what the spec says, or check whether it adds anything.",
+		actions:
+			"The agent asked what would break if the menu never existed. Nothing would.",
+		impact: "The spec was updated instead of building duplicate code.",
+		hoursLow: 30,
+		hoursHigh: 45,
+		tools: [
+			{ id: "grill_questions", label: "Ask the hard questions" },
+			{ id: "architecture_lens", label: "Challenge the design" },
+			{ id: "interrogate_plan", label: "Question the plan" },
+		],
+		tone: "violet",
+	},
+	{
+		id: "19",
+		app: "Vertex Learning",
+		industry: "Edtech",
+		title: "Settle the rules before automating",
+		situation:
+			"A background job was ready to generate course outlines beside the main system, giving two places that could make plans that disagree.",
+		decision: "Wire it up now, or settle the rules first.",
+		actions:
+			"The agent ran a go/no-go review and held the job until one shared set of teaching rules existed.",
+		impact:
+			"One source of truth for course structure before anything ran unattended.",
+		hoursLow: 16,
+		hoursHigh: 24,
+		tools: [
+			{ id: "grill_questions", label: "Ask the hard questions" },
+			{ id: "architecture_lens", label: "Challenge the design" },
+			{ id: "plan_delivery", label: "Sequence the work" },
+		],
+		tone: "violet",
+	},
+	{
 		id: "20",
+		app: "Atlas Compliance",
+		industry: "Regtech",
+		title: "Stop running all of CI",
+		situation:
+			"Repairs touched more than 50 test files, and every guess triggered a 90-minute CI run.",
+		decision: "Keep guessing, or narrow the target.",
+		actions:
+			"The agent marked which steps were proven and which weren't, then grouped the evidence by cluster.",
+		impact: "Targeted test runs replaced a full CI run on every guess.",
+		hoursLow: 50,
+		hoursHigh: 80,
+		tools: [
+			{ id: "journey_attest", label: "Mark each step proven or not" },
+			{ id: "fix_pack", label: "Bundle the fix with its proof" },
+			{ id: "debug_defect", label: "Investigate before fixing" },
+		],
+		tone: "amber",
+	},
+	{
+		id: "21",
 		app: "FleetDispatch",
 		industry: "Logistics",
-		title: "Product decision menu",
-		body: "Engineering was ready for org→depot cutover but product hadn't decided catalog scope, scope columns, assistant rail, or agent API safety — and coders started assuming answers. slice_issues, grill_questions, and map_feature produced a numbered decision menu in one agent session.",
+		title: "Product decisions first",
+		situation:
+			"Engineering was ready to migrate, but product hadn't made four key decisions, and coders had started guessing.",
+		decision: "Let coders decide, or put the decisions in front of product.",
+		actions:
+			"The agent broke the work into issues and wrote the open questions as a numbered menu.",
+		impact: "Product answered in one session, and coders stopped guessing.",
 		hoursLow: 20,
 		hoursHigh: 30,
-		tools: ["slice_issues", "grill_questions", "map_feature", "prism_frame"],
+		tools: [
+			{ id: "slice_issues", label: "Break work into issues" },
+			{ id: "grill_questions", label: "Ask the hard questions" },
+			{ id: "map_feature", label: "Map the feature and its blockers" },
+		],
+		tone: "violet",
+	},
+	{
+		id: "22",
+		app: "Cartwheel",
+		industry: "Marketplace",
+		title: "Untangle the vibe-coded app",
+		situation:
+			"Two founders prompted their marketplace into existence: 140 files, three copies of checkout, database tables anyone could read, and secret keys shipped to the browser. Every new prompt broke something old.",
+		decision: "Rewrite from scratch, or rescue what's there.",
+		actions:
+			"The agent mapped what existed, checked which tables leaked between customers, and ordered the work: lock down data, merge duplicates, then features.",
+		impact:
+			"Twelve ordered fixes, no rewrite, and the store kept taking orders the whole time.",
+		hoursLow: 60,
+		hoursHigh: 90,
+		tools: [
+			{ id: "repo_architecture_map", label: "Map the codebase" },
+			{
+				id: "tenant_isolation_check",
+				label: "Check customer data stays separate",
+			},
+			{ id: "slice_issues", label: "Break work into issues" },
+		],
+		tone: "emerald",
+	},
+	{
+		id: "23",
+		app: "LedgerFlow",
+		industry: "Fintech",
+		title: "Refactor the whole backend",
+		situation:
+			"Eight years of routes calling the database directly: business rules in controllers, validation in three places, and no part that could be changed safely.",
+		decision: "A big-bang rewrite, or replace it route by route.",
+		actions:
+			"The agent planned a step-by-step move (input boundaries first, business logic next, data access last) and defined old-versus-new checks each route had to pass before traffic moved.",
+		impact:
+			"The backend moved in steps, with the money rules checked at every one.",
+		hoursLow: 120,
+		hoursHigh: 180,
+		tools: [
+			{ id: "plan_delivery", label: "Sequence the work" },
+			{
+				id: "cutover_parity_check",
+				label: "Compare old and new before switching",
+			},
+			{ id: "invariant_register", label: "Keep key rules true over time" },
+		],
+		tone: "violet",
+	},
+	{
+		id: "24",
+		app: "Tenantly",
+		industry: "Proptech",
+		title: "Prototype to production",
+		situation:
+			"The demo that won the pilot went live as-is: no error plan, no audit log, retries that charged rent twice, and nothing operators could debug at 2 a.m.",
+		decision: "Keep patching, or prove it's ready.",
+		actions:
+			"The agent checked one area at a time against the standard's controls, built a single list of errors, and named what operators need to see.",
+		impact: "\u201cReady\u201d became a checklist with evidence attached.",
+		hoursLow: 50,
+		hoursHigh: 80,
+		tools: [
+			{ id: "assurance_run", label: "Prove readiness one step at a time" },
+			{ id: "error_registry_check", label: "Build one catalog of errors" },
+			{ id: "signal_stack_outline", label: "List what operators need to see" },
+		],
+		tone: "sky",
+	},
+	{
+		id: "25",
+		app: "Orbit Ops",
+		industry: "SaaS",
+		title: "The agent that could drop prod",
+		situation:
+			"An internal coding agent held a permanent database password and ran migrations on request, even during a code freeze.",
+		decision: "Trust it to behave, or limit what it can do.",
+		actions:
+			"The agent mapped who the bot acts for, what it can reach, and how to shut it off.",
+		impact:
+			"Short-lived credentials per task, a freeze it can't override, and a kill switch tested before anyone trusted it again.",
+		hoursLow: 30,
+		hoursHigh: 50,
+		tools: [
+			{ id: "sentinel_program", label: "Run a focused audit" },
+			{ id: "agent_op_contract_check", label: "Check what the agent may do" },
+			{ id: "run_state_control", label: "Pause or stop an agent run" },
+		],
+		tone: "amber",
+	},
+	{
+		id: "26",
+		app: "Meridian Health",
+		industry: "Healthcare",
+		title: "FDE: tailor the core, don't rewrite it",
+		situation:
+			"A forward-deployed engineer had six weeks inside a hospital network to make your core referral backend fit their workflow. They had the hospital's source code, but rewriting it was never on the table.",
+		decision:
+			"Fork the product for one customer, or extend the core in place through configuration and plugins.",
+		actions:
+			"The agent mapped the hospital's code onto the UDALI layers, showed which seams already took configuration or plugins, and sequenced each customization against those seams with a named acceptor on the hospital side.",
+		impact:
+			"Hospital-specific rules shipped as config and plugins on the unchanged core. Their team owns them, and the reusable pieces went back into the product.",
+		hoursLow: 40,
+		hoursHigh: 60,
+		tools: [
+			{ id: "repo_architecture_map", label: "Map the codebase" },
+			{ id: "plan_delivery", label: "Sequence the work" },
+			{ id: "sentinel_program", label: "Run a focused audit" },
+		],
+		tone: "emerald",
+	},
+	{
+		id: "27",
+		app: "Keystone Logistics",
+		industry: "Logistics",
+		title: "FDE: no source code, still structured",
+		situation:
+			"Your FDE landed at a freight customer whose core systems belong to a vendor. There was no source code to read: only API docs, runbooks, interview notes and a few exports.",
+		decision:
+			"Guess at how their system works, or build a shared, written picture of what is known.",
+		actions:
+			"The FDE connected AADM to a repo of what was known (docs, contracts, notes) and used the FDE tools to place each piece on the UDALI layers with the customer's architects, marking every gap as unknown instead of assuming.",
+		impact:
+			"Customer and FDE agreed on one map of their system, with the gaps listed, before any integration code was written. The plugins that followed targeted real seams.",
+		hoursLow: 30,
+		hoursHigh: 45,
+		tools: [
+			{ id: "plan_delivery", label: "Sequence the work" },
+			{ id: "repo_feature_map", label: "Map one feature from what is known" },
+			{ id: "map_feature", label: "Map the feature and its blockers" },
+		],
+		tone: "sky",
+	},
+	{
+		id: "28",
+		app: "Granite Mutual",
+		industry: "Insurance",
+		title: "FDE: tools the customer keeps",
+		situation:
+			"The customer wanted their own agents to quote and file claims against your core backend, safely, after the FDE left.",
+		decision:
+			"Hand over raw API keys and a wiki page, or ship governed tools the customer can run themselves.",
+		actions:
+			"The FDE used AADM to design an MCP server, a small set of APIs and agent skills on top of the core: checked each tool's schema across model providers, scoped what every agent may do, and wrote the proof each tool needed before release.",
+		impact:
+			"The customer runs their own MCP, APIs and skills on your core, with permissions and tests they understand and can change.",
+		hoursLow: 35,
+		hoursHigh: 55,
+		tools: [
+			{
+				id: "llm_tool_schema_compat",
+				label: "Check tool schemas work across models",
+			},
+			{ id: "agent_op_contract_check", label: "Check what the agent may do" },
+			{ id: "assurance_run", label: "Prove readiness one step at a time" },
+		],
+		tone: "violet",
+	},
+	{
+		id: "29",
+		app: "Northstar Retail",
+		industry: "Retail",
+		title: "Ten agents, one codebase",
+		situation:
+			"The team ran several coding agents at once and spent more time on merge conflicts than on features.",
+		decision: "Run fewer agents, or split the work better.",
+		actions:
+			"The agent split work so no two agents touched the same files, checked each branch before merge, and recorded what each run got wrong.",
+		impact:
+			"Parallel work that merges cleanly, and agents that learn between runs.",
+		hoursLow: 25,
+		hoursHigh: 40,
+		tools: [
+			{ id: "fanout_guide", label: "Split work across agents" },
+			{ id: "chunk_branch_check", label: "Check each branch before merge" },
+			{ id: "lessons_register", label: "Record what each run got wrong" },
+		],
 		tone: "violet",
 	},
 ];
-
 const toneClasses: Record<
 	Vignette["tone"],
 	{ numeral: string; rule: string; chip: string; hour: string }
 > = {
 	violet: {
-		numeral: "text-violet-300/90",
+		numeral: "text-brand-violet",
 		rule: "border-violet-400/40",
-		chip: "border-violet-400/30 text-violet-200",
-		hour: "border-violet-300/30 bg-violet-950/30 text-violet-100",
+		chip: "border-violet-400/30 text-brand-violet",
+		hour: "border-brand-violet/40 bg-accent text-brand-violet",
 	},
 	amber: {
-		numeral: "text-amber-300/90",
-		rule: "border-amber-300/40",
-		chip: "border-amber-300/30 text-amber-200",
-		hour: "border-amber-300/30 bg-amber-950/30 text-amber-100",
+		numeral: "text-brand-warn",
+		rule: "border-brand-warn-border",
+		chip: "border-brand-warn-border text-brand-warn",
+		hour: "border-brand-warn-border bg-brand-warn-bg text-brand-warn",
 	},
 	sky: {
-		numeral: "text-sky-300/90",
+		numeral: "text-brand-sky",
 		rule: "border-sky-400/40",
-		chip: "border-sky-400/30 text-sky-200",
-		hour: "border-sky-300/30 bg-sky-950/30 text-sky-100",
+		chip: "border-sky-400/30 text-brand-sky",
+		hour: "border-brand-sky/40 bg-accent text-brand-sky",
 	},
 	emerald: {
-		numeral: "text-emerald-300/90",
-		rule: "border-emerald-300/40",
-		chip: "border-emerald-300/30 text-emerald-200",
-		hour: "border-emerald-300/30 bg-emerald-950/30 text-emerald-100",
+		numeral: "text-brand-mcp",
+		rule: "border-brand-mcp-border",
+		chip: "border-brand-mcp-border text-brand-mcp",
+		hour: "border-brand-mcp-border bg-brand-mcp-bg text-brand-mcp",
 	},
 };
 
@@ -322,60 +711,60 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 
 <Layout
 	title="AADM stories — patterns from the field"
-	description={`Twenty-one vignettes from agent sessions with the hosted AADM MCP — fictional apps, real patterns, illustrative hour ranges. Portfolio band ~${totalLow}–${totalHigh} engineer-hours redirected from wrong fixes.`}
+	description={`${vignettes.length} vignettes from agent sessions with the hosted AADM MCP — fictional apps, real patterns, illustrative hour ranges. Portfolio band ~${totalLow}–${totalHigh} engineer-hours redirected from wrong fixes.`}
 	headerActiveNav="stories"
 	ogImage="/og/og-stories.png"
 >
-	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-slate-100">
+	<main id="main" class="relative isolate overflow-x-clip bg-surface-deep text-text-primary">
 
 		<!-- =============================================================
 		     §00 — Hero
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
+		<section class="relative border-b border-border">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[length:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_55%,transparent_85%)]"></div>
 			<div aria-hidden="true" class="absolute right-0 top-0 -z-10 h-[36rem] w-[36rem] translate-x-1/3 -translate-y-1/3 rounded-full bg-emerald-500/[0.06] blur-3xl"></div>
 			<div aria-hidden="true" class="absolute left-0 top-40 -z-10 h-[32rem] w-[32rem] -translate-x-1/3 rounded-full bg-amber-500/[0.05] blur-3xl"></div>
 
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 pb-20 pt-10 sm:px-8 sm:pb-28 sm:pt-16">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 00</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Stories · field</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 00</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Stories · field</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<p class="font-mono-cta mb-8 text-[10px] uppercase tracking-[0.28em] text-slate-500">
-						<span class="text-amber-200/90">▸</span> 21 vignettes · May 2026 → June 2026 · agent sessions with the hosted AADM MCP
+					<p class="font-mono-cta mb-10 text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
+						<span class="text-brand-warn">▸</span> {vignettes.length} vignettes · agent sessions with the hosted AADM MCP
 					</p>
 
-					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-black leading-[0.9] tracking-[-0.04em] text-white">
-						Patterns <span class="font-extralight italic text-slate-400">from the field.</span>
+					<h1 class="font-display max-w-[18ch] text-balance text-[clamp(2.4rem,8vw,6.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						Patterns <span class="font-light italic text-muted-foreground">from the field.</span>
 					</h1>
 
-					<div class="mt-12 grid grid-cols-12 gap-6">
+					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 sm:col-span-4">
-							<div class="border-l border-emerald-300/40 pl-5">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.25em] text-emerald-200/80">Portfolio band</p>
-								<p class="font-display mt-3 text-balance text-3xl font-black leading-tight text-white sm:text-4xl">
-									~{totalLow.toLocaleString()}–{totalHigh.toLocaleString()}<span class="font-mono-cta ml-2 align-middle text-[11px] uppercase tracking-[0.22em] text-emerald-200/85">engineer-hours</span>
+							<div class="border-l border-brand-mcp-border pl-5">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">Portfolio band</p>
+								<p class="font-display mt-3 text-balance text-3xl font-bold leading-tight text-foreground sm:text-4xl">
+									~{totalLow.toLocaleString()}–{totalHigh.toLocaleString()}<span class="font-mono-cta ml-2 align-middle text-sm normal-case tracking-[0.01em] text-brand-mcp">engineer-hours</span>
 								</p>
-								<p class="mt-3 text-sm leading-relaxed text-slate-400">
+								<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
 									Redirected from wrong fixes, duplicate UI, false CI, and meeting loops across these 20+1 patterns — not raw codegen
 									speed.
 								</p>
 							</div>
 						</div>
 						<div class="col-span-12 sm:col-span-8">
-							<p class="text-pretty text-lg leading-[1.65] text-slate-300 sm:text-xl">
+							<p class="text-pretty text-lg leading-[1.65] text-text-secondary sm:text-xl">
 								These are real session patterns from teams running the AADM MCP. The app names are
-								<span class="font-extralight italic text-slate-400"> fictional.</span> The bugs, refactors, and decisions are not.
+								<span class="font-light italic text-muted-foreground"> fictional.</span> The bugs, refactors, and decisions are not.
 								Hours are illustrative — the typical-wrong-path vs the attested-path, for a senior engineer + agent pair.
 							</p>
-							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-slate-500">
+							<p class="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
 								Every vignette below is the same move: a senior engineer's judgment applied before the agent starts editing
 								rather than after.{' '}
 								<a
 									href="/about"
-									class="font-semibold text-slate-300 underline decoration-slate-700 underline-offset-4 transition hover:text-emerald-200 hover:decoration-emerald-300"
+									class="font-semibold text-text-secondary underline decoration-border underline-offset-4 transition hover:text-brand-mcp hover:decoration-brand-mcp"
 									>Agentic engineering</a
 								>{' '}
 								is the general form of that move.
@@ -383,10 +772,10 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						</div>
 					</div>
 
-					<div class="mt-12 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<a
 							href="#vignettes"
-							class="group inline-flex items-center gap-3 bg-white px-6 py-3.5 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="group inline-flex items-center gap-3 bg-foreground px-6 py-3.5 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-warn hover:text-brand-warn-fg focus-visible:ring-2 focus-visible:ring-brand-warn focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							<span>Read the vignettes</span>
 							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
@@ -395,13 +784,13 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						</a>
 						<a
 							href={urlMcpMarketing}
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-6 py-3.5 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-6 py-3.5 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface-deep"
 						>
 							Get access
 						</a>
 						<a
 							href="#honest-boundary"
-							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-amber-200 hover:decoration-amber-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-warn hover:decoration-brand-warn"
 						>
 							<span>The honest boundary</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">↓</span>
@@ -414,19 +803,19 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 		<!-- =============================================================
 		     §01 — Honesty box (apps fictional, patterns real)
 		     ============================================================= -->
-		<section id="honest-boundary" class="relative scroll-mt-24 border-b border-white/[0.06] bg-[#06080f] sm:scroll-mt-28">
+		<section id="honest-boundary" class="relative scroll-mt-24 border-b border-border bg-surface-mid sm:scroll-mt-28">
 			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-20 sm:px-8 sm:py-24">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 01</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Read this first</span>
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 01</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Read this first</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[24ch] text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.05] tracking-[-0.025em] text-white">
-						Fictional apps. <span class="font-extralight italic text-slate-400">Real patterns.</span>
+					<h2 class="font-display max-w-[24ch] text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+						Fictional apps. <span class="font-light italic text-muted-foreground">Real patterns.</span>
 					</h2>
 
-					<div class="mt-12 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
+					<div class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-3">
 						{
 							[
 								{
@@ -445,12 +834,12 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 									body: "AADM MCP frames problems, names seams, and enforces evidence obligations. Your repository's tests and CI still decide pass/fail. Nothing here is a compliance verdict.",
 								},
 							].map((item) => (
-								<article class="group bg-[#06080f] p-7 transition duration-300 hover:bg-[#080c16] sm:p-8">
+								<article class="group bg-surface-mid p-7 transition duration-300 hover:bg-secondary sm:p-8">
 									<div class="flex items-baseline gap-4">
-										<span class="font-display text-[3.5rem] font-extralight leading-[0.85] text-amber-300/85 transition duration-300 group-hover:text-amber-300">{item.num}</span>
+										<span class="font-display text-[3.5rem] font-light leading-[0.85] text-brand-warn transition duration-300 group-hover:text-brand-warn">{item.num}</span>
 									</div>
-									<h3 class="font-display mt-6 text-balance text-lg font-bold leading-snug tracking-tight text-white">{item.title}</h3>
-									<p class="mt-3 text-sm leading-relaxed text-slate-400">{item.body}</p>
+									<h3 class="font-display mt-6 text-balance text-lg font-bold leading-snug tracking-tight text-foreground">{item.title}</h3>
+									<p class="mt-3 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
 								</article>
 							))
 						}
@@ -460,22 +849,22 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 		</section>
 
 		<!-- =============================================================
-		     §02 — Vignette cards (all 21)
+		     §02 — Vignette cards (all)
 		     ============================================================= -->
-		<section id="vignettes" class="relative scroll-mt-24 border-b border-white/[0.06] sm:scroll-mt-28">
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 02</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">{vignettes.length} vignettes</span>
+		<section id="vignettes" class="relative scroll-mt-24 border-b border-border sm:scroll-mt-28">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 02</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{vignettes.length} vignettes</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
-						The catalog. <span class="font-extralight italic text-slate-400">In one place.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						The catalog. <span class="font-light italic text-muted-foreground">In one place.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
-						Each card · the app (fictional), the industry, what the team would have done without governance, what AADM tools moved
-						the conversation, and an illustrative hours-saved range. Read straight through, or skim for shapes that match your work.
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
+						Each story walks through the same four beats: the situation your team is in, the decision you face, what AADM had the agent
+						do, and what changed. App names are fictional; the patterns are real. Skim for the one that looks like your week.
 					</p>
 
 					<ul class="mt-14 grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
@@ -483,38 +872,51 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 							vignettes.map((v) => {
 								const t = toneClasses[v.tone];
 								return (
-									<li class="group flex flex-col bg-surface-deep p-7 transition duration-300 hover:bg-[#0a0e1a] sm:p-9">
+									<li class="group flex flex-col bg-surface-deep p-7 transition duration-300 hover:bg-surface-mid sm:p-9">
 										<header class="flex items-baseline justify-between gap-4">
 											<div class="flex items-baseline gap-4">
-												<span class:list={["font-display text-[3.5rem] font-extralight leading-[0.85] tracking-tight sm:text-[4rem]", t.numeral]}>
+												<span class:list={["font-display text-[3.5rem] font-light leading-[0.85] tracking-tight sm:text-[4rem]", t.numeral]}>
 													{v.id}
 												</span>
 												<div>
-													<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">{v.industry}</p>
-													<h3 class="font-display mt-1 text-balance text-lg font-bold leading-snug text-white sm:text-xl">
+													<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">{v.industry}</p>
+													<h3 class="font-display mt-1 text-balance text-lg font-bold leading-snug text-foreground sm:text-xl">
 														{v.app}
 													</h3>
 												</div>
 											</div>
-											<span class:list={["border px-2.5 py-1 font-mono-cta text-[10px] uppercase tracking-[0.22em]", t.hour]}>
+											<span class:list={["border px-2.5 py-1 font-mono-cta text-[13px] normal-case tracking-[0.01em]", t.hour]}>
 												{v.hoursLow}–{v.hoursHigh} hrs saved
 											</span>
 										</header>
 
-										<p class="font-display mt-7 text-balance text-[1.05rem] font-bold leading-snug tracking-tight text-white sm:text-[1.15rem]">
+										<p class="font-display mt-7 text-balance text-[1.05rem] font-bold leading-snug tracking-tight text-foreground sm:text-[1.15rem]">
 											{v.title}
 										</p>
-										<p class="mt-3 text-sm leading-relaxed text-slate-300">{v.body}</p>
+										<dl class="mt-5 space-y-4 text-[15px] leading-relaxed">
+											{[
+												["The situation", v.situation],
+												["The decision", v.decision],
+												["What AADM did", v.actions],
+												["The impact", v.impact],
+											].map(([label, text]) => (
+												<div>
+													<dt class="text-[13px] font-semibold text-muted-foreground">{label}</dt>
+													<dd class:list={["mt-1", label === "The impact" ? "text-foreground" : "text-text-secondary"]}>{text}</dd>
+												</div>
+											))}
+										</dl>
 
 										<div class:list={["mt-6 border-l pl-4", t.rule]}>
-											<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-500">Tools the agent called</p>
-											<div class="mt-2 flex flex-wrap gap-1.5">
+											<p class="text-[13px] font-semibold text-muted-foreground">Three AADM tools that did the work</p>
+											<ul class="mt-2 space-y-1.5">
 												{v.tools.map((tool) => (
-													<code class:list={["font-mono-cta border bg-transparent px-2 py-0.5 text-[11px]", t.chip]}>
-														{tool}
-													</code>
+													<li class="flex flex-wrap items-baseline gap-x-2 text-sm text-foreground">
+														<span>{tool.label}</span>
+														<code class:list={["border bg-transparent px-1.5 py-0.5 text-[12px]", t.chip]}>{tool.id}</code>
+													</li>
 												))}
-											</div>
+											</ul>
 										</div>
 
 										<div aria-hidden="true" class="mt-auto pt-6">
@@ -527,7 +929,7 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						{vignetteVisuals.map((visual) => (
 							<li
 								class:list={[
-									"grid-visual-slot-cols-2 relative overflow-hidden bg-surface-deep transition duration-300 hover:bg-[#0a0e1a]",
+									"grid-visual-slot-cols-2 relative overflow-hidden bg-surface-deep transition duration-300 hover:bg-surface-mid",
 									visual.variant === "wide" ? "sm:col-span-2" : "",
 								]}
 								style={gridVisualSlotStyle(visual)}
@@ -543,7 +945,7 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						))}
 					</ul>
 
-					<p class="mt-12 max-w-3xl text-sm leading-relaxed text-slate-500">
+					<p class="mt-14 max-w-3xl text-sm leading-relaxed text-muted-foreground">
 						Hour ranges are method · typical wrong path (meetings, wrong fixes, full CI, parallel UI) vs attested path (one
 						governed agent session). A senior engineer + agent pair. Not a guaranteed SLA. Not a compliance claim. Your repository's
 						tests and CI still decide pass/fail.
@@ -555,45 +957,45 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 		<!-- =============================================================
 		     §03 — Industry rollup + portfolio band
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06] bg-[#06080f]">
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 03</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Rollup</span>
+		<section class="relative border-b border-border bg-surface-mid">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 03</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Rollup</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-black leading-[0.96] tracking-[-0.025em] text-white">
-						The portfolio band. <span class="font-extralight italic text-slate-400">All 21 together.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.9rem,4.2vw,3.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						The portfolio band. <span class="font-light italic text-muted-foreground">All of them together.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						If the patterns above all ran in your quarter — they won't all show up, but the shapes recur — the redirected effort
 						adds up.
 					</p>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-7">
-							<div class="border border-emerald-300/30 bg-[#070b13] p-7 sm:p-10">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">If the 21 patterns landed in one quarter</p>
-								<p class="font-display mt-5 text-balance text-[clamp(2.6rem,6vw,5rem)] font-black leading-[0.95] tracking-tight text-white">
-									~{totalLow.toLocaleString()}<span class="text-slate-500">–</span>{totalHigh.toLocaleString()}
+							<div class="border border-brand-mcp-border bg-muted p-7 sm:p-10">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">If these patterns landed in one quarter</p>
+								<p class="font-display mt-5 text-balance text-[clamp(2.6rem,6vw,5rem)] font-bold leading-[1.08] tracking-tight text-foreground">
+									~{totalLow.toLocaleString()}<span class="text-muted-foreground">–</span>{totalHigh.toLocaleString()}
 								</p>
-								<p class="font-mono-cta mt-2 text-[11px] uppercase tracking-[0.22em] text-emerald-200/85">engineer-hours redirected</p>
-								<p class="mt-6 text-sm leading-relaxed text-slate-300">
+								<p class="font-mono-cta mt-2 text-sm normal-case tracking-[0.01em] text-brand-mcp">engineer-hours redirected</p>
+								<p class="mt-6 text-sm leading-relaxed text-text-secondary">
 									Redirected from wrong fixes, duplicate UI, false CI, and meeting loops. Not raw codegen throughput. Not a compliance
 									claim. A summed estimate of the kinds of wasted time these patterns prevent.
 								</p>
 							</div>
 						</div>
 						<div class="col-span-12 lg:col-span-5">
-							<div class="border-l-2 border-emerald-300/40 pl-6">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">By industry · {vignettes.length} vignettes</p>
-								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+							<div class="border-l-2 border-brand-mcp-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">By industry · {vignettes.length} vignettes</p>
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-border">
 									{
 										industryRollup.map((row) => (
 											<li class="group grid grid-cols-[1fr_auto] items-baseline gap-4 py-3">
-												<span class="text-sm leading-relaxed text-slate-300 transition group-hover:text-white">{row.industry}</span>
-												<span class="font-mono-cta text-[11px] uppercase tracking-[0.22em] text-emerald-200/85">{row.count}</span>
+												<span class="text-sm leading-relaxed text-text-secondary transition group-hover:text-foreground">{row.industry}</span>
+												<span class="font-mono-cta text-sm normal-case tracking-[0.01em] text-brand-mcp">{row.count}</span>
 											</li>
 										))
 									}
@@ -608,27 +1010,27 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 		<!-- =============================================================
 		     §04 — Copy rules / what AADM doesn't claim
 		     ============================================================= -->
-		<section class="relative border-b border-white/[0.06]">
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-amber-200/70">§ 04</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Copy rules</span>
+		<section class="relative border-b border-border">
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">§ 04</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Copy rules</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[22ch] text-[clamp(1.7rem,4vw,2.8rem)] font-black leading-[1.05] tracking-[-0.025em] text-white">
-						How we talk about this. <span class="font-extralight italic text-slate-400">How we don't.</span>
+					<h2 class="font-display max-w-[22ch] text-[clamp(1.7rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-[-0.01em] text-foreground">
+						How we talk about this. <span class="font-light italic text-muted-foreground">How we don't.</span>
 					</h2>
-					<p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-400">
+					<p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
 						The framing rules we hold ourselves to when reporting these patterns. Useful if you're considering AADM and want to
 						know what claims we'll make in front of your auditor.
 					</p>
 
 					<div class="mt-14 grid grid-cols-12 gap-6">
 						<div class="col-span-12 lg:col-span-6">
-							<div class="border-l-2 border-emerald-300/40 pl-6">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-emerald-200/85">We say</p>
-								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+							<div class="border-l-2 border-brand-mcp-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">We say</p>
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-border">
 									{
 										[
 											"12–18 hours avoided wrong Back button implementation and review cycle",
@@ -637,8 +1039,8 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 											"Vertical through_domain_and_data plus horizontal seams signed off",
 										].map((line) => (
 											<li class="grid grid-cols-[auto_1fr] items-baseline gap-3 py-3">
-												<span class="font-mono-cta text-[11px] text-emerald-300/80">✓</span>
-												<span class="text-sm leading-relaxed text-slate-300">{line}</span>
+												<span class="font-mono-cta text-sm text-brand-mcp">✓</span>
+												<span class="text-sm leading-relaxed text-text-secondary">{line}</span>
 											</li>
 										))
 									}
@@ -646,9 +1048,9 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 							</div>
 						</div>
 						<div class="col-span-12 lg:col-span-6">
-							<div class="border-l-2 border-amber-300/40 pl-6">
-								<p class="font-mono-cta text-[10px] uppercase tracking-[0.22em] text-amber-200/85">We don't say</p>
-								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+							<div class="border-l-2 border-brand-warn-border pl-6">
+								<p class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-warn">We don't say</p>
+								<ul class="mt-5 divide-y divide-white/[0.06] border-t border-border">
 									{
 										[
 											"AADM saved 90% of development",
@@ -657,8 +1059,8 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 											"Certified compliant",
 										].map((line) => (
 											<li class="grid grid-cols-[auto_1fr] items-baseline gap-3 py-3">
-												<span class="font-mono-cta text-[11px] text-amber-300/80">✗</span>
-												<span class="text-sm leading-relaxed text-slate-400">{line}</span>
+												<span class="font-mono-cta text-sm text-brand-warn">✗</span>
+												<span class="text-sm leading-relaxed text-muted-foreground">{line}</span>
 											</li>
 										))
 									}
@@ -667,9 +1069,9 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 						</div>
 					</div>
 
-					<p class="mt-12 max-w-3xl text-base leading-relaxed text-slate-300">
-						<span class="font-semibold text-white">Honest boundary ·</span> AADM MCP frames problems, names seams, and enforces
-						proof obligations. <span class="font-extralight italic text-slate-400">Your repository's tests and evidence</span> still
+					<p class="mt-14 max-w-3xl text-base leading-relaxed text-text-secondary">
+						<span class="font-semibold text-foreground">Honest boundary ·</span> AADM MCP frames problems, names seams, and enforces
+						proof obligations. <span class="font-light italic text-muted-foreground">Your repository's tests and evidence</span> still
 						decide pass/fail. That's the line, and we hold it.
 					</p>
 				</div>
@@ -681,40 +1083,40 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 		     ============================================================= -->
 		<section class="relative bg-surface-deep">
 			<div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom,rgba(110,231,183,0.07),transparent_60%)]"></div>
-			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-24 sm:px-8 sm:py-32">
-				<aside class="col-span-12 mb-8 flex items-baseline justify-between gap-4 border-b border-white/10 pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-white/[0.08] sm:pb-0 sm:pr-4">
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-emerald-200/70">§ 05</span>
-					<span class="font-mono-cta text-[10px] uppercase tracking-[0.28em] text-slate-500">Yours</span>
+			<div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-6 px-4 py-28 sm:py-32 sm:px-8 sm:py-32">
+				<aside class="col-span-12 mb-10 flex items-baseline justify-between gap-4 border-b border-border pb-4 sm:col-span-2 sm:mb-0 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:border-b-0 sm:border-r sm:border-border sm:pb-0 sm:pr-4">
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-brand-mcp">§ 05</span>
+					<span class="font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">Yours</span>
 				</aside>
 
 				<div class="col-span-12 sm:col-span-10">
-					<h2 class="font-display max-w-[16ch] text-balance text-[clamp(2rem,5.5vw,4.4rem)] font-black leading-[0.95] tracking-[-0.03em] text-white">
-						The best case study <span class="font-extralight italic text-slate-400">is yours.</span>
+					<h2 class="font-display max-w-[16ch] text-balance text-[clamp(2rem,5.5vw,4.4rem)] font-bold leading-[1.08] tracking-[-0.01em] text-foreground">
+						The best case study <span class="font-light italic text-muted-foreground">is yours.</span>
 					</h2>
-					<p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
+					<p class="mt-6 max-w-2xl text-base leading-relaxed text-text-secondary">
 						Try the patterns on something real this week. Catch a classification bug, attest a release without theater, onboard
 						a senior engineer in a week. When it works, tell us — we'll feature consenting teams here.
 					</p>
 
-					<div class="mt-12 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+					<div class="mt-14 flex flex-col flex-wrap items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
 						<a
 							href={urlMcpMarketing}
-							class="group inline-flex items-center gap-3 bg-white px-7 py-4 text-sm font-semibold tracking-tight text-slate-950 outline-none transition duration-200 hover:bg-emerald-200"
+							class="group inline-flex items-center gap-3 bg-foreground px-7 py-4 text-sm font-semibold tracking-tight text-background outline-none transition duration-200 hover:bg-brand-mcp hover:text-brand-mcp-fg"
 						>
-							<span>Connect production agents</span>
+							<span>See how the MCP works</span>
 							<svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" class="transition duration-300 group-hover:translate-x-1">
 								<path d="M1 5h13M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
 							</svg>
 						</a>
 						<a
 							href={urlStandard}
-							class="inline-flex items-center gap-2 border border-white/20 bg-transparent px-7 py-4 text-sm font-semibold text-white outline-none transition duration-200 hover:border-white/40 hover:bg-white/[0.04]"
+							class="inline-flex items-center gap-2 border border-border bg-transparent px-7 py-4 text-sm font-semibold text-foreground outline-none transition duration-200 hover:border-foreground/25 hover:bg-accent"
 						>
 							Read the standard
 						</a>
 						<a
 							href="/why-aadm"
-							class="group font-mono-cta inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-slate-400 underline decoration-slate-700 underline-offset-[6px] transition hover:text-emerald-200 hover:decoration-emerald-300"
+							class="group font-mono-cta inline-flex items-center gap-2 text-sm normal-case tracking-[0.01em] text-muted-foreground underline decoration-border underline-offset-[6px] transition hover:text-brand-mcp hover:decoration-brand-mcp"
 						>
 							<span>Why AADM, vs raw loops</span>
 							<span aria-hidden="true" class="transition group-hover:translate-x-0.5">→</span>
@@ -722,15 +1124,12 @@ const industryRollup: Array<{ industry: Industry; count: number }> = (() => {
 					</div>
 
 					<!-- Colophon -->
-					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-white/[0.06] pt-8 font-mono-cta text-[10px] uppercase tracking-[0.22em] text-slate-600">
-						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-500">Catalog</span> · {vignettes.length} vignettes
+					<div class="mt-24 grid grid-cols-12 gap-6 border-t border-border pt-8 font-mono-cta text-[13px] normal-case tracking-[0.01em] text-muted-foreground">
+						<div class="col-span-12 sm:col-span-6">
+							<span class="text-muted-foreground">Catalog</span> · {vignettes.length} vignettes
 						</div>
-						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-500">Period</span> · <span class="text-emerald-300/80">2026-05-28 → 2026-06-27</span>
-						</div>
-						<div class="col-span-12 sm:col-span-4">
-							<span class="text-slate-500">Hours band</span> · <span class="text-emerald-300/80">~{totalLow.toLocaleString()}–{totalHigh.toLocaleString()} engineer-hours redirected</span>
+						<div class="col-span-12 sm:col-span-6">
+							<span class="text-muted-foreground">Hours band</span> · <span class="text-brand-mcp">~{totalLow.toLocaleString()}–{totalHigh.toLocaleString()} engineer-hours redirected</span>
 						</div>
 					</div>
 				</div>

@@ -26,3 +26,6 @@ playwright/demos/.auth/
 # jetbrains setting folder
 .idea/
 test-results/
+
+# scratch space — never commit
+.tmp/

@@ -1,0 +1,246 @@
+/*
+ * AADM semantic theme — shadcn token convention + AADM brand.
+ *
+ * Surfaces pair as background / *-foreground.
+ * Dark is the site default (html.dark). Light overrides the same names.
+ * Existing utilities (bg-surface-deep, text-accent-violet) stay valid in both themes.
+ *
+ * Switch: document.documentElement.classList.toggle("dark", theme === "dark")
+ * Optional persist: localStorage "aadm-theme" = "light" | "dark" | "system"
+ */
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+	--radius: 0.5rem;
+
+	--font-sans-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-display-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-mono-family: "JetBrains Mono", ui-monospace, monospace;
+
+	--space-section: 7rem;
+	--space-section-sm: 8rem;
+	--space-block: 3.5rem;
+	--space-prose: 1.5rem;
+
+	/* Light — AADM violet/blue on paper, not generic zinc */
+	--background: #f6f4fb;
+	--foreground: #0f1424;
+	--card: #ffffff;
+	--card-foreground: #0f1424;
+	--popover: #ffffff;
+	--popover-foreground: #0f1424;
+	--primary: #6d4bd6;
+	--primary-foreground: #f8f7ff;
+	--secondary: #ece8f5;
+	--secondary-foreground: #1a1430;
+	--muted: #eceaf4;
+	--muted-foreground: #5b6478;
+	--accent: #e8e0ff;
+	--accent-foreground: #2a1d55;
+	--destructive: #dc2626;
+	--destructive-foreground: #fff7f7;
+	--success: #059669;
+	--success-foreground: #ecfdf5;
+	--warning: #d97706;
+	--warning-foreground: #fffbeb;
+	--border: rgb(15 20 36 / 0.1);
+	--input: rgb(15 20 36 / 0.12);
+	--ring: #6d4bd6;
+
+	--text-primary: #0f1424;
+	--text-secondary: #3d4660;
+	--text-muted: #64708a;
+	--text-inverse: #f1f5f9;
+
+	--surface-deep: #f6f4fb;
+	--surface-mid: #ece8f5;
+	--surface-card: #ffffff;
+	--accent-violet: #6d4bd6;
+	--accent-violet-dim: #5438b0;
+	--accent-blue: #2563eb;
+	--accent-blue-dim: #1d4ed8;
+	--border-subtle: rgb(15 20 36 / 0.1);
+
+	--glow-1: rgb(109 75 214 / 0.08);
+	--glow-2: rgb(37 99 235 / 0.06);
+	--glow-3: rgb(139 92 246 / 0.04);
+	--theme-color: #f6f4fb;
+	--overlay: rgb(15 20 36 / 0.4);
+	--hover: rgb(15 20 36 / 0.05);
+
+	--brand-mcp: #047857;
+	--brand-mcp-fg: #ecfdf5;
+	--brand-mcp-bg: rgb(16 185 129 / 0.12);
+	--brand-mcp-border: rgb(5 150 105 / 0.35);
+	--brand-warn: #b45309;
+	--brand-warn-fg: #fffbeb;
+	--brand-warn-bg: rgb(217 119 6 / 0.1);
+	--brand-warn-border: rgb(217 119 6 / 0.35);
+	--brand-sky: #0369a1;
+	--brand-violet: #6d4bd6;
+
+	--chart-1: #6d4bd6;
+	--chart-2: #2563eb;
+	--chart-3: #059669;
+	--chart-4: #d97706;
+	--chart-5: #db2777;
+	--sidebar: #ffffff;
+	--sidebar-foreground: #0f1424;
+	--sidebar-primary: #6d4bd6;
+	--sidebar-primary-foreground: #f8f7ff;
+	--sidebar-accent: #e8e0ff;
+	--sidebar-accent-foreground: #2a1d55;
+	--sidebar-border: rgb(15 20 36 / 0.1);
+	--sidebar-ring: #6d4bd6;
+}
+
+.dark {
+	--background: #05040a;
+	--foreground: #e2e8f0;
+	--card: #0f1424;
+	--card-foreground: #e2e8f0;
+	--popover: #0f1424;
+	--popover-foreground: #f1f5f9;
+	--primary: #9d7bf5;
+	--primary-foreground: #05040a;
+	--secondary: #0a0e1a;
+	--secondary-foreground: #e2e8f0;
+	--muted: #0a0e1a;
+	--muted-foreground: #94a3b8;
+	--accent: rgb(157 123 245 / 0.14);
+	--accent-foreground: #f1f5f9;
+	--destructive: #f87171;
+	--destructive-foreground: #05040a;
+	--success: #34d399;
+	--success-foreground: #05040a;
+	--warning: #fbbf24;
+	--warning-foreground: #05040a;
+	--border: rgb(148 163 184 / 0.12);
+	--input: rgb(148 163 184 / 0.18);
+	--ring: #9d7bf5;
+
+	--text-primary: #f1f5f9;
+	--text-secondary: #cbd5e1;
+	--text-muted: #94a3b8;
+	--text-inverse: #0f1424;
+
+	--surface-deep: #05040a;
+	--surface-mid: #0a0e1a;
+	--surface-card: #0f1424;
+	--accent-violet: #9d7bf5;
+	--accent-violet-dim: #6d4bd6;
+	--accent-blue: #4f8cff;
+	--accent-blue-dim: #2563eb;
+	--border-subtle: rgb(148 163 184 / 0.12);
+
+	--glow-1: rgb(124 58 237 / 0.14);
+	--glow-2: rgb(37 99 235 / 0.1);
+	--glow-3: rgb(139 92 246 / 0.06);
+	--theme-color: #05040a;
+	--overlay: rgb(0 0 0 / 0.7);
+	--hover: rgb(255 255 255 / 0.04);
+
+	--brand-mcp: #a7f3d0;
+	--brand-mcp-fg: #022c22;
+	--brand-mcp-bg: rgb(6 78 59 / 0.28);
+	--brand-mcp-border: rgb(110 231 183 / 0.4);
+	--brand-warn: #fde68a;
+	--brand-warn-fg: #451a03;
+	--brand-warn-bg: rgb(245 158 11 / 0.08);
+	--brand-warn-border: rgb(252 211 77 / 0.35);
+	--brand-sky: #7dd3fc;
+	--brand-violet: #c4b5fd;
+
+	--chart-1: #9d7bf5;
+	--chart-2: #4f8cff;
+	--chart-3: #34d399;
+	--chart-4: #fbbf24;
+	--chart-5: #f472b6;
+	--sidebar: #0a0e1a;
+	--sidebar-foreground: #e2e8f0;
+	--sidebar-primary: #9d7bf5;
+	--sidebar-primary-foreground: #05040a;
+	--sidebar-accent: rgb(157 123 245 / 0.14);
+	--sidebar-accent-foreground: #f1f5f9;
+	--sidebar-border: rgb(148 163 184 / 0.12);
+	--sidebar-ring: #9d7bf5;
+}
+
+@theme inline {
+	--font-sans: var(--font-sans-family);
+	--font-display: var(--font-display-family);
+	--font-mono: var(--font-mono-family);
+
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-success: var(--success);
+	--color-success-foreground: var(--success-foreground);
+	--color-warning: var(--warning);
+	--color-warning-foreground: var(--warning-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+
+	--color-text-primary: var(--text-primary);
+	--color-text-secondary: var(--text-secondary);
+	--color-text-muted: var(--text-muted);
+	--color-text-inverse: var(--text-inverse);
+
+	--color-surface-deep: var(--surface-deep);
+	--color-surface-mid: var(--surface-mid);
+	--color-surface-card: var(--surface-card);
+	--color-accent-violet: var(--accent-violet);
+	--color-accent-violet-dim: var(--accent-violet-dim);
+	--color-accent-blue: var(--accent-blue);
+	--color-accent-blue-dim: var(--accent-blue-dim);
+	--color-border-subtle: var(--border-subtle);
+	--color-overlay: var(--overlay);
+	--color-hover: var(--hover);
+	--color-brand-mcp: var(--brand-mcp);
+	--color-brand-mcp-fg: var(--brand-mcp-fg);
+	--color-brand-mcp-bg: var(--brand-mcp-bg);
+	--color-brand-mcp-border: var(--brand-mcp-border);
+	--color-brand-warn: var(--brand-warn);
+	--color-brand-warn-fg: var(--brand-warn-fg);
+	--color-brand-warn-bg: var(--brand-warn-bg);
+	--color-brand-warn-border: var(--brand-warn-border);
+	--color-brand-sky: var(--brand-sky);
+	--color-brand-violet: var(--brand-violet);
+
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
+
+	--radius-sm: calc(var(--radius) * 0.6);
+	--radius-md: calc(var(--radius) * 0.8);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) * 1.4);
+	--radius-2xl: calc(var(--radius) * 1.8);
+	--radius-3xl: calc(var(--radius) * 2.2);
+	--radius-4xl: calc(var(--radius) * 2.6);
+}

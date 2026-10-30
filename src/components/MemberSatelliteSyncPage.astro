@@ -1,7 +1,18 @@
 ---
-import { getMemberSignInUrl } from "../lib/account-portal-urls";
+import {
+	getAccountPortalUrls,
+	getMemberSignInUrl,
+} from "../lib/account-portal-urls";
 
-const signInUrl = getMemberSignInUrl(import.meta.env);
+interface Props {
+	/** When set, Account Portal `redirect_url` returns here after sign-in. Default: member area. */
+	returnPath?: string;
+}
+
+const { returnPath } = Astro.props;
+const signInUrl = returnPath
+	? getAccountPortalUrls(import.meta.env, returnPath).signInUrl
+	: getMemberSignInUrl(import.meta.env);
 /** Milliseconds before redirecting to sign-in if handshake never completes. */
 const syncTimeoutMs = 20_000;
 ---
@@ -9,15 +20,17 @@ const syncTimeoutMs = 20_000;
 <div
 	class="rounded-2xl border border-border-subtle bg-surface-card/40 p-8 text-center sm:p-12"
 	aria-live="polite"
+	data-sign-in-url={signInUrl}
 >
-	<p class="font-display text-lg font-semibold text-white">Syncing your session</p>
-	<p class="mt-2 text-sm text-slate-400">
-		Returning from <strong class="text-slate-300">accounts.aadm.io</strong>. This usually takes a
+	<p class="font-display text-lg font-semibold text-foreground">Syncing your session</p>
+	<p class="mt-2 text-sm text-muted-foreground">
+		Returning from <strong class="text-text-secondary">accounts.aadm.io</strong>. This usually takes a
 		few seconds.
 	</p>
-	<p class="mt-6 text-xs text-slate-500" id="member-sync-status">
+	<p class="mt-6 text-xs text-muted-foreground" id="member-sync-status">
 		Finishing authentication…
 	</p>
+	<a class="sr-only" href={signInUrl} data-sync-sign-in>Sign in</a>
 </div>
 
 <script is:inline define:vars={{ signInUrl, syncTimeoutMs }}>

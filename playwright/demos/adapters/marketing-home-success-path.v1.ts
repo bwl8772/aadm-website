@@ -15,7 +15,8 @@ export const MARKETING_HOME_SUCCESS_PATH_V1 = {
 			sceneId: "1-home-hero",
 			title: "Home hero",
 			path: "/",
-			intent: "Orient on brand + two-product story (open standard + Hosted MCP).",
+			intent:
+				"Orient on brand + two-product story (open standard + Hosted MCP).",
 			beats: [
 				{
 					id: "home-hero-orient",
@@ -89,7 +90,8 @@ export const MARKETING_HOME_SUCCESS_PATH_V1 = {
 			sceneId: "4-mcp-land",
 			title: "Hosted MCP land",
 			path: "/mcp",
-			intent: "Prove the CTA delivered the viewer to Hosted MCP — stable end frame.",
+			intent:
+				"Prove the CTA delivered the viewer to Hosted MCP — stable end frame.",
 			beats: [
 				{
 					id: "mcp-hero-read",
@@ -101,7 +103,8 @@ export const MARKETING_HOME_SUCCESS_PATH_V1 = {
 					id: "mcp-nav-chip",
 					verb: "Reading",
 					affordance: "Hosted MCP nav chip active",
-					locatorHint: "nav a[aria-label*='MCP marketing'], a[aria-label*='Hosted MCP']",
+					locatorHint:
+						"nav a[aria-label*='MCP marketing'], a[aria-label*='Hosted MCP']",
 				},
 			],
 		},
