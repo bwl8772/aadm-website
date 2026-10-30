@@ -16,6 +16,7 @@ type ActiveNav =
 	| "standard"
 	| "stories"
 	| "member"
+	| "field"
 	| null;
 
 interface Props {
@@ -51,6 +52,7 @@ const idesChip = activeNav === "ides" ? ringActive("emerald-300") : "";
 const enterpriseChip =
 	activeNav === "enterprise" ? ringActive("amber-300") : "";
 const storiesChip = activeNav === "stories" ? ringActive("emerald-300") : "";
+const fieldChip = activeNav === "field" ? ringActive("emerald-300") : "";
 const memberChip = activeNav === "member" ? ringActive("emerald-300") : "";
 
 /**
@@ -115,6 +117,15 @@ const navItems: NavItem[] = [
 		chip: mcpChip,
 		className:
 			"border border-brand-mcp-border bg-brand-mcp-bg text-brand-mcp hover:border-brand-mcp",
+	},
+	{
+		key: "field",
+		href: "/field",
+		label: "Field",
+		ariaLabel: "AADM Field — engagement workspace for forward-deployed engineers",
+		chip: fieldChip,
+		className:
+			"border border-border bg-transparent text-text-secondary hover:border-foreground/25 hover:bg-accent hover:text-foreground",
 	},
 	{
 		key: "ides",

@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 
-import FieldHeader from "../../components/FieldHeader.astro";
+import FieldApp from "../../components/field/FieldApp";
 import MemberSatelliteSyncPage from "../../components/MemberSatelliteSyncPage.astro";
 import Layout from "../../layouts/Layout.astro";
 import { FIELD_HOME_PATH } from "../../lib/field-area";
@@ -17,21 +17,13 @@ const syncPending = Astro.locals.satelliteSyncPending === true;
 	showHeader={false}
 	showFooter={false}
 >
-	<FieldHeader active="home" />
-	<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
-		{
-			userId ? (
-				<div class="min-w-0">
-					<h1 class="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-						AADM Field
-					</h1>
-					<p class="mt-4 max-w-2xl text-base leading-7 text-text-secondary">
-						Your engagements will show here.
-					</p>
-				</div>
-			) : syncPending ? (
+	{
+		userId ? (
+			<FieldApp client:load />
+		) : syncPending ? (
+			<main id="main" class="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
 				<MemberSatelliteSyncPage returnPath={FIELD_HOME_PATH} />
-			) : null
-		}
-	</main>
+			</main>
+		) : null
+	}
 </Layout>

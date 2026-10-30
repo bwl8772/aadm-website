@@ -24,7 +24,7 @@
 |------|----------------|---------|
 | **`accounts.aadm.io`** | **Clerk** (CNAME — keep it) | Sign-in, sign-up only |
 | **`aadm.io/member`** | **Astro tabs + Clerk widgets** | API keys, Connectors OAuth (Astro), Profile, Security |
-| **`aadm.io/field/main`** | **Astro** (protected; Field header, not marketing nav) | Empty Field home for signed-in users — not public `/field` |
+| **`aadm.io/field/main`** | **Astro gate + React Field app** (same deploy, same cookies) | Signed-in Field UI — not public `/field`; member area stays Astro |
 | **`aadm.io`** | **Astro** | Marketing + MCP setup (no secrets) |
 | **`mcp.aadm.io`** | **aadm-mcp** | MCP JSON-RPC |
 
