@@ -69,7 +69,7 @@ export default function DraftCard({ draft }: { draft: WorkbenchDraft }) {
 			<footer className="flex flex-wrap items-center gap-3 border-t border-border px-6 py-4">
 				<button
 					type="button"
-					className="rounded-md bg-accent-blue px-5 py-2.5 font-semibold text-white transition hover:bg-accent-blue-dim"
+					className="rounded-md bg-accent-blue px-5 py-2.5 font-semibold text-text-inverse transition hover:bg-accent-blue-dim"
 				>
 					{draft.save_label}
 				</button>

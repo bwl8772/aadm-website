@@ -1,26 +1,20 @@
 ---
-description: aadm-website engineering contract — render only, Clerk hosts login, Field is React on /field/main
+description: aadm-website engineering contract — Astro shell + React Field island, backend-authoritative, Clerk Account Portal auth
 alwaysApply: true
 ---
 
 # Engineering rules (always on)
 
 **Full contract:** [`docs/ENGINEERING_RULES.md`](docs/ENGINEERING_RULES.md)
-**Invariants:** [`docs/INVARIANTS.md`](docs/INVARIANTS.md)
-**Auth:** [`docs/CLERK-AUTH.md`](docs/CLERK-AUTH.md)
-
-This repo is aadm.io. Marketing and member chrome are Astro. Field after login is a React island at `/field/main` on the same deploy. The website never invents domain truth.
+**Invariants:** [`docs/INVARIANTS.md`](docs/INVARIANTS.md) · **Auth:** [`docs/CLERK-AUTH.md`](docs/CLERK-AUTH.md)
+**The invariants win** if this file and they disagree.
 
 ## Non-negotiables
 
-- Backend (and Clerk session) are authoritative. No client-invented success, workspace, or version.
-- No domain logic in Astro pages or the Field React shell. Call the backend; render parsed replies.
-- Sign-in is `accounts.aadm.io` only. Satellite off. Do not embed Clerk `<SignIn>` / `<SignUp>`. Do not repoint the CNAME.
-- No secrets in the browser bundle. `PUBLIC_*` only. Member credentials stay on `/member`.
-- IDs are server UUIDs from replies. Never mint or derive them.
-- TEN-07 families are distinct screens. Field is not a dashboard (FLD-01–04).
-
-## Before merging
-
-1. Read the matching heading in `docs/ENGINEERING_RULES.md` and the invariant ID in `docs/INVARIANTS.md`.
-2. Auth changes: read `docs/CLERK-AUTH.md` first.
+- Backend is authoritative (BACK-01). The shell renders parsed replies; it maps backend enums to theme tokens but never derives status, lateness, health, or progress.
+- One backend door: React → same-origin Astro endpoints → `aadm-backend`, with `request_id`, `api_version`, release ID, and a timeout. No secrets or backend URL in the browser.
+- Field read models are zod schemas in `src/components/field/field-types.ts`; pages parse before React renders. Failed parse = visible error.
+- Example data only in `src/components/field/fixtures/`, loaded by glob via `src/lib/field-fixtures.ts` when `PUBLIC_FIELD_FIXTURES=1`. Nothing imports a fixture directly. Deleting the folder needs no code change.
+- Build from shared components; color only from `src/styles/theme.css` tokens; light and dark both work.
+- IDs are server-made UUIDs (IDN-06). Session, not URL, is tenant authority.
+- Login is `accounts.aadm.io` only; satellite off; do not repoint the CNAME.

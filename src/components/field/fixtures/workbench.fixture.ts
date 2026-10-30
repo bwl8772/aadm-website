@@ -92,4 +92,6 @@ const acmeIntake: WorkbenchModel = {
 	],
 };
 
-export const workbenchFixtures: Record<string, WorkbenchModel> = { [acmeIntake.engagement_id]: acmeIntake };
+const workbenchFixtures: Record<string, WorkbenchModel> = { [acmeIntake.engagement_id]: acmeIntake };
+
+export default workbenchFixtures;

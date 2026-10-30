@@ -17,7 +17,7 @@ export default function ContinueCard({ label, engagement, specialist, blocks, ve
 			</div>
 			<button
 				type="button"
-				className="shrink-0 rounded-md bg-accent-blue px-5 py-3 font-semibold text-white transition hover:bg-accent-blue-dim focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+				className="shrink-0 rounded-md bg-accent-blue px-5 py-3 font-semibold text-text-inverse transition hover:bg-accent-blue-dim focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 			>
 				{verb}
 			</button>

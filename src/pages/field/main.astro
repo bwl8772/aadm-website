@@ -3,15 +3,14 @@ export const prerender = false;
 
 import FieldApp from "../../components/field/FieldApp";
 import { MyFieldModelSchema } from "../../components/field/field-types";
-// EXAMPLE DATA — delete this import (and the fixtures/ file) to strip examples.
-import { myFieldFixture } from "../../components/field/fixtures/my-field.fixture";
 import MemberSatelliteSyncPage from "../../components/MemberSatelliteSyncPage.astro";
 import Layout from "../../layouts/Layout.astro";
 import { FIELD_HOME_PATH } from "../../lib/field-area";
+import { fieldFixture } from "../../lib/field-fixtures";
 
 const { userId } = Astro.locals.auth();
 /** Example data only when PUBLIC_FIELD_FIXTURES=1; otherwise no data until the backend read model is wired. */
-const raw = import.meta.env.PUBLIC_FIELD_FIXTURES === "1" ? myFieldFixture : null;
+const raw = fieldFixture("my-field");
 const parsed = raw ? MyFieldModelSchema.safeParse(raw) : null;
 /** RES-05: a malformed model is a visible error, never an empty state. */
 const model = parsed?.success ? parsed.data : null;

@@ -10,7 +10,15 @@ BACK-01. Actor identity, tenant, membership, authorization, workflow, domain sta
 
 ## No domain logic in the shell
 
-ARCH-05. Astro pages, server endpoints, and the Field React island hold no domain business logic. They call the backend and render parsed replies. Status, verdict, color, and lint are never computed in the shell.
+ARCH-05. Astro pages, server endpoints, and the Field React island hold no domain business logic. They call the backend and render parsed replies. The shell may map a backend enum to a theme token. It never derives the enum (status, lateness, health, progress, alert) from other fields.
+
+## One backend door
+
+ARCH-24, CTX-05, API-06, OPS-08, XO-04. The browser never calls `aadm-backend`. React calls same-origin Astro server endpoints; only they call the backend. Every backend call carries `request_id`, `api_version`, and the release ID, and has a timeout. Forms cap payload size. External side effects happen only in the backend.
+
+## Deploy apart
+
+DEPLOY-01, ARCH-21, OPS-05. Website and backend each have their own build, config, health, release ID, and rollback. The backend serves API N and N-1; the website reads `api_version` from `/health`. A release that needs both at once is marked coordinated in its slice.
 
 ## Session, not the URL, is tenant authority
 
@@ -32,10 +40,22 @@ IDN-06, ART-02. Every workspace, artifact, version, Decision, and request ID is 
 
 ARCH-25, TEN-07, RES-04, RES-05. Empty, unavailable, unauthorized, indeterminate, and rejected are different screens. Branch on `code` / `sub_code` / `retryable`, not message text. Show `request_id` on errors. Parse every backend reply with a schema.
 
+## Schemas are the types
+
+RES-05, CONTRACT-01, API-02. Field read models are zod schemas in `src/components/field/field-types.ts`; TypeScript types are `z.infer` of them. A page parses its model on the server before React renders it. A failed parse is a visible error, never an empty state or "not found".
+
+## Example data is strippable
+
+Example data lives only in `src/components/field/fixtures/*.fixture.ts` (default export). Only `src/lib/field-fixtures.ts` loads it, by glob, when `PUBLIC_FIELD_FIXTURES=1`; pages call `fieldFixture(name)` and parse the result. No other file imports a fixture. Components take data through props and hold no example values. Deleting `fixtures/` needs no code change and leaves a passing build with empty states.
+
+## Components and theme
+
+Field UI is built from shared components (`AccountMenu`, `home/Pill`, per-screen parts under `home/` and `workbench/`); a screen composes them and adds no one-off copies. Color comes only from tokens in `src/styles/theme.css` — no raw hex — and every screen works in light and dark. `npm run test:theme-contrast` guards light-theme contrast.
+
 ## Field is not a dashboard
 
 FLD-01 to FLD-04, OBS-04. Field helps a person decide the next move or get it done. Proof sits one click below the answer. No compliance, uptime, or health dashboard as a customer screen. UI noun is **engagement**; auth noun stays **workspace**.
 
 ## Tests name the failure
 
-`npm run test:clerk-smoke` must fail if unsigned `/member` leaks credentials or skips the Account Portal. `scripts/field-home-smoke.mjs` must fail if unsigned `/field/main` shows Field content or marketing chrome, or if signed-in Field is missing the Field header.
+`npm run test:clerk-smoke` must fail if unsigned `/member` leaks credentials or skips the Account Portal. `npm run test:field-home` must fail if unsigned `/field/main` shows Field content or marketing chrome, or if signed-in Field is missing the Field header.

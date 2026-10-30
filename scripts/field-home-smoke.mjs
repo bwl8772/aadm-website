@@ -2,12 +2,12 @@
  * Field home smoke — empty /field/main behind the same sign-in/sync as /member.
  *
  * Always (unsigned):
- * - No "AADM Field" H1 / engagement copy (credentials-equivalent content hidden).
+ * - No "Where to act" H1 / engagement copy (credentials-equivalent content hidden).
  * - Sync shell (or sign-in redirect) present; sign-in href redirect_url ends with /field/main.
  * - No MemberNavTabs chrome.
  *
  * When `MEMBER_SMOKE_STORAGE_STATE` is set (signed-in cookies):
- * - H1 "AADM Field" visible; engagement line present.
+ * - H1 "Where to act" visible (empty state or fixture data).
  * - Still no MemberNavTabs.
  *
  * Run:
@@ -62,19 +62,20 @@ try {
 
 	const anonUrl = anonPage.url();
 	const fieldHeading = await anonPage
-		.locator('h1:text-is("AADM Field")')
+		.locator('h1:text-is("Where to act")')
 		.count();
 	const engagementLine = await anonPage
 		.getByText("Your engagements will show here.")
 		.count();
 	const memberTabs = await anonPage.locator(".member-nav-tabs").count();
 	const syncShell = await anonPage.locator("[data-sign-in-url]").count();
+	// Only read the shell link when the shell rendered; a redirect has none.
 	const signInHref =
-		(await anonPage.locator("[data-sync-sign-in]").getAttribute("href")) ||
-		(await anonPage
-			.locator("[data-sign-in-url]")
-			.getAttribute("data-sign-in-url")) ||
-		"";
+		syncShell > 0
+			? (await anonPage.locator("[data-sync-sign-in]").first().getAttribute("href")) ||
+				(await anonPage.locator("[data-sign-in-url]").first().getAttribute("data-sign-in-url")) ||
+				""
+			: "";
 
 	log("Unsigned /field/main", {
 		anonUrl,
@@ -120,11 +121,8 @@ try {
 		});
 		await page.waitForTimeout(1200);
 
-		const h1 = page.locator('h1:text-is("AADM Field")');
+		const h1 = page.locator('h1:text-is("Where to act")');
 		await h1.waitFor({ state: "visible", timeout: 20000 });
-		await page
-			.getByText("Your engagements will show here.")
-			.waitFor({ state: "visible", timeout: 10000 });
 		assert(
 			(await page.locator(".member-nav-tabs").count()) === 0,
 			"signed-in /field/main must not add a MemberNavTabs tab",

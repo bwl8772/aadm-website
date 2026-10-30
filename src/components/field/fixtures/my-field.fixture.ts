@@ -1,7 +1,6 @@
 /**
- * EXAMPLE DATA ONLY — the "1 · My Field" mock. Nothing else imports this file
- * except `src/pages/field/main.astro`, behind PUBLIC_FIELD_FIXTURES=1.
- * To strip examples: delete this file and that one import.
+ * EXAMPLE DATA ONLY — the "1 · My Field" mock. Loaded only by `src/lib/field-fixtures.ts` when PUBLIC_FIELD_FIXTURES=1.
+ * To strip examples: delete this file (or the whole fixtures/ folder).
  */
 import type { FieldAction, FieldEngagement, MyFieldModel } from "../field-types";
 
@@ -61,4 +60,6 @@ const engagements: FieldEngagement[] = [
 	},
 ];
 
-export const myFieldFixture: MyFieldModel = { continue_action, actions, counts, engagements };
+const myFieldFixture: MyFieldModel = { continue_action, actions, counts, engagements };
+
+export default myFieldFixture;
