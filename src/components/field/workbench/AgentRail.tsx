@@ -1,16 +1,22 @@
-import type { WorkbenchAgentGroup } from "../field-types";
+import type { ToneKey, WorkbenchAgentGroup } from "../field-types";
 
-interface Props {
-	groups: WorkbenchAgentGroup[];
-	activeId: string;
-	onSelect: (agentId: string) => void;
-}
+const statusClass: Record<ToneKey, string> = {
+	neutral: "text-text-secondary",
+	info: "text-accent-blue",
+	success: "text-brand-mcp",
+	warning: "font-medium text-brand-warn",
+	danger: "font-medium text-destructive",
+};
 
-const itemClass = (active: boolean) =>
-	`block w-full rounded-md px-3 py-2 text-left transition ${active ? "bg-accent-blue/10" : "hover:bg-muted"}`;
+const itemClass = (selected: boolean) =>
+	`block w-full rounded-md px-3 py-2 text-left transition ${selected ? "bg-accent-blue/10" : "hover:bg-muted"}`;
 
-/** Workbench left rail: specialist agents grouped by area. An agent with `href` navigates; else it selects in place. */
-export default function AgentRail({ groups, activeId, onSelect }: Props) {
+/**
+ * Workbench left rail: specialist agents in the server's groups and order.
+ * Selecting an agent follows its `open` action (a new read); the server says
+ * which one is selected.
+ */
+export default function AgentRail({ groups }: { groups: WorkbenchAgentGroup[] }) {
 	return (
 		<nav
 			aria-label="Agents"
@@ -23,54 +29,50 @@ export default function AgentRail({ groups, activeId, onSelect }: Props) {
 				</p>
 			</div>
 			{groups.map((g) => (
-				<div key={g.label} className="mt-6">
+				<div key={g.group_id} className="mt-6">
 					<p className="px-3 text-xs font-semibold uppercase tracking-[0.12em] text-text-muted">
 						{g.label}
 					</p>
 					<ul className="mt-2 flex flex-col gap-0.5">
 						{g.agents.map((a) => {
-							const active = a.agent_id === activeId;
+							const body = (
+								<>
+									<span
+										className={`block font-medium ${a.selected ? "text-accent-blue" : "text-foreground"}`}
+									>
+										{a.label}
+									</span>
+									{a.status_text ? (
+										<span
+											className={`mt-0.5 block text-sm ${a.selected ? "text-accent-blue" : statusClass[a.status_tone ?? "neutral"]}`}
+										>
+											{a.status_text}
+										</span>
+									) : null}
+								</>
+							);
+							const href =
+								a.open.kind === "navigate" && a.open.enabled
+									? a.open.href
+									: undefined;
 							return (
 								<li key={a.agent_id}>
-									{a.href ? (
+									{href ? (
 										<a
-											href={a.href}
-											aria-current={active ? "page" : undefined}
-											className={itemClass(active)}
+											href={href}
+											aria-current={a.selected ? "page" : undefined}
+											className={itemClass(a.selected)}
 										>
-											<span
-												className={`block font-medium ${active ? "text-accent-blue" : "text-foreground"}`}
-											>
-												{a.name}
-											</span>
-											{a.status ? (
-												<span
-													className={`mt-0.5 block text-sm ${a.status.tone === "warning" ? "font-medium text-brand-warn" : active ? "text-accent-blue" : "text-text-secondary"}`}
-												>
-													{a.status.label}
-												</span>
-											) : null}
+											{body}
 										</a>
 									) : (
-										<button
-											type="button"
-											aria-current={active ? "true" : undefined}
-											onClick={() => onSelect(a.agent_id)}
-											className={itemClass(active)}
+										<span
+											aria-current={a.selected ? "page" : undefined}
+											title={a.open.disabled_reason}
+											className={`${itemClass(a.selected)} opacity-60`}
 										>
-											<span
-												className={`block font-medium ${active ? "text-accent-blue" : "text-foreground"}`}
-											>
-												{a.name}
-											</span>
-											{a.status ? (
-												<span
-													className={`mt-0.5 block text-sm ${a.status.tone === "warning" ? "font-medium text-brand-warn" : active ? "text-accent-blue" : "text-text-secondary"}`}
-												>
-													{a.status.label}
-												</span>
-											) : null}
-										</button>
+											{body}
+										</span>
 									)}
 								</li>
 							);

@@ -1,89 +1,43 @@
-import Button from "../Button";
-import type { WorkbenchDraft, WorkbenchQuestion } from "../field-types";
+import ActionControl from "../ActionControl";
+import type { DraftEntry } from "../field-types";
 import { Pill } from "../Pill";
 
-function Heading({
-	tone,
-	children,
-}: {
-	tone: "ok" | "warn" | "info" | "muted";
-	children: string;
-}) {
-	const color = {
-		ok: "text-brand-mcp",
-		warn: "text-brand-warn",
-		info: "text-accent-blue",
-		muted: "text-text-muted",
-	}[tone];
+/**
+ * A draft in the canvas: not yet a saved version. Headings, items and actions
+ * are the server's; the card decides nothing about what a draft means. It
+ * becomes a record only when a save action it offers returns a `saved` entry.
+ */
+export default function DraftCard({ draft }: { draft: DraftEntry }) {
 	return (
-		<h3 className={`text-xs font-bold uppercase tracking-[0.12em] ${color}`}>
-			{children}
-		</h3>
-	);
-}
-
-function AskList({ items }: { items: WorkbenchQuestion[] }) {
-	return (
-		<ul className="mt-3 flex flex-col gap-3">
-			{items.map((q) => (
-				<li key={q.text} className="flex items-center justify-between gap-4">
-					<span className="text-foreground">{q.text}</span>
-					<Button>{q.verb}</Button>
-				</li>
-			))}
-		</ul>
-	);
-}
-
-export default function DraftCard({ draft }: { draft: WorkbenchDraft }) {
-	return (
-		<article className="rounded-xl border border-border bg-surface-card">
+		<article
+			className="rounded-xl border border-border bg-surface-card"
+			data-draft-id={draft.draft_id}
+		>
 			<header className="flex flex-wrap items-center gap-2 border-b border-border px-6 py-4">
-				<h2 className="font-semibold text-foreground">{draft.title}</h2>
-				<Pill>{draft.source_label}</Pill>
-				{draft.saved ? null : <Pill tone="info">Not saved yet</Pill>}
+				<h3 className="font-semibold text-foreground">{draft.title}</h3>
+				<Pill tone="info">{draft.summary}</Pill>
 			</header>
-			<div className="grid grid-cols-1 md:grid-cols-2">
-				<div className="px-6 py-5 md:border-r md:border-border">
-					<Heading tone="ok">Confirmed findings</Heading>
-					<ul className="mt-3 flex flex-col gap-3 text-foreground">
-						{draft.findings.map((f) => (
-							<li key={f}>{f}</li>
-						))}
-					</ul>
-					{draft.assumptions.length > 0 ? (
-						<div className="mt-6">
-							<Heading tone="muted">Assumptions</Heading>
-							<ul className="mt-3 flex flex-col gap-3 text-foreground">
-								{draft.assumptions.map((a) => (
-									<li key={a}>{a}</li>
-								))}
-							</ul>
-						</div>
-					) : null}
-				</div>
-				<div className="border-t border-border px-6 py-5 md:border-t-0">
-					{draft.questions.length > 0 ? (
-						<>
-							<Heading tone="warn">Unresolved questions</Heading>
-							<AskList items={draft.questions} />
-						</>
-					) : null}
-					{draft.decisions.length > 0 ? (
-						<div className="mt-6">
-							<Heading tone="info">Decision needed</Heading>
-							<AskList items={draft.decisions} />
-						</div>
-					) : null}
-				</div>
+			<div className="grid grid-cols-1 gap-6 px-6 py-5 md:grid-cols-2">
+				{draft.sections.map((section) => (
+					<section key={section.heading}>
+						<h4 className="text-xs font-bold uppercase tracking-[0.12em] text-text-muted">
+							{section.heading}
+						</h4>
+						<ul className="mt-3 flex flex-col gap-3 text-foreground">
+							{section.items.map((item) => (
+								<li key={item}>{item}</li>
+							))}
+						</ul>
+					</section>
+				))}
 			</div>
-			<footer className="flex flex-wrap items-center gap-3 border-t border-border px-6 py-4">
-				<Button variant="primary">{draft.save_label}</Button>
-				<Button>Edit draft</Button>
-				<Button variant="ghost" className="ml-auto">
-					Discard
-				</Button>
-			</footer>
+			{draft.actions.length > 0 ? (
+				<footer className="flex flex-wrap items-center gap-3 border-t border-border px-6 py-4">
+					{draft.actions.map((a) => (
+						<ActionControl key={`${a.command ?? a.href}:${a.label}`} action={a} />
+					))}
+				</footer>
+			) : null}
 		</article>
 	);
 }

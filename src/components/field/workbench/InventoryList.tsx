@@ -1,40 +1,36 @@
-import Button from "../Button";
-import type { WorkbenchInventory } from "../field-types";
+import ActionControl from "../ActionControl";
+import type { WorkbenchView } from "../field-types";
 import { Pill } from "../Pill";
 
-/** "Lay of the land": inventories of what the customer has today. */
-export default function InventoryList({
-	inventories,
-}: {
-	inventories: WorkbenchInventory[];
-}) {
+/** "Lay of the land": the server's inventory types in its order, with the actions it offers. */
+export default function InventoryList({ land }: { land: WorkbenchView["land"] }) {
 	return (
 		<div>
-			<p className="text-sm leading-relaxed text-text-secondary">
-				Inventories of what the customer has today: technology, people,
-				processes and data. Built with your agents from uploads, interviews and
-				connected systems.
-			</p>
-			<div className="mt-4 grid grid-cols-[2fr_3fr] gap-3">
-				<Button>Import file</Button>
-				<Button>+ New inventory</Button>
-			</div>
+			{land.actions.length > 0 ? (
+				<div className="flex flex-wrap gap-3">
+					{land.actions.map((a) => (
+						<ActionControl key={`${a.command ?? a.href}:${a.label}`} action={a} />
+					))}
+				</div>
+			) : null}
 			<ul className="mt-4 flex flex-col gap-3">
-				{inventories.map((inv) => (
+				{land.items.map((inv) => (
 					<li
 						key={inv.inventory_id}
-						className={`rounded-xl border p-4 ${inv.highlighted ? "border-accent-blue/40 bg-accent-blue/5" : "border-border bg-surface-card"}`}
+						data-inventory-type={inv.type}
+						className="rounded-xl border border-border bg-surface-card p-4"
 					>
 						<div className="flex items-start justify-between gap-3">
-							<h3 className="font-semibold text-foreground">{inv.title}</h3>
-							<Pill tone={inv.state.tone}>{inv.state.label}</Pill>
+							<h3 className="font-semibold text-foreground">{inv.label}</h3>
+							<Pill tone={inv.status.tone}>{inv.status.label}</Pill>
 						</div>
-						<p className="mt-2 text-sm text-text-secondary">{inv.summary}</p>
+						<p className="mt-2 text-sm text-text-secondary">
+							{inv.description}
+							{inv.detail_label ? ` · ${inv.detail_label}` : ""}
+						</p>
 						<div className="mt-3 flex items-center justify-between gap-3">
-							<span className="text-sm text-text-muted">{inv.agent_name}</span>
-							<Button variant={inv.action.primary ? "primary" : "outline"}>
-								{inv.action.label}
-							</Button>
+							<span className="text-sm text-text-muted">{inv.agent_label}</span>
+							<ActionControl action={inv.primary} size="sm" />
 						</div>
 					</li>
 				))}

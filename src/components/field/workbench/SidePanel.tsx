@@ -1,20 +1,27 @@
 import { useState } from "react";
-import type { WorkbenchArtifact, WorkbenchInventory } from "../field-types";
+import type { WorkbenchView } from "../field-types";
 import SegmentedTabs from "../SegmentedTabs";
 import ArtifactList from "./ArtifactList";
 import InventoryList from "./InventoryList";
 
-type Tab = "artifacts" | "land";
+type Tab = WorkbenchView["panels"]["selected"];
 
-/** Workbench right rail: saved artifacts, or the customer's lay of the land. */
+/**
+ * Workbench right rail: the server's two panel tabs with their labels and
+ * counts. Which tab is showing is presentation state, seeded by the server.
+ */
 export default function SidePanel({
+	panels,
 	artifacts,
-	inventories,
+	land,
+	agentId,
 }: {
-	artifacts: WorkbenchArtifact[];
-	inventories: WorkbenchInventory[];
+	panels: WorkbenchView["panels"];
+	artifacts: WorkbenchView["artifacts"];
+	land: WorkbenchView["land"];
+	agentId: string;
 }) {
-	const [tab, setTab] = useState<Tab>("land");
+	const [tab, setTab] = useState<Tab>(panels.selected);
 	return (
 		<aside
 			aria-label="Engagement records"
@@ -25,16 +32,16 @@ export default function SidePanel({
 				stretch
 				active={tab}
 				onChange={setTab}
-				tabs={[
-					{ key: "artifacts", label: `Artifacts · ${artifacts.length}` },
-					{ key: "land", label: `Lay of the land · ${inventories.length}` },
-				]}
+				tabs={panels.tabs.map((t) => ({
+					key: t.id,
+					label: `${t.label} · ${t.count}`,
+				}))}
 			/>
 			<div className="mt-5">
 				{tab === "artifacts" ? (
-					<ArtifactList artifacts={artifacts} />
+					<ArtifactList artifacts={artifacts} agentId={agentId} />
 				) : (
-					<InventoryList inventories={inventories} />
+					<InventoryList land={land} />
 				)}
 			</div>
 		</aside>
