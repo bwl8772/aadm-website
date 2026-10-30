@@ -129,6 +129,18 @@ try {
 			(await page.locator(".member-nav-tabs").count()) === 0,
 			"signed-in /field/main must not add a MemberNavTabs tab",
 		);
+		assert(
+			(await page.locator("[data-site-header]").count()) === 0,
+			"signed-in /field/main must not show the marketing SiteHeader",
+		);
+		assert(
+			(await page.locator("[data-field-header]").count()) === 1,
+			"signed-in /field/main must show the Field product header",
+		);
+		assert(
+			(await page.getByRole("navigation", { name: "Field" }).count()) === 1,
+			"signed-in /field/main must show the Field menu",
+		);
 		log("Signed-in /field/main", { ok: true, url: page.url() });
 		await context.close();
 	}

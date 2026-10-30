@@ -24,7 +24,7 @@
 |------|----------------|---------|
 | **`accounts.aadm.io`** | **Clerk** (CNAME — keep it) | Sign-in, sign-up only |
 | **`aadm.io/member`** | **Astro tabs + Clerk widgets** | API keys, Connectors OAuth (Astro), Profile, Security |
-| **`aadm.io/field/main`** | **Astro** (protected; same sync as `/member`) | Empty Field home for signed-in users — not public `/field` |
+| **`aadm.io/field/main`** | **Astro** (protected; Field header, not marketing nav) | Empty Field home for signed-in users — not public `/field` |
 | **`aadm.io`** | **Astro** | Marketing + MCP setup (no secrets) |
 | **`mcp.aadm.io`** | **aadm-mcp** | MCP JSON-RPC |
 
@@ -82,10 +82,10 @@ Credential sign-in links use `redirect_url=https://aadm.io/member` (no `__clerk_
 | `src/components/MemberNavTabs.astro` | Top tablist (API keys · Connectors OAuth · Profile · Security) |
 | `src/components/MemberUserProfilePage.astro` | Route switch: Astro OAuth / `<APIKeys />` / navbar-hidden `<UserProfile>` |
 | `src/lib/member-clerk-appearance.ts` | Hide Clerk sidenav for content-only widgets |
-| `src/components/MemberSatelliteSyncPage.astro` | Sync-only shell during satellite handshake (no credentials) |
-| `src/lib/routes.ts` | `/member(.*)` protected |
+| `src/components/MemberSatelliteSyncPage.astro` | Sync-only shell when `__clerk_synced=false` (no credentials) |
+| `src/lib/routes.ts` | `/member(.*)` and `/field/main(.*)` protected |
 | `src/lib/clerk-portal-urls.ts` | Portal + member URLs |
-| `src/middleware.ts` | `clerkMiddleware` + `/member` → `/member/api-keys`, bearer → api-keys |
+| `src/middleware.ts` | Unsigned private routes → Account Portal; handshake param → sync shell; `/member` → `/member/api-keys` |
 | `src/components/SiteHeader.astro` | **Member** → `/member` |
 
 ---

@@ -209,6 +209,17 @@ export function isSatelliteHandshakePending(request: Request): boolean {
 	}
 }
 
+/** Path (+ query) to send back to Account Portal — strips the handshake flag. */
+export function returnPathForAccountPortal(request: Request): string {
+	try {
+		const url = new URL(request.url);
+		url.searchParams.delete("__clerk_synced");
+		return `${url.pathname}${url.search}`;
+	} catch {
+		return "/member";
+	}
+}
+
 /** Satellite return URLs need __clerk_synced=false so handshake runs on aadm.io. */
 function withSatelliteSyncParam(returnTo: string, env: ImportMetaEnv): string {
 	if (!isClerkSatelliteFromEnv(env)) return returnTo;
@@ -282,6 +293,20 @@ export function getClerkIntegrationOptions(
 				? { domain: clerkDomainFromEnv(env) }
 				: {}),
 	};
+}
+
+/** Sign-in at accounts.aadm.io, then return to this private request's path. */
+export function getSignInUrlForRequest(
+	request: Request,
+	env: ImportMetaEnv,
+): string {
+	const signInBase =
+		trim(env.PUBLIC_CLERK_SIGN_IN_URL) || CLERK_ACCOUNTS_SIGN_IN;
+	return withAccountPortalRedirect(
+		signInBase,
+		returnPathForAccountPortal(request),
+		env,
+	);
 }
 
 /** Sign-in at accounts.aadm.io with return to member area after auth. */
