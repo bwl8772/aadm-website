@@ -2,6 +2,8 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/astro/server";
 import { redirectAuthPathToAccounts } from "./lib/clerk-auth-policy";
 import {
 	getClerkIntegrationOptions,
+	getSignInUrlForRequest,
+	isSatelliteHandshakePending,
 	redirectSatelliteFapiPath,
 } from "./lib/clerk-portal-urls";
 import {
@@ -17,7 +19,9 @@ import { clerkPrivateRoutePatternsFromEnv } from "./lib/routes";
  * POLICY (docs/CLERK-AUTH.md): Sign-in on accounts.aadm.io; member UI on aadm.io/member.
  * Auth paths on aadm.io redirect to accounts.aadm.io — no embedded SignIn on marketing host.
  *
- * Satellite: clerk-js sync hits `/v1/*` on aadm.io; we 302 to clerk.aadm.io FAPI.
+ * Unsigned private routes go to accounts.aadm.io immediately. The sync shell
+ * is only for `__clerk_synced=false` (return from Account Portal).
+ * Satellite FAPI: clerk-js sync hits `/v1/*` on aadm.io; we 302 to clerk.aadm.io.
  *
  * @see https://clerk.com/docs/reference/astro/clerk-middleware
  */
@@ -49,12 +53,15 @@ export const onRequest = clerkMiddleware((auth, context, next) => {
 
 	const { isAuthenticated } = auth();
 	if (!isAuthenticated) {
-		// Do not 307 to accounts.aadm.io/sign-in?redirect_url=/member here.
-		// That URL is the bounce loop: portal sends the browser back to /member,
-		// SSR still has no session, and redirectToSignIn() fires again.
-		// Let MemberSatelliteSyncPage run clerk-js on this host (no credentials).
-		context.locals.satelliteSyncPending = true;
-		return next();
+		// Handshake only: returning from Account Portal with __clerk_synced=false.
+		// A first visit has no session to sync — send them to sign-in now.
+		if (isSatelliteHandshakePending(context.request)) {
+			context.locals.satelliteSyncPending = true;
+			return next();
+		}
+		return context.redirect(
+			getSignInUrlForRequest(context.request, import.meta.env),
+		);
 	}
 
 	// Legacy fifth tab: /member/bearer → API keys (bearer how-to + Clerk key UI).

@@ -4,13 +4,14 @@
  * - Loads `/`, captures hrefs/buttons signed-out users see.
  * - Clicks Sign in (Account Portal link) to confirm navigation to Clerk-hosted sign-in.
  * - Loads `/mcp`, confirms Get access / Sign in CTAs are anchors with expected ids/text.
- * - Asserts unsigned `/member` shows the sync shell (no creds; sign-in redirect_url → /member).
- * - Forged sync param must not expose credentials.
+ * - Asserts unsigned `/member` redirects to Account Portal (or handshake sync shell).
+ * - Forged `__clerk_synced=false` must show the sync shell and not expose credentials.
  *
  * Run: BASE_URL=http://127.0.0.1:4321 npm run test:clerk-smoke
  *      BASE_URL=https://aadm.io npm run test:clerk-smoke
  */
 import { chromium } from "playwright";
+import { assertHandsOffToSignIn } from "./lib/auth-gate.mjs";
 
 const base = (process.env.BASE_URL || "http://127.0.0.1:4321").replace(
 	/\/$/,
@@ -110,9 +111,12 @@ try {
 	});
 	log("/mcp page (signed-out CTAs)", { url: page.url(), ...mcpData });
 
-	// Unauthenticated /member stays on the sync shell (ba35c8f+) — no instant
-	// Account Portal redirect. Same pattern as scripts/field-home-smoke.mjs.
+	// Unsigned /member goes to Account Portal immediately (no 20s sync wait).
 	navigations.length = 0;
+	console.log(
+		"\n=== Unsigned /member hand-off ===",
+		await assertHandsOffToSignIn(context.request, base, "/member", "/member"),
+	);
 	await page.goto(`${base}/member`, {
 		waitUntil: "domcontentloaded",
 		timeout: timeoutMs,
@@ -122,28 +126,37 @@ try {
 	const syncShell = await page.locator("[data-sign-in-url]").count();
 	const hasSyncCopy = await page.getByText("Syncing your session").count();
 	const signInHref =
-		(await page.locator("[data-sync-sign-in]").getAttribute("href")) ||
-		(await page
-			.locator("[data-sign-in-url]")
-			.getAttribute("data-sign-in-url")) ||
+		(syncShell > 0 &&
+			(await page
+				.locator("[data-sync-sign-in]")
+				.first()
+				.getAttribute("href"))) ||
+		(syncShell > 0 &&
+			(await page
+				.locator("[data-sign-in-url]")
+				.first()
+				.getAttribute("data-sign-in-url"))) ||
 		"";
 	const credUi = await page
 		.locator(
 			"#oauth-heading, #api-keys-guide-heading, [data-member-area-root], [data-cred-panel]",
 		)
 		.count();
+	const onAccounts = /accounts\.|sign-in|clerk/i.test(memberUrl);
 	const redirectEndsWithMember = (() => {
 		try {
-			const redirect = new URL(signInHref).searchParams.get("redirect_url");
-			if (!redirect) return false;
+			const href = onAccounts ? memberUrl : signInHref;
+			const redirect = new URL(href).searchParams.get("redirect_url");
+			if (!redirect) return onAccounts;
 			const path = new URL(redirect).pathname.replace(/\/+$/, "") || "/";
 			return path === "/member" || path.endsWith("/member");
 		} catch {
 			return false;
 		}
 	})();
-	log("/member (signed-out sync shell)", {
+	log("/member (signed-out)", {
 		finalUrl: memberUrl,
+		onAccounts,
 		syncShell,
 		hasSyncCopy,
 		credUi,
@@ -151,15 +164,15 @@ try {
 		redirectEndsWithMember,
 		navigations,
 	});
-	if (syncShell === 0 || hasSyncCopy === 0) {
+	if (!onAccounts && (syncShell === 0 || hasSyncCopy === 0)) {
 		throw new Error(
-			`unsigned /member must show satellite sync shell; stayed at ${memberUrl}`,
+			`unsigned /member must redirect to sign-in or show sync shell; stayed at ${memberUrl}`,
 		);
 	}
 	if (credUi > 0) {
 		throw new Error("unsigned /member must not expose API key / credential UI");
 	}
-	if (!redirectEndsWithMember) {
+	if (!onAccounts && !redirectEndsWithMember) {
 		throw new Error(
 			`[data-sync-sign-in] redirect_url must end with /member (got ${signInHref})`,
 		);

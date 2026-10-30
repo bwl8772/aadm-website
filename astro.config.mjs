@@ -1,4 +1,5 @@
 import node from "@astrojs/node";
+import react from "@astrojs/react";
 import clerk from "@clerk/astro";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
@@ -116,6 +117,7 @@ export default defineConfig({
 			...(isSatellite ? { isSatellite: true } : {}),
 			...(proxyUrl ? { proxyUrl } : isSatellite ? { domain: clerkDomain } : {}),
 		}),
+		react(),
 	],
 	vite: {
 		plugins: [tailwindcss()],
